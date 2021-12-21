@@ -1,0 +1,43 @@
+{
+  "name": "Adhesion",
+  "fields": [
+    {
+      "fieldName": "fecha",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "particularidades",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "adhesion",
+      "relationshipName": "cliente"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "individuo",
+      "otherEntityRelationshipName": "adhesion",
+      "relationshipName": "individuo"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "plan",
+      "otherEntityRelationshipName": "adhesion",
+      "relationshipName": "plan"
+    }
+  ],
+  "entityTableName": "adhesion",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211221144805"
+}

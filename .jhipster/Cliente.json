@@ -1,0 +1,40 @@
+{
+  "name": "Cliente",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "enPadron",
+      "relationshipName": "padron"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "adhesion",
+      "otherEntityRelationshipName": "cliente",
+      "relationshipName": "adhesion"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "cliente",
+      "relationshipName": "factura"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "padron",
+      "relationshipName": "enPadron"
+    }
+  ],
+  "entityTableName": "cliente",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211221144605"
+}

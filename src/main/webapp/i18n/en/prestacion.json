@@ -1,0 +1,27 @@
+{
+  "ssoc22App": {
+    "prestacion": {
+      "home": {
+        "title": "Prestacions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Prestacion",
+        "createOrEditLabel": "Create or edit a Prestacion",
+        "notFound": "No Prestacions found"
+      },
+      "created": "A new Prestacion is created with identifier {{ param }}",
+      "updated": "A Prestacion is updated with identifier {{ param }}",
+      "deleted": "A Prestacion is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Prestacion {{ id }}?"
+      },
+      "detail": {
+        "title": "Prestacion"
+      },
+      "id": "ID",
+      "tipo": "Tipo",
+      "carencias": "Carencias",
+      "insumo": "Insumo",
+      "plan": "Plan"
+    }
+  }
+}

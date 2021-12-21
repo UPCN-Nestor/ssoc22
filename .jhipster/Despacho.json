@@ -1,0 +1,15 @@
+{
+  "name": "Despacho",
+  "fields": [],
+  "relationships": [],
+  "entityTableName": "despacho",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211221145405"
+}

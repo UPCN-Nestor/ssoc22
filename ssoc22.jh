@@ -1,0 +1,83 @@
+
+application {
+  config {
+    baseName ssoc22,
+    applicationType monolith,
+    packageName com.upcn.ssoc22,
+    authenticationType jwt,
+    prodDatabaseType mssql,
+    clientFramework angular
+  }
+  entities *
+}
+
+entity Cliente {}
+
+entity Individuo {}
+
+entity Adhesion {
+	fecha LocalDate
+    particularidades String
+}
+
+entity Plan {
+	tarifa String
+    habilitaciones String
+    descuentos String
+    restricciones String    
+}
+
+entity Factura {}
+
+entity Prestacion {
+	tipo String
+    carencias String
+}
+
+entity Insumo {
+	tipo String
+    precioVenta Float
+    esModificable Boolean
+}
+
+entity MovimientoStock {
+	fecha LocalDate
+}
+
+entity Despacho {}
+
+entity SolicitudPrestacion {}
+
+relationship OneToMany {
+	Cliente{Padron} to Cliente{EnPadron}
+}
+
+relationship OneToMany {
+    Cliente to Adhesion{Cliente}
+}
+
+relationship OneToMany {
+    Individuo to Adhesion{Individuo}
+}
+
+relationship OneToMany {
+	Plan to Adhesion{Plan}
+}
+
+relationship OneToMany {
+	Cliente to Factura{Cliente}
+}
+
+relationship ManyToMany {
+	Plan to Prestacion
+}
+
+relationship ManyToMany {
+	Prestacion to Insumo
+}
+
+relationship OneToMany {
+	Insumo to MovimientoStock{insumo}
+}
+
+

@@ -1,0 +1,46 @@
+{
+  "name": "Plan",
+  "fields": [
+    {
+      "fieldName": "tarifa",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "habilitaciones",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descuentos",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "restricciones",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "adhesion",
+      "otherEntityRelationshipName": "plan",
+      "relationshipName": "adhesion"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "prestacion",
+      "otherEntityRelationshipName": "plan",
+      "relationshipName": "prestacion",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "jhi_plan",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211221144905"
+}
