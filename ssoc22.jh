@@ -1,0 +1,134 @@
+
+application {
+  config {
+    baseName ssoc22,
+    applicationType monolith,
+    packageName com.upcn.ssoc22,
+    authenticationType jwt,
+    prodDatabaseType mssql,
+    clientFramework angular
+  }
+  entities *
+}
+
+entity Cliente {}
+
+entity Individuo {}
+
+entity Adhesion {
+	fecha LocalDate
+    particularidades String
+}
+
+entity Plan {
+	tarifa String
+    habilitaciones String
+    descuentos String
+    restricciones String    
+}
+
+entity ItemFactura {}
+
+entity Factura {}
+
+entity Prestacion {
+	tipo String
+    carencias String
+}
+
+entity Insumo {
+	tipo String
+    precioVenta Float
+    esModificable Boolean
+}
+
+entity MovimientoStock {
+	fecha LocalDate
+}
+
+entity Despacho {}
+
+entity Equipo {}
+
+entity SolicitudPrestacion {}
+
+entity ItemNomenclador {}
+
+entity Prestador {}
+
+relationship OneToMany {
+	Cliente{Padron} to Cliente{EnPadron}
+}
+
+relationship ManyToOne {
+    Adhesion to Cliente{adhesiones}
+}
+
+relationship ManyToOne {
+    Adhesion to Individuo{adhesiones}
+}
+
+relationship ManyToOne {
+	Adhesion to Plan
+}
+
+relationship ManyToOne {
+	Factura to Cliente
+}
+
+relationship ManyToOne {
+	ItemFactura to Cliente
+}
+
+relationship ManyToOne {
+	ItemFactura to Factura
+}
+
+relationship ManyToMany {
+	Plan to Prestacion
+}
+
+relationship ManyToMany {
+	Prestacion to Insumo
+}
+
+relationship ManyToOne {
+	MovimientoStock to Insumo
+}
+
+relationship ManyToOne {
+	SolicitudPrestacion to Prestacion
+}
+
+relationship OneToOne {
+	SolicitudPrestacion to Despacho
+}
+
+relationship ManyToMany {
+	SolicitudPrestacion to Insumo
+}
+
+relationship ManyToOne {
+	Despacho to Equipo
+}
+
+relationship OneToOne {
+	Prestacion to ItemNomenclador
+}
+
+relationship ManyToMany {
+	Plan{excepcionesInsumos} to Insumo
+}
+
+relationship OneToOne {
+	SolicitudPrestacion to Prestador
+}
+
+relationship ManyToMany {
+	Prestador to ItemNomenclador
+}
+
+
+
+
+
