@@ -1,0 +1,30 @@
+{
+  "ssoc22App": {
+    "insumo": {
+      "home": {
+        "title": "Insumos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Insumo",
+        "createOrEditLabel": "Create or edit a Insumo",
+        "notFound": "No Insumos found"
+      },
+      "created": "A new Insumo is created with identifier {{ param }}",
+      "updated": "A Insumo is updated with identifier {{ param }}",
+      "deleted": "A Insumo is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Insumo {{ id }}?"
+      },
+      "detail": {
+        "title": "Insumo"
+      },
+      "id": "ID",
+      "tipo": "Tipo",
+      "precioVenta": "Precio Venta",
+      "esModificable": "Es Modificable",
+      "movimientoStock": "Movimiento Stock",
+      "prestacion": "Prestacion",
+      "solicitudPrestacion": "Solicitud Prestacion",
+      "plan": "Plan"
+    }
+  }
+}

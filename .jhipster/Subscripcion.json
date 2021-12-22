@@ -1,0 +1,37 @@
+{
+  "name": "Subscripcion",
+  "fields": [
+    {
+      "fieldName": "fechaAlta",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "particularidades",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "plan",
+      "otherEntityRelationshipName": "subscripcion",
+      "relationshipName": "plan"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "subscripcion",
+      "relationshipName": "cliente"
+    }
+  ],
+  "entityTableName": "subscripcion",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211222134031"
+}

@@ -1,0 +1,25 @@
+{
+  "ssoc22App": {
+    "reglaPrestacion": {
+      "home": {
+        "title": "Regla Prestacions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Regla Prestacion",
+        "createOrEditLabel": "Create or edit a Regla Prestacion",
+        "notFound": "No Regla Prestacions found"
+      },
+      "created": "A new Regla Prestacion is created with identifier {{ param }}",
+      "updated": "A Regla Prestacion is updated with identifier {{ param }}",
+      "deleted": "A Regla Prestacion is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Regla Prestacion {{ id }}?"
+      },
+      "detail": {
+        "title": "Regla Prestacion"
+      },
+      "id": "ID",
+      "prestacion": "Prestacion",
+      "plan": "Plan"
+    }
+  }
+}

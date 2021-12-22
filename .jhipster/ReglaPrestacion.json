@@ -1,0 +1,28 @@
+{
+  "name": "ReglaPrestacion",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "prestacion",
+      "otherEntityRelationshipName": "reglaPrestacion",
+      "relationshipName": "prestacion"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "plan",
+      "otherEntityRelationshipName": "reglaPrestacion",
+      "relationshipName": "plan"
+    }
+  ],
+  "entityTableName": "regla_prestacion",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211222134431"
+}

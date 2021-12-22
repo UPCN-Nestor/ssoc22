@@ -1,0 +1,27 @@
+{
+  "ssoc22App": {
+    "subscripcion": {
+      "home": {
+        "title": "Subscripcions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Subscripcion",
+        "createOrEditLabel": "Create or edit a Subscripcion",
+        "notFound": "No Subscripcions found"
+      },
+      "created": "A new Subscripcion is created with identifier {{ param }}",
+      "updated": "A Subscripcion is updated with identifier {{ param }}",
+      "deleted": "A Subscripcion is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Subscripcion {{ id }}?"
+      },
+      "detail": {
+        "title": "Subscripcion"
+      },
+      "id": "ID",
+      "fechaAlta": "Fecha Alta",
+      "particularidades": "Particularidades",
+      "plan": "Plan",
+      "cliente": "Cliente"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="subscripcion">
+      <h2 data-cy="subscripcionDetailsHeading"><span jhiTranslate="ssoc22App.subscripcion.detail.title">Subscripcion</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ subscripcion.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.subscripcion.fechaAlta">Fecha Alta</span></dt>
+        <dd>
+          <span>{{ subscripcion.fechaAlta | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.subscripcion.particularidades">Particularidades</span></dt>
+        <dd>
+          <span>{{ subscripcion.particularidades }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.subscripcion.plan">Plan</span></dt>
+        <dd>
+          <div *ngIf="subscripcion.plan">
+            <a [routerLink]="['/plan', subscripcion.plan?.id, 'view']">{{ subscripcion.plan?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.subscripcion.cliente">Cliente</span></dt>
+        <dd>
+          <div *ngIf="subscripcion.cliente">
+            <a [routerLink]="['/cliente', subscripcion.cliente?.id, 'view']">{{ subscripcion.cliente?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/subscripcion', subscripcion.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

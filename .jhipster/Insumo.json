@@ -1,0 +1,56 @@
+{
+  "name": "Insumo",
+  "fields": [
+    {
+      "fieldName": "tipo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "precioVenta",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "esModificable",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "movimientoStock",
+      "otherEntityRelationshipName": "insumo",
+      "relationshipName": "movimientoStock"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "prestacion",
+      "otherEntityRelationshipName": "insumo",
+      "relationshipName": "prestacion",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "solicitudPrestacion",
+      "otherEntityRelationshipName": "insumo",
+      "relationshipName": "solicitudPrestacion",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "plan",
+      "otherEntityRelationshipName": "excepcionInsumo",
+      "relationshipName": "plan",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "insumo",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211222134631"
+}
