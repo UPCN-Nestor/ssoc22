@@ -1,0 +1,30 @@
+{
+  "name": "ItemNomenclador",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "prestacion",
+      "otherEntityRelationshipName": "itemNomenclador",
+      "relationshipName": "prestacion",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "prestador",
+      "otherEntityRelationshipName": "itemNomenclador",
+      "relationshipName": "prestador",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "item_nomenclador",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211222135131"
+}

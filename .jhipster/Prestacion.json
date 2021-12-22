@@ -1,0 +1,51 @@
+{
+  "name": "Prestacion",
+  "fields": [
+    {
+      "fieldName": "tipo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "carencias",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "itemNomenclador",
+      "otherEntityRelationshipName": "prestacion",
+      "relationshipName": "itemNomenclador",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "insumo",
+      "otherEntityRelationshipName": "prestacion",
+      "relationshipName": "insumo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "reglaPrestacion",
+      "otherEntityRelationshipName": "prestacion",
+      "relationshipName": "reglaPrestacion"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "solicitudPrestacion",
+      "otherEntityRelationshipName": "prestacion",
+      "relationshipName": "solicitudPrestacion"
+    }
+  ],
+  "entityTableName": "prestacion",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211222134531"
+}
