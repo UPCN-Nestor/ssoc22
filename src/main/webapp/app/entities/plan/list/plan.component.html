@@ -1,0 +1,81 @@
+<div>
+  <h2 id="page-heading" data-cy="PlanHeading">
+    <span jhiTranslate="ssoc22App.plan.home.title">Plans</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="ssoc22App.plan.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-plan"
+        [routerLink]="['/plan/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="ssoc22App.plan.home.createLabel"> Create a new Plan </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="plans?.length === 0">
+    <span jhiTranslate="ssoc22App.plan.home.notFound">No plans found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="plans && plans.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.plan.tarifa">Tarifa</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.plan.habilitaciones">Habilitaciones</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.plan.descuentos">Descuentos</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.plan.restricciones">Restricciones</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.plan.excepcionInsumo">Excepcion Insumo</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let plan of plans; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/plan', plan.id, 'view']">{{ plan.id }}</a>
+          </td>
+          <td>{{ plan.tarifa }}</td>
+          <td>{{ plan.habilitaciones }}</td>
+          <td>{{ plan.descuentos }}</td>
+          <td>{{ plan.restricciones }}</td>
+          <td>
+            <span *ngFor="let excepcionInsumo of plan.excepcionInsumos; let last = last">
+              <a class="form-control-static" [routerLink]="['/insumo', excepcionInsumo.id, 'view']">{{ excepcionInsumo.id }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/plan', plan.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/plan', plan.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(plan)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

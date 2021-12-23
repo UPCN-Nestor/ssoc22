@@ -1,0 +1,25 @@
+{
+  "ssoc22App": {
+    "despacho": {
+      "home": {
+        "title": "Despachos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Despacho",
+        "createOrEditLabel": "Create or edit a Despacho",
+        "notFound": "No Despachos found"
+      },
+      "created": "A new Despacho is created with identifier {{ param }}",
+      "updated": "A Despacho is updated with identifier {{ param }}",
+      "deleted": "A Despacho is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Despacho {{ id }}?"
+      },
+      "detail": {
+        "title": "Despacho"
+      },
+      "id": "ID",
+      "equipo": "Equipo",
+      "solicitudPrestacion": "Solicitud Prestacion"
+    }
+  }
+}

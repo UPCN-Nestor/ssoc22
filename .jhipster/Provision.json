@@ -1,0 +1,34 @@
+{
+  "name": "Provision",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "reglaPrestacion",
+      "otherEntityRelationshipName": "provision",
+      "relationshipName": "reglaPrestacion"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "prestacion",
+      "otherEntityRelationshipName": "provision",
+      "relationshipName": "prestacion"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "plan",
+      "otherEntityRelationshipName": "provision",
+      "relationshipName": "plan"
+    }
+  ],
+  "entityTableName": "provision",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211223124549"
+}

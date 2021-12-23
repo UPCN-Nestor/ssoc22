@@ -1,0 +1,37 @@
+{
+  "name": "Contrato",
+  "fields": [
+    {
+      "fieldName": "fechaAlta",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "particularidades",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "plan",
+      "otherEntityRelationshipName": "contrato",
+      "relationshipName": "plan"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "contrato",
+      "relationshipName": "cliente"
+    }
+  ],
+  "entityTableName": "contrato",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211223124149"
+}
