@@ -1,0 +1,22 @@
+{
+  "name": "Individuo",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "adhesion",
+      "otherEntityRelationshipName": "individuo",
+      "relationshipName": "adhesion"
+    }
+  ],
+  "entityTableName": "individuo",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211223123949"
+}

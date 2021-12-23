@@ -1,0 +1,41 @@
+{
+  "name": "Adhesion",
+  "fields": [
+    {
+      "fieldName": "fechaAlta",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "condicion",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "individuo",
+      "otherEntityRelationshipName": "adhesion",
+      "relationshipName": "individuo"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "adhesion",
+      "relationshipName": "cliente"
+    }
+  ],
+  "entityTableName": "adhesion",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20211223124049"
+}
