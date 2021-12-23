@@ -18,6 +18,8 @@
         "title": "Regla Prestacion"
       },
       "id": "ID",
+      "regla": "Regla",
+      "datos": "Datos",
       "provision": "Provision"
     }
   }

@@ -1,5 +1,6 @@
 package com.upcn.ssoc22.web.rest;
 
+import com.upcn.ssoc22.domain.Adhesion;
 import com.upcn.ssoc22.domain.ReglaPrestacion;
 import com.upcn.ssoc22.repository.ReglaPrestacionRepository;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
@@ -123,6 +124,13 @@ public class ReglaPrestacionResource {
         Optional<ReglaPrestacion> result = reglaPrestacionRepository
             .findById(reglaPrestacion.getId())
             .map(existingReglaPrestacion -> {
+                if (reglaPrestacion.getRegla() != null) {
+                    existingReglaPrestacion.setRegla(reglaPrestacion.getRegla());
+                }
+                if (reglaPrestacion.getDatos() != null) {
+                    existingReglaPrestacion.setDatos(reglaPrestacion.getDatos());
+                }
+
                 return existingReglaPrestacion;
             })
             .map(reglaPrestacionRepository::save);

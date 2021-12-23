@@ -1,13 +1,23 @@
 package com.upcn.ssoc22.web.rest;
 
+import com.upcn.ssoc22.domain.Adhesion;
+import com.upcn.ssoc22.domain.Contrato;
 import com.upcn.ssoc22.domain.Plan;
+import com.upcn.ssoc22.domain.Prestacion;
+import com.upcn.ssoc22.domain.Provision;
+import com.upcn.ssoc22.domain.ReglaPrestacion;
+import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.repository.PlanRepository;
+import com.upcn.ssoc22.service.ReglaService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import liquibase.pro.packaged.aD;
+import liquibase.pro.packaged.ah;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,9 +43,13 @@ public class PlanResource {
     private String applicationName;
 
     private final PlanRepository planRepository;
+    private final ReglaService reglaService;
+    private final AdhesionRepository adhesionRepository;
 
-    public PlanResource(PlanRepository planRepository) {
+    public PlanResource(PlanRepository planRepository, ReglaService reglaService, AdhesionRepository adhesionRepository) {
         this.planRepository = planRepository;
+        this.reglaService = reglaService;
+        this.adhesionRepository = adhesionRepository;
     }
 
     /**
@@ -181,5 +195,31 @@ public class PlanResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    /*** NESTOR */
+
+    @GetMapping("/prestacioneshabilitadas/{planId}/{adhesionId}")
+    public List<Prestacion> getPrestacionesHabilitadas(@PathVariable Long planId, @PathVariable Long adhesionId) {
+        Optional<Plan> plan = planRepository.findOneWithEagerRelationships(planId);
+        Optional<Adhesion> adhesion = adhesionRepository.findById(adhesionId);
+
+        List<Prestacion> toRet = new LinkedList<Prestacion>();
+
+        // Integridad. Efectivamente hay un camino adhesión->cliente->contrato->plan
+        // if(!verificarVinculoConPlan(r, paraQuien)) return toRet;
+
+        for (Provision p : plan.get().getProvisions()) {
+            log.debug("Prestación: " + p.getPrestacion().getTipo());
+            boolean habilitada = true;
+            for (ReglaPrestacion r : p.getReglaPrestacions()) {
+                boolean h = reglaService.procesarReglaParaHabilitacionPrestacion(r, adhesion.get());
+                habilitada = habilitada && h;
+                log.debug("Controlando regla: " + r.getRegla() + " - " + r.getDatos() + " - " + h);
+            }
+            if (habilitada) toRet.add(p.getPrestacion());
+        }
+
+        return toRet;
     }
 }

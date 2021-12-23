@@ -21,6 +21,8 @@ describe('ReglaPrestacion Service', () => {
 
     elemDefault = {
       id: 0,
+      regla: 'AAAAAAA',
+      datos: 'AAAAAAA',
     };
   });
 
@@ -56,6 +58,8 @@ describe('ReglaPrestacion Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          regla: 'BBBBBB',
+          datos: 'BBBBBB',
         },
         elemDefault
       );
@@ -70,7 +74,12 @@ describe('ReglaPrestacion Service', () => {
     });
 
     it('should partial update a ReglaPrestacion', () => {
-      const patchObject = Object.assign({}, new ReglaPrestacion());
+      const patchObject = Object.assign(
+        {
+          datos: 'BBBBBB',
+        },
+        new ReglaPrestacion()
+      );
 
       const returnedFromService = Object.assign(patchObject, elemDefault);
 
@@ -87,6 +96,8 @@ describe('ReglaPrestacion Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          regla: 'BBBBBB',
+          datos: 'BBBBBB',
         },
         elemDefault
       );
@@ -138,7 +149,7 @@ describe('ReglaPrestacion Service', () => {
       });
 
       it('should add only unique ReglaPrestacion to an array', () => {
-        const reglaPrestacionArray: IReglaPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 45954 }];
+        const reglaPrestacionArray: IReglaPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 81551 }];
         const reglaPrestacionCollection: IReglaPrestacion[] = [{ id: 123 }];
         expectedResult = service.addReglaPrestacionToCollectionIfMissing(reglaPrestacionCollection, ...reglaPrestacionArray);
         expect(expectedResult).toHaveLength(3);

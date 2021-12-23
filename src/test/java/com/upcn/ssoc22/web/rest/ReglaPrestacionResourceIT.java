@@ -29,6 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ReglaPrestacionResourceIT {
 
+    private static final String DEFAULT_REGLA = "AAAAAAAAAA";
+    private static final String UPDATED_REGLA = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DATOS = "AAAAAAAAAA";
+    private static final String UPDATED_DATOS = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/regla-prestacions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -53,7 +59,7 @@ class ReglaPrestacionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ReglaPrestacion createEntity(EntityManager em) {
-        ReglaPrestacion reglaPrestacion = new ReglaPrestacion();
+        ReglaPrestacion reglaPrestacion = new ReglaPrestacion().regla(DEFAULT_REGLA).datos(DEFAULT_DATOS);
         return reglaPrestacion;
     }
 
@@ -64,7 +70,7 @@ class ReglaPrestacionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ReglaPrestacion createUpdatedEntity(EntityManager em) {
-        ReglaPrestacion reglaPrestacion = new ReglaPrestacion();
+        ReglaPrestacion reglaPrestacion = new ReglaPrestacion().regla(UPDATED_REGLA).datos(UPDATED_DATOS);
         return reglaPrestacion;
     }
 
@@ -88,6 +94,8 @@ class ReglaPrestacionResourceIT {
         List<ReglaPrestacion> reglaPrestacionList = reglaPrestacionRepository.findAll();
         assertThat(reglaPrestacionList).hasSize(databaseSizeBeforeCreate + 1);
         ReglaPrestacion testReglaPrestacion = reglaPrestacionList.get(reglaPrestacionList.size() - 1);
+        assertThat(testReglaPrestacion.getRegla()).isEqualTo(DEFAULT_REGLA);
+        assertThat(testReglaPrestacion.getDatos()).isEqualTo(DEFAULT_DATOS);
     }
 
     @Test
@@ -121,7 +129,9 @@ class ReglaPrestacionResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(reglaPrestacion.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(reglaPrestacion.getId().intValue())))
+            .andExpect(jsonPath("$.[*].regla").value(hasItem(DEFAULT_REGLA)))
+            .andExpect(jsonPath("$.[*].datos").value(hasItem(DEFAULT_DATOS)));
     }
 
     @Test
@@ -135,7 +145,9 @@ class ReglaPrestacionResourceIT {
             .perform(get(ENTITY_API_URL_ID, reglaPrestacion.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(reglaPrestacion.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(reglaPrestacion.getId().intValue()))
+            .andExpect(jsonPath("$.regla").value(DEFAULT_REGLA))
+            .andExpect(jsonPath("$.datos").value(DEFAULT_DATOS));
     }
 
     @Test
@@ -157,6 +169,7 @@ class ReglaPrestacionResourceIT {
         ReglaPrestacion updatedReglaPrestacion = reglaPrestacionRepository.findById(reglaPrestacion.getId()).get();
         // Disconnect from session so that the updates on updatedReglaPrestacion are not directly saved in db
         em.detach(updatedReglaPrestacion);
+        updatedReglaPrestacion.regla(UPDATED_REGLA).datos(UPDATED_DATOS);
 
         restReglaPrestacionMockMvc
             .perform(
@@ -170,6 +183,8 @@ class ReglaPrestacionResourceIT {
         List<ReglaPrestacion> reglaPrestacionList = reglaPrestacionRepository.findAll();
         assertThat(reglaPrestacionList).hasSize(databaseSizeBeforeUpdate);
         ReglaPrestacion testReglaPrestacion = reglaPrestacionList.get(reglaPrestacionList.size() - 1);
+        assertThat(testReglaPrestacion.getRegla()).isEqualTo(UPDATED_REGLA);
+        assertThat(testReglaPrestacion.getDatos()).isEqualTo(UPDATED_DATOS);
     }
 
     @Test
@@ -242,6 +257,8 @@ class ReglaPrestacionResourceIT {
         ReglaPrestacion partialUpdatedReglaPrestacion = new ReglaPrestacion();
         partialUpdatedReglaPrestacion.setId(reglaPrestacion.getId());
 
+        partialUpdatedReglaPrestacion.datos(UPDATED_DATOS);
+
         restReglaPrestacionMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedReglaPrestacion.getId())
@@ -254,6 +271,8 @@ class ReglaPrestacionResourceIT {
         List<ReglaPrestacion> reglaPrestacionList = reglaPrestacionRepository.findAll();
         assertThat(reglaPrestacionList).hasSize(databaseSizeBeforeUpdate);
         ReglaPrestacion testReglaPrestacion = reglaPrestacionList.get(reglaPrestacionList.size() - 1);
+        assertThat(testReglaPrestacion.getRegla()).isEqualTo(DEFAULT_REGLA);
+        assertThat(testReglaPrestacion.getDatos()).isEqualTo(UPDATED_DATOS);
     }
 
     @Test
@@ -268,6 +287,8 @@ class ReglaPrestacionResourceIT {
         ReglaPrestacion partialUpdatedReglaPrestacion = new ReglaPrestacion();
         partialUpdatedReglaPrestacion.setId(reglaPrestacion.getId());
 
+        partialUpdatedReglaPrestacion.regla(UPDATED_REGLA).datos(UPDATED_DATOS);
+
         restReglaPrestacionMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedReglaPrestacion.getId())
@@ -280,6 +301,8 @@ class ReglaPrestacionResourceIT {
         List<ReglaPrestacion> reglaPrestacionList = reglaPrestacionRepository.findAll();
         assertThat(reglaPrestacionList).hasSize(databaseSizeBeforeUpdate);
         ReglaPrestacion testReglaPrestacion = reglaPrestacionList.get(reglaPrestacionList.size() - 1);
+        assertThat(testReglaPrestacion.getRegla()).isEqualTo(UPDATED_REGLA);
+        assertThat(testReglaPrestacion.getDatos()).isEqualTo(UPDATED_DATOS);
     }
 
     @Test

@@ -173,11 +173,13 @@
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.liquibase.ext</groupId>
             <artifactId>liquibase-mssql</artifactId>
             <version>${liquibase.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>

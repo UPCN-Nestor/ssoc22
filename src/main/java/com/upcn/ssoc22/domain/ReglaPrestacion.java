@@ -22,6 +22,12 @@ public class ReglaPrestacion implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "regla")
+    private String regla;
+
+    @Column(name = "datos")
+    private String datos;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "reglaPrestacions", "prestacion", "plan" }, allowSetters = true)
     private Provision provision;
@@ -39,6 +45,32 @@ public class ReglaPrestacion implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getRegla() {
+        return this.regla;
+    }
+
+    public ReglaPrestacion regla(String regla) {
+        this.setRegla(regla);
+        return this;
+    }
+
+    public void setRegla(String regla) {
+        this.regla = regla;
+    }
+
+    public String getDatos() {
+        return this.datos;
+    }
+
+    public ReglaPrestacion datos(String datos) {
+        this.setDatos(datos);
+        return this;
+    }
+
+    public void setDatos(String datos) {
+        this.datos = datos;
     }
 
     public Provision getProvision() {
@@ -78,6 +110,8 @@ public class ReglaPrestacion implements Serializable {
     public String toString() {
         return "ReglaPrestacion{" +
             "id=" + getId() +
+            ", regla='" + getRegla() + "'" +
+            ", datos='" + getDatos() + "'" +
             "}";
     }
 }

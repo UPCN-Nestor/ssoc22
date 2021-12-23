@@ -21,6 +21,8 @@ export class ReglaPrestacionUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
+    regla: [],
+    datos: [],
     provision: [],
   });
 
@@ -79,6 +81,8 @@ export class ReglaPrestacionUpdateComponent implements OnInit {
   protected updateForm(reglaPrestacion: IReglaPrestacion): void {
     this.editForm.patchValue({
       id: reglaPrestacion.id,
+      regla: reglaPrestacion.regla,
+      datos: reglaPrestacion.datos,
       provision: reglaPrestacion.provision,
     });
 
@@ -104,6 +108,8 @@ export class ReglaPrestacionUpdateComponent implements OnInit {
     return {
       ...new ReglaPrestacion(),
       id: this.editForm.get(['id'])!.value,
+      regla: this.editForm.get(['regla'])!.value,
+      datos: this.editForm.get(['datos'])!.value,
       provision: this.editForm.get(['provision'])!.value,
     };
   }

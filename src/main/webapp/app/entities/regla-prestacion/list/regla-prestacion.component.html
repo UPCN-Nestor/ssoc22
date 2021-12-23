@@ -33,6 +33,8 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.reglaPrestacion.regla">Regla</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.reglaPrestacion.datos">Datos</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.reglaPrestacion.provision">Provision</span></th>
           <th scope="col"></th>
         </tr>
@@ -42,6 +44,8 @@
           <td>
             <a [routerLink]="['/regla-prestacion', reglaPrestacion.id, 'view']">{{ reglaPrestacion.id }}</a>
           </td>
+          <td>{{ reglaPrestacion.regla }}</td>
+          <td>{{ reglaPrestacion.datos }}</td>
           <td>
             <div *ngIf="reglaPrestacion.provision">
               <a [routerLink]="['/provision', reglaPrestacion.provision?.id, 'view']">{{ reglaPrestacion.provision?.id }}</a>
