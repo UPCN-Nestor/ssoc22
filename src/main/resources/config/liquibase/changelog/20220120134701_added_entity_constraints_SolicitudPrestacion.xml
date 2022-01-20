@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity SolicitudPrestacion.
+    -->
+    <changeSet id="20220120134701-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="despacho_id"
+                                 baseTableName="solicitud_prestacion"
+                                 constraintName="fk_solicitud_prestacion__despacho_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="despacho"/>
+
+        <addForeignKeyConstraint baseColumnNames="prestador_id"
+                                 baseTableName="solicitud_prestacion"
+                                 constraintName="fk_solicitud_prestacion__prestador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestador"/>
+
+        <addForeignKeyConstraint baseColumnNames="prestacion_id"
+                                 baseTableName="solicitud_prestacion"
+                                 constraintName="fk_solicitud_prestacion__prestacion_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestacion"/>
+
+        <addForeignKeyConstraint baseColumnNames="solicitud_prestacion_id"
+                                 baseTableName="rel_solicitud_prestacion__insumo"
+                                 constraintName="fk_rel_solicitud_prestacion__insumo__solicitud_prestacion_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="solicitud_prestacion"/>
+
+        <addForeignKeyConstraint baseColumnNames="insumo_id"
+                                 baseTableName="rel_solicitud_prestacion__insumo"
+                                 constraintName="fk_rel_solicitud_prestacion__insumo__insumo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insumo"/>
+
+        <addForeignKeyConstraint baseColumnNames="individuo_id"
+                                 baseTableName="solicitud_prestacion"
+                                 constraintName="fk_solicitud_prestacion__individuo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="individuo"/>
+    </changeSet>
+</databaseChangeLog>

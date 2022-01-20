@@ -1,0 +1,28 @@
+{
+  "name": "ItemFactura",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "itemFactura",
+      "relationshipName": "cliente"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "itemFactura",
+      "relationshipName": "factura"
+    }
+  ],
+  "entityTableName": "item_factura",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20220120133801"
+}

@@ -1,0 +1,34 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="itemNomenclador">
+      <h2 data-cy="itemNomencladorDetailsHeading"><span jhiTranslate="ssoc22App.itemNomenclador.detail.title">Item Nomenclador</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ itemNomenclador.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.itemNomenclador.prestacion">Prestacion</span></dt>
+        <dd>
+          <div *ngIf="itemNomenclador.prestacion">
+            <a [routerLink]="['/prestacion', itemNomenclador.prestacion?.id, 'view']">{{ itemNomenclador.prestacion?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/item-nomenclador', itemNomenclador.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

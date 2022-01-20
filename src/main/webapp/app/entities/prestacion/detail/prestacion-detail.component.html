@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="prestacion">
+      <h2 data-cy="prestacionDetailsHeading"><span jhiTranslate="ssoc22App.prestacion.detail.title">Prestacion</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ prestacion.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.prestacion.tipo">Tipo</span></dt>
+        <dd>
+          <span>{{ prestacion.tipo }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.prestacion.carencias">Carencias</span></dt>
+        <dd>
+          <span>{{ prestacion.carencias }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.prestacion.insumo">Insumo</span></dt>
+        <dd>
+          <span *ngFor="let insumo of prestacion.insumos; let last = last">
+            <a [routerLink]="['/insumo', insumo?.id, 'view']">{{ insumo.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/prestacion', prestacion.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
