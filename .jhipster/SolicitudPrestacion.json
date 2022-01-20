@@ -1,0 +1,49 @@
+{
+  "name": "SolicitudPrestacion",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "despacho",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "despacho",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "prestador",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "prestador",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "prestacion",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "prestacion"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "insumo",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "insumo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "individuo",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "individuo"
+    }
+  ],
+  "entityTableName": "solicitud_prestacion",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20220120134701"
+}
