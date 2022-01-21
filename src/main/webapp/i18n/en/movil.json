@@ -1,0 +1,25 @@
+{
+  "ssoc22App": {
+    "movil": {
+      "home": {
+        "title": "Movils",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Movil",
+        "createOrEditLabel": "Create or edit a Movil",
+        "notFound": "No Movils found"
+      },
+      "created": "A new Movil is created with identifier {{ param }}",
+      "updated": "A Movil is updated with identifier {{ param }}",
+      "deleted": "A Movil is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Movil {{ id }}?"
+      },
+      "detail": {
+        "title": "Movil"
+      },
+      "id": "ID",
+      "numero": "Numero",
+      "despacho": "Despacho"
+    }
+  }
+}

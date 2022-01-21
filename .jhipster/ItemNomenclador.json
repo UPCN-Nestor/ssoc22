@@ -1,0 +1,50 @@
+{
+  "name": "ItemNomenclador",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "carencia",
+      "fieldType": "Duration"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "prestacion",
+      "otherEntityRelationshipName": "itemNomenclador",
+      "relationshipName": "prestacion"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "provision",
+      "otherEntityRelationshipName": "itemNomenclador",
+      "relationshipName": "provision"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "solicitudPrestacion",
+      "otherEntityRelationshipName": "itemNomenclador",
+      "relationshipName": "solicitudPrestacion"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "prestador",
+      "otherEntityRelationshipName": "itemNomenclador",
+      "relationshipName": "prestador",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "item_nomenclador",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20220121170206"
+}

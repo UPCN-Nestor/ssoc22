@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-regla-prestacion-heading"
+        data-cy="ReglaPrestacionCreateUpdateHeading"
+        jhiTranslate="ssoc22App.reglaPrestacion.home.createOrEditLabel"
+      >
+        Create or edit a Regla Prestacion
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.reglaPrestacion.codigoRegla" for="field_codigoRegla"
+            >Codigo Regla</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="codigoRegla"
+            id="field_codigoRegla"
+            data-cy="codigoRegla"
+            formControlName="codigoRegla"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.reglaPrestacion.tipoRegla" for="field_tipoRegla">Tipo Regla</label>
+          <input type="text" class="form-control" name="tipoRegla" id="field_tipoRegla" data-cy="tipoRegla" formControlName="tipoRegla" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.reglaPrestacion.datos" for="field_datos">Datos</label>
+          <input type="text" class="form-control" name="datos" id="field_datos" data-cy="datos" formControlName="datos" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.reglaPrestacion.provision" for="field_provision">Provision</label>
+          <select class="form-control" id="field_provision" data-cy="provision" name="provision" formControlName="provision">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="provisionOption.id === editForm.get('provision')!.value?.id ? editForm.get('provision')!.value : provisionOption"
+              *ngFor="let provisionOption of provisionsSharedCollection; trackBy: trackProvisionById"
+            >
+              {{ provisionOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
