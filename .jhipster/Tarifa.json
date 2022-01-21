@@ -1,0 +1,35 @@
+{
+  "name": "Tarifa",
+  "fields": [
+    {
+      "fieldName": "tipo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datos",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "vigenciaHasta",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "plan",
+      "otherEntityRelationshipName": "tarifa",
+      "relationshipName": "plan"
+    }
+  ],
+  "entityTableName": "tarifa",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20220121112906"
+}

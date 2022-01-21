@@ -1,0 +1,29 @@
+{
+  "name": "Despacho",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "equipo",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "equipo"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "solicitudPrestacion",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "solicitudPrestacion",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "despacho",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20220121114006"
+}

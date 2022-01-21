@@ -1,0 +1,26 @@
+{
+  "ssoc22App": {
+    "itemNomenclador": {
+      "home": {
+        "title": "Item Nomencladors",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Item Nomenclador",
+        "createOrEditLabel": "Create or edit a Item Nomenclador",
+        "notFound": "No Item Nomencladors found"
+      },
+      "created": "A new Item Nomenclador is created with identifier {{ param }}",
+      "updated": "A Item Nomenclador is updated with identifier {{ param }}",
+      "deleted": "A Item Nomenclador is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Item Nomenclador {{ id }}?"
+      },
+      "detail": {
+        "title": "Item Nomenclador"
+      },
+      "id": "ID",
+      "prestacion": "Prestacion",
+      "provision": "Provision",
+      "prestador": "Prestador"
+    }
+  }
+}

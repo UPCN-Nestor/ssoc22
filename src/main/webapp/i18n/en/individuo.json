@@ -1,0 +1,25 @@
+{
+  "ssoc22App": {
+    "individuo": {
+      "home": {
+        "title": "Individuos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Individuo",
+        "createOrEditLabel": "Create or edit a Individuo",
+        "notFound": "No Individuos found"
+      },
+      "created": "A new Individuo is created with identifier {{ param }}",
+      "updated": "A Individuo is updated with identifier {{ param }}",
+      "deleted": "A Individuo is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Individuo {{ id }}?"
+      },
+      "detail": {
+        "title": "Individuo"
+      },
+      "id": "ID",
+      "adhesion": "Adhesion",
+      "solicitudPrestacion": "Solicitud Prestacion"
+    }
+  }
+}

@@ -1,0 +1,182 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-solicitud-prestacion-heading"
+        data-cy="SolicitudPrestacionCreateUpdateHeading"
+        jhiTranslate="ssoc22App.solicitudPrestacion.home.createOrEditLabel"
+      >
+        Create or edit a Solicitud Prestacion
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.fecha" for="field_fecha">Fecha</label>
+          <div class="input-group">
+            <input
+              id="field_fecha"
+              data-cy="fecha"
+              type="text"
+              class="form-control"
+              name="fecha"
+              ngbDatepicker
+              #fechaDp="ngbDatepicker"
+              formControlName="fecha"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.numero" for="field_numero">Numero</label>
+          <input type="number" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.horaSolicitud" for="field_horaSolicitud"
+            >Hora Solicitud</label
+          >
+          <div class="input-group">
+            <input
+              id="field_horaSolicitud"
+              data-cy="horaSolicitud"
+              type="text"
+              class="form-control"
+              name="horaSolicitud"
+              ngbDatepicker
+              #horaSolicitudDp="ngbDatepicker"
+              formControlName="horaSolicitud"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="horaSolicitudDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.domicilio" for="field_domicilio">Domicilio</label>
+          <input type="text" class="form-control" name="domicilio" id="field_domicilio" data-cy="domicilio" formControlName="domicilio" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.telefono" for="field_telefono">Telefono</label>
+          <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.edad" for="field_edad">Edad</label>
+          <input type="number" class="form-control" name="edad" id="field_edad" data-cy="edad" formControlName="edad" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.observaciones" for="field_observaciones"
+            >Observaciones</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="observaciones"
+            id="field_observaciones"
+            data-cy="observaciones"
+            formControlName="observaciones"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.despacho" for="field_despacho">Despacho</label>
+          <select class="form-control" id="field_despacho" data-cy="despacho" name="despacho" formControlName="despacho">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="despachoOption.id === editForm.get('despacho')!.value?.id ? editForm.get('despacho')!.value : despachoOption"
+              *ngFor="let despachoOption of despachosCollection; trackBy: trackDespachoById"
+            >
+              {{ despachoOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.prestador" for="field_prestador">Prestador</label>
+          <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="prestadorOption.id === editForm.get('prestador')!.value?.id ? editForm.get('prestador')!.value : prestadorOption"
+              *ngFor="let prestadorOption of prestadorsCollection; trackBy: trackPrestadorById"
+            >
+              {{ prestadorOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.prestacion" for="field_prestacion"
+            >Prestacion</label
+          >
+          <select class="form-control" id="field_prestacion" data-cy="prestacion" name="prestacion" formControlName="prestacion">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                prestacionOption.id === editForm.get('prestacion')!.value?.id ? editForm.get('prestacion')!.value : prestacionOption
+              "
+              *ngFor="let prestacionOption of prestacionsSharedCollection; trackBy: trackPrestacionById"
+            >
+              {{ prestacionOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label jhiTranslate="ssoc22App.solicitudPrestacion.insumo" for="field_insumos">Insumo</label>
+          <select class="form-control" id="field_insumos" data-cy="insumo" multiple name="insumos" formControlName="insumos">
+            <option
+              [ngValue]="getSelectedInsumo(insumoOption, editForm.get('insumos')!.value)"
+              *ngFor="let insumoOption of insumosSharedCollection; trackBy: trackInsumoById"
+            >
+              {{ insumoOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.individuo" for="field_individuo">Individuo</label>
+          <select class="form-control" id="field_individuo" data-cy="individuo" name="individuo" formControlName="individuo">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="individuoOption.id === editForm.get('individuo')!.value?.id ? editForm.get('individuo')!.value : individuoOption"
+              *ngFor="let individuoOption of individuosSharedCollection; trackBy: trackIndividuoById"
+            >
+              {{ individuoOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

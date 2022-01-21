@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Provision.
+    -->
+    <changeSet id="20220121113506-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="item_nomenclador_id"
+                                 baseTableName="provision"
+                                 constraintName="fk_provision__item_nomenclador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="item_nomenclador"/>
+
+        <addForeignKeyConstraint baseColumnNames="provision_id"
+                                 baseTableName="rel_provision__insumo"
+                                 constraintName="fk_rel_provision__insumo__provision_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="provision"/>
+
+        <addForeignKeyConstraint baseColumnNames="insumo_id"
+                                 baseTableName="rel_provision__insumo"
+                                 constraintName="fk_rel_provision__insumo__insumo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insumo"/>
+
+        <addForeignKeyConstraint baseColumnNames="plan_id"
+                                 baseTableName="provision"
+                                 constraintName="fk_provision__plan_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_plan"/>
+    </changeSet>
+</databaseChangeLog>

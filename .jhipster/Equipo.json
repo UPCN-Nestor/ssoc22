@@ -1,0 +1,22 @@
+{
+  "name": "Equipo",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "despacho",
+      "otherEntityRelationshipName": "equipo",
+      "relationshipName": "despacho"
+    }
+  ],
+  "entityTableName": "equipo",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20220121114106"
+}

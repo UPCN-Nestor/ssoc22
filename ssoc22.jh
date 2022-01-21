@@ -1,0 +1,128 @@
+
+
+application {
+  config {
+    baseName ssoc22,
+    applicationType monolith,
+    packageName com.upcn.ssoc22,
+    authenticationType jwt,
+    prodDatabaseType mssql,
+    clientFramework angular
+  }
+  entities *
+}
+
+entity Cliente {}
+
+entity Individuo {}
+
+entity Tarifa {
+	tipo String
+    datos String
+    vigenciaHasta LocalDate
+}
+
+entity Adhesion {
+	fechaAlta LocalDate
+    estado String
+    condicion String
+}
+
+entity Contrato {
+	fechaAlta LocalDate
+    particularidades String
+}
+
+entity Plan {
+	tarifa String
+    habilitaciones String
+    descuentos String
+    restricciones String    
+}
+
+entity ItemFactura {}
+
+entity Factura {}
+
+entity Provision {}
+
+entity ReglaPrestacion {}
+
+entity Prestacion {
+	tipo String
+    carencias String
+}
+
+entity Insumo {
+	tipo String
+    precioVenta Float
+    esModificable Boolean
+}
+
+entity MovimientoStock {
+	fecha LocalDate
+    cantidad Float
+}
+
+entity Despacho {}
+
+entity Equipo {}
+
+entity SolicitudPrestacion {
+	fecha LocalDate
+    numero Integer
+    horaSolicitud LocalDate
+    // horaSalida, horaLlegada, médico, chofer son de Despacho
+    domicilio String
+    telefono String
+    edad Integer
+    observaciones String
+    // telefonista Jhi_User
+}
+
+entity ItemNomenclador {}
+
+entity Prestador {}
+
+relationship OneToMany {
+	Cliente{Padron} to Cliente{EnPadron}
+    Individuo to Adhesion
+    Cliente to Adhesion
+    Cliente to Contrato{cliente}
+    Plan to Provision{plan}
+    Provision to ReglaPrestacion{provision}
+    Individuo to SolicitudPrestacion{individuo}
+    Prestacion to ItemNomenclador{prestacion}
+    Plan to Tarifa{plan}
+}
+
+relationship ManyToOne {  
+	Provision to ItemNomenclador 
+    Contrato to Plan,
+    Factura to Cliente,
+    ItemFactura to Cliente,
+    ItemFactura to Factura,
+    MovimientoStock to Insumo,
+    SolicitudPrestacion to Prestacion,
+    Despacho to Equipo
+}
+
+relationship ManyToMany {
+    Prestacion{insumo} to Insumo{prestacion},
+    SolicitudPrestacion{insumo} to Insumo{solicitudPrestacion},
+    //Plan{excepcionInsumo} to Insumo{plan},
+    Prestador to ItemNomenclador
+    Provision to Insumo
+}
+
+
+relationship OneToOne {
+	SolicitudPrestacion to Despacho,
+    SolicitudPrestacion to Prestador
+}
+
+
+
+
+
+
