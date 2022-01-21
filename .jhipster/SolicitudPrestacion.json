@@ -1,0 +1,77 @@
+{
+  "name": "SolicitudPrestacion",
+  "fields": [
+    {
+      "fieldName": "fecha",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "numero",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "horaSolicitud",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "domicilio",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telefono",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "edad",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "observaciones",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "despacho",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "despacho",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "itemNomenclador",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "itemNomenclador"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "prestador",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "prestador"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "insumo",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "insumo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "individuo",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "individuo"
+    }
+  ],
+  "entityTableName": "solicitud_prestacion",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20220121151149"
+}

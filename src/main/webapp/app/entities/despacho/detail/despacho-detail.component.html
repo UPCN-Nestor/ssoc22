@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="despacho">
+      <h2 data-cy="despachoDetailsHeading"><span jhiTranslate="ssoc22App.despacho.detail.title">Despacho</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ despacho.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.horaSalida">Hora Salida</span></dt>
+        <dd>
+          <span>{{ despacho.horaSalida | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.horaLlegada">Hora Llegada</span></dt>
+        <dd>
+          <span>{{ despacho.horaLlegada | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.chofer">Chofer</span></dt>
+        <dd>
+          <span *ngFor="let chofer of despacho.chofers; let last = last">
+            <a [routerLink]="['/chofer', chofer?.id, 'view']">{{ chofer.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.medico">Medico</span></dt>
+        <dd>
+          <span *ngFor="let medico of despacho.medicos; let last = last">
+            <a [routerLink]="['/medico', medico?.id, 'view']">{{ medico.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.enfermero">Enfermero</span></dt>
+        <dd>
+          <span *ngFor="let enfermero of despacho.enfermeros; let last = last">
+            <a [routerLink]="['/enfermero', enfermero?.id, 'view']">{{ enfermero.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.movil">Movil</span></dt>
+        <dd>
+          <span *ngFor="let movil of despacho.movils; let last = last">
+            <a [routerLink]="['/movil', movil?.id, 'view']">{{ movil.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/despacho', despacho.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
