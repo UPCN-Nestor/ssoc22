@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Despacho.
+    -->
+    <changeSet id="20220121165511-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="prestador_id"
+                                 baseTableName="despacho"
+                                 constraintName="fk_despacho__prestador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestador"/>
+
+        <addForeignKeyConstraint baseColumnNames="chofer_id"
+                                 baseTableName="despacho"
+                                 constraintName="fk_despacho__chofer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="chofer"/>
+
+        <addForeignKeyConstraint baseColumnNames="medico_id"
+                                 baseTableName="despacho"
+                                 constraintName="fk_despacho__medico_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="medico"/>
+
+        <addForeignKeyConstraint baseColumnNames="enfermero_id"
+                                 baseTableName="despacho"
+                                 constraintName="fk_despacho__enfermero_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="enfermero"/>
+
+        <addForeignKeyConstraint baseColumnNames="movil_id"
+                                 baseTableName="despacho"
+                                 constraintName="fk_despacho__movil_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="movil"/>
+    </changeSet>
+</databaseChangeLog>
