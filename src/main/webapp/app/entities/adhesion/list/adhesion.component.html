@@ -1,0 +1,94 @@
+<div>
+  <h2 id="page-heading" data-cy="AdhesionHeading">
+    <span jhiTranslate="ssoc22App.adhesion.home.title">Adhesions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="ssoc22App.adhesion.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-adhesion"
+        [routerLink]="['/adhesion/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="ssoc22App.adhesion.home.createLabel"> Create a new Adhesion </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="adhesions?.length === 0">
+    <span jhiTranslate="ssoc22App.adhesion.home.notFound">No adhesions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="adhesions && adhesions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.adhesion.fechaAlta">Fecha Alta</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.adhesion.estado">Estado</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.adhesion.condicion">Condicion</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.adhesion.individuo">Individuo</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.adhesion.cliente">Cliente</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let adhesion of adhesions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/adhesion', adhesion.id, 'view']">{{ adhesion.id }}</a>
+          </td>
+          <td>{{ adhesion.fechaAlta | formatMediumDatetime }}</td>
+          <td>{{ adhesion.estado }}</td>
+          <td>{{ adhesion.condicion }}</td>
+          <td>
+            <div *ngIf="adhesion.individuo">
+              <a [routerLink]="['/individuo', adhesion.individuo?.id, 'view']">{{ adhesion.individuo?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="adhesion.cliente">
+              <a [routerLink]="['/cliente', adhesion.cliente?.id, 'view']">{{ adhesion.cliente?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/adhesion', adhesion.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/adhesion', adhesion.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(adhesion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

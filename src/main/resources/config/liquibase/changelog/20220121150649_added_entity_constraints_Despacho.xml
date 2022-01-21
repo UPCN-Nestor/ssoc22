@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Despacho.
+    -->
+    <changeSet id="20220121150649-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="despacho_id"
+                                 baseTableName="rel_despacho__chofer"
+                                 constraintName="fk_rel_despacho__chofer__despacho_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="despacho"/>
+
+        <addForeignKeyConstraint baseColumnNames="chofer_id"
+                                 baseTableName="rel_despacho__chofer"
+                                 constraintName="fk_rel_despacho__chofer__chofer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="chofer"/>
+
+        <addForeignKeyConstraint baseColumnNames="despacho_id"
+                                 baseTableName="rel_despacho__medico"
+                                 constraintName="fk_rel_despacho__medico__despacho_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="despacho"/>
+
+        <addForeignKeyConstraint baseColumnNames="medico_id"
+                                 baseTableName="rel_despacho__medico"
+                                 constraintName="fk_rel_despacho__medico__medico_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="medico"/>
+
+        <addForeignKeyConstraint baseColumnNames="despacho_id"
+                                 baseTableName="rel_despacho__enfermero"
+                                 constraintName="fk_rel_despacho__enfermero__despacho_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="despacho"/>
+
+        <addForeignKeyConstraint baseColumnNames="enfermero_id"
+                                 baseTableName="rel_despacho__enfermero"
+                                 constraintName="fk_rel_despacho__enfermero__enfermero_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="enfermero"/>
+
+        <addForeignKeyConstraint baseColumnNames="despacho_id"
+                                 baseTableName="rel_despacho__movil"
+                                 constraintName="fk_rel_despacho__movil__despacho_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="despacho"/>
+
+        <addForeignKeyConstraint baseColumnNames="movil_id"
+                                 baseTableName="rel_despacho__movil"
+                                 constraintName="fk_rel_despacho__movil__movil_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="movil"/>
+    </changeSet>
+</databaseChangeLog>

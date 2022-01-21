@@ -1,0 +1,91 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="solicitudPrestacion">
+      <h2 data-cy="solicitudPrestacionDetailsHeading">
+        <span jhiTranslate="ssoc22App.solicitudPrestacion.detail.title">Solicitud Prestacion</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.fecha">Fecha</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.fecha | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.numero">Numero</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.numero }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.horaSolicitud">Hora Solicitud</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.horaSolicitud | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.domicilio">Domicilio</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.domicilio }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.telefono">Telefono</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.telefono }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.edad">Edad</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.edad }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.observaciones }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.despacho">Despacho</span></dt>
+        <dd>
+          <div *ngIf="solicitudPrestacion.despacho">
+            <a [routerLink]="['/despacho', solicitudPrestacion.despacho?.id, 'view']">{{ solicitudPrestacion.despacho?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador">Item Nomenclador</span></dt>
+        <dd>
+          <div *ngIf="solicitudPrestacion.itemNomenclador">
+            <a [routerLink]="['/item-nomenclador', solicitudPrestacion.itemNomenclador?.id, 'view']">{{
+              solicitudPrestacion.itemNomenclador?.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.prestador">Prestador</span></dt>
+        <dd>
+          <div *ngIf="solicitudPrestacion.prestador">
+            <a [routerLink]="['/prestador', solicitudPrestacion.prestador?.id, 'view']">{{ solicitudPrestacion.prestador?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.insumo">Insumo</span></dt>
+        <dd>
+          <span *ngFor="let insumo of solicitudPrestacion.insumos; let last = last">
+            <a [routerLink]="['/insumo', insumo?.id, 'view']">{{ insumo.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.individuo">Individuo</span></dt>
+        <dd>
+          <div *ngIf="solicitudPrestacion.individuo">
+            <a [routerLink]="['/individuo', solicitudPrestacion.individuo?.id, 'view']">{{ solicitudPrestacion.individuo?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

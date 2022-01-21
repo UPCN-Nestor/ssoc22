@@ -1,0 +1,60 @@
+{
+  "name": "Despacho",
+  "fields": [
+    {
+      "fieldName": "horaSalida",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "horaLlegada",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "chofer",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "chofer",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "medico",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "medico",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "enfermero",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "enfermero",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "movil",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "movil",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "solicitudPrestacion",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "solicitudPrestacion",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "despacho",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20220121150649"
+}
