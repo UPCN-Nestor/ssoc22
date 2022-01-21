@@ -1,0 +1,172 @@
+
+
+application {
+  config {
+    baseName ssoc22,
+    applicationType monolith,
+    packageName com.upcn.ssoc22,
+    authenticationType jwt,
+    prodDatabaseType mssql,
+    clientFramework angular
+  }
+  entities *
+}
+
+entity Cliente {
+	nombre String
+    socio Integer
+    suministro Integer
+    dni String    
+}
+
+entity Individuo {
+	nombre String
+    dni String
+}
+
+entity Tarifa {
+	tipo String
+    datos String
+    vigenciaHasta ZonedDateTime
+}
+
+entity Adhesion {
+	fechaAlta ZonedDateTime
+    estado String
+    condicion String
+}
+
+entity Contrato {
+	fechaAlta ZonedDateTime
+    particularidades String
+}
+
+entity Plan {
+    habilitaciones String
+    descuentos String
+    restricciones String    
+}
+
+entity ItemFactura {}
+
+entity Factura {
+	fechaEmision ZonedDateTime
+    numeroInterno String
+}
+
+entity Provision {}
+
+entity ReglaPrestacion {
+	codigoRegla String
+    tipoRegla String
+    datos String
+}
+
+entity Prestacion {
+	tipo String
+    precio Float
+    carencia Duration
+}
+
+entity Insumo {
+	tipo String
+    precioVenta Float
+    esModificable Boolean
+}
+
+entity MovimientoStock {
+	fecha ZonedDateTime
+    cantidad Float
+}
+
+entity Despacho {
+	horaSalida ZonedDateTime
+    horaLlegada ZonedDateTime
+    //usuarioSalida Jhi_User
+    //usuarioLlegada Jhi_User
+}
+
+entity Chofer {
+	nombre String
+}
+
+entity Medico {
+	nombre String
+	//usuario Jhi_User
+}
+
+entity Enfermero {
+	nombre String
+	//usuario Jhi_User
+}
+
+entity Movil {
+	numero Integer
+}
+
+entity SolicitudPrestacion {
+	fecha ZonedDateTime
+    numero Integer
+    horaSolicitud ZonedDateTime
+    // horaSalida, horaLlegada, médico, chofer son de Despacho
+    domicilio String
+    telefono String
+    edad Integer
+    observaciones String
+    // usuarioSolicitud Jhi_User
+}
+
+entity ItemNomenclador {
+	nombre String
+    carencia Duration
+}
+
+entity Prestador {
+	nombre String
+    condicion String
+}
+
+relationship OneToMany {
+	Cliente{Padron} to Cliente{EnPadron}
+    Individuo to Adhesion
+    Cliente to Adhesion
+    Cliente to Contrato{cliente}
+    Plan to Provision{plan}
+    Provision to ReglaPrestacion{provision}
+    Individuo to SolicitudPrestacion{individuo}
+    Prestacion to ItemNomenclador{prestacion}
+    Plan to Tarifa{plan}
+    Provision to ItemNomenclador
+}
+
+relationship ManyToOne {  
+    Contrato to Plan,
+    Factura to Cliente,
+    ItemFactura to Cliente,
+    ItemFactura to Factura,
+    MovimientoStock to Insumo,
+    SolicitudPrestacion to ItemNomenclador
+    Despacho to Prestador
+    Despacho to Chofer
+    Despacho to Medico
+    Despacho to Enfermero
+    Despacho to Movil
+}
+
+relationship ManyToMany {
+    Prestacion{insumo} to Insumo{prestacion},
+    SolicitudPrestacion{insumo} to Insumo{solicitudPrestacion},
+    //Plan{excepcionInsumo} to Insumo{plan},
+    Prestador to ItemNomenclador
+    Provision to Insumo
+}
+
+relationship OneToOne {
+	SolicitudPrestacion to Despacho
+}
+
+
+
+
+
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Prestador.
+    -->
+    <changeSet id="20220121170306-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="prestador_id"
+                                 baseTableName="rel_prestador__item_nomenclador"
+                                 constraintName="fk_rel_prestador__item_nomenclador__prestador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestador"/>
+
+        <addForeignKeyConstraint baseColumnNames="item_nomenclador_id"
+                                 baseTableName="rel_prestador__item_nomenclador"
+                                 constraintName="fk_rel_prestador__item_nomenclador__item_nomenclador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="item_nomenclador"/>
+    </changeSet>
+</databaseChangeLog>
