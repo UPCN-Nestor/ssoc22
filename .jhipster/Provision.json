@@ -1,0 +1,41 @@
+{
+  "name": "Provision",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "reglaPrestacion",
+      "otherEntityRelationshipName": "provision",
+      "relationshipName": "reglaPrestacion"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "itemNomenclador",
+      "otherEntityRelationshipName": "provision",
+      "relationshipName": "itemNomenclador"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "insumo",
+      "otherEntityRelationshipName": "provision",
+      "relationshipName": "insumo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "plan",
+      "otherEntityRelationshipName": "provision",
+      "relationshipName": "plan"
+    }
+  ],
+  "entityTableName": "provision",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["ssoc22"],
+  "changelogDate": "20220121165011"
+}

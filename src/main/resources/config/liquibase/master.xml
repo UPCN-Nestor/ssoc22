@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="GETDATE()" dbms="mssql"/>
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql, mariadb"/>
+    <property name="clobType" value="clob" dbms="h2"/>
+    <property name="clobType" value="clob" dbms="mysql, oracle, mssql, mariadb, postgresql"/>
+    <property name="uuidType" value="uuid" dbms="h2, mssql"/>
+    <property name="datetimeType" value="datetime(6)" dbms="mysql, mariadb"/>
+    <property name="datetimeType" value="datetime" dbms="oracle, mssql, postgresql, h2"/>
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164211_added_entity_Cliente.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164311_added_entity_Individuo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164411_added_entity_Tarifa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164511_added_entity_Adhesion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164611_added_entity_Contrato.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164711_added_entity_Plan.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164811_added_entity_ItemFactura.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164911_added_entity_Factura.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165011_added_entity_Provision.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165111_added_entity_ReglaPrestacion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165211_added_entity_Prestacion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165311_added_entity_Insumo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165411_added_entity_MovimientoStock.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165511_added_entity_Despacho.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165611_added_entity_Chofer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165711_added_entity_Medico.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165811_added_entity_Enfermero.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165911_added_entity_Movil.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121170011_added_entity_SolicitudPrestacion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121170111_added_entity_ItemNomenclador.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121170211_added_entity_Prestador.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20220121164211_added_entity_constraints_Cliente.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164411_added_entity_constraints_Tarifa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164511_added_entity_constraints_Adhesion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164611_added_entity_constraints_Contrato.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164811_added_entity_constraints_ItemFactura.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121164911_added_entity_constraints_Factura.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165011_added_entity_constraints_Provision.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165111_added_entity_constraints_ReglaPrestacion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165211_added_entity_constraints_Prestacion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165411_added_entity_constraints_MovimientoStock.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121165511_added_entity_constraints_Despacho.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121170011_added_entity_constraints_SolicitudPrestacion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121170111_added_entity_constraints_ItemNomenclador.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220121170211_added_entity_constraints_Prestador.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+</databaseChangeLog>
