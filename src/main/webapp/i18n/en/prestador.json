@@ -1,0 +1,25 @@
+{
+  "ssoc22App": {
+    "prestador": {
+      "home": {
+        "title": "Prestadors",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Prestador",
+        "createOrEditLabel": "Create or edit a Prestador",
+        "notFound": "No Prestadors found"
+      },
+      "created": "A new Prestador is created with identifier {{ param }}",
+      "updated": "A Prestador is updated with identifier {{ param }}",
+      "deleted": "A Prestador is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Prestador {{ id }}?"
+      },
+      "detail": {
+        "title": "Prestador"
+      },
+      "id": "ID",
+      "itemNomenclador": "Item Nomenclador",
+      "solicitudPrestacion": "Solicitud Prestacion"
+    }
+  }
+}
