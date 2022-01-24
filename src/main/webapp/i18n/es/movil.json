@@ -1,0 +1,25 @@
+{
+  "ssoc22App": {
+    "movil": {
+      "home": {
+        "title": "Movils",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Movil",
+        "createOrEditLabel": "Crear o editar Movil",
+        "notFound": "Ningún Movils encontrado"
+      },
+      "created": "Un nuevo Movil ha sido creado con el identificador {{ param }}",
+      "updated": "Un Movil ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Movil ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Movil {{ id }}?"
+      },
+      "detail": {
+        "title": "Movil"
+      },
+      "id": "ID",
+      "numero": "Numero",
+      "despacho": "Despacho"
+    }
+  }
+}

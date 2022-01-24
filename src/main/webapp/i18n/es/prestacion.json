@@ -1,0 +1,28 @@
+{
+  "ssoc22App": {
+    "prestacion": {
+      "home": {
+        "title": "Prestacions",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Prestacion",
+        "createOrEditLabel": "Crear o editar Prestacion",
+        "notFound": "Ningún Prestacions encontrado"
+      },
+      "created": "Un nuevo Prestacion ha sido creado con el identificador {{ param }}",
+      "updated": "Un Prestacion ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Prestacion ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Prestacion {{ id }}?"
+      },
+      "detail": {
+        "title": "Prestacion"
+      },
+      "id": "ID",
+      "tipo": "Tipo",
+      "precio": "Precio",
+      "carencia": "Carencia",
+      "itemNomenclador": "Item Nomenclador",
+      "insumo": "Insumo"
+    }
+  }
+}

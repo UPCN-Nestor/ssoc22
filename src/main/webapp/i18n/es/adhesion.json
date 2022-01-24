@@ -1,0 +1,28 @@
+{
+  "ssoc22App": {
+    "adhesion": {
+      "home": {
+        "title": "Adhesions",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Adhesion",
+        "createOrEditLabel": "Crear o editar Adhesion",
+        "notFound": "Ningún Adhesions encontrado"
+      },
+      "created": "Un nuevo Adhesion ha sido creado con el identificador {{ param }}",
+      "updated": "Un Adhesion ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Adhesion ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Adhesion {{ id }}?"
+      },
+      "detail": {
+        "title": "Adhesion"
+      },
+      "id": "ID",
+      "fechaAlta": "Fecha Alta",
+      "estado": "Estado",
+      "condicion": "Condicion",
+      "individuo": "Individuo",
+      "cliente": "Cliente"
+    }
+  }
+}

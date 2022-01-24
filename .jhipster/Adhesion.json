@@ -1,0 +1,41 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124135615",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "adhesion",
+  "fields": [
+    {
+      "fieldName": "fechaAlta",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "condicion",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Adhesion",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "individuo",
+      "otherEntityRelationshipName": "adhesion",
+      "relationshipName": "individuo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "adhesion",
+      "relationshipName": "cliente",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

@@ -1,0 +1,34 @@
+{
+  "ssoc22App": {
+    "solicitudPrestacion": {
+      "home": {
+        "title": "Solicitud Prestacions",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Solicitud Prestacion",
+        "createOrEditLabel": "Crear o editar Solicitud Prestacion",
+        "notFound": "Ningún Solicitud Prestacions encontrado"
+      },
+      "created": "Un nuevo Solicitud Prestacion ha sido creado con el identificador {{ param }}",
+      "updated": "Un Solicitud Prestacion ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Solicitud Prestacion ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Solicitud Prestacion {{ id }}?"
+      },
+      "detail": {
+        "title": "Solicitud Prestacion"
+      },
+      "id": "ID",
+      "fecha": "Fecha",
+      "numero": "Numero",
+      "horaSolicitud": "Hora Solicitud",
+      "domicilio": "Domicilio",
+      "telefono": "Telefono",
+      "edad": "Edad",
+      "observaciones": "Observaciones",
+      "despacho": "Despacho",
+      "itemNomenclador": "Item Nomenclador",
+      "insumo": "Insumo",
+      "individuo": "Individuo"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "ssoc22App": {
+    "enfermero": {
+      "home": {
+        "title": "Enfermeros",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Enfermero",
+        "createOrEditLabel": "Crear o editar Enfermero",
+        "notFound": "Ningún Enfermeros encontrado"
+      },
+      "created": "Un nuevo Enfermero ha sido creado con el identificador {{ param }}",
+      "updated": "Un Enfermero ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Enfermero ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Enfermero {{ id }}?"
+      },
+      "detail": {
+        "title": "Enfermero"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "despacho": "Despacho"
+    }
+  }
+}

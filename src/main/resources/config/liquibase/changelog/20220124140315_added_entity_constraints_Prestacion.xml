@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Prestacion.
+    -->
+    <changeSet id="20220124140315-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="prestacion_id"
+                                 baseTableName="rel_prestacion__insumo"
+                                 constraintName="fk_rel_prestacion__insumo__prestacion_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestacion"/>
+
+        <addForeignKeyConstraint baseColumnNames="insumo_id"
+                                 baseTableName="rel_prestacion__insumo"
+                                 constraintName="fk_rel_prestacion__insumo__insumo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insumo"/>
+    </changeSet>
+</databaseChangeLog>

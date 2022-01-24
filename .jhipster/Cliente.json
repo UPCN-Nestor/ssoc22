@@ -1,0 +1,69 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124135315",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "cliente",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "socio",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "suministro",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "dni",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Cliente",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "enPadron",
+      "relationshipName": "padron",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "adhesion",
+      "otherEntityRelationshipName": "cliente",
+      "relationshipName": "adhesion",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "contrato",
+      "otherEntityRelationshipName": "cliente",
+      "relationshipName": "contrato",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "padron",
+      "relationshipName": "enPadron",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "cliente",
+      "relationshipName": "factura",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "itemFactura",
+      "otherEntityRelationshipName": "cliente",
+      "relationshipName": "itemFactura",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

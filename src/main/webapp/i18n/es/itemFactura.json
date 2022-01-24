@@ -1,0 +1,25 @@
+{
+  "ssoc22App": {
+    "itemFactura": {
+      "home": {
+        "title": "Item Facturas",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Item Factura",
+        "createOrEditLabel": "Crear o editar Item Factura",
+        "notFound": "Ningún Item Facturas encontrado"
+      },
+      "created": "Un nuevo Item Factura ha sido creado con el identificador {{ param }}",
+      "updated": "Un Item Factura ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Item Factura ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Item Factura {{ id }}?"
+      },
+      "detail": {
+        "title": "Item Factura"
+      },
+      "id": "ID",
+      "cliente": "Cliente",
+      "factura": "Factura"
+    }
+  }
+}

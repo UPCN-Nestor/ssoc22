@@ -1,0 +1,27 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124141015",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "movil",
+  "fields": [
+    {
+      "fieldName": "numero",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Movil",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "despacho",
+      "otherEntityRelationshipName": "movil",
+      "relationshipName": "despacho",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

@@ -1,0 +1,31 @@
+{
+  "ssoc22App": {
+    "despacho": {
+      "home": {
+        "title": "Despachos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Despacho",
+        "createOrEditLabel": "Crear o editar Despacho",
+        "notFound": "Ningún Despachos encontrado"
+      },
+      "created": "Un nuevo Despacho ha sido creado con el identificador {{ param }}",
+      "updated": "Un Despacho ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Despacho ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Despacho {{ id }}?"
+      },
+      "detail": {
+        "title": "Despacho"
+      },
+      "id": "ID",
+      "horaSalida": "Hora Salida",
+      "horaLlegada": "Hora Llegada",
+      "prestador": "Prestador",
+      "chofer": "Chofer",
+      "medico": "Medico",
+      "enfermero": "Enfermero",
+      "movil": "Movil",
+      "solicitudPrestacion": "Solicitud Prestacion"
+    }
+  }
+}

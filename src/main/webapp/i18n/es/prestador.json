@@ -1,0 +1,27 @@
+{
+  "ssoc22App": {
+    "prestador": {
+      "home": {
+        "title": "Prestadors",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Prestador",
+        "createOrEditLabel": "Crear o editar Prestador",
+        "notFound": "Ningún Prestadors encontrado"
+      },
+      "created": "Un nuevo Prestador ha sido creado con el identificador {{ param }}",
+      "updated": "Un Prestador ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Prestador ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Prestador {{ id }}?"
+      },
+      "detail": {
+        "title": "Prestador"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "condicion": "Condicion",
+      "itemNomenclador": "Item Nomenclador",
+      "despacho": "Despacho"
+    }
+  }
+}

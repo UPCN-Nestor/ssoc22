@@ -1,0 +1,31 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124140515",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "movimiento_stock",
+  "fields": [
+    {
+      "fieldName": "fecha",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "cantidad",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "MovimientoStock",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "insumo",
+      "otherEntityRelationshipName": "movimientoStock",
+      "relationshipName": "insumo",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}
