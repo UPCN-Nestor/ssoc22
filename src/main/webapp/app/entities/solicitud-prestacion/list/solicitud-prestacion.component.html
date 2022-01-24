@@ -40,6 +40,7 @@
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.telefono">Telefono</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.edad">Edad</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.tipo">Tipo</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.despacho">Despacho</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador">Item Nomenclador</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.insumo">Insumo</span></th>
@@ -59,6 +60,7 @@
           <td>{{ solicitudPrestacion.telefono }}</td>
           <td>{{ solicitudPrestacion.edad }}</td>
           <td>{{ solicitudPrestacion.observaciones }}</td>
+          <td>{{ solicitudPrestacion.tipo }}</td>
           <td>
             <div *ngIf="solicitudPrestacion.despacho">
               <a [routerLink]="['/despacho', solicitudPrestacion.despacho?.id, 'view']">{{ solicitudPrestacion.despacho?.id }}</a>

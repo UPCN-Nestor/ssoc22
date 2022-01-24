@@ -57,6 +57,7 @@ describe('SolicitudPrestacion e2e test', () => {
       solicitudPrestacionUpdatePage.setTelefonoInput('telefono'),
       solicitudPrestacionUpdatePage.setEdadInput('5'),
       solicitudPrestacionUpdatePage.setObservacionesInput('observaciones'),
+      solicitudPrestacionUpdatePage.setTipoInput('tipo'),
       solicitudPrestacionUpdatePage.despachoSelectLastOption(),
       solicitudPrestacionUpdatePage.itemNomencladorSelectLastOption(),
       // solicitudPrestacionUpdatePage.insumoSelectLastOption(),

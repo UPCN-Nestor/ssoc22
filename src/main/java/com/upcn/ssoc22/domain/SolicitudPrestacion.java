@@ -46,6 +46,9 @@ public class SolicitudPrestacion implements Serializable {
     @Column(name = "observaciones")
     private String observaciones;
 
+    @Column(name = "tipo")
+    private String tipo;
+
     @JsonIgnoreProperties(value = { "prestador", "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
@@ -175,6 +178,19 @@ public class SolicitudPrestacion implements Serializable {
         this.observaciones = observaciones;
     }
 
+    public String getTipo() {
+        return this.tipo;
+    }
+
+    public SolicitudPrestacion tipo(String tipo) {
+        this.setTipo(tipo);
+        return this;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public Despacho getDespacho() {
         return this.despacho;
     }
@@ -270,6 +286,7 @@ public class SolicitudPrestacion implements Serializable {
             ", telefono='" + getTelefono() + "'" +
             ", edad=" + getEdad() +
             ", observaciones='" + getObservaciones() + "'" +
+            ", tipo='" + getTipo() + "'" +
             "}";
     }
 }

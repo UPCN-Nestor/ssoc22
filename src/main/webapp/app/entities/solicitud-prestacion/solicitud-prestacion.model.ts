@@ -13,6 +13,7 @@ export interface ISolicitudPrestacion {
   telefono?: string | null;
   edad?: number | null;
   observaciones?: string | null;
+  tipo?: string | null;
   despacho?: IDespacho | null;
   itemNomenclador?: IItemNomenclador | null;
   insumos?: IInsumo[] | null;
@@ -29,6 +30,7 @@ export class SolicitudPrestacion implements ISolicitudPrestacion {
     public telefono?: string | null,
     public edad?: number | null,
     public observaciones?: string | null,
+    public tipo?: string | null,
     public despacho?: IDespacho | null,
     public itemNomenclador?: IItemNomenclador | null,
     public insumos?: IInsumo[] | null,

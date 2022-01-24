@@ -32,6 +32,7 @@ describe('SolicitudPrestacion Service', () => {
       telefono: 'AAAAAAA',
       edad: 0,
       observaciones: 'AAAAAAA',
+      tipo: 'AAAAAAA',
     };
   });
 
@@ -88,6 +89,7 @@ describe('SolicitudPrestacion Service', () => {
           telefono: 'BBBBBB',
           edad: 1,
           observaciones: 'BBBBBB',
+          tipo: 'BBBBBB',
         },
         elemDefault
       );
@@ -116,6 +118,7 @@ describe('SolicitudPrestacion Service', () => {
           domicilio: 'BBBBBB',
           telefono: 'BBBBBB',
           edad: 1,
+          tipo: 'BBBBBB',
         },
         new SolicitudPrestacion()
       );
@@ -148,6 +151,7 @@ describe('SolicitudPrestacion Service', () => {
           telefono: 'BBBBBB',
           edad: 1,
           observaciones: 'BBBBBB',
+          tipo: 'BBBBBB',
         },
         elemDefault
       );
@@ -205,7 +209,7 @@ describe('SolicitudPrestacion Service', () => {
       });
 
       it('should add only unique SolicitudPrestacion to an array', () => {
-        const solicitudPrestacionArray: ISolicitudPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 54122 }];
+        const solicitudPrestacionArray: ISolicitudPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 18712 }];
         const solicitudPrestacionCollection: ISolicitudPrestacion[] = [{ id: 123 }];
         expectedResult = service.addSolicitudPrestacionToCollectionIfMissing(solicitudPrestacionCollection, ...solicitudPrestacionArray);
         expect(expectedResult).toHaveLength(3);

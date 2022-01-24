@@ -162,6 +162,8 @@ describe('SolicitudPrestacion e2e test', () => {
 
       cy.get(`[data-cy="observaciones"]`).type('colaboración Bedfordshire').should('have.value', 'colaboración Bedfordshire');
 
+      cy.get(`[data-cy="tipo"]`).type('Azul solutions').should('have.value', 'Azul solutions');
+
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

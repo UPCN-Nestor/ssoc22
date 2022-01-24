@@ -63,6 +63,9 @@ class SolicitudPrestacionResourceIT {
     private static final String DEFAULT_OBSERVACIONES = "AAAAAAAAAA";
     private static final String UPDATED_OBSERVACIONES = "BBBBBBBBBB";
 
+    private static final String DEFAULT_TIPO = "AAAAAAAAAA";
+    private static final String UPDATED_TIPO = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/solicitud-prestacions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -97,7 +100,8 @@ class SolicitudPrestacionResourceIT {
             .domicilio(DEFAULT_DOMICILIO)
             .telefono(DEFAULT_TELEFONO)
             .edad(DEFAULT_EDAD)
-            .observaciones(DEFAULT_OBSERVACIONES);
+            .observaciones(DEFAULT_OBSERVACIONES)
+            .tipo(DEFAULT_TIPO);
         return solicitudPrestacion;
     }
 
@@ -115,7 +119,8 @@ class SolicitudPrestacionResourceIT {
             .domicilio(UPDATED_DOMICILIO)
             .telefono(UPDATED_TELEFONO)
             .edad(UPDATED_EDAD)
-            .observaciones(UPDATED_OBSERVACIONES);
+            .observaciones(UPDATED_OBSERVACIONES)
+            .tipo(UPDATED_TIPO);
         return solicitudPrestacion;
     }
 
@@ -146,6 +151,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
         assertThat(testSolicitudPrestacion.getEdad()).isEqualTo(DEFAULT_EDAD);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(DEFAULT_OBSERVACIONES);
+        assertThat(testSolicitudPrestacion.getTipo()).isEqualTo(DEFAULT_TIPO);
     }
 
     @Test
@@ -186,7 +192,8 @@ class SolicitudPrestacionResourceIT {
             .andExpect(jsonPath("$.[*].domicilio").value(hasItem(DEFAULT_DOMICILIO)))
             .andExpect(jsonPath("$.[*].telefono").value(hasItem(DEFAULT_TELEFONO)))
             .andExpect(jsonPath("$.[*].edad").value(hasItem(DEFAULT_EDAD)))
-            .andExpect(jsonPath("$.[*].observaciones").value(hasItem(DEFAULT_OBSERVACIONES)));
+            .andExpect(jsonPath("$.[*].observaciones").value(hasItem(DEFAULT_OBSERVACIONES)))
+            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -225,7 +232,8 @@ class SolicitudPrestacionResourceIT {
             .andExpect(jsonPath("$.domicilio").value(DEFAULT_DOMICILIO))
             .andExpect(jsonPath("$.telefono").value(DEFAULT_TELEFONO))
             .andExpect(jsonPath("$.edad").value(DEFAULT_EDAD))
-            .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES));
+            .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES))
+            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO));
     }
 
     @Test
@@ -254,7 +262,8 @@ class SolicitudPrestacionResourceIT {
             .domicilio(UPDATED_DOMICILIO)
             .telefono(UPDATED_TELEFONO)
             .edad(UPDATED_EDAD)
-            .observaciones(UPDATED_OBSERVACIONES);
+            .observaciones(UPDATED_OBSERVACIONES)
+            .tipo(UPDATED_TIPO);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -275,6 +284,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testSolicitudPrestacion.getEdad()).isEqualTo(UPDATED_EDAD);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
+        assertThat(testSolicitudPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test
@@ -374,6 +384,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testSolicitudPrestacion.getEdad()).isEqualTo(UPDATED_EDAD);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
+        assertThat(testSolicitudPrestacion.getTipo()).isEqualTo(DEFAULT_TIPO);
     }
 
     @Test
@@ -395,7 +406,8 @@ class SolicitudPrestacionResourceIT {
             .domicilio(UPDATED_DOMICILIO)
             .telefono(UPDATED_TELEFONO)
             .edad(UPDATED_EDAD)
-            .observaciones(UPDATED_OBSERVACIONES);
+            .observaciones(UPDATED_OBSERVACIONES)
+            .tipo(UPDATED_TIPO);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -416,6 +428,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testSolicitudPrestacion.getEdad()).isEqualTo(UPDATED_EDAD);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
+        assertThat(testSolicitudPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test

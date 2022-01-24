@@ -145,6 +145,9 @@ public class SolicitudPrestacionResource {
                 if (solicitudPrestacion.getObservaciones() != null) {
                     existingSolicitudPrestacion.setObservaciones(solicitudPrestacion.getObservaciones());
                 }
+                if (solicitudPrestacion.getTipo() != null) {
+                    existingSolicitudPrestacion.setTipo(solicitudPrestacion.getTipo());
+                }
 
                 return existingSolicitudPrestacion;
             })

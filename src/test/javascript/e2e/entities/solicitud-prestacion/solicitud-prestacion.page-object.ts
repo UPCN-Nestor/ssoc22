@@ -37,6 +37,7 @@ export class SolicitudPrestacionUpdatePage {
   telefonoInput = element(by.id('field_telefono'));
   edadInput = element(by.id('field_edad'));
   observacionesInput = element(by.id('field_observaciones'));
+  tipoInput = element(by.id('field_tipo'));
 
   despachoSelect = element(by.id('field_despacho'));
   itemNomencladorSelect = element(by.id('field_itemNomenclador'));
@@ -109,6 +110,14 @@ export class SolicitudPrestacionUpdatePage {
 
   async getObservacionesInput(): Promise<string> {
     return await this.observacionesInput.getAttribute('value');
+  }
+
+  async setTipoInput(tipo: string): Promise<void> {
+    await this.tipoInput.sendKeys(tipo);
+  }
+
+  async getTipoInput(): Promise<string> {
+    return await this.tipoInput.getAttribute('value');
   }
 
   async despachoSelectLastOption(): Promise<void> {
