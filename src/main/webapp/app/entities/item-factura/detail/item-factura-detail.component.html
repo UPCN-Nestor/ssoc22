@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="itemFactura">
+      <h2 data-cy="itemFacturaDetailsHeading"><span>Item Factura</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ itemFactura.id }}</span>
+        </dd>
+        <dt><span>Cliente</span></dt>
+        <dd>
+          <div *ngIf="itemFactura.cliente">
+            <a [routerLink]="['/cliente', itemFactura.cliente?.id, 'view']">{{ itemFactura.cliente?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Factura</span></dt>
+        <dd>
+          <div *ngIf="itemFactura.factura">
+            <a [routerLink]="['/factura', itemFactura.factura?.id, 'view']">{{ itemFactura.factura?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/item-factura', itemFactura.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

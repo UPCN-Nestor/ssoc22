@@ -1,0 +1,86 @@
+<div>
+  <h2 id="page-heading" data-cy="ItemNomencladorHeading">
+    <span>Item Nomencladors</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-item-nomenclador"
+        [routerLink]="['/item-nomenclador/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Item Nomenclador </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="itemNomencladors?.length === 0">
+    <span>No itemNomencladors found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="itemNomencladors && itemNomencladors.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Nombre</span></th>
+          <th scope="col"><span>Carencia</span></th>
+          <th scope="col"><span>Prestacion</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let itemNomenclador of itemNomencladors; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/item-nomenclador', itemNomenclador.id, 'view']">{{ itemNomenclador.id }}</a>
+          </td>
+          <td>{{ itemNomenclador.nombre }}</td>
+          <td title="{{ itemNomenclador.carencia }}">{{ itemNomenclador.carencia | duration }}</td>
+          <td>
+            <div *ngIf="itemNomenclador.prestacion">
+              <a [routerLink]="['/prestacion', itemNomenclador.prestacion?.id, 'view']">{{ itemNomenclador.prestacion?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/item-nomenclador', itemNomenclador.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/item-nomenclador', itemNomenclador.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(itemNomenclador)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

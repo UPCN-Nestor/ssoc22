@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="movimientoStock">
+      <h2 data-cy="movimientoStockDetailsHeading"><span>Movimiento Stock</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ movimientoStock.id }}</span>
+        </dd>
+        <dt><span>Fecha</span></dt>
+        <dd>
+          <span>{{ movimientoStock.fecha | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Cantidad</span></dt>
+        <dd>
+          <span>{{ movimientoStock.cantidad }}</span>
+        </dd>
+        <dt><span>Insumo</span></dt>
+        <dd>
+          <div *ngIf="movimientoStock.insumo">
+            <a [routerLink]="['/insumo', movimientoStock.insumo?.id, 'view']">{{ movimientoStock.insumo?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/movimiento-stock', movimientoStock.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

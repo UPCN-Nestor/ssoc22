@@ -1,0 +1,27 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124135242",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "enfermero",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Enfermero",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "despacho",
+      "otherEntityRelationshipName": "enfermero",
+      "relationshipName": "despacho",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

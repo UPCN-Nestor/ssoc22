@@ -1,0 +1,89 @@
+<div>
+  <h2 id="page-heading" data-cy="PrestacionHeading">
+    <span>Prestacions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-prestacion"
+        [routerLink]="['/prestacion/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Prestacion </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="prestacions?.length === 0">
+    <span>No prestacions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="prestacions && prestacions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Tipo</span></th>
+          <th scope="col"><span>Precio</span></th>
+          <th scope="col"><span>Carencia</span></th>
+          <th scope="col"><span>Insumo</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prestacion of prestacions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/prestacion', prestacion.id, 'view']">{{ prestacion.id }}</a>
+          </td>
+          <td>{{ prestacion.tipo }}</td>
+          <td>{{ prestacion.precio }}</td>
+          <td title="{{ prestacion.carencia }}">{{ prestacion.carencia | duration }}</td>
+          <td>
+            <span *ngFor="let insumo of prestacion.insumos; let last = last">
+              <a class="form-control-static" [routerLink]="['/insumo', insumo.id, 'view']">{{ insumo.id }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/prestacion', prestacion.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/prestacion', prestacion.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(prestacion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

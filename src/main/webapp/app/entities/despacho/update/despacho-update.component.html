@@ -1,0 +1,127 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-despacho-heading" data-cy="DespachoCreateUpdateHeading">Create or edit a Despacho</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_horaSalida">Hora Salida</label>
+          <div class="d-flex">
+            <input
+              id="field_horaSalida"
+              data-cy="horaSalida"
+              type="datetime-local"
+              class="form-control"
+              name="horaSalida"
+              formControlName="horaSalida"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_horaLlegada">Hora Llegada</label>
+          <div class="d-flex">
+            <input
+              id="field_horaLlegada"
+              data-cy="horaLlegada"
+              type="datetime-local"
+              class="form-control"
+              name="horaLlegada"
+              formControlName="horaLlegada"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_prestador">Prestador</label>
+          <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="prestadorOption.id === editForm.get('prestador')!.value?.id ? editForm.get('prestador')!.value : prestadorOption"
+              *ngFor="let prestadorOption of prestadorsSharedCollection; trackBy: trackPrestadorById"
+            >
+              {{ prestadorOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_chofer">Chofer</label>
+          <select class="form-control" id="field_chofer" data-cy="chofer" name="chofer" formControlName="chofer">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="choferOption.id === editForm.get('chofer')!.value?.id ? editForm.get('chofer')!.value : choferOption"
+              *ngFor="let choferOption of chofersSharedCollection; trackBy: trackChoferById"
+            >
+              {{ choferOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_medico">Medico</label>
+          <select class="form-control" id="field_medico" data-cy="medico" name="medico" formControlName="medico">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="medicoOption.id === editForm.get('medico')!.value?.id ? editForm.get('medico')!.value : medicoOption"
+              *ngFor="let medicoOption of medicosSharedCollection; trackBy: trackMedicoById"
+            >
+              {{ medicoOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_enfermero">Enfermero</label>
+          <select class="form-control" id="field_enfermero" data-cy="enfermero" name="enfermero" formControlName="enfermero">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="enfermeroOption.id === editForm.get('enfermero')!.value?.id ? editForm.get('enfermero')!.value : enfermeroOption"
+              *ngFor="let enfermeroOption of enfermerosSharedCollection; trackBy: trackEnfermeroById"
+            >
+              {{ enfermeroOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_movil">Movil</label>
+          <select class="form-control" id="field_movil" data-cy="movil" name="movil" formControlName="movil">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="movilOption.id === editForm.get('movil')!.value?.id ? editForm.get('movil')!.value : movilOption"
+              *ngFor="let movilOption of movilsSharedCollection; trackBy: trackMovilById"
+            >
+              {{ movilOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

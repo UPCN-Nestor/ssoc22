@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="tarifa">
+      <h2 data-cy="tarifaDetailsHeading"><span>Tarifa</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ tarifa.id }}</span>
+        </dd>
+        <dt><span>Tipo</span></dt>
+        <dd>
+          <span>{{ tarifa.tipo }}</span>
+        </dd>
+        <dt><span>Datos</span></dt>
+        <dd>
+          <span>{{ tarifa.datos }}</span>
+        </dd>
+        <dt><span>Vigencia Hasta</span></dt>
+        <dd>
+          <span>{{ tarifa.vigenciaHasta | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Plan</span></dt>
+        <dd>
+          <div *ngIf="tarifa.plan">
+            <a [routerLink]="['/plan', tarifa.plan?.id, 'view']">{{ tarifa.plan?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/tarifa', tarifa.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

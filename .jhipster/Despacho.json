@@ -1,0 +1,62 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124134942",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "despacho",
+  "fields": [
+    {
+      "fieldName": "horaSalida",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "horaLlegada",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Despacho",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "prestador",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "prestador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "chofer",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "chofer",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "medico",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "medico",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "enfermero",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "enfermero",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "movil",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "movil",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "solicitudPrestacion",
+      "otherEntityRelationshipName": "despacho",
+      "ownerSide": false,
+      "relationshipName": "solicitudPrestacion",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}
