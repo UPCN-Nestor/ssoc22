@@ -1,0 +1,56 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124115558",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "insumo",
+  "fields": [
+    {
+      "fieldName": "tipo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "precioVenta",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "esModificable",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Insumo",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "movimientoStock",
+      "otherEntityRelationshipName": "insumo",
+      "relationshipName": "movimientoStock",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "prestacion",
+      "otherEntityRelationshipName": "insumo",
+      "ownerSide": false,
+      "relationshipName": "prestacion",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "solicitudPrestacion",
+      "otherEntityRelationshipName": "insumo",
+      "ownerSide": false,
+      "relationshipName": "solicitudPrestacion",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "provision",
+      "otherEntityRelationshipName": "insumo",
+      "ownerSide": false,
+      "relationshipName": "provision",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

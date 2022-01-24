@@ -1,0 +1,27 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124115958",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "medico",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Medico",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "despacho",
+      "otherEntityRelationshipName": "medico",
+      "relationshipName": "despacho",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

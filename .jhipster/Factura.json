@@ -1,0 +1,37 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124115158",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "factura",
+  "fields": [
+    {
+      "fieldName": "fechaEmision",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "numeroInterno",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Factura",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "cliente",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "itemFactura",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "itemFactura",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}
