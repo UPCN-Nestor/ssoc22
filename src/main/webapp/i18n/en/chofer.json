@@ -1,0 +1,25 @@
+{
+  "ssoc22App": {
+    "chofer": {
+      "home": {
+        "title": "Chofers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Chofer",
+        "createOrEditLabel": "Create or edit a Chofer",
+        "notFound": "No Chofers found"
+      },
+      "created": "A new Chofer is created with identifier {{ param }}",
+      "updated": "A Chofer is updated with identifier {{ param }}",
+      "deleted": "A Chofer is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Chofer {{ id }}?"
+      },
+      "detail": {
+        "title": "Chofer"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "despacho": "Despacho"
+    }
+  }
+}

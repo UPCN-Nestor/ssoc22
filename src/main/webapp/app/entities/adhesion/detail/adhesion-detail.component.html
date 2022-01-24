@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="adhesion">
+      <h2 data-cy="adhesionDetailsHeading"><span jhiTranslate="ssoc22App.adhesion.detail.title">Adhesion</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ adhesion.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.adhesion.fechaAlta">Fecha Alta</span></dt>
+        <dd>
+          <span>{{ adhesion.fechaAlta | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.adhesion.estado">Estado</span></dt>
+        <dd>
+          <span>{{ adhesion.estado }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.adhesion.condicion">Condicion</span></dt>
+        <dd>
+          <span>{{ adhesion.condicion }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.adhesion.individuo">Individuo</span></dt>
+        <dd>
+          <div *ngIf="adhesion.individuo">
+            <a [routerLink]="['/individuo', adhesion.individuo?.id, 'view']">{{ adhesion.individuo?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.adhesion.cliente">Cliente</span></dt>
+        <dd>
+          <div *ngIf="adhesion.cliente">
+            <a [routerLink]="['/cliente', adhesion.cliente?.id, 'view']">{{ adhesion.cliente?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/adhesion', adhesion.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

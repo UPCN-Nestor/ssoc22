@@ -1,0 +1,27 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124113941",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "chofer",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Chofer",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "despacho",
+      "otherEntityRelationshipName": "chofer",
+      "relationshipName": "despacho",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}
