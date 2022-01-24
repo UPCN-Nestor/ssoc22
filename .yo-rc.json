@@ -64,7 +64,7 @@
     "skipCheckLengthOfIdentifier": false,
     "skipFakeData": false,
     "skipUserManagement": false,
-    "testFrameworks": [],
+    "testFrameworks": ["cypress", "protractor", "cucumber", "gatling"],
     "websocket": false,
     "withAdminUi": true
   }
