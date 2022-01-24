@@ -1,0 +1,27 @@
+{
+  "ssoc22App": {
+    "provision": {
+      "home": {
+        "title": "Provisions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Provision",
+        "createOrEditLabel": "Create or edit a Provision",
+        "notFound": "No Provisions found"
+      },
+      "created": "A new Provision is created with identifier {{ param }}",
+      "updated": "A Provision is updated with identifier {{ param }}",
+      "deleted": "A Provision is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Provision {{ id }}?"
+      },
+      "detail": {
+        "title": "Provision"
+      },
+      "id": "ID",
+      "reglaPrestacion": "Regla Prestacion",
+      "itemNomenclador": "Item Nomenclador",
+      "insumo": "Insumo",
+      "plan": "Plan"
+    }
+  }
+}

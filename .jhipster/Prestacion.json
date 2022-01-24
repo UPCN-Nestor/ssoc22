@@ -1,0 +1,42 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124115458",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "prestacion",
+  "fields": [
+    {
+      "fieldName": "tipo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "precio",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "carencia",
+      "fieldType": "Duration"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Prestacion",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "itemNomenclador",
+      "otherEntityRelationshipName": "prestacion",
+      "relationshipName": "itemNomenclador",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "insumo",
+      "otherEntityRelationshipName": "prestacion",
+      "ownerSide": true,
+      "relationshipName": "insumo",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

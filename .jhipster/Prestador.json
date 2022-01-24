@@ -1,0 +1,38 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124120458",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "prestador",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "condicion",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Prestador",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "itemNomenclador",
+      "otherEntityRelationshipName": "prestador",
+      "ownerSide": true,
+      "relationshipName": "itemNomenclador",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "despacho",
+      "otherEntityRelationshipName": "prestador",
+      "relationshipName": "despacho",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

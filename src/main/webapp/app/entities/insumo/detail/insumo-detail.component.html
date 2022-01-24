@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="insumo">
+      <h2 data-cy="insumoDetailsHeading"><span jhiTranslate="ssoc22App.insumo.detail.title">Insumo</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ insumo.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.insumo.tipo">Tipo</span></dt>
+        <dd>
+          <span>{{ insumo.tipo }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.insumo.precioVenta">Precio Venta</span></dt>
+        <dd>
+          <span>{{ insumo.precioVenta }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.insumo.esModificable">Es Modificable</span></dt>
+        <dd>
+          <span>{{ insumo.esModificable }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/insumo', insumo.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

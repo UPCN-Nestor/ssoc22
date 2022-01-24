@@ -1,0 +1,35 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124115358",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "regla_prestacion",
+  "fields": [
+    {
+      "fieldName": "codigoRegla",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tipoRegla",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datos",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ReglaPrestacion",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "provision",
+      "otherEntityRelationshipName": "reglaPrestacion",
+      "relationshipName": "provision",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

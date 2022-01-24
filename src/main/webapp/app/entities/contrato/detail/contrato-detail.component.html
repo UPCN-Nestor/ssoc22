@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="contrato">
+      <h2 data-cy="contratoDetailsHeading"><span jhiTranslate="ssoc22App.contrato.detail.title">Contrato</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ contrato.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.contrato.fechaAlta">Fecha Alta</span></dt>
+        <dd>
+          <span>{{ contrato.fechaAlta | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.contrato.particularidades">Particularidades</span></dt>
+        <dd>
+          <span>{{ contrato.particularidades }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.contrato.plan">Plan</span></dt>
+        <dd>
+          <div *ngIf="contrato.plan">
+            <a [routerLink]="['/plan', contrato.plan?.id, 'view']">{{ contrato.plan?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.contrato.cliente">Cliente</span></dt>
+        <dd>
+          <div *ngIf="contrato.cliente">
+            <a [routerLink]="['/cliente', contrato.cliente?.id, 'view']">{{ contrato.cliente?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/contrato', contrato.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
