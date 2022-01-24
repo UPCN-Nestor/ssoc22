@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="reglaPrestacion">
+      <h2 data-cy="reglaPrestacionDetailsHeading"><span jhiTranslate="ssoc22App.reglaPrestacion.detail.title">Regla Prestacion</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ reglaPrestacion.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.reglaPrestacion.codigoRegla">Codigo Regla</span></dt>
+        <dd>
+          <span>{{ reglaPrestacion.codigoRegla }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.reglaPrestacion.tipoRegla">Tipo Regla</span></dt>
+        <dd>
+          <span>{{ reglaPrestacion.tipoRegla }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.reglaPrestacion.datos">Datos</span></dt>
+        <dd>
+          <span>{{ reglaPrestacion.datos }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.reglaPrestacion.provision">Provision</span></dt>
+        <dd>
+          <div *ngIf="reglaPrestacion.provision">
+            <a [routerLink]="['/provision', reglaPrestacion.provision?.id, 'view']">{{ reglaPrestacion.provision?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/regla-prestacion', reglaPrestacion.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
