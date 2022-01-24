@@ -11,6 +11,7 @@ import { ISolicitudPrestacion } from 'app/entities/solicitud-prestacion/solicitu
 })
 export class PantallaTelefonistaComponent implements OnInit {
   solicitudAtencionMedica?: ISolicitudPrestacion[];
+  solicitudEmergencia?: ISolicitudPrestacion[];
   isLoading = false;
 
   constructor(protected solicitudPrestacionService: SolicitudPrestacionService, protected modalService: NgbModal) {}
@@ -18,10 +19,20 @@ export class PantallaTelefonistaComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
 
-    this.solicitudPrestacionService.query().subscribe({
+    this.solicitudPrestacionService.queryPorTipo('AtencionMedica').subscribe({
       next: (res: HttpResponse<ISolicitudPrestacion[]>) => {
         this.isLoading = false;
         this.solicitudAtencionMedica = res.body ?? [];
+      },
+      error: () => {
+        this.isLoading = false;
+      },
+    });
+
+    this.solicitudPrestacionService.queryPorTipo('Emergencia').subscribe({
+      next: (res: HttpResponse<ISolicitudPrestacion[]>) => {
+        this.isLoading = false;
+        this.solicitudEmergencia = res.body ?? [];
       },
       error: () => {
         this.isLoading = false;

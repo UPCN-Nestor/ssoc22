@@ -27,4 +27,6 @@ public interface SolicitudPrestacionRepository extends JpaRepository<SolicitudPr
         "select solicitudPrestacion from SolicitudPrestacion solicitudPrestacion left join fetch solicitudPrestacion.insumos where solicitudPrestacion.id =:id"
     )
     Optional<SolicitudPrestacion> findOneWithEagerRelationships(@Param("id") Long id);
+
+    List<SolicitudPrestacion> findAllByTipo(String tipo);
 }

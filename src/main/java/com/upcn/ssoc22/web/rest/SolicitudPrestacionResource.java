@@ -171,6 +171,15 @@ public class SolicitudPrestacionResource {
         return solicitudPrestacionRepository.findAllWithEagerRelationships();
     }
 
+    @GetMapping("/solicitud-prestacions/tipo/{tipo}")
+    public List<SolicitudPrestacion> getAllSolicitudPrestacionsPorTipo(
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload,
+        @PathVariable String tipo
+    ) {
+        log.debug("REST request to get all SolicitudPrestacions");
+        return solicitudPrestacionRepository.findAllByTipo(tipo);
+    }
+
     /**
      * {@code GET  /solicitud-prestacions/:id} : get the "id" solicitudPrestacion.
      *
