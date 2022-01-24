@@ -11,7 +11,8 @@ application {
     serverPort 8081,
     clientTheme minty,
     languages [es],
-    nativeLanguage es    
+    nativeLanguage es,
+    testFrameworks	[cypress, protractor, cucumber, gatling]
   }
   entities *
 }
