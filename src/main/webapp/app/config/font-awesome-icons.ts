@@ -40,9 +40,11 @@ import {
   faUserClock,
   faCalendarTimes,
   faCoins,
+  faPhone,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const fontAwesomeIcons = [
+  faPhone,
   faUser,
   faSort,
   faSortUp,
