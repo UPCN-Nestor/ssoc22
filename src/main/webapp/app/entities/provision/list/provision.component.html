@@ -1,0 +1,95 @@
+<div>
+  <h2 id="page-heading" data-cy="ProvisionHeading">
+    <span>Provisions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-provision"
+        [routerLink]="['/provision/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Provision </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="provisions?.length === 0">
+    <span>No provisions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="provisions && provisions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Item Nomenclador</span></th>
+          <th scope="col"><span>Insumo</span></th>
+          <th scope="col"><span>Plan</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let provision of provisions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/provision', provision.id, 'view']">{{ provision.id }}</a>
+          </td>
+          <td>
+            <div *ngIf="provision.itemNomenclador">
+              <a [routerLink]="['/item-nomenclador', provision.itemNomenclador?.id, 'view']">{{ provision.itemNomenclador?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <span *ngFor="let insumo of provision.insumos; let last = last">
+              <a class="form-control-static" [routerLink]="['/insumo', insumo.id, 'view']">{{ insumo.id }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
+          <td>
+            <div *ngIf="provision.plan">
+              <a [routerLink]="['/plan', provision.plan?.id, 'view']">{{ provision.plan?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/provision', provision.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/provision', provision.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(provision)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

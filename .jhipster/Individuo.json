@@ -1,0 +1,37 @@
+{
+  "applications": ["ssoc22"],
+  "changelogDate": "20220124133742",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "individuo",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dni",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Individuo",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "adhesion",
+      "otherEntityRelationshipName": "individuo",
+      "relationshipName": "adhesion",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "solicitudPrestacion",
+      "otherEntityRelationshipName": "individuo",
+      "relationshipName": "solicitudPrestacion",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

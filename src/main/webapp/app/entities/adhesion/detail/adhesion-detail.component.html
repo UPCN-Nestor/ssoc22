@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="adhesion">
+      <h2 data-cy="adhesionDetailsHeading"><span>Adhesion</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ adhesion.id }}</span>
+        </dd>
+        <dt><span>Fecha Alta</span></dt>
+        <dd>
+          <span>{{ adhesion.fechaAlta | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Estado</span></dt>
+        <dd>
+          <span>{{ adhesion.estado }}</span>
+        </dd>
+        <dt><span>Condicion</span></dt>
+        <dd>
+          <span>{{ adhesion.condicion }}</span>
+        </dd>
+        <dt><span>Individuo</span></dt>
+        <dd>
+          <div *ngIf="adhesion.individuo">
+            <a [routerLink]="['/individuo', adhesion.individuo?.id, 'view']">{{ adhesion.individuo?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Cliente</span></dt>
+        <dd>
+          <div *ngIf="adhesion.cliente">
+            <a [routerLink]="['/cliente', adhesion.cliente?.id, 'view']">{{ adhesion.cliente?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/adhesion', adhesion.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

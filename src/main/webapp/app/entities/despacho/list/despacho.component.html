@@ -1,0 +1,110 @@
+<div>
+  <h2 id="page-heading" data-cy="DespachoHeading">
+    <span>Despachos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-despacho"
+        [routerLink]="['/despacho/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Despacho </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="despachos?.length === 0">
+    <span>No despachos found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="despachos && despachos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Hora Salida</span></th>
+          <th scope="col"><span>Hora Llegada</span></th>
+          <th scope="col"><span>Prestador</span></th>
+          <th scope="col"><span>Chofer</span></th>
+          <th scope="col"><span>Medico</span></th>
+          <th scope="col"><span>Enfermero</span></th>
+          <th scope="col"><span>Movil</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let despacho of despachos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/despacho', despacho.id, 'view']">{{ despacho.id }}</a>
+          </td>
+          <td>{{ despacho.horaSalida | formatMediumDatetime }}</td>
+          <td>{{ despacho.horaLlegada | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="despacho.prestador">
+              <a [routerLink]="['/prestador', despacho.prestador?.id, 'view']">{{ despacho.prestador?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="despacho.chofer">
+              <a [routerLink]="['/chofer', despacho.chofer?.id, 'view']">{{ despacho.chofer?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="despacho.medico">
+              <a [routerLink]="['/medico', despacho.medico?.id, 'view']">{{ despacho.medico?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="despacho.enfermero">
+              <a [routerLink]="['/enfermero', despacho.enfermero?.id, 'view']">{{ despacho.enfermero?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="despacho.movil">
+              <a [routerLink]="['/movil', despacho.movil?.id, 'view']">{{ despacho.movil?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/despacho', despacho.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/despacho', despacho.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(despacho)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

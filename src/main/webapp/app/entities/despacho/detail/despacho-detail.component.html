@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="despacho">
+      <h2 data-cy="despachoDetailsHeading"><span>Despacho</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ despacho.id }}</span>
+        </dd>
+        <dt><span>Hora Salida</span></dt>
+        <dd>
+          <span>{{ despacho.horaSalida | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Hora Llegada</span></dt>
+        <dd>
+          <span>{{ despacho.horaLlegada | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Prestador</span></dt>
+        <dd>
+          <div *ngIf="despacho.prestador">
+            <a [routerLink]="['/prestador', despacho.prestador?.id, 'view']">{{ despacho.prestador?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Chofer</span></dt>
+        <dd>
+          <div *ngIf="despacho.chofer">
+            <a [routerLink]="['/chofer', despacho.chofer?.id, 'view']">{{ despacho.chofer?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Medico</span></dt>
+        <dd>
+          <div *ngIf="despacho.medico">
+            <a [routerLink]="['/medico', despacho.medico?.id, 'view']">{{ despacho.medico?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Enfermero</span></dt>
+        <dd>
+          <div *ngIf="despacho.enfermero">
+            <a [routerLink]="['/enfermero', despacho.enfermero?.id, 'view']">{{ despacho.enfermero?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Movil</span></dt>
+        <dd>
+          <div *ngIf="despacho.movil">
+            <a [routerLink]="['/movil', despacho.movil?.id, 'view']">{{ despacho.movil?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/despacho', despacho.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

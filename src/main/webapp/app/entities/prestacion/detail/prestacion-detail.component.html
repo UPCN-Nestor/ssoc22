@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="prestacion">
+      <h2 data-cy="prestacionDetailsHeading"><span>Prestacion</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ prestacion.id }}</span>
+        </dd>
+        <dt><span>Tipo</span></dt>
+        <dd>
+          <span>{{ prestacion.tipo }}</span>
+        </dd>
+        <dt><span>Precio</span></dt>
+        <dd>
+          <span>{{ prestacion.precio }}</span>
+        </dd>
+        <dt><span>Carencia</span></dt>
+        <dd>
+          <span>{{ prestacion.carencia | duration }} ({{ prestacion.carencia }})</span>
+        </dd>
+        <dt><span>Insumo</span></dt>
+        <dd>
+          <span *ngFor="let insumo of prestacion.insumos; let last = last">
+            <a [routerLink]="['/insumo', insumo?.id, 'view']">{{ insumo.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/prestacion', prestacion.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
