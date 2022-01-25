@@ -87,6 +87,7 @@ entity MovimientoStock {
 entity Despacho {
 	horaSalida ZonedDateTime
     horaLlegada ZonedDateTime
+    horaLibre ZonedDateTime
     //usuarioSalida Jhi_User
     //usuarioLlegada Jhi_User
 }
@@ -110,13 +111,16 @@ entity Movil {
 }
 
 entity SolicitudPrestacion {
-	fecha ZonedDateTime
-    numero Integer
+    tipo String
+	numero Integer
     horaSolicitud ZonedDateTime
     // horaSalida, horaLlegada, médico, chofer son de Despacho
     domicilio String
     telefono String
     edad Integer
+    motivoLlamado String
+    seEfectuo Boolean
+    internacion Boolean
     observaciones String
     // usuarioSolicitud Jhi_User
 }

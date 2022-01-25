@@ -33,14 +33,16 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.fecha">Fecha</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.tipo">Tipo</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.numero">Numero</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.horaSolicitud">Hora Solicitud</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.domicilio">Domicilio</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.telefono">Telefono</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.edad">Edad</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.motivoLlamado">Motivo Llamado</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.seEfectuo">Se Efectuo</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.internacion">Internacion</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.tipo">Tipo</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.despacho">Despacho</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador">Item Nomenclador</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.insumo">Insumo</span></th>
@@ -53,14 +55,16 @@
           <td>
             <a [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'view']">{{ solicitudPrestacion.id }}</a>
           </td>
-          <td>{{ solicitudPrestacion.fecha | formatMediumDatetime }}</td>
+          <td>{{ solicitudPrestacion.tipo }}</td>
           <td>{{ solicitudPrestacion.numero }}</td>
           <td>{{ solicitudPrestacion.horaSolicitud | formatMediumDatetime }}</td>
           <td>{{ solicitudPrestacion.domicilio }}</td>
           <td>{{ solicitudPrestacion.telefono }}</td>
           <td>{{ solicitudPrestacion.edad }}</td>
+          <td>{{ solicitudPrestacion.motivoLlamado }}</td>
+          <td>{{ solicitudPrestacion.seEfectuo }}</td>
+          <td>{{ solicitudPrestacion.internacion }}</td>
           <td>{{ solicitudPrestacion.observaciones }}</td>
-          <td>{{ solicitudPrestacion.tipo }}</td>
           <td>
             <div *ngIf="solicitudPrestacion.despacho">
               <a [routerLink]="['/despacho', solicitudPrestacion.despacho?.id, 'view']">{{ solicitudPrestacion.despacho?.id }}</a>

@@ -124,8 +124,8 @@ public class SolicitudPrestacionResource {
         Optional<SolicitudPrestacion> result = solicitudPrestacionRepository
             .findById(solicitudPrestacion.getId())
             .map(existingSolicitudPrestacion -> {
-                if (solicitudPrestacion.getFecha() != null) {
-                    existingSolicitudPrestacion.setFecha(solicitudPrestacion.getFecha());
+                if (solicitudPrestacion.getTipo() != null) {
+                    existingSolicitudPrestacion.setTipo(solicitudPrestacion.getTipo());
                 }
                 if (solicitudPrestacion.getNumero() != null) {
                     existingSolicitudPrestacion.setNumero(solicitudPrestacion.getNumero());
@@ -142,11 +142,17 @@ public class SolicitudPrestacionResource {
                 if (solicitudPrestacion.getEdad() != null) {
                     existingSolicitudPrestacion.setEdad(solicitudPrestacion.getEdad());
                 }
+                if (solicitudPrestacion.getMotivoLlamado() != null) {
+                    existingSolicitudPrestacion.setMotivoLlamado(solicitudPrestacion.getMotivoLlamado());
+                }
+                if (solicitudPrestacion.getSeEfectuo() != null) {
+                    existingSolicitudPrestacion.setSeEfectuo(solicitudPrestacion.getSeEfectuo());
+                }
+                if (solicitudPrestacion.getInternacion() != null) {
+                    existingSolicitudPrestacion.setInternacion(solicitudPrestacion.getInternacion());
+                }
                 if (solicitudPrestacion.getObservaciones() != null) {
                     existingSolicitudPrestacion.setObservaciones(solicitudPrestacion.getObservaciones());
-                }
-                if (solicitudPrestacion.getTipo() != null) {
-                    existingSolicitudPrestacion.setTipo(solicitudPrestacion.getTipo());
                 }
 
                 return existingSolicitudPrestacion;

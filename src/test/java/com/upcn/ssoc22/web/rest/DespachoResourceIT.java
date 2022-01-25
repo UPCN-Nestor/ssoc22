@@ -40,6 +40,9 @@ class DespachoResourceIT {
     private static final ZonedDateTime DEFAULT_HORA_LLEGADA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_HORA_LLEGADA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
+    private static final ZonedDateTime DEFAULT_HORA_LIBRE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_HORA_LIBRE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
     private static final String ENTITY_API_URL = "/api/despachos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -64,7 +67,7 @@ class DespachoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Despacho createEntity(EntityManager em) {
-        Despacho despacho = new Despacho().horaSalida(DEFAULT_HORA_SALIDA).horaLlegada(DEFAULT_HORA_LLEGADA);
+        Despacho despacho = new Despacho().horaSalida(DEFAULT_HORA_SALIDA).horaLlegada(DEFAULT_HORA_LLEGADA).horaLibre(DEFAULT_HORA_LIBRE);
         return despacho;
     }
 
@@ -75,7 +78,7 @@ class DespachoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Despacho createUpdatedEntity(EntityManager em) {
-        Despacho despacho = new Despacho().horaSalida(UPDATED_HORA_SALIDA).horaLlegada(UPDATED_HORA_LLEGADA);
+        Despacho despacho = new Despacho().horaSalida(UPDATED_HORA_SALIDA).horaLlegada(UPDATED_HORA_LLEGADA).horaLibre(UPDATED_HORA_LIBRE);
         return despacho;
     }
 
@@ -99,6 +102,7 @@ class DespachoResourceIT {
         Despacho testDespacho = despachoList.get(despachoList.size() - 1);
         assertThat(testDespacho.getHoraSalida()).isEqualTo(DEFAULT_HORA_SALIDA);
         assertThat(testDespacho.getHoraLlegada()).isEqualTo(DEFAULT_HORA_LLEGADA);
+        assertThat(testDespacho.getHoraLibre()).isEqualTo(DEFAULT_HORA_LIBRE);
     }
 
     @Test
@@ -132,7 +136,8 @@ class DespachoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(despacho.getId().intValue())))
             .andExpect(jsonPath("$.[*].horaSalida").value(hasItem(sameInstant(DEFAULT_HORA_SALIDA))))
-            .andExpect(jsonPath("$.[*].horaLlegada").value(hasItem(sameInstant(DEFAULT_HORA_LLEGADA))));
+            .andExpect(jsonPath("$.[*].horaLlegada").value(hasItem(sameInstant(DEFAULT_HORA_LLEGADA))))
+            .andExpect(jsonPath("$.[*].horaLibre").value(hasItem(sameInstant(DEFAULT_HORA_LIBRE))));
     }
 
     @Test
@@ -148,7 +153,8 @@ class DespachoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(despacho.getId().intValue()))
             .andExpect(jsonPath("$.horaSalida").value(sameInstant(DEFAULT_HORA_SALIDA)))
-            .andExpect(jsonPath("$.horaLlegada").value(sameInstant(DEFAULT_HORA_LLEGADA)));
+            .andExpect(jsonPath("$.horaLlegada").value(sameInstant(DEFAULT_HORA_LLEGADA)))
+            .andExpect(jsonPath("$.horaLibre").value(sameInstant(DEFAULT_HORA_LIBRE)));
     }
 
     @Test
@@ -170,7 +176,7 @@ class DespachoResourceIT {
         Despacho updatedDespacho = despachoRepository.findById(despacho.getId()).get();
         // Disconnect from session so that the updates on updatedDespacho are not directly saved in db
         em.detach(updatedDespacho);
-        updatedDespacho.horaSalida(UPDATED_HORA_SALIDA).horaLlegada(UPDATED_HORA_LLEGADA);
+        updatedDespacho.horaSalida(UPDATED_HORA_SALIDA).horaLlegada(UPDATED_HORA_LLEGADA).horaLibre(UPDATED_HORA_LIBRE);
 
         restDespachoMockMvc
             .perform(
@@ -186,6 +192,7 @@ class DespachoResourceIT {
         Despacho testDespacho = despachoList.get(despachoList.size() - 1);
         assertThat(testDespacho.getHoraSalida()).isEqualTo(UPDATED_HORA_SALIDA);
         assertThat(testDespacho.getHoraLlegada()).isEqualTo(UPDATED_HORA_LLEGADA);
+        assertThat(testDespacho.getHoraLibre()).isEqualTo(UPDATED_HORA_LIBRE);
     }
 
     @Test
@@ -272,6 +279,7 @@ class DespachoResourceIT {
         Despacho testDespacho = despachoList.get(despachoList.size() - 1);
         assertThat(testDespacho.getHoraSalida()).isEqualTo(UPDATED_HORA_SALIDA);
         assertThat(testDespacho.getHoraLlegada()).isEqualTo(UPDATED_HORA_LLEGADA);
+        assertThat(testDespacho.getHoraLibre()).isEqualTo(DEFAULT_HORA_LIBRE);
     }
 
     @Test
@@ -286,7 +294,7 @@ class DespachoResourceIT {
         Despacho partialUpdatedDespacho = new Despacho();
         partialUpdatedDespacho.setId(despacho.getId());
 
-        partialUpdatedDespacho.horaSalida(UPDATED_HORA_SALIDA).horaLlegada(UPDATED_HORA_LLEGADA);
+        partialUpdatedDespacho.horaSalida(UPDATED_HORA_SALIDA).horaLlegada(UPDATED_HORA_LLEGADA).horaLibre(UPDATED_HORA_LIBRE);
 
         restDespachoMockMvc
             .perform(
@@ -302,6 +310,7 @@ class DespachoResourceIT {
         Despacho testDespacho = despachoList.get(despachoList.size() - 1);
         assertThat(testDespacho.getHoraSalida()).isEqualTo(UPDATED_HORA_SALIDA);
         assertThat(testDespacho.getHoraLlegada()).isEqualTo(UPDATED_HORA_LLEGADA);
+        assertThat(testDespacho.getHoraLibre()).isEqualTo(UPDATED_HORA_LIBRE);
     }
 
     @Test

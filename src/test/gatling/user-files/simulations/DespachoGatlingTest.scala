@@ -73,6 +73,7 @@ class DespachoGatlingTest extends Simulation {
             .body(StringBody("""{
                 "horaSalida":"2020-01-01T00:00:00.000Z"
                 , "horaLlegada":"2020-01-01T00:00:00.000Z"
+                , "horaLibre":"2020-01-01T00:00:00.000Z"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_despacho_url"))).exitHereIfFailed

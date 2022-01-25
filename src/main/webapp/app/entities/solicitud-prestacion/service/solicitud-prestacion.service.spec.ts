@@ -25,14 +25,16 @@ describe('SolicitudPrestacion Service', () => {
 
     elemDefault = {
       id: 0,
-      fecha: currentDate,
+      tipo: 'AAAAAAA',
       numero: 0,
       horaSolicitud: currentDate,
       domicilio: 'AAAAAAA',
       telefono: 'AAAAAAA',
       edad: 0,
+      motivoLlamado: 'AAAAAAA',
+      seEfectuo: false,
+      internacion: false,
       observaciones: 'AAAAAAA',
-      tipo: 'AAAAAAA',
     };
   });
 
@@ -40,7 +42,6 @@ describe('SolicitudPrestacion Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign(
         {
-          fecha: currentDate.format(DATE_TIME_FORMAT),
           horaSolicitud: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
@@ -57,7 +58,6 @@ describe('SolicitudPrestacion Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 0,
-          fecha: currentDate.format(DATE_TIME_FORMAT),
           horaSolicitud: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
@@ -65,7 +65,6 @@ describe('SolicitudPrestacion Service', () => {
 
       const expected = Object.assign(
         {
-          fecha: currentDate,
           horaSolicitud: currentDate,
         },
         returnedFromService
@@ -82,21 +81,22 @@ describe('SolicitudPrestacion Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
-          fecha: currentDate.format(DATE_TIME_FORMAT),
+          tipo: 'BBBBBB',
           numero: 1,
           horaSolicitud: currentDate.format(DATE_TIME_FORMAT),
           domicilio: 'BBBBBB',
           telefono: 'BBBBBB',
           edad: 1,
+          motivoLlamado: 'BBBBBB',
+          seEfectuo: true,
+          internacion: true,
           observaciones: 'BBBBBB',
-          tipo: 'BBBBBB',
         },
         elemDefault
       );
 
       const expected = Object.assign(
         {
-          fecha: currentDate,
           horaSolicitud: currentDate,
         },
         returnedFromService
@@ -112,13 +112,14 @@ describe('SolicitudPrestacion Service', () => {
     it('should partial update a SolicitudPrestacion', () => {
       const patchObject = Object.assign(
         {
-          fecha: currentDate.format(DATE_TIME_FORMAT),
+          tipo: 'BBBBBB',
           numero: 1,
           horaSolicitud: currentDate.format(DATE_TIME_FORMAT),
           domicilio: 'BBBBBB',
           telefono: 'BBBBBB',
           edad: 1,
-          tipo: 'BBBBBB',
+          seEfectuo: true,
+          observaciones: 'BBBBBB',
         },
         new SolicitudPrestacion()
       );
@@ -127,7 +128,6 @@ describe('SolicitudPrestacion Service', () => {
 
       const expected = Object.assign(
         {
-          fecha: currentDate,
           horaSolicitud: currentDate,
         },
         returnedFromService
@@ -144,21 +144,22 @@ describe('SolicitudPrestacion Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
-          fecha: currentDate.format(DATE_TIME_FORMAT),
+          tipo: 'BBBBBB',
           numero: 1,
           horaSolicitud: currentDate.format(DATE_TIME_FORMAT),
           domicilio: 'BBBBBB',
           telefono: 'BBBBBB',
           edad: 1,
+          motivoLlamado: 'BBBBBB',
+          seEfectuo: true,
+          internacion: true,
           observaciones: 'BBBBBB',
-          tipo: 'BBBBBB',
         },
         elemDefault
       );
 
       const expected = Object.assign(
         {
-          fecha: currentDate,
           horaSolicitud: currentDate,
         },
         returnedFromService
@@ -209,7 +210,7 @@ describe('SolicitudPrestacion Service', () => {
       });
 
       it('should add only unique SolicitudPrestacion to an array', () => {
-        const solicitudPrestacionArray: ISolicitudPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 18712 }];
+        const solicitudPrestacionArray: ISolicitudPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 94227 }];
         const solicitudPrestacionCollection: ISolicitudPrestacion[] = [{ id: 123 }];
         expectedResult = service.addSolicitudPrestacionToCollectionIfMissing(solicitudPrestacionCollection, ...solicitudPrestacionArray);
         expect(expectedResult).toHaveLength(3);

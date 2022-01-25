@@ -12,6 +12,10 @@
     {
       "fieldName": "horaLlegada",
       "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "horaLibre",
+      "fieldType": "ZonedDateTime"
     }
   ],
   "fluentMethods": true,

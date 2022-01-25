@@ -148,21 +148,29 @@ describe('SolicitudPrestacion e2e test', () => {
     });
 
     it('should create an instance of SolicitudPrestacion', () => {
-      cy.get(`[data-cy="fecha"]`).type('2022-01-24T04:13').should('have.value', '2022-01-24T04:13');
+      cy.get(`[data-cy="tipo"]`).type('microchip Deportes').should('have.value', 'microchip Deportes');
 
-      cy.get(`[data-cy="numero"]`).type('73858').should('have.value', '73858');
+      cy.get(`[data-cy="numero"]`).type('56223').should('have.value', '56223');
 
-      cy.get(`[data-cy="horaSolicitud"]`).type('2022-01-24T09:23').should('have.value', '2022-01-24T09:23');
+      cy.get(`[data-cy="horaSolicitud"]`).type('2022-01-24T06:06').should('have.value', '2022-01-24T06:06');
 
-      cy.get(`[data-cy="domicilio"]`).type('Deportes').should('have.value', 'Deportes');
+      cy.get(`[data-cy="domicilio"]`).type('Global generate colaboración').should('have.value', 'Global generate colaboración');
 
-      cy.get(`[data-cy="telefono"]`).type('enterprise Japón').should('have.value', 'enterprise Japón');
+      cy.get(`[data-cy="telefono"]`).type('proyección Azul').should('have.value', 'proyección Azul');
 
-      cy.get(`[data-cy="edad"]`).type('54952').should('have.value', '54952');
+      cy.get(`[data-cy="edad"]`).type('44298').should('have.value', '44298');
 
-      cy.get(`[data-cy="observaciones"]`).type('colaboración Bedfordshire').should('have.value', 'colaboración Bedfordshire');
+      cy.get(`[data-cy="motivoLlamado"]`).type('evolve').should('have.value', 'evolve');
 
-      cy.get(`[data-cy="tipo"]`).type('Azul solutions').should('have.value', 'Azul solutions');
+      cy.get(`[data-cy="seEfectuo"]`).should('not.be.checked');
+      cy.get(`[data-cy="seEfectuo"]`).click().should('be.checked');
+
+      cy.get(`[data-cy="internacion"]`).should('not.be.checked');
+      cy.get(`[data-cy="internacion"]`).click().should('be.checked');
+
+      cy.get(`[data-cy="observaciones"]`)
+        .type('navigating web-readiness application')
+        .should('have.value', 'navigating web-readiness application');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

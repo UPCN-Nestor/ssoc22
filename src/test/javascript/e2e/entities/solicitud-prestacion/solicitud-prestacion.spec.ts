@@ -50,14 +50,16 @@ describe('SolicitudPrestacion e2e test', () => {
     await solicitudPrestacionComponentsPage.clickOnCreateButton();
 
     await promise.all([
-      solicitudPrestacionUpdatePage.setFechaInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      solicitudPrestacionUpdatePage.setTipoInput('tipo'),
       solicitudPrestacionUpdatePage.setNumeroInput('5'),
       solicitudPrestacionUpdatePage.setHoraSolicitudInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       solicitudPrestacionUpdatePage.setDomicilioInput('domicilio'),
       solicitudPrestacionUpdatePage.setTelefonoInput('telefono'),
       solicitudPrestacionUpdatePage.setEdadInput('5'),
+      solicitudPrestacionUpdatePage.setMotivoLlamadoInput('motivoLlamado'),
+      solicitudPrestacionUpdatePage.getSeEfectuoInput().click(),
+      solicitudPrestacionUpdatePage.getInternacionInput().click(),
       solicitudPrestacionUpdatePage.setObservacionesInput('observaciones'),
-      solicitudPrestacionUpdatePage.setTipoInput('tipo'),
       solicitudPrestacionUpdatePage.despachoSelectLastOption(),
       solicitudPrestacionUpdatePage.itemNomencladorSelectLastOption(),
       // solicitudPrestacionUpdatePage.insumoSelectLastOption(),

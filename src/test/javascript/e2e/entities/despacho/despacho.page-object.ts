@@ -32,6 +32,7 @@ export class DespachoUpdatePage {
   idInput = element(by.id('field_id'));
   horaSalidaInput = element(by.id('field_horaSalida'));
   horaLlegadaInput = element(by.id('field_horaLlegada'));
+  horaLibreInput = element(by.id('field_horaLibre'));
 
   prestadorSelect = element(by.id('field_prestador'));
   choferSelect = element(by.id('field_chofer'));
@@ -65,6 +66,14 @@ export class DespachoUpdatePage {
 
   async getHoraLlegadaInput(): Promise<string> {
     return await this.horaLlegadaInput.getAttribute('value');
+  }
+
+  async setHoraLibreInput(horaLibre: string): Promise<void> {
+    await this.horaLibreInput.sendKeys(horaLibre);
+  }
+
+  async getHoraLibreInput(): Promise<string> {
+    return await this.horaLibreInput.getAttribute('value');
   }
 
   async prestadorSelectLastOption(): Promise<void> {
