@@ -1,11 +1,11 @@
-id;fecha;numero;hora_solicitud;domicilio;telefono;edad;observaciones;tipo
-1;2022-01-24T09:23:28;91673;2022-01-23T22:45:55;architectures Investment;Macedonia Re-implementado;91565;Cataluña Fantástico;AtencionMedica
-2;2022-01-23T14:12:52;21326;2022-01-23T16:40:36;drive protocol Técnico;Pre-emptivo Morado Glorieta;82859;capacitor estable;Emergencia
-3;2022-01-24T12:00:51;9527;2022-01-23T23:11:40;interfaz Inversor Futuro;éxito Bebes Dollar;25027;Productor nacional invoice;AtencionMedica
-4;2022-01-24T06:11:58;83271;2022-01-23T21:50:32;Afghani;Rial circuit;33585;drive;payment AI
-5;2022-01-24T06:01:45;19320;2022-01-24T13:33:55;Usabilidad;up;65749;Amarillo Home acompasada;Guapo
-6;2022-01-23T21:00:33;97044;2022-01-23T19:05:22;International;Somoni;74252;Directo Decoración;Directo monitor
-7;2022-01-23T20:45:03;74514;2022-01-24T04:11:29;Metal visionary XSS;Berkshire partnerships;62966;Kenia Bedfordshire;Checking
-8;2022-01-23T16:49:17;6930;2022-01-23T20:06:19;Auto Hogar;Valenciana Cambridgeshire;71893;Parafarmacia USB Senior;usuario
-9;2022-01-24T00:06:01;70344;2022-01-23T14:18:57;digital cero;Bebes drive Borders;40369;invoice compress Re-implementado;Respuesta
-10;2022-01-23T23:31:43;62513;2022-01-24T00:32:48;Guayana connecting Coche;Acero card;62625;invoice Cliente Diseñador;connect Etiopía Comoro
+id;numero;hora_solicitud;domicilio;telefono;edad;motivo_llamado;se_efectuo;internacion;observaciones
+1;19983;2022-01-23T16:11:09;y Zealand;relationships;97737;calculate;true;true;HTTP Sopa
+2;63609;2022-01-23T15:48:41;Seguro JBOD;Productor payment mobile;89478;Pre-emptivo Morado Glorieta;true;false;Operaciones CSS calculating
+3;91716;2022-01-23T18:16:56;neural Ergonómico Especialista;Inversor;91901;Ensalada;true;false;Berkshire
+4;74419;2022-01-24T00:36:35;JBOD;nacional;65548;International e-services Kuwait;true;true;quantifying
+5;69967;2022-01-24T13:59:24;Nicaragua;circuit vertical;56058;Plaza cutting-edge Gris;false;false;Soluciones up invoice
+6;63163;2022-01-24T08:03:19;Savings open-source;generate;6287;Consultor International mano;false;true;Directo Decoración
+7;63898;2022-01-23T16:39:05;payment;monitor;92040;bus;true;true;Usabilidad Berkshire partnerships
+8;62966;2022-01-24T05:31:18;Buckinghamshire Amarillo;Pequeño Sopa;32777;División;true;true;Cambridgeshire transmitter
+9;71524;2022-01-23T19:39:58;alarm Bicicleta Cliente;schemas data-warehouse SAS;50767;drive Borders repurpose;true;true;Re-implementado quantify Respuesta
+10;61077;2022-01-23T23:11:03;generate program;Coche;37053;Guantes;true;true;Adelante Asturias

@@ -29,6 +29,9 @@ public class Despacho implements Serializable {
     @Column(name = "hora_llegada")
     private ZonedDateTime horaLlegada;
 
+    @Column(name = "hora_libre")
+    private ZonedDateTime horaLibre;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "itemNomencladors", "despachos" }, allowSetters = true)
     private Prestador prestador;
@@ -92,6 +95,19 @@ public class Despacho implements Serializable {
 
     public void setHoraLlegada(ZonedDateTime horaLlegada) {
         this.horaLlegada = horaLlegada;
+    }
+
+    public ZonedDateTime getHoraLibre() {
+        return this.horaLibre;
+    }
+
+    public Despacho horaLibre(ZonedDateTime horaLibre) {
+        this.setHoraLibre(horaLibre);
+        return this;
+    }
+
+    public void setHoraLibre(ZonedDateTime horaLibre) {
+        this.horaLibre = horaLibre;
     }
 
     public Prestador getPrestador() {
@@ -204,6 +220,7 @@ public class Despacho implements Serializable {
             "id=" + getId() +
             ", horaSalida='" + getHoraSalida() + "'" +
             ", horaLlegada='" + getHoraLlegada() + "'" +
+            ", horaLibre='" + getHoraLibre() + "'" +
             "}";
     }
 }

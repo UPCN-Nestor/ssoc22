@@ -56,13 +56,6 @@ export class SolicitudPrestacionService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  queryPorTipo(tipo: string, req?: any): Observable<EntityArrayResponseType> {
-    const options = createRequestOption(req);
-    return this.http
-      .get<ISolicitudPrestacion[]>(`${this.resourceUrl}/tipo/${tipo}`, { params: options, observe: 'response' })
-      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
-  }
-
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
@@ -91,14 +84,12 @@ export class SolicitudPrestacionService {
 
   protected convertDateFromClient(solicitudPrestacion: ISolicitudPrestacion): ISolicitudPrestacion {
     return Object.assign({}, solicitudPrestacion, {
-      fecha: solicitudPrestacion.fecha?.isValid() ? solicitudPrestacion.fecha.toJSON() : undefined,
       horaSolicitud: solicitudPrestacion.horaSolicitud?.isValid() ? solicitudPrestacion.horaSolicitud.toJSON() : undefined,
     });
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.fecha = res.body.fecha ? dayjs(res.body.fecha) : undefined;
       res.body.horaSolicitud = res.body.horaSolicitud ? dayjs(res.body.horaSolicitud) : undefined;
     }
     return res;
@@ -107,7 +98,6 @@ export class SolicitudPrestacionService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((solicitudPrestacion: ISolicitudPrestacion) => {
-        solicitudPrestacion.fecha = solicitudPrestacion.fecha ? dayjs(solicitudPrestacion.fecha) : undefined;
         solicitudPrestacion.horaSolicitud = solicitudPrestacion.horaSolicitud ? dayjs(solicitudPrestacion.horaSolicitud) : undefined;
       });
     }

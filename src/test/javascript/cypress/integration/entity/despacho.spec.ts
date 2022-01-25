@@ -152,6 +152,8 @@ describe('Despacho e2e test', () => {
 
       cy.get(`[data-cy="horaLlegada"]`).type('2022-01-23T15:54').should('have.value', '2022-01-23T15:54');
 
+      cy.get(`[data-cy="horaLibre"]`).type('2022-01-24T02:35').should('have.value', '2022-01-24T02:35');
+
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

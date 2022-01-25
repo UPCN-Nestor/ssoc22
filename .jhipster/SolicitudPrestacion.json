@@ -6,10 +6,6 @@
   "entityTableName": "solicitud_prestacion",
   "fields": [
     {
-      "fieldName": "fecha",
-      "fieldType": "ZonedDateTime"
-    },
-    {
       "fieldName": "numero",
       "fieldType": "Integer"
     },
@@ -30,11 +26,19 @@
       "fieldType": "Integer"
     },
     {
-      "fieldName": "observaciones",
+      "fieldName": "motivoLlamado",
       "fieldType": "String"
     },
     {
-      "fieldName": "tipo",
+      "fieldName": "seEfectuo",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "internacion",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "observaciones",
       "fieldType": "String"
     }
   ],

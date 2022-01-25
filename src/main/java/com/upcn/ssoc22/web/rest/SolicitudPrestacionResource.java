@@ -124,9 +124,6 @@ public class SolicitudPrestacionResource {
         Optional<SolicitudPrestacion> result = solicitudPrestacionRepository
             .findById(solicitudPrestacion.getId())
             .map(existingSolicitudPrestacion -> {
-                if (solicitudPrestacion.getFecha() != null) {
-                    existingSolicitudPrestacion.setFecha(solicitudPrestacion.getFecha());
-                }
                 if (solicitudPrestacion.getNumero() != null) {
                     existingSolicitudPrestacion.setNumero(solicitudPrestacion.getNumero());
                 }
@@ -142,11 +139,17 @@ public class SolicitudPrestacionResource {
                 if (solicitudPrestacion.getEdad() != null) {
                     existingSolicitudPrestacion.setEdad(solicitudPrestacion.getEdad());
                 }
+                if (solicitudPrestacion.getMotivoLlamado() != null) {
+                    existingSolicitudPrestacion.setMotivoLlamado(solicitudPrestacion.getMotivoLlamado());
+                }
+                if (solicitudPrestacion.getSeEfectuo() != null) {
+                    existingSolicitudPrestacion.setSeEfectuo(solicitudPrestacion.getSeEfectuo());
+                }
+                if (solicitudPrestacion.getInternacion() != null) {
+                    existingSolicitudPrestacion.setInternacion(solicitudPrestacion.getInternacion());
+                }
                 if (solicitudPrestacion.getObservaciones() != null) {
                     existingSolicitudPrestacion.setObservaciones(solicitudPrestacion.getObservaciones());
-                }
-                if (solicitudPrestacion.getTipo() != null) {
-                    existingSolicitudPrestacion.setTipo(solicitudPrestacion.getTipo());
                 }
 
                 return existingSolicitudPrestacion;
@@ -169,15 +172,6 @@ public class SolicitudPrestacionResource {
     public List<SolicitudPrestacion> getAllSolicitudPrestacions(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all SolicitudPrestacions");
         return solicitudPrestacionRepository.findAllWithEagerRelationships();
-    }
-
-    @GetMapping("/solicitud-prestacions/tipo/{tipo}")
-    public List<SolicitudPrestacion> getAllSolicitudPrestacionsPorTipo(
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload,
-        @PathVariable String tipo
-    ) {
-        log.debug("REST request to get all SolicitudPrestacions");
-        return solicitudPrestacionRepository.findAllByTipo(tipo);
     }
 
     /**

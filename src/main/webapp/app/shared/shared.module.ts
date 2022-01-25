@@ -12,12 +12,10 @@ import { FormatMediumDatePipe } from './date/format-medium-date.pipe';
 import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
-import { FormatShortTimePipe } from './date/format-short-time.pipe';
 
 @NgModule({
   imports: [SharedLibsModule],
   declarations: [
-    FormatShortTimePipe,
     FindLanguageFromKeyPipe,
     TranslateDirective,
     AlertComponent,
@@ -43,7 +41,6 @@ import { FormatShortTimePipe } from './date/format-short-time.pipe';
     SortByDirective,
     SortDirective,
     ItemCountComponent,
-    FormatShortTimePipe,
   ],
 })
 export class SharedModule {}

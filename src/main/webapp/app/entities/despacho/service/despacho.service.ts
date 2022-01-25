@@ -77,6 +77,7 @@ export class DespachoService {
     return Object.assign({}, despacho, {
       horaSalida: despacho.horaSalida?.isValid() ? despacho.horaSalida.toJSON() : undefined,
       horaLlegada: despacho.horaLlegada?.isValid() ? despacho.horaLlegada.toJSON() : undefined,
+      horaLibre: despacho.horaLibre?.isValid() ? despacho.horaLibre.toJSON() : undefined,
     });
   }
 
@@ -84,6 +85,7 @@ export class DespachoService {
     if (res.body) {
       res.body.horaSalida = res.body.horaSalida ? dayjs(res.body.horaSalida) : undefined;
       res.body.horaLlegada = res.body.horaLlegada ? dayjs(res.body.horaLlegada) : undefined;
+      res.body.horaLibre = res.body.horaLibre ? dayjs(res.body.horaLibre) : undefined;
     }
     return res;
   }
@@ -93,6 +95,7 @@ export class DespachoService {
       res.body.forEach((despacho: IDespacho) => {
         despacho.horaSalida = despacho.horaSalida ? dayjs(despacho.horaSalida) : undefined;
         despacho.horaLlegada = despacho.horaLlegada ? dayjs(despacho.horaLlegada) : undefined;
+        despacho.horaLibre = despacho.horaLibre ? dayjs(despacho.horaLibre) : undefined;
       });
     }
     return res;

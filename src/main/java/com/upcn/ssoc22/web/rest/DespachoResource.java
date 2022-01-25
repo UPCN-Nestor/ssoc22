@@ -131,6 +131,9 @@ public class DespachoResource {
                 if (despacho.getHoraLlegada() != null) {
                     existingDespacho.setHoraLlegada(despacho.getHoraLlegada());
                 }
+                if (despacho.getHoraLibre() != null) {
+                    existingDespacho.setHoraLibre(despacho.getHoraLibre());
+                }
 
                 return existingDespacho;
             })

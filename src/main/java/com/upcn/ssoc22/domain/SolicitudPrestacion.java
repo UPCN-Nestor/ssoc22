@@ -25,9 +25,6 @@ public class SolicitudPrestacion implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "fecha")
-    private ZonedDateTime fecha;
-
     @Column(name = "numero")
     private Integer numero;
 
@@ -43,11 +40,17 @@ public class SolicitudPrestacion implements Serializable {
     @Column(name = "edad")
     private Integer edad;
 
+    @Column(name = "motivo_llamado")
+    private String motivoLlamado;
+
+    @Column(name = "se_efectuo")
+    private Boolean seEfectuo;
+
+    @Column(name = "internacion")
+    private Boolean internacion;
+
     @Column(name = "observaciones")
     private String observaciones;
-
-    @Column(name = "tipo")
-    private String tipo;
 
     @JsonIgnoreProperties(value = { "prestador", "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
     @OneToOne
@@ -85,19 +88,6 @@ public class SolicitudPrestacion implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ZonedDateTime getFecha() {
-        return this.fecha;
-    }
-
-    public SolicitudPrestacion fecha(ZonedDateTime fecha) {
-        this.setFecha(fecha);
-        return this;
-    }
-
-    public void setFecha(ZonedDateTime fecha) {
-        this.fecha = fecha;
     }
 
     public Integer getNumero() {
@@ -165,6 +155,45 @@ public class SolicitudPrestacion implements Serializable {
         this.edad = edad;
     }
 
+    public String getMotivoLlamado() {
+        return this.motivoLlamado;
+    }
+
+    public SolicitudPrestacion motivoLlamado(String motivoLlamado) {
+        this.setMotivoLlamado(motivoLlamado);
+        return this;
+    }
+
+    public void setMotivoLlamado(String motivoLlamado) {
+        this.motivoLlamado = motivoLlamado;
+    }
+
+    public Boolean getSeEfectuo() {
+        return this.seEfectuo;
+    }
+
+    public SolicitudPrestacion seEfectuo(Boolean seEfectuo) {
+        this.setSeEfectuo(seEfectuo);
+        return this;
+    }
+
+    public void setSeEfectuo(Boolean seEfectuo) {
+        this.seEfectuo = seEfectuo;
+    }
+
+    public Boolean getInternacion() {
+        return this.internacion;
+    }
+
+    public SolicitudPrestacion internacion(Boolean internacion) {
+        this.setInternacion(internacion);
+        return this;
+    }
+
+    public void setInternacion(Boolean internacion) {
+        this.internacion = internacion;
+    }
+
     public String getObservaciones() {
         return this.observaciones;
     }
@@ -176,19 +205,6 @@ public class SolicitudPrestacion implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
-    }
-
-    public String getTipo() {
-        return this.tipo;
-    }
-
-    public SolicitudPrestacion tipo(String tipo) {
-        this.setTipo(tipo);
-        return this;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public Despacho getDespacho() {
@@ -279,14 +295,15 @@ public class SolicitudPrestacion implements Serializable {
     public String toString() {
         return "SolicitudPrestacion{" +
             "id=" + getId() +
-            ", fecha='" + getFecha() + "'" +
             ", numero=" + getNumero() +
             ", horaSolicitud='" + getHoraSolicitud() + "'" +
             ", domicilio='" + getDomicilio() + "'" +
             ", telefono='" + getTelefono() + "'" +
             ", edad=" + getEdad() +
+            ", motivoLlamado='" + getMotivoLlamado() + "'" +
+            ", seEfectuo='" + getSeEfectuo() + "'" +
+            ", internacion='" + getInternacion() + "'" +
             ", observaciones='" + getObservaciones() + "'" +
-            ", tipo='" + getTipo() + "'" +
             "}";
     }
 }

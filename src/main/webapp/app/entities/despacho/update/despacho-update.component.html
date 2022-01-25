@@ -44,6 +44,21 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.despacho.horaLibre" for="field_horaLibre">Hora Libre</label>
+          <div class="d-flex">
+            <input
+              id="field_horaLibre"
+              data-cy="horaLibre"
+              type="datetime-local"
+              class="form-control"
+              name="horaLibre"
+              formControlName="horaLibre"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.despacho.prestador" for="field_prestador">Prestador</label>
           <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador">
             <option [ngValue]="null"></option>

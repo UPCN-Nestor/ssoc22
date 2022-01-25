@@ -148,21 +148,25 @@ describe('SolicitudPrestacion e2e test', () => {
     });
 
     it('should create an instance of SolicitudPrestacion', () => {
-      cy.get(`[data-cy="fecha"]`).type('2022-01-24T04:13').should('have.value', '2022-01-24T04:13');
+      cy.get(`[data-cy="numero"]`).type('41511').should('have.value', '41511');
 
-      cy.get(`[data-cy="numero"]`).type('73858').should('have.value', '73858');
+      cy.get(`[data-cy="horaSolicitud"]`).type('2022-01-23T20:27').should('have.value', '2022-01-23T20:27');
 
-      cy.get(`[data-cy="horaSolicitud"]`).type('2022-01-24T09:23').should('have.value', '2022-01-24T09:23');
+      cy.get(`[data-cy="domicilio"]`).type('Pequeño').should('have.value', 'Pequeño');
 
-      cy.get(`[data-cy="domicilio"]`).type('Deportes').should('have.value', 'Deportes');
+      cy.get(`[data-cy="telefono"]`).type('Cantabria').should('have.value', 'Cantabria');
 
-      cy.get(`[data-cy="telefono"]`).type('enterprise Japón').should('have.value', 'enterprise Japón');
+      cy.get(`[data-cy="edad"]`).type('92108').should('have.value', '92108');
 
-      cy.get(`[data-cy="edad"]`).type('54952').should('have.value', '54952');
+      cy.get(`[data-cy="motivoLlamado"]`).type('Rampa Money').should('have.value', 'Rampa Money');
 
-      cy.get(`[data-cy="observaciones"]`).type('colaboración Bedfordshire').should('have.value', 'colaboración Bedfordshire');
+      cy.get(`[data-cy="seEfectuo"]`).should('not.be.checked');
+      cy.get(`[data-cy="seEfectuo"]`).click().should('be.checked');
 
-      cy.get(`[data-cy="tipo"]`).type('Azul solutions').should('have.value', 'Azul solutions');
+      cy.get(`[data-cy="internacion"]`).should('not.be.checked');
+      cy.get(`[data-cy="internacion"]`).click().should('be.checked');
+
+      cy.get(`[data-cy="observaciones"]`).type('online').should('have.value', 'online');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

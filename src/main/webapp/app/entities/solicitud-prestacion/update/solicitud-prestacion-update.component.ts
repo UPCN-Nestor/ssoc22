@@ -33,14 +33,15 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    fecha: [],
     numero: [],
     horaSolicitud: [],
     domicilio: [],
     telefono: [],
     edad: [],
+    motivoLlamado: [],
+    seEfectuo: [],
+    internacion: [],
     observaciones: [],
-    tipo: [],
     despacho: [],
     itemNomenclador: [],
     insumos: [],
@@ -61,7 +62,6 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ solicitudPrestacion }) => {
       if (solicitudPrestacion.id === undefined) {
         const today = dayjs().startOf('day');
-        solicitudPrestacion.fecha = today;
         solicitudPrestacion.horaSolicitud = today;
       }
 
@@ -134,14 +134,15 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
   protected updateForm(solicitudPrestacion: ISolicitudPrestacion): void {
     this.editForm.patchValue({
       id: solicitudPrestacion.id,
-      fecha: solicitudPrestacion.fecha ? solicitudPrestacion.fecha.format(DATE_TIME_FORMAT) : null,
       numero: solicitudPrestacion.numero,
       horaSolicitud: solicitudPrestacion.horaSolicitud ? solicitudPrestacion.horaSolicitud.format(DATE_TIME_FORMAT) : null,
       domicilio: solicitudPrestacion.domicilio,
       telefono: solicitudPrestacion.telefono,
       edad: solicitudPrestacion.edad,
+      motivoLlamado: solicitudPrestacion.motivoLlamado,
+      seEfectuo: solicitudPrestacion.seEfectuo,
+      internacion: solicitudPrestacion.internacion,
       observaciones: solicitudPrestacion.observaciones,
-      tipo: solicitudPrestacion.tipo,
       despacho: solicitudPrestacion.despacho,
       itemNomenclador: solicitudPrestacion.itemNomenclador,
       insumos: solicitudPrestacion.insumos,
@@ -212,7 +213,6 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     return {
       ...new SolicitudPrestacion(),
       id: this.editForm.get(['id'])!.value,
-      fecha: this.editForm.get(['fecha'])!.value ? dayjs(this.editForm.get(['fecha'])!.value, DATE_TIME_FORMAT) : undefined,
       numero: this.editForm.get(['numero'])!.value,
       horaSolicitud: this.editForm.get(['horaSolicitud'])!.value
         ? dayjs(this.editForm.get(['horaSolicitud'])!.value, DATE_TIME_FORMAT)
@@ -220,8 +220,10 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       domicilio: this.editForm.get(['domicilio'])!.value,
       telefono: this.editForm.get(['telefono'])!.value,
       edad: this.editForm.get(['edad'])!.value,
+      motivoLlamado: this.editForm.get(['motivoLlamado'])!.value,
+      seEfectuo: this.editForm.get(['seEfectuo'])!.value,
+      internacion: this.editForm.get(['internacion'])!.value,
       observaciones: this.editForm.get(['observaciones'])!.value,
-      tipo: this.editForm.get(['tipo'])!.value,
       despacho: this.editForm.get(['despacho'])!.value,
       itemNomenclador: this.editForm.get(['itemNomenclador'])!.value,
       insumos: this.editForm.get(['insumos'])!.value,
