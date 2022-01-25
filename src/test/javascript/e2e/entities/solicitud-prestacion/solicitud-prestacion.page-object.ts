@@ -42,6 +42,7 @@ export class SolicitudPrestacionUpdatePage {
   observacionesInput = element(by.id('field_observaciones'));
 
   despachoSelect = element(by.id('field_despacho'));
+  usuarioSolicitudSelect = element(by.id('field_usuarioSolicitud'));
   itemNomencladorSelect = element(by.id('field_itemNomenclador'));
   insumoSelect = element(by.id('field_insumo'));
   individuoSelect = element(by.id('field_individuo'));
@@ -144,6 +145,22 @@ export class SolicitudPrestacionUpdatePage {
 
   async getDespachoSelectedOption(): Promise<string> {
     return await this.despachoSelect.element(by.css('option:checked')).getText();
+  }
+
+  async usuarioSolicitudSelectLastOption(): Promise<void> {
+    await this.usuarioSolicitudSelect.all(by.tagName('option')).last().click();
+  }
+
+  async usuarioSolicitudSelectOption(option: string): Promise<void> {
+    await this.usuarioSolicitudSelect.sendKeys(option);
+  }
+
+  getUsuarioSolicitudSelect(): ElementFinder {
+    return this.usuarioSolicitudSelect;
+  }
+
+  async getUsuarioSolicitudSelectedOption(): Promise<string> {
+    return await this.usuarioSolicitudSelect.element(by.css('option:checked')).getText();
   }
 
   async itemNomencladorSelectLastOption(): Promise<void> {

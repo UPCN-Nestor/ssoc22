@@ -55,10 +55,19 @@ public class SolicitudPrestacion implements Serializable {
     @Column(name = "observaciones")
     private String observaciones;
 
-    @JsonIgnoreProperties(value = { "prestador", "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = {
+            "usuarioSalida", "usuarioLlegada", "usuarioLibre", "prestador", "chofer", "medico", "enfermero", "movil", "solicitudPrestacion",
+        },
+        allowSetters = true
+    )
     @OneToOne
     @JoinColumn(unique = true)
     private Despacho despacho;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User usuarioSolicitud;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "prestacion", "solicitudPrestacions", "provisions", "prestadors" }, allowSetters = true)
@@ -233,6 +242,19 @@ public class SolicitudPrestacion implements Serializable {
 
     public SolicitudPrestacion despacho(Despacho despacho) {
         this.setDespacho(despacho);
+        return this;
+    }
+
+    public User getUsuarioSolicitud() {
+        return this.usuarioSolicitud;
+    }
+
+    public void setUsuarioSolicitud(User user) {
+        this.usuarioSolicitud = user;
+    }
+
+    public SolicitudPrestacion usuarioSolicitud(User user) {
+        this.setUsuarioSolicitud(user);
         return this;
     }
 

@@ -32,6 +32,18 @@ public class Despacho implements Serializable {
     @Column(name = "hora_libre")
     private ZonedDateTime horaLibre;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User usuarioSalida;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User usuarioLlegada;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User usuarioLibre;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "itemNomencladors", "despachos" }, allowSetters = true)
     private Prestador prestador;
@@ -52,7 +64,7 @@ public class Despacho implements Serializable {
     @JsonIgnoreProperties(value = { "despachos" }, allowSetters = true)
     private Movil movil;
 
-    @JsonIgnoreProperties(value = { "despacho", "itemNomenclador", "insumos", "individuo" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "despacho", "usuarioSolicitud", "itemNomenclador", "insumos", "individuo" }, allowSetters = true)
     @OneToOne(mappedBy = "despacho")
     private SolicitudPrestacion solicitudPrestacion;
 
@@ -108,6 +120,45 @@ public class Despacho implements Serializable {
 
     public void setHoraLibre(ZonedDateTime horaLibre) {
         this.horaLibre = horaLibre;
+    }
+
+    public User getUsuarioSalida() {
+        return this.usuarioSalida;
+    }
+
+    public void setUsuarioSalida(User user) {
+        this.usuarioSalida = user;
+    }
+
+    public Despacho usuarioSalida(User user) {
+        this.setUsuarioSalida(user);
+        return this;
+    }
+
+    public User getUsuarioLlegada() {
+        return this.usuarioLlegada;
+    }
+
+    public void setUsuarioLlegada(User user) {
+        this.usuarioLlegada = user;
+    }
+
+    public Despacho usuarioLlegada(User user) {
+        this.setUsuarioLlegada(user);
+        return this;
+    }
+
+    public User getUsuarioLibre() {
+        return this.usuarioLibre;
+    }
+
+    public void setUsuarioLibre(User user) {
+        this.usuarioLibre = user;
+    }
+
+    public Despacho usuarioLibre(User user) {
+        this.setUsuarioLibre(user);
+        return this;
     }
 
     public Prestador getPrestador() {

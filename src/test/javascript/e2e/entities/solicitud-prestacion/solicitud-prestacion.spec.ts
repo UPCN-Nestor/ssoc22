@@ -61,6 +61,7 @@ describe('SolicitudPrestacion e2e test', () => {
       solicitudPrestacionUpdatePage.getInternacionInput().click(),
       solicitudPrestacionUpdatePage.setObservacionesInput('observaciones'),
       solicitudPrestacionUpdatePage.despachoSelectLastOption(),
+      solicitudPrestacionUpdatePage.usuarioSolicitudSelectLastOption(),
       solicitudPrestacionUpdatePage.itemNomencladorSelectLastOption(),
       // solicitudPrestacionUpdatePage.insumoSelectLastOption(),
       solicitudPrestacionUpdatePage.individuoSelectLastOption(),

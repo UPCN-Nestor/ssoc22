@@ -25,6 +25,27 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "despacho",
+      "ownerSide": true,
+      "relationshipName": "usuarioSalida",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "despacho",
+      "ownerSide": true,
+      "relationshipName": "usuarioLlegada",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "despacho",
+      "ownerSide": true,
+      "relationshipName": "usuarioLibre",
+      "relationshipType": "one-to-one"
+    },
+    {
       "otherEntityName": "prestador",
       "otherEntityRelationshipName": "despacho",
       "relationshipName": "prestador",

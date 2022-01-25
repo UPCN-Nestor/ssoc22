@@ -60,6 +60,13 @@
       "relationshipType": "one-to-one"
     },
     {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "ownerSide": true,
+      "relationshipName": "usuarioSolicitud",
+      "relationshipType": "one-to-one"
+    },
+    {
       "otherEntityName": "itemNomenclador",
       "otherEntityRelationshipName": "solicitudPrestacion",
       "relationshipName": "itemNomenclador",

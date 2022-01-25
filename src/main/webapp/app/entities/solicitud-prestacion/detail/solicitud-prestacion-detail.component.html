@@ -62,6 +62,10 @@
             <a [routerLink]="['/despacho', solicitudPrestacion.despacho?.id, 'view']">{{ solicitudPrestacion.despacho?.id }}</a>
           </div>
         </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.usuarioSolicitud">Usuario Solicitud</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.usuarioSolicitud?.id }}</span>
+        </dd>
         <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador">Item Nomenclador</span></dt>
         <dd>
           <div *ngIf="solicitudPrestacion.itemNomenclador">

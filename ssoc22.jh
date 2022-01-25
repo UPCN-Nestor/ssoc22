@@ -122,7 +122,6 @@ entity SolicitudPrestacion {
     seEfectuo Boolean
     internacion Boolean
     observaciones String
-    // usuarioSolicitud Jhi_User
 }
 
 entity ItemNomenclador {
@@ -172,6 +171,10 @@ relationship ManyToMany {
 
 relationship OneToOne {
 	SolicitudPrestacion to Despacho
+    SolicitudPrestacion{usuarioSolicitud} to User
+    Despacho{usuarioSalida} to User
+    Despacho{usuarioLlegada} to User
+    Despacho{usuarioLibre} to User
 }
 
 

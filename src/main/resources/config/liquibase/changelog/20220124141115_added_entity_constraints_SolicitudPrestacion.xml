@@ -14,6 +14,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="despacho"/>
 
+        <addForeignKeyConstraint baseColumnNames="usuario_solicitud_id"
+                                 baseTableName="solicitud_prestacion"
+                                 constraintName="fk_solicitud_prestacion__usuario_solicitud_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
         <addForeignKeyConstraint baseColumnNames="item_nomenclador_id"
                                  baseTableName="solicitud_prestacion"
                                  constraintName="fk_solicitud_prestacion__item_nomenclador_id"

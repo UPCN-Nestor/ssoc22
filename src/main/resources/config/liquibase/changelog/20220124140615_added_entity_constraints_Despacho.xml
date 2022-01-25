@@ -8,6 +8,24 @@
     -->
     <changeSet id="20220124140615-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="usuario_salida_id"
+                                 baseTableName="despacho"
+                                 constraintName="fk_despacho__usuario_salida_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="usuario_llegada_id"
+                                 baseTableName="despacho"
+                                 constraintName="fk_despacho__usuario_llegada_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="usuario_libre_id"
+                                 baseTableName="despacho"
+                                 constraintName="fk_despacho__usuario_libre_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
         <addForeignKeyConstraint baseColumnNames="prestador_id"
                                  baseTableName="despacho"
                                  constraintName="fk_despacho__prestador_id"

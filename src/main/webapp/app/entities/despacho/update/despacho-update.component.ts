@@ -10,6 +10,8 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { IDespacho, Despacho } from '../despacho.model';
 import { DespachoService } from '../service/despacho.service';
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/user.service';
 import { IPrestador } from 'app/entities/prestador/prestador.model';
 import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
 import { IChofer } from 'app/entities/chofer/chofer.model';
@@ -28,6 +30,7 @@ import { MovilService } from 'app/entities/movil/service/movil.service';
 export class DespachoUpdateComponent implements OnInit {
   isSaving = false;
 
+  usersSharedCollection: IUser[] = [];
   prestadorsSharedCollection: IPrestador[] = [];
   chofersSharedCollection: IChofer[] = [];
   medicosSharedCollection: IMedico[] = [];
@@ -39,6 +42,9 @@ export class DespachoUpdateComponent implements OnInit {
     horaSalida: [],
     horaLlegada: [],
     horaLibre: [],
+    usuarioSalida: [],
+    usuarioLlegada: [],
+    usuarioLibre: [],
     prestador: [],
     chofer: [],
     medico: [],
@@ -48,6 +54,7 @@ export class DespachoUpdateComponent implements OnInit {
 
   constructor(
     protected despachoService: DespachoService,
+    protected userService: UserService,
     protected prestadorService: PrestadorService,
     protected choferService: ChoferService,
     protected medicoService: MedicoService,
@@ -84,6 +91,10 @@ export class DespachoUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.despachoService.create(despacho));
     }
+  }
+
+  trackUserById(index: number, item: IUser): number {
+    return item.id!;
   }
 
   trackPrestadorById(index: number, item: IPrestador): number {
@@ -131,6 +142,9 @@ export class DespachoUpdateComponent implements OnInit {
       horaSalida: despacho.horaSalida ? despacho.horaSalida.format(DATE_TIME_FORMAT) : null,
       horaLlegada: despacho.horaLlegada ? despacho.horaLlegada.format(DATE_TIME_FORMAT) : null,
       horaLibre: despacho.horaLibre ? despacho.horaLibre.format(DATE_TIME_FORMAT) : null,
+      usuarioSalida: despacho.usuarioSalida,
+      usuarioLlegada: despacho.usuarioLlegada,
+      usuarioLibre: despacho.usuarioLibre,
       prestador: despacho.prestador,
       chofer: despacho.chofer,
       medico: despacho.medico,
@@ -138,6 +152,12 @@ export class DespachoUpdateComponent implements OnInit {
       movil: despacho.movil,
     });
 
+    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(
+      this.usersSharedCollection,
+      despacho.usuarioSalida,
+      despacho.usuarioLlegada,
+      despacho.usuarioLibre
+    );
     this.prestadorsSharedCollection = this.prestadorService.addPrestadorToCollectionIfMissing(
       this.prestadorsSharedCollection,
       despacho.prestador
@@ -152,6 +172,21 @@ export class DespachoUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.userService
+      .query()
+      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
+      .pipe(
+        map((users: IUser[]) =>
+          this.userService.addUserToCollectionIfMissing(
+            users,
+            this.editForm.get('usuarioSalida')!.value,
+            this.editForm.get('usuarioLlegada')!.value,
+            this.editForm.get('usuarioLibre')!.value
+          )
+        )
+      )
+      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+
     this.prestadorService
       .query()
       .pipe(map((res: HttpResponse<IPrestador[]>) => res.body ?? []))
@@ -200,6 +235,9 @@ export class DespachoUpdateComponent implements OnInit {
         ? dayjs(this.editForm.get(['horaLlegada'])!.value, DATE_TIME_FORMAT)
         : undefined,
       horaLibre: this.editForm.get(['horaLibre'])!.value ? dayjs(this.editForm.get(['horaLibre'])!.value, DATE_TIME_FORMAT) : undefined,
+      usuarioSalida: this.editForm.get(['usuarioSalida'])!.value,
+      usuarioLlegada: this.editForm.get(['usuarioLlegada'])!.value,
+      usuarioLibre: this.editForm.get(['usuarioLibre'])!.value,
       prestador: this.editForm.get(['prestador'])!.value,
       chofer: this.editForm.get(['chofer'])!.value,
       medico: this.editForm.get(['medico'])!.value,

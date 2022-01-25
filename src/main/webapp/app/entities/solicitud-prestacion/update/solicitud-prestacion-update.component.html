@@ -120,6 +120,29 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.usuarioSolicitud" for="field_usuarioSolicitud"
+            >Usuario Solicitud</label
+          >
+          <select
+            class="form-control"
+            id="field_usuarioSolicitud"
+            data-cy="usuarioSolicitud"
+            name="usuarioSolicitud"
+            formControlName="usuarioSolicitud"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                userOption.id === editForm.get('usuarioSolicitud')!.value?.id ? editForm.get('usuarioSolicitud')!.value : userOption
+              "
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador" for="field_itemNomenclador"
             >Item Nomenclador</label
           >
