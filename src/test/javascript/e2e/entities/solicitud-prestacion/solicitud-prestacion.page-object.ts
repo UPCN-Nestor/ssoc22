@@ -30,14 +30,15 @@ export class SolicitudPrestacionUpdatePage {
   cancelButton = element(by.id('cancel-save'));
 
   idInput = element(by.id('field_id'));
-  fechaInput = element(by.id('field_fecha'));
   numeroInput = element(by.id('field_numero'));
   horaSolicitudInput = element(by.id('field_horaSolicitud'));
   domicilioInput = element(by.id('field_domicilio'));
   telefonoInput = element(by.id('field_telefono'));
   edadInput = element(by.id('field_edad'));
+  motivoLlamadoInput = element(by.id('field_motivoLlamado'));
+  seEfectuoInput = element(by.id('field_seEfectuo'));
+  internacionInput = element(by.id('field_internacion'));
   observacionesInput = element(by.id('field_observaciones'));
-  tipoInput = element(by.id('field_tipo'));
 
   despachoSelect = element(by.id('field_despacho'));
   itemNomencladorSelect = element(by.id('field_itemNomenclador'));
@@ -54,14 +55,6 @@ export class SolicitudPrestacionUpdatePage {
 
   async getIdInput(): Promise<string> {
     return await this.idInput.getAttribute('value');
-  }
-
-  async setFechaInput(fecha: string): Promise<void> {
-    await this.fechaInput.sendKeys(fecha);
-  }
-
-  async getFechaInput(): Promise<string> {
-    return await this.fechaInput.getAttribute('value');
   }
 
   async setNumeroInput(numero: string): Promise<void> {
@@ -104,20 +97,28 @@ export class SolicitudPrestacionUpdatePage {
     return await this.edadInput.getAttribute('value');
   }
 
+  async setMotivoLlamadoInput(motivoLlamado: string): Promise<void> {
+    await this.motivoLlamadoInput.sendKeys(motivoLlamado);
+  }
+
+  async getMotivoLlamadoInput(): Promise<string> {
+    return await this.motivoLlamadoInput.getAttribute('value');
+  }
+
+  getSeEfectuoInput(): ElementFinder {
+    return this.seEfectuoInput;
+  }
+
+  getInternacionInput(): ElementFinder {
+    return this.internacionInput;
+  }
+
   async setObservacionesInput(observaciones: string): Promise<void> {
     await this.observacionesInput.sendKeys(observaciones);
   }
 
   async getObservacionesInput(): Promise<string> {
     return await this.observacionesInput.getAttribute('value');
-  }
-
-  async setTipoInput(tipo: string): Promise<void> {
-    await this.tipoInput.sendKeys(tipo);
-  }
-
-  async getTipoInput(): Promise<string> {
-    return await this.tipoInput.getAttribute('value');
   }
 
   async despachoSelectLastOption(): Promise<void> {

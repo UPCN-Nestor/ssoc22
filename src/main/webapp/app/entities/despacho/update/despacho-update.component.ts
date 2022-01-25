@@ -38,6 +38,7 @@ export class DespachoUpdateComponent implements OnInit {
     id: [],
     horaSalida: [],
     horaLlegada: [],
+    horaLibre: [],
     prestador: [],
     chofer: [],
     medico: [],
@@ -62,6 +63,7 @@ export class DespachoUpdateComponent implements OnInit {
         const today = dayjs().startOf('day');
         despacho.horaSalida = today;
         despacho.horaLlegada = today;
+        despacho.horaLibre = today;
       }
 
       this.updateForm(despacho);
@@ -128,6 +130,7 @@ export class DespachoUpdateComponent implements OnInit {
       id: despacho.id,
       horaSalida: despacho.horaSalida ? despacho.horaSalida.format(DATE_TIME_FORMAT) : null,
       horaLlegada: despacho.horaLlegada ? despacho.horaLlegada.format(DATE_TIME_FORMAT) : null,
+      horaLibre: despacho.horaLibre ? despacho.horaLibre.format(DATE_TIME_FORMAT) : null,
       prestador: despacho.prestador,
       chofer: despacho.chofer,
       medico: despacho.medico,
@@ -196,6 +199,7 @@ export class DespachoUpdateComponent implements OnInit {
       horaLlegada: this.editForm.get(['horaLlegada'])!.value
         ? dayjs(this.editForm.get(['horaLlegada'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      horaLibre: this.editForm.get(['horaLibre'])!.value ? dayjs(this.editForm.get(['horaLibre'])!.value, DATE_TIME_FORMAT) : undefined,
       prestador: this.editForm.get(['prestador'])!.value,
       chofer: this.editForm.get(['chofer'])!.value,
       medico: this.editForm.get(['medico'])!.value,

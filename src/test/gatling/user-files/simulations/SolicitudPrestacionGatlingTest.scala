@@ -71,14 +71,15 @@ class SolicitudPrestacionGatlingTest extends Simulation {
             .post("/api/solicitud-prestacions")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "fecha":"2020-01-01T00:00:00.000Z"
-                , "numero":"0"
+                "numero":"0"
                 , "horaSolicitud":"2020-01-01T00:00:00.000Z"
                 , "domicilio":"SAMPLE_TEXT"
                 , "telefono":"SAMPLE_TEXT"
                 , "edad":"0"
+                , "motivoLlamado":"SAMPLE_TEXT"
+                , "seEfectuo":null
+                , "internacion":null
                 , "observaciones":"SAMPLE_TEXT"
-                , "tipo":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_solicitudPrestacion_url"))).exitHereIfFailed

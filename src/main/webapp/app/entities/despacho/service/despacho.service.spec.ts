@@ -27,6 +27,7 @@ describe('Despacho Service', () => {
       id: 0,
       horaSalida: currentDate,
       horaLlegada: currentDate,
+      horaLibre: currentDate,
     };
   });
 
@@ -36,6 +37,7 @@ describe('Despacho Service', () => {
         {
           horaSalida: currentDate.format(DATE_TIME_FORMAT),
           horaLlegada: currentDate.format(DATE_TIME_FORMAT),
+          horaLibre: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
@@ -53,6 +55,7 @@ describe('Despacho Service', () => {
           id: 0,
           horaSalida: currentDate.format(DATE_TIME_FORMAT),
           horaLlegada: currentDate.format(DATE_TIME_FORMAT),
+          horaLibre: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
@@ -61,6 +64,7 @@ describe('Despacho Service', () => {
         {
           horaSalida: currentDate,
           horaLlegada: currentDate,
+          horaLibre: currentDate,
         },
         returnedFromService
       );
@@ -78,6 +82,7 @@ describe('Despacho Service', () => {
           id: 1,
           horaSalida: currentDate.format(DATE_TIME_FORMAT),
           horaLlegada: currentDate.format(DATE_TIME_FORMAT),
+          horaLibre: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
@@ -86,6 +91,7 @@ describe('Despacho Service', () => {
         {
           horaSalida: currentDate,
           horaLlegada: currentDate,
+          horaLibre: currentDate,
         },
         returnedFromService
       );
@@ -101,6 +107,7 @@ describe('Despacho Service', () => {
       const patchObject = Object.assign(
         {
           horaLlegada: currentDate.format(DATE_TIME_FORMAT),
+          horaLibre: currentDate.format(DATE_TIME_FORMAT),
         },
         new Despacho()
       );
@@ -111,6 +118,7 @@ describe('Despacho Service', () => {
         {
           horaSalida: currentDate,
           horaLlegada: currentDate,
+          horaLibre: currentDate,
         },
         returnedFromService
       );
@@ -128,6 +136,7 @@ describe('Despacho Service', () => {
           id: 1,
           horaSalida: currentDate.format(DATE_TIME_FORMAT),
           horaLlegada: currentDate.format(DATE_TIME_FORMAT),
+          horaLibre: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
@@ -136,6 +145,7 @@ describe('Despacho Service', () => {
         {
           horaSalida: currentDate,
           horaLlegada: currentDate,
+          horaLibre: currentDate,
         },
         returnedFromService
       );
@@ -185,7 +195,7 @@ describe('Despacho Service', () => {
       });
 
       it('should add only unique Despacho to an array', () => {
-        const despachoArray: IDespacho[] = [{ id: 123 }, { id: 456 }, { id: 84575 }];
+        const despachoArray: IDespacho[] = [{ id: 123 }, { id: 456 }, { id: 64883 }];
         const despachoCollection: IDespacho[] = [{ id: 123 }];
         expectedResult = service.addDespachoToCollectionIfMissing(despachoCollection, ...despachoArray);
         expect(expectedResult).toHaveLength(3);

@@ -22,6 +22,10 @@
         <dd>
           <span>{{ despacho.horaLlegada | formatMediumDatetime }}</span>
         </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.horaLibre">Hora Libre</span></dt>
+        <dd>
+          <span>{{ despacho.horaLibre | formatMediumDatetime }}</span>
+        </dd>
         <dt><span jhiTranslate="ssoc22App.despacho.prestador">Prestador</span></dt>
         <dd>
           <div *ngIf="despacho.prestador">

@@ -20,6 +20,7 @@
       "id": "ID",
       "horaSalida": "Hora Salida",
       "horaLlegada": "Hora Llegada",
+      "horaLibre": "Hora Libre",
       "prestador": "Prestador",
       "chofer": "Chofer",
       "medico": "Medico",

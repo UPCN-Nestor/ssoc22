@@ -10,6 +10,7 @@ export interface IDespacho {
   id?: number;
   horaSalida?: dayjs.Dayjs | null;
   horaLlegada?: dayjs.Dayjs | null;
+  horaLibre?: dayjs.Dayjs | null;
   prestador?: IPrestador | null;
   chofer?: IChofer | null;
   medico?: IMedico | null;
@@ -23,6 +24,7 @@ export class Despacho implements IDespacho {
     public id?: number,
     public horaSalida?: dayjs.Dayjs | null,
     public horaLlegada?: dayjs.Dayjs | null,
+    public horaLibre?: dayjs.Dayjs | null,
     public prestador?: IPrestador | null,
     public chofer?: IChofer | null,
     public medico?: IMedico | null,

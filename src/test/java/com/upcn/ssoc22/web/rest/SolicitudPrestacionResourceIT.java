@@ -42,9 +42,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class SolicitudPrestacionResourceIT {
 
-    private static final ZonedDateTime DEFAULT_FECHA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_FECHA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
     private static final Integer DEFAULT_NUMERO = 1;
     private static final Integer UPDATED_NUMERO = 2;
 
@@ -60,11 +57,17 @@ class SolicitudPrestacionResourceIT {
     private static final Integer DEFAULT_EDAD = 1;
     private static final Integer UPDATED_EDAD = 2;
 
+    private static final String DEFAULT_MOTIVO_LLAMADO = "AAAAAAAAAA";
+    private static final String UPDATED_MOTIVO_LLAMADO = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_SE_EFECTUO = false;
+    private static final Boolean UPDATED_SE_EFECTUO = true;
+
+    private static final Boolean DEFAULT_INTERNACION = false;
+    private static final Boolean UPDATED_INTERNACION = true;
+
     private static final String DEFAULT_OBSERVACIONES = "AAAAAAAAAA";
     private static final String UPDATED_OBSERVACIONES = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TIPO = "AAAAAAAAAA";
-    private static final String UPDATED_TIPO = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/solicitud-prestacions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -94,14 +97,15 @@ class SolicitudPrestacionResourceIT {
      */
     public static SolicitudPrestacion createEntity(EntityManager em) {
         SolicitudPrestacion solicitudPrestacion = new SolicitudPrestacion()
-            .fecha(DEFAULT_FECHA)
             .numero(DEFAULT_NUMERO)
             .horaSolicitud(DEFAULT_HORA_SOLICITUD)
             .domicilio(DEFAULT_DOMICILIO)
             .telefono(DEFAULT_TELEFONO)
             .edad(DEFAULT_EDAD)
-            .observaciones(DEFAULT_OBSERVACIONES)
-            .tipo(DEFAULT_TIPO);
+            .motivoLlamado(DEFAULT_MOTIVO_LLAMADO)
+            .seEfectuo(DEFAULT_SE_EFECTUO)
+            .internacion(DEFAULT_INTERNACION)
+            .observaciones(DEFAULT_OBSERVACIONES);
         return solicitudPrestacion;
     }
 
@@ -113,14 +117,15 @@ class SolicitudPrestacionResourceIT {
      */
     public static SolicitudPrestacion createUpdatedEntity(EntityManager em) {
         SolicitudPrestacion solicitudPrestacion = new SolicitudPrestacion()
-            .fecha(UPDATED_FECHA)
             .numero(UPDATED_NUMERO)
             .horaSolicitud(UPDATED_HORA_SOLICITUD)
             .domicilio(UPDATED_DOMICILIO)
             .telefono(UPDATED_TELEFONO)
             .edad(UPDATED_EDAD)
-            .observaciones(UPDATED_OBSERVACIONES)
-            .tipo(UPDATED_TIPO);
+            .motivoLlamado(UPDATED_MOTIVO_LLAMADO)
+            .seEfectuo(UPDATED_SE_EFECTUO)
+            .internacion(UPDATED_INTERNACION)
+            .observaciones(UPDATED_OBSERVACIONES);
         return solicitudPrestacion;
     }
 
@@ -144,14 +149,15 @@ class SolicitudPrestacionResourceIT {
         List<SolicitudPrestacion> solicitudPrestacionList = solicitudPrestacionRepository.findAll();
         assertThat(solicitudPrestacionList).hasSize(databaseSizeBeforeCreate + 1);
         SolicitudPrestacion testSolicitudPrestacion = solicitudPrestacionList.get(solicitudPrestacionList.size() - 1);
-        assertThat(testSolicitudPrestacion.getFecha()).isEqualTo(DEFAULT_FECHA);
         assertThat(testSolicitudPrestacion.getNumero()).isEqualTo(DEFAULT_NUMERO);
         assertThat(testSolicitudPrestacion.getHoraSolicitud()).isEqualTo(DEFAULT_HORA_SOLICITUD);
         assertThat(testSolicitudPrestacion.getDomicilio()).isEqualTo(DEFAULT_DOMICILIO);
         assertThat(testSolicitudPrestacion.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
         assertThat(testSolicitudPrestacion.getEdad()).isEqualTo(DEFAULT_EDAD);
+        assertThat(testSolicitudPrestacion.getMotivoLlamado()).isEqualTo(DEFAULT_MOTIVO_LLAMADO);
+        assertThat(testSolicitudPrestacion.getSeEfectuo()).isEqualTo(DEFAULT_SE_EFECTUO);
+        assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(DEFAULT_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(DEFAULT_OBSERVACIONES);
-        assertThat(testSolicitudPrestacion.getTipo()).isEqualTo(DEFAULT_TIPO);
     }
 
     @Test
@@ -186,14 +192,15 @@ class SolicitudPrestacionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(solicitudPrestacion.getId().intValue())))
-            .andExpect(jsonPath("$.[*].fecha").value(hasItem(sameInstant(DEFAULT_FECHA))))
             .andExpect(jsonPath("$.[*].numero").value(hasItem(DEFAULT_NUMERO)))
             .andExpect(jsonPath("$.[*].horaSolicitud").value(hasItem(sameInstant(DEFAULT_HORA_SOLICITUD))))
             .andExpect(jsonPath("$.[*].domicilio").value(hasItem(DEFAULT_DOMICILIO)))
             .andExpect(jsonPath("$.[*].telefono").value(hasItem(DEFAULT_TELEFONO)))
             .andExpect(jsonPath("$.[*].edad").value(hasItem(DEFAULT_EDAD)))
-            .andExpect(jsonPath("$.[*].observaciones").value(hasItem(DEFAULT_OBSERVACIONES)))
-            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)));
+            .andExpect(jsonPath("$.[*].motivoLlamado").value(hasItem(DEFAULT_MOTIVO_LLAMADO)))
+            .andExpect(jsonPath("$.[*].seEfectuo").value(hasItem(DEFAULT_SE_EFECTUO.booleanValue())))
+            .andExpect(jsonPath("$.[*].internacion").value(hasItem(DEFAULT_INTERNACION.booleanValue())))
+            .andExpect(jsonPath("$.[*].observaciones").value(hasItem(DEFAULT_OBSERVACIONES)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -226,14 +233,15 @@ class SolicitudPrestacionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(solicitudPrestacion.getId().intValue()))
-            .andExpect(jsonPath("$.fecha").value(sameInstant(DEFAULT_FECHA)))
             .andExpect(jsonPath("$.numero").value(DEFAULT_NUMERO))
             .andExpect(jsonPath("$.horaSolicitud").value(sameInstant(DEFAULT_HORA_SOLICITUD)))
             .andExpect(jsonPath("$.domicilio").value(DEFAULT_DOMICILIO))
             .andExpect(jsonPath("$.telefono").value(DEFAULT_TELEFONO))
             .andExpect(jsonPath("$.edad").value(DEFAULT_EDAD))
-            .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES))
-            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO));
+            .andExpect(jsonPath("$.motivoLlamado").value(DEFAULT_MOTIVO_LLAMADO))
+            .andExpect(jsonPath("$.seEfectuo").value(DEFAULT_SE_EFECTUO.booleanValue()))
+            .andExpect(jsonPath("$.internacion").value(DEFAULT_INTERNACION.booleanValue()))
+            .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES));
     }
 
     @Test
@@ -256,14 +264,15 @@ class SolicitudPrestacionResourceIT {
         // Disconnect from session so that the updates on updatedSolicitudPrestacion are not directly saved in db
         em.detach(updatedSolicitudPrestacion);
         updatedSolicitudPrestacion
-            .fecha(UPDATED_FECHA)
             .numero(UPDATED_NUMERO)
             .horaSolicitud(UPDATED_HORA_SOLICITUD)
             .domicilio(UPDATED_DOMICILIO)
             .telefono(UPDATED_TELEFONO)
             .edad(UPDATED_EDAD)
-            .observaciones(UPDATED_OBSERVACIONES)
-            .tipo(UPDATED_TIPO);
+            .motivoLlamado(UPDATED_MOTIVO_LLAMADO)
+            .seEfectuo(UPDATED_SE_EFECTUO)
+            .internacion(UPDATED_INTERNACION)
+            .observaciones(UPDATED_OBSERVACIONES);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -277,14 +286,15 @@ class SolicitudPrestacionResourceIT {
         List<SolicitudPrestacion> solicitudPrestacionList = solicitudPrestacionRepository.findAll();
         assertThat(solicitudPrestacionList).hasSize(databaseSizeBeforeUpdate);
         SolicitudPrestacion testSolicitudPrestacion = solicitudPrestacionList.get(solicitudPrestacionList.size() - 1);
-        assertThat(testSolicitudPrestacion.getFecha()).isEqualTo(UPDATED_FECHA);
         assertThat(testSolicitudPrestacion.getNumero()).isEqualTo(UPDATED_NUMERO);
         assertThat(testSolicitudPrestacion.getHoraSolicitud()).isEqualTo(UPDATED_HORA_SOLICITUD);
         assertThat(testSolicitudPrestacion.getDomicilio()).isEqualTo(UPDATED_DOMICILIO);
         assertThat(testSolicitudPrestacion.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testSolicitudPrestacion.getEdad()).isEqualTo(UPDATED_EDAD);
+        assertThat(testSolicitudPrestacion.getMotivoLlamado()).isEqualTo(UPDATED_MOTIVO_LLAMADO);
+        assertThat(testSolicitudPrestacion.getSeEfectuo()).isEqualTo(UPDATED_SE_EFECTUO);
+        assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(UPDATED_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
-        assertThat(testSolicitudPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test
@@ -358,11 +368,12 @@ class SolicitudPrestacionResourceIT {
         partialUpdatedSolicitudPrestacion.setId(solicitudPrestacion.getId());
 
         partialUpdatedSolicitudPrestacion
-            .fecha(UPDATED_FECHA)
             .numero(UPDATED_NUMERO)
-            .domicilio(UPDATED_DOMICILIO)
+            .horaSolicitud(UPDATED_HORA_SOLICITUD)
             .telefono(UPDATED_TELEFONO)
             .edad(UPDATED_EDAD)
+            .motivoLlamado(UPDATED_MOTIVO_LLAMADO)
+            .seEfectuo(UPDATED_SE_EFECTUO)
             .observaciones(UPDATED_OBSERVACIONES);
 
         restSolicitudPrestacionMockMvc
@@ -377,14 +388,15 @@ class SolicitudPrestacionResourceIT {
         List<SolicitudPrestacion> solicitudPrestacionList = solicitudPrestacionRepository.findAll();
         assertThat(solicitudPrestacionList).hasSize(databaseSizeBeforeUpdate);
         SolicitudPrestacion testSolicitudPrestacion = solicitudPrestacionList.get(solicitudPrestacionList.size() - 1);
-        assertThat(testSolicitudPrestacion.getFecha()).isEqualTo(UPDATED_FECHA);
         assertThat(testSolicitudPrestacion.getNumero()).isEqualTo(UPDATED_NUMERO);
-        assertThat(testSolicitudPrestacion.getHoraSolicitud()).isEqualTo(DEFAULT_HORA_SOLICITUD);
-        assertThat(testSolicitudPrestacion.getDomicilio()).isEqualTo(UPDATED_DOMICILIO);
+        assertThat(testSolicitudPrestacion.getHoraSolicitud()).isEqualTo(UPDATED_HORA_SOLICITUD);
+        assertThat(testSolicitudPrestacion.getDomicilio()).isEqualTo(DEFAULT_DOMICILIO);
         assertThat(testSolicitudPrestacion.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testSolicitudPrestacion.getEdad()).isEqualTo(UPDATED_EDAD);
+        assertThat(testSolicitudPrestacion.getMotivoLlamado()).isEqualTo(UPDATED_MOTIVO_LLAMADO);
+        assertThat(testSolicitudPrestacion.getSeEfectuo()).isEqualTo(UPDATED_SE_EFECTUO);
+        assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(DEFAULT_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
-        assertThat(testSolicitudPrestacion.getTipo()).isEqualTo(DEFAULT_TIPO);
     }
 
     @Test
@@ -400,14 +412,15 @@ class SolicitudPrestacionResourceIT {
         partialUpdatedSolicitudPrestacion.setId(solicitudPrestacion.getId());
 
         partialUpdatedSolicitudPrestacion
-            .fecha(UPDATED_FECHA)
             .numero(UPDATED_NUMERO)
             .horaSolicitud(UPDATED_HORA_SOLICITUD)
             .domicilio(UPDATED_DOMICILIO)
             .telefono(UPDATED_TELEFONO)
             .edad(UPDATED_EDAD)
-            .observaciones(UPDATED_OBSERVACIONES)
-            .tipo(UPDATED_TIPO);
+            .motivoLlamado(UPDATED_MOTIVO_LLAMADO)
+            .seEfectuo(UPDATED_SE_EFECTUO)
+            .internacion(UPDATED_INTERNACION)
+            .observaciones(UPDATED_OBSERVACIONES);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -421,14 +434,15 @@ class SolicitudPrestacionResourceIT {
         List<SolicitudPrestacion> solicitudPrestacionList = solicitudPrestacionRepository.findAll();
         assertThat(solicitudPrestacionList).hasSize(databaseSizeBeforeUpdate);
         SolicitudPrestacion testSolicitudPrestacion = solicitudPrestacionList.get(solicitudPrestacionList.size() - 1);
-        assertThat(testSolicitudPrestacion.getFecha()).isEqualTo(UPDATED_FECHA);
         assertThat(testSolicitudPrestacion.getNumero()).isEqualTo(UPDATED_NUMERO);
         assertThat(testSolicitudPrestacion.getHoraSolicitud()).isEqualTo(UPDATED_HORA_SOLICITUD);
         assertThat(testSolicitudPrestacion.getDomicilio()).isEqualTo(UPDATED_DOMICILIO);
         assertThat(testSolicitudPrestacion.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testSolicitudPrestacion.getEdad()).isEqualTo(UPDATED_EDAD);
+        assertThat(testSolicitudPrestacion.getMotivoLlamado()).isEqualTo(UPDATED_MOTIVO_LLAMADO);
+        assertThat(testSolicitudPrestacion.getSeEfectuo()).isEqualTo(UPDATED_SE_EFECTUO);
+        assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(UPDATED_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
-        assertThat(testSolicitudPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test
