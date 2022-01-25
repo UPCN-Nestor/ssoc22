@@ -1,232 +1,293 @@
 <div>
+  <ul ngbNav #nav="ngbNav" class="nav-tabs mb-4">
+    <li ngbNavItem>
+      <a ngbNavLink
+        ><h6>
+          Emergencia<span class="badge badge-danger ml-2">{{ solicitudEmergencia?.length }}</span>
+        </h6></a
+      >
+      <ng-template ngbNavContent>
+        <h4 id="page-heading" data-cy="SolicitudPrestacionHeading">
+          <div class="d-flex flex-row">
+            <div>Emergencias</div>
+
+            <div class="ml-auto">
+              <button class="btn btn-info" (click)="loadAll()" [disabled]="isLoading">
+                <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+              </button>
+
+              <button
+                id="jh-create-entity"
+                data-cy="entityCreateButton"
+                class="btn btn-secondary jh-create-entity create-solicitud-prestacion"
+                [routerLink]="['/solicitud-prestacion/new']"
+              >
+                <fa-icon icon="plus"></fa-icon>
+                <span>Nueva emergencia</span>
+              </button>
+            </div>
+          </div>
+        </h4>
+
+        <div class="alert alert-warning" id="no-result" *ngIf="solicitudEmergencia?.length === 0">
+          <span jhiTranslate="ssoc22App.solicitudPrestacion.home.notFound">No solicitudEmergencia found</span>
+        </div>
+
+        <div class="table-responsive" id="entities" *ngIf="solicitudEmergencia && solicitudEmergencia.length > 0">
+          <table class="table table-striped table-sm table-hover" aria-describedby="page-heading">
+            <thead>
+              <tr>
+                <th scope="col"><span>#</span></th>
+                <th scope="col"><span>Solic.</span></th>
+                <th scope="col"><span>Salida</span></th>
+                <th scope="col"><span>Llegada</span></th>
+                <th scope="col"><span>Libre</span></th>
+                <th scope="col"><span>Paciente</span></th>
+                <th scope="col"><span>Socio</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.domicilio">Domicilio</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.telefono">Telefono</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.edad">Edad</span></th>
+
+                <th scope="col"><span>Motivo</span></th>
+                <th scope="col"><span>¿Se efectuó?</span></th>
+                <th scope="col"><span>¿Internación?</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let solicitudPrestacion of solicitudEmergencia; trackBy: trackId" data-cy="entityTable">
+                <td>{{ solicitudPrestacion.numero }}</td>
+                <td>{{ solicitudPrestacion.horaSolicitud | formatShortTime }}</td>
+                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaSalida) }}</td>
+                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaLlegada) }}</td>
+                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaLibre) }}</td>
+                <td>
+                  <div *ngIf="solicitudPrestacion.individuo">
+                    <a (click)="popupPaciente(solicitudPrestacion.individuo!)">{{ solicitudPrestacion.individuo?.nombre }}</a>
+                  </div>
+                </td>
+                <td><span class="text-danger">???</span></td>
+                <td>{{ solicitudPrestacion.domicilio }}</td>
+                <td>{{ solicitudPrestacion.telefono }}</td>
+                <td>{{ solicitudPrestacion.edad }}</td>
+                <td>{{ solicitudPrestacion.motivoLlamado }}</td>
+                <td class="text-center">
+                  <div *ngIf="solicitudPrestacion.seEfectuo"><fa-icon icon="check"></fa-icon></div>
+                  <div *ngIf="!solicitudPrestacion.seEfectuo"><fa-icon icon="times"></fa-icon></div>
+                </td>
+                <td class="text-center">
+                  <div *ngIf="solicitudPrestacion.internacion"><fa-icon icon="check"></fa-icon></div>
+                  <div *ngIf="!solicitudPrestacion.internacion"><fa-icon icon="times"></fa-icon></div>
+                </td>
+                <td>{{ solicitudPrestacion.observaciones }}</td>
+
+                <td class="text-right">
+                  <div class="btn-group">
+                    <!--
+                    <button
+                      type="submit"
+                      [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'view']"
+                      class="btn btn-info btn-sm"
+                      data-cy="entityDetailsButton"
+                    >
+                      <fa-icon icon="eye"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                    </button>
+                    -->
+
+                    <button
+                      *ngIf="mostrarBoton(solicitudPrestacion) == 'Salida'"
+                      type="submit"
+                      (click)="salida(solicitudPrestacion)"
+                      class="btn btn-outline-secondary btn-sm"
+                    >
+                      <fa-icon icon="ambulance"></fa-icon>
+                      <span class="d-none d-md-inline">Salida</span>
+                    </button>
+
+                    <button
+                      *ngIf="mostrarBoton(solicitudPrestacion) == 'Llegada'"
+                      type="submit"
+                      (click)="llegada(solicitudPrestacion)"
+                      class="btn btn-outline-secondary btn-sm"
+                    >
+                      <fa-icon icon="home"></fa-icon>
+                      <span class="d-none d-md-inline">Llegada</span>
+                    </button>
+
+                    <button
+                      *ngIf="mostrarBoton(solicitudPrestacion) == 'Libre'"
+                      type="submit"
+                      (click)="libre(solicitudPrestacion)"
+                      class="btn btn-outline-secondary btn-sm"
+                    >
+                      <fa-icon icon="check"></fa-icon>
+                      <span class="d-none d-md-inline">Libre</span>
+                    </button>
+
+                    <button
+                      type="submit"
+                      [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'edit']"
+                      class="btn btn-outline-primary btn-sm"
+                      data-cy="entityEditButton"
+                    >
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                      <span class="d-none d-md-inline">Modificar</span>
+                    </button>
+
+                    <!--
+                      <button type="submit" (click)="delete(solicitudPrestacion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                        <fa-icon icon="times"></fa-icon>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                      </button>
+                      -->
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+    </li>
+
+    <li ngbNavItem>
+      <a ngbNavLink
+        ><h6>
+          Atención Médica Prehospitalaria<span class="badge badge-info ml-2">{{ solicitudAtencionMedica?.length }}</span>
+        </h6></a
+      >
+      <ng-template ngbNavContent>
+        <h4 id="page-heading" data-cy="SolicitudPrestacionHeading">
+          <div class="d-flex flex-row">
+            <div font-weight-bold>Atención Médica Prehospitalaria</div>
+
+            <div class="ml-auto">
+              <button class="btn btn-info" (click)="loadAll()" [disabled]="isLoading">
+                <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+              </button>
+
+              <button
+                id="jh-create-entity"
+                data-cy="entityCreateButton"
+                class="btn btn-primary jh-create-entity create-solicitud-prestacion"
+                [routerLink]="['/solicitud-prestacion/new']"
+              >
+                <fa-icon icon="plus"></fa-icon>
+                <span>Nueva atención</span>
+              </button>
+            </div>
+          </div>
+        </h4>
+
+        <div class="alert alert-warning" id="no-result" *ngIf="solicitudAtencionMedica?.length === 0">
+          <span jhiTranslate="ssoc22App.solicitudPrestacion.home.notFound">No solicitudAtencionMedica found</span>
+        </div>
+
+        <div class="table-responsive" id="entities" *ngIf="solicitudAtencionMedica && solicitudAtencionMedica.length > 0">
+          <table class="table table-striped table-sm table-hover" aria-describedby="page-heading">
+            <thead>
+              <tr>
+                <th scope="col"><span>#</span></th>
+                <th scope="col"><span>Solic.</span></th>
+                <th scope="col"><span>Salida</span></th>
+                <th scope="col"><span>Llegada</span></th>
+                <th scope="col"><span>Libre</span></th>
+                <th scope="col"><span>Paciente</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.domicilio">Domicilio</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.telefono">Telefono</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.edad">Edad</span></th>
+
+                <th scope="col"><span>Motivo</span></th>
+                <th scope="col"><span>¿Se efectuó?</span></th>
+                <th scope="col"><span>¿Internación?</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let solicitudPrestacion of solicitudAtencionMedica; trackBy: trackId" data-cy="entityTable">
+                <td>{{ solicitudPrestacion.numero }}</td>
+                <td>{{ solicitudPrestacion.horaSolicitud | formatShortTime }}</td>
+                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaSalida) }}</td>
+                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaLlegada) }}</td>
+                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaLibre) }}</td>
+                <td>
+                  <div *ngIf="solicitudPrestacion.individuo">
+                    <a (click)="popupPaciente(solicitudPrestacion.individuo!)">{{ solicitudPrestacion.individuo?.nombre }}</a>
+                  </div>
+                </td>
+                <td>{{ solicitudPrestacion.domicilio }}</td>
+                <td>{{ solicitudPrestacion.telefono }}</td>
+                <td>{{ solicitudPrestacion.edad }}</td>
+                <td>{{ solicitudPrestacion.motivoLlamado }}</td>
+                <td class="text-center">
+                  <div *ngIf="solicitudPrestacion.seEfectuo"><fa-icon icon="check"></fa-icon></div>
+                  <div *ngIf="!solicitudPrestacion.seEfectuo"><fa-icon icon="times"></fa-icon></div>
+                </td>
+                <td class="text-center">
+                  <div *ngIf="solicitudPrestacion.internacion"><fa-icon icon="check"></fa-icon></div>
+                  <div *ngIf="!solicitudPrestacion.internacion"><fa-icon icon="times"></fa-icon></div>
+                </td>
+                <td>{{ solicitudPrestacion.observaciones }}</td>
+
+                <td class="text-right">
+                  <div class="btn-group">
+                    <!--
+                    <button
+                      type="submit"
+                      [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'view']"
+                      class="btn btn-info btn-sm"
+                      data-cy="entityDetailsButton"
+                    >
+                      <fa-icon icon="eye"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                    </button>
+                    -->
+
+                    <button
+                      type="submit"
+                      [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'edit']"
+                      class="btn btn-outline-primary btn-sm"
+                      data-cy="entityEditButton"
+                    >
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                      <span class="d-none d-md-inline">Modificar</span>
+                    </button>
+
+                    <!--
+                      <button type="submit" (click)="delete(solicitudPrestacion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                        <fa-icon icon="times"></fa-icon>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                      </button>
+                      -->
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+    </li>
+
+    <li ngbNavItem>
+      <a ngbNavLink
+        ><h6>Traslado Local<span class="badge badge-info ml-2"></span></h6
+      ></a>
+      <ng-template ngbNavContent></ng-template>
+    </li>
+
+    <li ngbNavItem>
+      <a ngbNavLink
+        ><h6>Traslado Larga Distancia<span class="badge badge-info ml-2"></span></h6
+      ></a>
+      <ng-template ngbNavContent></ng-template>
+    </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav"></div>
+
   <jhi-alert-error></jhi-alert-error>
 
-  <jhi-alert></jhi-alert>
-
-  <h4 id="page-heading" data-cy="SolicitudPrestacionHeading">
-    <span>Emergencias</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-secondary jh-create-entity create-solicitud-prestacion"
-        [routerLink]="['/solicitud-prestacion/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span>Nueva emergencia</span>
-      </button>
-    </div>
-  </h4>
-
-  <div class="alert alert-warning" id="no-result" *ngIf="solicitudEmergencia?.length === 0">
-    <span jhiTranslate="ssoc22App.solicitudPrestacion.home.notFound">No solicitudEmergencia found</span>
-  </div>
-
-  <div class="table-responsive" id="entities" *ngIf="solicitudEmergencia && solicitudEmergencia.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr>
-          <th scope="col"><span>#</span></th>
-          <th scope="col"><span>Hora</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.horaSolicitud">Hora Solicitud</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.domicilio">Domicilio</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.telefono">Telefono</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.edad">Edad</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.despacho">Despacho</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador">Item Nomenclador</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.insumo">Insumo</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.individuo">Individuo</span></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let solicitudPrestacion of solicitudEmergencia; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'view']">{{ solicitudPrestacion.id }}</a>
-          </td>
-          <td>{{ solicitudPrestacion.fecha | formatShortTime }}</td>
-          <td>{{ solicitudPrestacion.numero }}</td>
-          <td>{{ solicitudPrestacion.horaSolicitud | formatMediumDatetime }}</td>
-          <td>{{ solicitudPrestacion.domicilio }}</td>
-          <td>{{ solicitudPrestacion.telefono }}</td>
-          <td>{{ solicitudPrestacion.edad }}</td>
-          <td>{{ solicitudPrestacion.observaciones }}</td>
-          <td>
-            <div *ngIf="solicitudPrestacion.despacho">
-              <a [routerLink]="['/despacho', solicitudPrestacion.despacho?.id, 'view']">{{ solicitudPrestacion.despacho?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="solicitudPrestacion.itemNomenclador">
-              <a [routerLink]="['/item-nomenclador', solicitudPrestacion.itemNomenclador?.id, 'view']">{{
-                solicitudPrestacion.itemNomenclador?.id
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <span *ngFor="let insumo of solicitudPrestacion.insumos; let last = last">
-              <a class="form-control-static" [routerLink]="['/insumo', insumo.id, 'view']">{{ insumo.id }}</a
-              >{{ last ? '' : ', ' }}
-            </span>
-          </td>
-          <td>
-            <div *ngIf="solicitudPrestacion.individuo">
-              <a [routerLink]="['/individuo', solicitudPrestacion.individuo?.id, 'view']">{{ solicitudPrestacion.individuo?.id }}</a>
-            </div>
-          </td>
-          <td class="text-right">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
-
-              <!--
-                <button type="submit" (click)="delete(solicitudPrestacion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                  <fa-icon icon="times"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                </button>
-                -->
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="mt-5"></div>
-
-  <h4 id="page-heading" data-cy="SolicitudPrestacionHeading">
-    <span>Atención Médica Prehospitalaria</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-solicitud-prestacion"
-        [routerLink]="['/solicitud-prestacion/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span>Nueva atención médica</span>
-      </button>
-    </div>
-  </h4>
-
-  <div class="alert alert-warning" id="no-result" *ngIf="solicitudAtencionMedica?.length === 0">
-    <span jhiTranslate="ssoc22App.solicitudPrestacion.home.notFound">No solicitudAtencionMedica found</span>
-  </div>
-
-  <div class="table-responsive" id="entities" *ngIf="solicitudAtencionMedica && solicitudAtencionMedica.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr>
-          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.fecha">Fecha</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.numero">Numero</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.horaSolicitud">Hora Solicitud</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.domicilio">Domicilio</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.telefono">Telefono</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.edad">Edad</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.despacho">Despacho</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador">Item Nomenclador</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.insumo">Insumo</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.individuo">Individuo</span></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let solicitudPrestacion of solicitudAtencionMedica; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'view']">{{ solicitudPrestacion.id }}</a>
-          </td>
-          <td>{{ solicitudPrestacion.fecha | formatMediumDatetime }}</td>
-          <td>{{ solicitudPrestacion.numero }}</td>
-          <td>{{ solicitudPrestacion.horaSolicitud | formatMediumDatetime }}</td>
-          <td>{{ solicitudPrestacion.domicilio }}</td>
-          <td>{{ solicitudPrestacion.telefono }}</td>
-          <td>{{ solicitudPrestacion.edad }}</td>
-          <td>{{ solicitudPrestacion.observaciones }}</td>
-          <td>
-            <div *ngIf="solicitudPrestacion.despacho">
-              <a [routerLink]="['/despacho', solicitudPrestacion.despacho?.id, 'view']">{{ solicitudPrestacion.despacho?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="solicitudPrestacion.itemNomenclador">
-              <a [routerLink]="['/item-nomenclador', solicitudPrestacion.itemNomenclador?.id, 'view']">{{
-                solicitudPrestacion.itemNomenclador?.id
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <span *ngFor="let insumo of solicitudPrestacion.insumos; let last = last">
-              <a class="form-control-static" [routerLink]="['/insumo', insumo.id, 'view']">{{ insumo.id }}</a
-              >{{ last ? '' : ', ' }}
-            </span>
-          </td>
-          <td>
-            <div *ngIf="solicitudPrestacion.individuo">
-              <a [routerLink]="['/individuo', solicitudPrestacion.individuo?.id, 'view']">{{ solicitudPrestacion.individuo?.id }}</a>
-            </div>
-          </td>
-          <td class="text-right">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
-
-              <!--
-                <button type="submit" (click)="delete(solicitudPrestacion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                  <fa-icon icon="times"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                </button>
-                -->
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <!--<jhi-alert></jhi-alert>-->
 </div>

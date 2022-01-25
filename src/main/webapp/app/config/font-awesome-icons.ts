@@ -35,15 +35,27 @@ import {
   faArrowRight,
   faFolderPlus,
   faMinus,
+  faCheck,
   // jhipster-needle-add-icon-import
   faHome,
   faUserClock,
   faCalendarTimes,
   faCoins,
   faPhone,
+  faAmbulance,
+  faCogs,
+  faDatabase,
+  faUsers,
+  faUsersCog,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const fontAwesomeIcons = [
+  faCogs,
+  faDatabase,
+  faUsers,
+  faUsersCog,
+  faAmbulance,
+  faCheck,
   faPhone,
   faUser,
   faSort,
