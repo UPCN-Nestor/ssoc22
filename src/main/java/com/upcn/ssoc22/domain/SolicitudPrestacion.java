@@ -55,12 +55,7 @@ public class SolicitudPrestacion implements Serializable {
     @Column(name = "observaciones")
     private String observaciones;
 
-    @JsonIgnoreProperties(
-        value = {
-            "prestador", "chofer", "medico", "enfermero", "movil", "usuarioSalida", "usuarioLlegada", "usuarioLibre", "solicitudPrestacion",
-        },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "prestador", "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Despacho despacho;

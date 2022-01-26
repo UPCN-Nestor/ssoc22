@@ -4,6 +4,7 @@ import { PantallaTelefonistaComponent } from './pantalla-telefonista/pantalla-te
 import { RouterModule, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { SharedModule } from 'app/shared/shared.module';
+import { SolicitudPrestacionAltaComponent } from './solicitud-prestacion-alta/solicitud-prestacion-alta.component';
 
 const pantallasRoute: Routes = [
   {
@@ -11,10 +12,15 @@ const pantallasRoute: Routes = [
     component: PantallaTelefonistaComponent,
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: 'solicitud-prestacion-alta/:tipo',
+    component: SolicitudPrestacionAltaComponent,
+    canActivate: [UserRouteAccessService],
+  },
 ];
 
 @NgModule({
-  declarations: [PantallaTelefonistaComponent],
+  declarations: [PantallaTelefonistaComponent, SolicitudPrestacionAltaComponent],
   imports: [SharedModule, RouterModule.forChild(pantallasRoute), CommonModule],
   exports: [RouterModule],
 })

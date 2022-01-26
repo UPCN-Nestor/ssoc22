@@ -10,6 +10,7 @@ import { IndividuoPopupComponent } from 'app/entities/individuo/popup/individuo-
 import { SolicitudPrestacionService } from 'app/entities/solicitud-prestacion/service/solicitud-prestacion.service';
 import { ISolicitudPrestacion } from 'app/entities/solicitud-prestacion/solicitud-prestacion.model';
 import dayjs, { Dayjs } from 'dayjs/esm';
+import { SolicitudPrestacionAltaComponent } from '../solicitud-prestacion-alta/solicitud-prestacion-alta.component';
 
 @Component({
   selector: 'jhi-pantalla-telefonista',
@@ -115,11 +116,20 @@ export class PantallaTelefonistaComponent implements OnInit {
     });
   }
 
+  popupAlta(tipo: string): void {
+    const modalRef = this.modalService.open(SolicitudPrestacionAltaComponent, { size: 'lg', backdrop: true });
+    modalRef.componentInstance.tipo = tipo;
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(reason => {
+      alert('x');
+    });
+  }
+
   cancel(): void {
     alert('x');
   }
 
-  formatShortDate(d: Dayjs | null | undefined): string {
+  formatShortTime(d: Dayjs | null | undefined): string {
     return d ? dayjs(d).format('HH:mm') : '';
   }
 

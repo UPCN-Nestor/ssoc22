@@ -41,6 +41,11 @@ export class IndividuoService {
     return this.http.get<IIndividuo[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  queryPorNombreParcial(nombre: string, req?: any): Observable<HttpResponse<IIndividuo[]>> {
+    const options = createRequestOption(req);
+    return this.http.get<IIndividuo[]>(this.resourceUrl + '/parcial/' + nombre, { params: options, observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

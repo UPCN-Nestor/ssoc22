@@ -2,9 +2,11 @@ package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.SolicitudPrestacion;
 import com.upcn.ssoc22.repository.SolicitudPrestacionRepository;
+import com.upcn.ssoc22.service.UserService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -33,9 +35,11 @@ public class SolicitudPrestacionResource {
     private String applicationName;
 
     private final SolicitudPrestacionRepository solicitudPrestacionRepository;
+    private final UserService userService;
 
-    public SolicitudPrestacionResource(SolicitudPrestacionRepository solicitudPrestacionRepository) {
+    public SolicitudPrestacionResource(SolicitudPrestacionRepository solicitudPrestacionRepository, UserService userService) {
         this.solicitudPrestacionRepository = solicitudPrestacionRepository;
+        this.userService = userService;
     }
 
     /**
@@ -52,6 +56,10 @@ public class SolicitudPrestacionResource {
         if (solicitudPrestacion.getId() != null) {
             throw new BadRequestAlertException("A new solicitudPrestacion cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        solicitudPrestacion.setHoraSolicitud(ZonedDateTime.now());
+        solicitudPrestacion.setUsuarioSolicitud(userService.getUserWithAuthorities().get());
+
         SolicitudPrestacion result = solicitudPrestacionRepository.save(solicitudPrestacion);
         return ResponseEntity
             .created(new URI("/api/solicitud-prestacions/" + result.getId()))

@@ -151,6 +151,12 @@ public class IndividuoResource {
         return individuoRepository.findAll();
     }
 
+    @GetMapping("/individuos/parcial/{parcial}")
+    public List<Individuo> getAllIndividuosPorNombreParcial(@PathVariable String parcial) {
+        log.debug("REST request to get all Individuos por nombre parcial: " + parcial);
+        return individuoRepository.findByNombreContaining(parcial);
+    }
+
     /**
      * {@code GET  /individuos/:id} : get the "id" individuo.
      *

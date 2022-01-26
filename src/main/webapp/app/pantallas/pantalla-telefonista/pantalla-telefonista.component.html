@@ -20,7 +20,7 @@
                 id="jh-create-entity"
                 data-cy="entityCreateButton"
                 class="btn btn-secondary jh-create-entity create-solicitud-prestacion"
-                [routerLink]="['/solicitud-prestacion/new']"
+                (click)="popupAlta('Emergencia')"
               >
                 <fa-icon icon="plus"></fa-icon>
                 <span>Nueva emergencia</span>
@@ -58,10 +58,26 @@
             <tbody>
               <tr *ngFor="let solicitudPrestacion of solicitudEmergencia; trackBy: trackId" data-cy="entityTable">
                 <td>{{ solicitudPrestacion.numero }}</td>
-                <td>{{ solicitudPrestacion.horaSolicitud | formatShortTime }}</td>
-                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaSalida) }}</td>
-                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaLlegada) }}</td>
-                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaLibre) }}</td>
+                <td>
+                  <div placement="top" ngbTooltip="{{ solicitudPrestacion.usuarioSolicitud?.login }}">
+                    {{ solicitudPrestacion.horaSolicitud | formatShortTime }}
+                  </div>
+                </td>
+                <td>
+                  <div placement="top" ngbTooltip="{{ solicitudPrestacion.despacho?.usuarioSalida?.login }}">
+                    {{ formatShortTime(solicitudPrestacion.despacho?.horaSalida) }}
+                  </div>
+                </td>
+                <td>
+                  <div placement="top" ngbTooltip="{{ solicitudPrestacion.despacho?.usuarioLlegada?.login }}">
+                    {{ formatShortTime(solicitudPrestacion.despacho?.horaLlegada) }}
+                  </div>
+                </td>
+                <td>
+                  <div placement="top" ngbTooltip="{{ solicitudPrestacion.despacho?.usuarioLibre?.login }}">
+                    {{ formatShortTime(solicitudPrestacion.despacho?.horaLibre) }}
+                  </div>
+                </td>
                 <td>
                   <div *ngIf="solicitudPrestacion.individuo">
                     <a (click)="popupPaciente(solicitudPrestacion.individuo!)">{{ solicitudPrestacion.individuo?.nombre }}</a>
@@ -171,7 +187,7 @@
                 id="jh-create-entity"
                 data-cy="entityCreateButton"
                 class="btn btn-primary jh-create-entity create-solicitud-prestacion"
-                [routerLink]="['/solicitud-prestacion/new']"
+                (click)="popupAlta('AtencionMedica')"
               >
                 <fa-icon icon="plus"></fa-icon>
                 <span>Nueva atención</span>
@@ -209,9 +225,9 @@
               <tr *ngFor="let solicitudPrestacion of solicitudAtencionMedica; trackBy: trackId" data-cy="entityTable">
                 <td>{{ solicitudPrestacion.numero }}</td>
                 <td>{{ solicitudPrestacion.horaSolicitud | formatShortTime }}</td>
-                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaSalida) }}</td>
-                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaLlegada) }}</td>
-                <td>{{ formatShortDate(solicitudPrestacion.despacho?.horaLibre) }}</td>
+                <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaSalida) }}</td>
+                <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaLlegada) }}</td>
+                <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaLibre) }}</td>
                 <td>
                   <div *ngIf="solicitudPrestacion.individuo">
                     <a (click)="popupPaciente(solicitudPrestacion.individuo!)">{{ solicitudPrestacion.individuo?.nombre }}</a>
