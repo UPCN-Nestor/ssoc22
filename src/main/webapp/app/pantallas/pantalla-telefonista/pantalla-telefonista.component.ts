@@ -87,7 +87,7 @@ export class PantallaTelefonistaComponent implements OnInit {
       const despacho = d.body;
       despacho!.horaLlegada = dayjs(dayjs(), DATE_TIME_FORMAT);
 
-      this.despachoService.update(despacho!).subscribe(res => {
+      this.despachoService.updateConResponsableLogueado(despacho!, 'Llegada').subscribe(res => {
         res.body;
       });
     });
@@ -100,7 +100,7 @@ export class PantallaTelefonistaComponent implements OnInit {
       const despacho = d.body;
       despacho!.horaLibre = dayjs(dayjs(), DATE_TIME_FORMAT);
 
-      this.despachoService.update(despacho!).subscribe(res => {
+      this.despachoService.updateConResponsableLogueado(despacho!, 'Libre').subscribe(res => {
         res.body;
       });
     });

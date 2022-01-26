@@ -1,7 +1,9 @@
 package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.Despacho;
+import com.upcn.ssoc22.domain.User;
 import com.upcn.ssoc22.repository.DespachoRepository;
+import com.upcn.ssoc22.service.UserService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,8 +37,10 @@ public class DespachoResource {
     private String applicationName;
 
     private final DespachoRepository despachoRepository;
+    private final UserService userService;
 
-    public DespachoResource(DespachoRepository despachoRepository) {
+    public DespachoResource(DespachoRepository despachoRepository, UserService userService) {
+        this.userService = userService;
         this.despachoRepository = despachoRepository;
     }
 
@@ -53,6 +57,8 @@ public class DespachoResource {
         if (despacho.getId() != null) {
             throw new BadRequestAlertException("A new despacho cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        despacho.setUsuarioSalida(userService.getUserWithAuthorities().get());
         Despacho result = despachoRepository.save(despacho);
         return ResponseEntity
             .created(new URI("/api/despachos/" + result.getId()))
@@ -92,6 +98,20 @@ public class DespachoResource {
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, despacho.getId().toString()))
             .body(result);
+    }
+
+    @PutMapping("/despachos/{id}/res/{campoResponsable}")
+    public ResponseEntity<Despacho> updateDespachoConResponsableLogueado(
+        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable final String campoResponsable,
+        @RequestBody Despacho despacho
+    ) throws URISyntaxException {
+        User responsable = userService.getUserWithAuthorities().get();
+        if (campoResponsable.equals("Salida")) despacho.setUsuarioSalida(responsable);
+        if (campoResponsable.equals("Llegada")) despacho.setUsuarioLlegada(responsable);
+        if (campoResponsable.equals("Libre")) despacho.setUsuarioLibre(responsable);
+
+        return updateDespacho(id, despacho);
     }
 
     /**
