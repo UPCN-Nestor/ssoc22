@@ -25,27 +25,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "user",
-      "otherEntityRelationshipName": "despacho",
-      "ownerSide": true,
-      "relationshipName": "usuarioSalida",
-      "relationshipType": "one-to-one"
-    },
-    {
-      "otherEntityName": "user",
-      "otherEntityRelationshipName": "despacho",
-      "ownerSide": true,
-      "relationshipName": "usuarioLlegada",
-      "relationshipType": "one-to-one"
-    },
-    {
-      "otherEntityName": "user",
-      "otherEntityRelationshipName": "despacho",
-      "ownerSide": true,
-      "relationshipName": "usuarioLibre",
-      "relationshipType": "one-to-one"
-    },
-    {
       "otherEntityName": "prestador",
       "otherEntityRelationshipName": "despacho",
       "relationshipName": "prestador",
@@ -73,6 +52,24 @@
       "otherEntityName": "movil",
       "otherEntityRelationshipName": "despacho",
       "relationshipName": "movil",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "usuarioSalida",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "usuarioLlegada",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "despacho",
+      "relationshipName": "usuarioLibre",
       "relationshipType": "many-to-one"
     },
     {

@@ -34,14 +34,14 @@ export class DespachoUpdatePage {
   horaLlegadaInput = element(by.id('field_horaLlegada'));
   horaLibreInput = element(by.id('field_horaLibre'));
 
-  usuarioSalidaSelect = element(by.id('field_usuarioSalida'));
-  usuarioLlegadaSelect = element(by.id('field_usuarioLlegada'));
-  usuarioLibreSelect = element(by.id('field_usuarioLibre'));
   prestadorSelect = element(by.id('field_prestador'));
   choferSelect = element(by.id('field_chofer'));
   medicoSelect = element(by.id('field_medico'));
   enfermeroSelect = element(by.id('field_enfermero'));
   movilSelect = element(by.id('field_movil'));
+  usuarioSalidaSelect = element(by.id('field_usuarioSalida'));
+  usuarioLlegadaSelect = element(by.id('field_usuarioLlegada'));
+  usuarioLibreSelect = element(by.id('field_usuarioLibre'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -77,54 +77,6 @@ export class DespachoUpdatePage {
 
   async getHoraLibreInput(): Promise<string> {
     return await this.horaLibreInput.getAttribute('value');
-  }
-
-  async usuarioSalidaSelectLastOption(): Promise<void> {
-    await this.usuarioSalidaSelect.all(by.tagName('option')).last().click();
-  }
-
-  async usuarioSalidaSelectOption(option: string): Promise<void> {
-    await this.usuarioSalidaSelect.sendKeys(option);
-  }
-
-  getUsuarioSalidaSelect(): ElementFinder {
-    return this.usuarioSalidaSelect;
-  }
-
-  async getUsuarioSalidaSelectedOption(): Promise<string> {
-    return await this.usuarioSalidaSelect.element(by.css('option:checked')).getText();
-  }
-
-  async usuarioLlegadaSelectLastOption(): Promise<void> {
-    await this.usuarioLlegadaSelect.all(by.tagName('option')).last().click();
-  }
-
-  async usuarioLlegadaSelectOption(option: string): Promise<void> {
-    await this.usuarioLlegadaSelect.sendKeys(option);
-  }
-
-  getUsuarioLlegadaSelect(): ElementFinder {
-    return this.usuarioLlegadaSelect;
-  }
-
-  async getUsuarioLlegadaSelectedOption(): Promise<string> {
-    return await this.usuarioLlegadaSelect.element(by.css('option:checked')).getText();
-  }
-
-  async usuarioLibreSelectLastOption(): Promise<void> {
-    await this.usuarioLibreSelect.all(by.tagName('option')).last().click();
-  }
-
-  async usuarioLibreSelectOption(option: string): Promise<void> {
-    await this.usuarioLibreSelect.sendKeys(option);
-  }
-
-  getUsuarioLibreSelect(): ElementFinder {
-    return this.usuarioLibreSelect;
-  }
-
-  async getUsuarioLibreSelectedOption(): Promise<string> {
-    return await this.usuarioLibreSelect.element(by.css('option:checked')).getText();
   }
 
   async prestadorSelectLastOption(): Promise<void> {
@@ -205,6 +157,54 @@ export class DespachoUpdatePage {
 
   async getMovilSelectedOption(): Promise<string> {
     return await this.movilSelect.element(by.css('option:checked')).getText();
+  }
+
+  async usuarioSalidaSelectLastOption(): Promise<void> {
+    await this.usuarioSalidaSelect.all(by.tagName('option')).last().click();
+  }
+
+  async usuarioSalidaSelectOption(option: string): Promise<void> {
+    await this.usuarioSalidaSelect.sendKeys(option);
+  }
+
+  getUsuarioSalidaSelect(): ElementFinder {
+    return this.usuarioSalidaSelect;
+  }
+
+  async getUsuarioSalidaSelectedOption(): Promise<string> {
+    return await this.usuarioSalidaSelect.element(by.css('option:checked')).getText();
+  }
+
+  async usuarioLlegadaSelectLastOption(): Promise<void> {
+    await this.usuarioLlegadaSelect.all(by.tagName('option')).last().click();
+  }
+
+  async usuarioLlegadaSelectOption(option: string): Promise<void> {
+    await this.usuarioLlegadaSelect.sendKeys(option);
+  }
+
+  getUsuarioLlegadaSelect(): ElementFinder {
+    return this.usuarioLlegadaSelect;
+  }
+
+  async getUsuarioLlegadaSelectedOption(): Promise<string> {
+    return await this.usuarioLlegadaSelect.element(by.css('option:checked')).getText();
+  }
+
+  async usuarioLibreSelectLastOption(): Promise<void> {
+    await this.usuarioLibreSelect.all(by.tagName('option')).last().click();
+  }
+
+  async usuarioLibreSelectOption(option: string): Promise<void> {
+    await this.usuarioLibreSelect.sendKeys(option);
+  }
+
+  getUsuarioLibreSelect(): ElementFinder {
+    return this.usuarioLibreSelect;
+  }
+
+  async getUsuarioLibreSelectedOption(): Promise<string> {
+    return await this.usuarioLibreSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

@@ -57,7 +57,7 @@ public class SolicitudPrestacion implements Serializable {
 
     @JsonIgnoreProperties(
         value = {
-            "usuarioSalida", "usuarioLlegada", "usuarioLibre", "prestador", "chofer", "medico", "enfermero", "movil", "solicitudPrestacion",
+            "prestador", "chofer", "medico", "enfermero", "movil", "usuarioSalida", "usuarioLlegada", "usuarioLibre", "solicitudPrestacion",
         },
         allowSetters = true
     )
@@ -65,13 +65,12 @@ public class SolicitudPrestacion implements Serializable {
     @JoinColumn(unique = true)
     private Despacho despacho;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private User usuarioSolicitud;
-
     @ManyToOne
     @JsonIgnoreProperties(value = { "prestacion", "solicitudPrestacions", "provisions", "prestadors" }, allowSetters = true)
     private ItemNomenclador itemNomenclador;
+
+    @ManyToOne
+    private User usuarioSolicitud;
 
     @ManyToMany
     @JoinTable(
@@ -245,19 +244,6 @@ public class SolicitudPrestacion implements Serializable {
         return this;
     }
 
-    public User getUsuarioSolicitud() {
-        return this.usuarioSolicitud;
-    }
-
-    public void setUsuarioSolicitud(User user) {
-        this.usuarioSolicitud = user;
-    }
-
-    public SolicitudPrestacion usuarioSolicitud(User user) {
-        this.setUsuarioSolicitud(user);
-        return this;
-    }
-
     public ItemNomenclador getItemNomenclador() {
         return this.itemNomenclador;
     }
@@ -268,6 +254,19 @@ public class SolicitudPrestacion implements Serializable {
 
     public SolicitudPrestacion itemNomenclador(ItemNomenclador itemNomenclador) {
         this.setItemNomenclador(itemNomenclador);
+        return this;
+    }
+
+    public User getUsuarioSolicitud() {
+        return this.usuarioSolicitud;
+    }
+
+    public void setUsuarioSolicitud(User user) {
+        this.usuarioSolicitud = user;
+    }
+
+    public SolicitudPrestacion usuarioSolicitud(User user) {
+        this.setUsuarioSolicitud(user);
         return this;
     }
 

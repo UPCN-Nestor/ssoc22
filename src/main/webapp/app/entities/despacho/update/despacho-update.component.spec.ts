@@ -8,9 +8,6 @@ import { of, Subject, from } from 'rxjs';
 
 import { DespachoService } from '../service/despacho.service';
 import { IDespacho, Despacho } from '../despacho.model';
-
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/user.service';
 import { IPrestador } from 'app/entities/prestador/prestador.model';
 import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
 import { IChofer } from 'app/entities/chofer/chofer.model';
@@ -22,6 +19,9 @@ import { EnfermeroService } from 'app/entities/enfermero/service/enfermero.servi
 import { IMovil } from 'app/entities/movil/movil.model';
 import { MovilService } from 'app/entities/movil/service/movil.service';
 
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/user.service';
+
 import { DespachoUpdateComponent } from './despacho-update.component';
 
 describe('Despacho Management Update Component', () => {
@@ -29,12 +29,12 @@ describe('Despacho Management Update Component', () => {
   let fixture: ComponentFixture<DespachoUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let despachoService: DespachoService;
-  let userService: UserService;
   let prestadorService: PrestadorService;
   let choferService: ChoferService;
   let medicoService: MedicoService;
   let enfermeroService: EnfermeroService;
   let movilService: MovilService;
+  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -56,40 +56,17 @@ describe('Despacho Management Update Component', () => {
     fixture = TestBed.createComponent(DespachoUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     despachoService = TestBed.inject(DespachoService);
-    userService = TestBed.inject(UserService);
     prestadorService = TestBed.inject(PrestadorService);
     choferService = TestBed.inject(ChoferService);
     medicoService = TestBed.inject(MedicoService);
     enfermeroService = TestBed.inject(EnfermeroService);
     movilService = TestBed.inject(MovilService);
+    userService = TestBed.inject(UserService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call User query and add missing value', () => {
-      const despacho: IDespacho = { id: 456 };
-      const usuarioSalida: IUser = { id: 37626 };
-      despacho.usuarioSalida = usuarioSalida;
-      const usuarioLlegada: IUser = { id: 1468 };
-      despacho.usuarioLlegada = usuarioLlegada;
-      const usuarioLibre: IUser = { id: 91963 };
-      despacho.usuarioLibre = usuarioLibre;
-
-      const userCollection: IUser[] = [{ id: 61958 }];
-      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
-      const additionalUsers = [usuarioSalida, usuarioLlegada, usuarioLibre];
-      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
-      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ despacho });
-      comp.ngOnInit();
-
-      expect(userService.query).toHaveBeenCalled();
-      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(userCollection, ...additionalUsers);
-      expect(comp.usersSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should call Prestador query and add missing value', () => {
       const despacho: IDespacho = { id: 456 };
       const prestador: IPrestador = { id: 81842 };
@@ -185,14 +162,31 @@ describe('Despacho Management Update Component', () => {
       expect(comp.movilsSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call User query and add missing value', () => {
+      const despacho: IDespacho = { id: 456 };
+      const usuarioSalida: IUser = { id: 37626 };
+      despacho.usuarioSalida = usuarioSalida;
+      const usuarioLlegada: IUser = { id: 1468 };
+      despacho.usuarioLlegada = usuarioLlegada;
+      const usuarioLibre: IUser = { id: 91963 };
+      despacho.usuarioLibre = usuarioLibre;
+
+      const userCollection: IUser[] = [{ id: 61958 }];
+      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
+      const additionalUsers = [usuarioSalida, usuarioLlegada, usuarioLibre];
+      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
+      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ despacho });
+      comp.ngOnInit();
+
+      expect(userService.query).toHaveBeenCalled();
+      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(userCollection, ...additionalUsers);
+      expect(comp.usersSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const despacho: IDespacho = { id: 456 };
-      const usuarioSalida: IUser = { id: 98911 };
-      despacho.usuarioSalida = usuarioSalida;
-      const usuarioLlegada: IUser = { id: 67106 };
-      despacho.usuarioLlegada = usuarioLlegada;
-      const usuarioLibre: IUser = { id: 37533 };
-      despacho.usuarioLibre = usuarioLibre;
       const prestador: IPrestador = { id: 61870 };
       despacho.prestador = prestador;
       const chofer: IChofer = { id: 8395 };
@@ -203,19 +197,25 @@ describe('Despacho Management Update Component', () => {
       despacho.enfermero = enfermero;
       const movil: IMovil = { id: 12845 };
       despacho.movil = movil;
+      const usuarioSalida: IUser = { id: 98911 };
+      despacho.usuarioSalida = usuarioSalida;
+      const usuarioLlegada: IUser = { id: 67106 };
+      despacho.usuarioLlegada = usuarioLlegada;
+      const usuarioLibre: IUser = { id: 37533 };
+      despacho.usuarioLibre = usuarioLibre;
 
       activatedRoute.data = of({ despacho });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(despacho));
-      expect(comp.usersSharedCollection).toContain(usuarioSalida);
-      expect(comp.usersSharedCollection).toContain(usuarioLlegada);
-      expect(comp.usersSharedCollection).toContain(usuarioLibre);
       expect(comp.prestadorsSharedCollection).toContain(prestador);
       expect(comp.chofersSharedCollection).toContain(chofer);
       expect(comp.medicosSharedCollection).toContain(medico);
       expect(comp.enfermerosSharedCollection).toContain(enfermero);
       expect(comp.movilsSharedCollection).toContain(movil);
+      expect(comp.usersSharedCollection).toContain(usuarioSalida);
+      expect(comp.usersSharedCollection).toContain(usuarioLlegada);
+      expect(comp.usersSharedCollection).toContain(usuarioLibre);
     });
   });
 
@@ -284,14 +284,6 @@ describe('Despacho Management Update Component', () => {
   });
 
   describe('Tracking relationships identifiers', () => {
-    describe('trackUserById', () => {
-      it('Should return tracked User primary key', () => {
-        const entity = { id: 123 };
-        const trackResult = comp.trackUserById(0, entity);
-        expect(trackResult).toEqual(entity.id);
-      });
-    });
-
     describe('trackPrestadorById', () => {
       it('Should return tracked Prestador primary key', () => {
         const entity = { id: 123 };
@@ -328,6 +320,14 @@ describe('Despacho Management Update Component', () => {
       it('Should return tracked Movil primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackMovilById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
+    describe('trackUserById', () => {
+      it('Should return tracked User primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackUserById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

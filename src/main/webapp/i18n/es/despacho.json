@@ -21,14 +21,14 @@
       "horaSalida": "Hora Salida",
       "horaLlegada": "Hora Llegada",
       "horaLibre": "Hora Libre",
-      "usuarioSalida": "Usuario Salida",
-      "usuarioLlegada": "Usuario Llegada",
-      "usuarioLibre": "Usuario Libre",
       "prestador": "Prestador",
       "chofer": "Chofer",
       "medico": "Medico",
       "enfermero": "Enfermero",
       "movil": "Movil",
+      "usuarioSalida": "Usuario Salida",
+      "usuarioLlegada": "Usuario Llegada",
+      "usuarioLibre": "Usuario Libre",
       "solicitudPrestacion": "Solicitud Prestacion"
     }
   }

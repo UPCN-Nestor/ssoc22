@@ -26,18 +26,6 @@
         <dd>
           <span>{{ despacho.horaLibre | formatMediumDatetime }}</span>
         </dd>
-        <dt><span jhiTranslate="ssoc22App.despacho.usuarioSalida">Usuario Salida</span></dt>
-        <dd>
-          <span>{{ despacho.usuarioSalida?.id }}</span>
-        </dd>
-        <dt><span jhiTranslate="ssoc22App.despacho.usuarioLlegada">Usuario Llegada</span></dt>
-        <dd>
-          <span>{{ despacho.usuarioLlegada?.id }}</span>
-        </dd>
-        <dt><span jhiTranslate="ssoc22App.despacho.usuarioLibre">Usuario Libre</span></dt>
-        <dd>
-          <span>{{ despacho.usuarioLibre?.id }}</span>
-        </dd>
         <dt><span jhiTranslate="ssoc22App.despacho.prestador">Prestador</span></dt>
         <dd>
           <div *ngIf="despacho.prestador">
@@ -67,6 +55,18 @@
           <div *ngIf="despacho.movil">
             <a [routerLink]="['/movil', despacho.movil?.id, 'view']">{{ despacho.movil?.id }}</a>
           </div>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.usuarioSalida">Usuario Salida</span></dt>
+        <dd>
+          <span>{{ despacho.usuarioSalida?.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.usuarioLlegada">Usuario Llegada</span></dt>
+        <dd>
+          <span>{{ despacho.usuarioLlegada?.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.despacho.usuarioLibre">Usuario Libre</span></dt>
+        <dd>
+          <span>{{ despacho.usuarioLibre?.id }}</span>
         </dd>
       </dl>
 

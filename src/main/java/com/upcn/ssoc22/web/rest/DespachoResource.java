@@ -57,7 +57,6 @@ public class DespachoResource {
         if (despacho.getId() != null) {
             throw new BadRequestAlertException("A new despacho cannot already have an ID", ENTITY_NAME, "idexists");
         }
-
         despacho.setUsuarioSalida(userService.getUserWithAuthorities().get());
         Despacho result = despachoRepository.save(despacho);
         return ResponseEntity

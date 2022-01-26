@@ -10,11 +10,11 @@ import { SolicitudPrestacionService } from '../service/solicitud-prestacion.serv
 import { ISolicitudPrestacion, SolicitudPrestacion } from '../solicitud-prestacion.model';
 import { IDespacho } from 'app/entities/despacho/despacho.model';
 import { DespachoService } from 'app/entities/despacho/service/despacho.service';
+import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
+import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
-import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
-import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
@@ -28,8 +28,8 @@ describe('SolicitudPrestacion Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let solicitudPrestacionService: SolicitudPrestacionService;
   let despachoService: DespachoService;
-  let userService: UserService;
   let itemNomencladorService: ItemNomencladorService;
+  let userService: UserService;
   let insumoService: InsumoService;
   let individuoService: IndividuoService;
 
@@ -54,8 +54,8 @@ describe('SolicitudPrestacion Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     solicitudPrestacionService = TestBed.inject(SolicitudPrestacionService);
     despachoService = TestBed.inject(DespachoService);
-    userService = TestBed.inject(UserService);
     itemNomencladorService = TestBed.inject(ItemNomencladorService);
+    userService = TestBed.inject(UserService);
     insumoService = TestBed.inject(InsumoService);
     individuoService = TestBed.inject(IndividuoService);
 
@@ -81,25 +81,6 @@ describe('SolicitudPrestacion Management Update Component', () => {
       expect(comp.despachosCollection).toEqual(expectedCollection);
     });
 
-    it('Should call User query and add missing value', () => {
-      const solicitudPrestacion: ISolicitudPrestacion = { id: 456 };
-      const usuarioSolicitud: IUser = { id: 17862 };
-      solicitudPrestacion.usuarioSolicitud = usuarioSolicitud;
-
-      const userCollection: IUser[] = [{ id: 50621 }];
-      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
-      const additionalUsers = [usuarioSolicitud];
-      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
-      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ solicitudPrestacion });
-      comp.ngOnInit();
-
-      expect(userService.query).toHaveBeenCalled();
-      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(userCollection, ...additionalUsers);
-      expect(comp.usersSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should call ItemNomenclador query and add missing value', () => {
       const solicitudPrestacion: ISolicitudPrestacion = { id: 456 };
       const itemNomenclador: IItemNomenclador = { id: 62866 };
@@ -120,6 +101,25 @@ describe('SolicitudPrestacion Management Update Component', () => {
         ...additionalItemNomencladors
       );
       expect(comp.itemNomencladorsSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should call User query and add missing value', () => {
+      const solicitudPrestacion: ISolicitudPrestacion = { id: 456 };
+      const usuarioSolicitud: IUser = { id: 17862 };
+      solicitudPrestacion.usuarioSolicitud = usuarioSolicitud;
+
+      const userCollection: IUser[] = [{ id: 50621 }];
+      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
+      const additionalUsers = [usuarioSolicitud];
+      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
+      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ solicitudPrestacion });
+      comp.ngOnInit();
+
+      expect(userService.query).toHaveBeenCalled();
+      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(userCollection, ...additionalUsers);
+      expect(comp.usersSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should call Insumo query and add missing value', () => {
@@ -164,10 +164,10 @@ describe('SolicitudPrestacion Management Update Component', () => {
       const solicitudPrestacion: ISolicitudPrestacion = { id: 456 };
       const despacho: IDespacho = { id: 14419 };
       solicitudPrestacion.despacho = despacho;
-      const usuarioSolicitud: IUser = { id: 38818 };
-      solicitudPrestacion.usuarioSolicitud = usuarioSolicitud;
       const itemNomenclador: IItemNomenclador = { id: 22519 };
       solicitudPrestacion.itemNomenclador = itemNomenclador;
+      const usuarioSolicitud: IUser = { id: 38818 };
+      solicitudPrestacion.usuarioSolicitud = usuarioSolicitud;
       const insumos: IInsumo = { id: 7828 };
       solicitudPrestacion.insumos = [insumos];
       const individuo: IIndividuo = { id: 56995 };
@@ -178,8 +178,8 @@ describe('SolicitudPrestacion Management Update Component', () => {
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(solicitudPrestacion));
       expect(comp.despachosCollection).toContain(despacho);
-      expect(comp.usersSharedCollection).toContain(usuarioSolicitud);
       expect(comp.itemNomencladorsSharedCollection).toContain(itemNomenclador);
+      expect(comp.usersSharedCollection).toContain(usuarioSolicitud);
       expect(comp.insumosSharedCollection).toContain(insumos);
       expect(comp.individuosSharedCollection).toContain(individuo);
     });
@@ -258,18 +258,18 @@ describe('SolicitudPrestacion Management Update Component', () => {
       });
     });
 
-    describe('trackUserById', () => {
-      it('Should return tracked User primary key', () => {
-        const entity = { id: 123 };
-        const trackResult = comp.trackUserById(0, entity);
-        expect(trackResult).toEqual(entity.id);
-      });
-    });
-
     describe('trackItemNomencladorById', () => {
       it('Should return tracked ItemNomenclador primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackItemNomencladorById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
+    describe('trackUserById', () => {
+      it('Should return tracked User primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackUserById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

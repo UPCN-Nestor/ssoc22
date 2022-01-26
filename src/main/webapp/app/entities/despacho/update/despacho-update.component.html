@@ -59,59 +59,6 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="ssoc22App.despacho.usuarioSalida" for="field_usuarioSalida">Usuario Salida</label>
-          <select
-            class="form-control"
-            id="field_usuarioSalida"
-            data-cy="usuarioSalida"
-            name="usuarioSalida"
-            formControlName="usuarioSalida"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="userOption.id === editForm.get('usuarioSalida')!.value?.id ? editForm.get('usuarioSalida')!.value : userOption"
-              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
-            >
-              {{ userOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="ssoc22App.despacho.usuarioLlegada" for="field_usuarioLlegada"
-            >Usuario Llegada</label
-          >
-          <select
-            class="form-control"
-            id="field_usuarioLlegada"
-            data-cy="usuarioLlegada"
-            name="usuarioLlegada"
-            formControlName="usuarioLlegada"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="userOption.id === editForm.get('usuarioLlegada')!.value?.id ? editForm.get('usuarioLlegada')!.value : userOption"
-              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
-            >
-              {{ userOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="ssoc22App.despacho.usuarioLibre" for="field_usuarioLibre">Usuario Libre</label>
-          <select class="form-control" id="field_usuarioLibre" data-cy="usuarioLibre" name="usuarioLibre" formControlName="usuarioLibre">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="userOption.id === editForm.get('usuarioLibre')!.value?.id ? editForm.get('usuarioLibre')!.value : userOption"
-              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
-            >
-              {{ userOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.despacho.prestador" for="field_prestador">Prestador</label>
           <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador">
             <option [ngValue]="null"></option>
@@ -172,6 +119,59 @@
               *ngFor="let movilOption of movilsSharedCollection; trackBy: trackMovilById"
             >
               {{ movilOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.despacho.usuarioSalida" for="field_usuarioSalida">Usuario Salida</label>
+          <select
+            class="form-control"
+            id="field_usuarioSalida"
+            data-cy="usuarioSalida"
+            name="usuarioSalida"
+            formControlName="usuarioSalida"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('usuarioSalida')!.value?.id ? editForm.get('usuarioSalida')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.despacho.usuarioLlegada" for="field_usuarioLlegada"
+            >Usuario Llegada</label
+          >
+          <select
+            class="form-control"
+            id="field_usuarioLlegada"
+            data-cy="usuarioLlegada"
+            name="usuarioLlegada"
+            formControlName="usuarioLlegada"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('usuarioLlegada')!.value?.id ? editForm.get('usuarioLlegada')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.despacho.usuarioLibre" for="field_usuarioLibre">Usuario Libre</label>
+          <select class="form-control" id="field_usuarioLibre" data-cy="usuarioLibre" name="usuarioLibre" formControlName="usuarioLibre">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('usuarioLibre')!.value?.id ? editForm.get('usuarioLibre')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.id }}
             </option>
           </select>
         </div>

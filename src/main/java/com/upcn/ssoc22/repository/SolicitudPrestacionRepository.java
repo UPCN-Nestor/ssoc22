@@ -15,6 +15,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SolicitudPrestacionRepository extends JpaRepository<SolicitudPrestacion, Long> {
     @Query(
+        "select solicitudPrestacion from SolicitudPrestacion solicitudPrestacion where solicitudPrestacion.usuarioSolicitud.login = ?#{principal.username}"
+    )
+    List<SolicitudPrestacion> findByUsuarioSolicitudIsCurrentUser();
+
+    @Query(
         value = "select distinct solicitudPrestacion from SolicitudPrestacion solicitudPrestacion left join fetch solicitudPrestacion.insumos",
         countQuery = "select count(distinct solicitudPrestacion) from SolicitudPrestacion solicitudPrestacion"
     )

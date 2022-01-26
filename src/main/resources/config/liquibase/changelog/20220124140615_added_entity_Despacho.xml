@@ -23,15 +23,6 @@
             <column name="hora_libre" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
-            <column name="usuario_salida_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_despacho__usuario_salida_id" />
-            </column>
-            <column name="usuario_llegada_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_despacho__usuario_llegada_id" />
-            </column>
-            <column name="usuario_libre_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_despacho__usuario_libre_id" />
-            </column>
             <column name="prestador_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -45,6 +36,15 @@
                 <constraints nullable="true" />
             </column>
             <column name="movil_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="usuario_salida_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="usuario_llegada_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="usuario_libre_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

@@ -12,10 +12,10 @@ import { ISolicitudPrestacion, SolicitudPrestacion } from '../solicitud-prestaci
 import { SolicitudPrestacionService } from '../service/solicitud-prestacion.service';
 import { IDespacho } from 'app/entities/despacho/despacho.model';
 import { DespachoService } from 'app/entities/despacho/service/despacho.service';
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/user.service';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
 import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/user.service';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
@@ -29,8 +29,8 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
   isSaving = false;
 
   despachosCollection: IDespacho[] = [];
-  usersSharedCollection: IUser[] = [];
   itemNomencladorsSharedCollection: IItemNomenclador[] = [];
+  usersSharedCollection: IUser[] = [];
   insumosSharedCollection: IInsumo[] = [];
   individuosSharedCollection: IIndividuo[] = [];
 
@@ -47,8 +47,8 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     internacion: [],
     observaciones: [],
     despacho: [],
-    usuarioSolicitud: [],
     itemNomenclador: [],
+    usuarioSolicitud: [],
     insumos: [],
     individuo: [],
   });
@@ -56,8 +56,8 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
   constructor(
     protected solicitudPrestacionService: SolicitudPrestacionService,
     protected despachoService: DespachoService,
-    protected userService: UserService,
     protected itemNomencladorService: ItemNomencladorService,
+    protected userService: UserService,
     protected insumoService: InsumoService,
     protected individuoService: IndividuoService,
     protected activatedRoute: ActivatedRoute,
@@ -95,11 +95,11 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  trackUserById(index: number, item: IUser): number {
+  trackItemNomencladorById(index: number, item: IItemNomenclador): number {
     return item.id!;
   }
 
-  trackItemNomencladorById(index: number, item: IItemNomenclador): number {
+  trackUserById(index: number, item: IUser): number {
     return item.id!;
   }
 
@@ -155,8 +155,8 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       internacion: solicitudPrestacion.internacion,
       observaciones: solicitudPrestacion.observaciones,
       despacho: solicitudPrestacion.despacho,
-      usuarioSolicitud: solicitudPrestacion.usuarioSolicitud,
       itemNomenclador: solicitudPrestacion.itemNomenclador,
+      usuarioSolicitud: solicitudPrestacion.usuarioSolicitud,
       insumos: solicitudPrestacion.insumos,
       individuo: solicitudPrestacion.individuo,
     });
@@ -165,13 +165,13 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       this.despachosCollection,
       solicitudPrestacion.despacho
     );
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(
-      this.usersSharedCollection,
-      solicitudPrestacion.usuarioSolicitud
-    );
     this.itemNomencladorsSharedCollection = this.itemNomencladorService.addItemNomencladorToCollectionIfMissing(
       this.itemNomencladorsSharedCollection,
       solicitudPrestacion.itemNomenclador
+    );
+    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(
+      this.usersSharedCollection,
+      solicitudPrestacion.usuarioSolicitud
     );
     this.insumosSharedCollection = this.insumoService.addInsumoToCollectionIfMissing(
       this.insumosSharedCollection,
@@ -194,12 +194,6 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       )
       .subscribe((despachos: IDespacho[]) => (this.despachosCollection = despachos));
 
-    this.userService
-      .query()
-      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
-      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing(users, this.editForm.get('usuarioSolicitud')!.value)))
-      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
-
     this.itemNomencladorService
       .query()
       .pipe(map((res: HttpResponse<IItemNomenclador[]>) => res.body ?? []))
@@ -209,6 +203,12 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
         )
       )
       .subscribe((itemNomencladors: IItemNomenclador[]) => (this.itemNomencladorsSharedCollection = itemNomencladors));
+
+    this.userService
+      .query()
+      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
+      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing(users, this.editForm.get('usuarioSolicitud')!.value)))
+      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
     this.insumoService
       .query()
@@ -248,8 +248,8 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       internacion: this.editForm.get(['internacion'])!.value,
       observaciones: this.editForm.get(['observaciones'])!.value,
       despacho: this.editForm.get(['despacho'])!.value,
-      usuarioSolicitud: this.editForm.get(['usuarioSolicitud'])!.value,
       itemNomenclador: this.editForm.get(['itemNomenclador'])!.value,
+      usuarioSolicitud: this.editForm.get(['usuarioSolicitud'])!.value,
       insumos: this.editForm.get(['insumos'])!.value,
       individuo: this.editForm.get(['individuo'])!.value,
     };

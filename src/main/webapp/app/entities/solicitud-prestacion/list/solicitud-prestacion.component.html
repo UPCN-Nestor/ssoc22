@@ -44,8 +44,8 @@
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.internacion">Internacion</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.despacho">Despacho</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.usuarioSolicitud">Usuario Solicitud</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador">Item Nomenclador</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.usuarioSolicitud">Usuario Solicitud</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.insumo">Insumo</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.individuo">Individuo</span></th>
           <th scope="col"></th>
@@ -72,14 +72,14 @@
             </div>
           </td>
           <td>
-            {{ solicitudPrestacion.usuarioSolicitud?.id }}
-          </td>
-          <td>
             <div *ngIf="solicitudPrestacion.itemNomenclador">
               <a [routerLink]="['/item-nomenclador', solicitudPrestacion.itemNomenclador?.id, 'view']">{{
                 solicitudPrestacion.itemNomenclador?.id
               }}</a>
             </div>
+          </td>
+          <td>
+            {{ solicitudPrestacion.usuarioSolicitud?.id }}
           </td>
           <td>
             <span *ngFor="let insumo of solicitudPrestacion.insumos; let last = last">

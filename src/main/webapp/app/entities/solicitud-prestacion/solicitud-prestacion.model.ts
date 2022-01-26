@@ -1,7 +1,7 @@
 import dayjs from 'dayjs/esm';
 import { IDespacho } from 'app/entities/despacho/despacho.model';
-import { IUser } from 'app/entities/user/user.model';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
+import { IUser } from 'app/entities/user/user.model';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 
@@ -18,8 +18,8 @@ export interface ISolicitudPrestacion {
   internacion?: boolean | null;
   observaciones?: string | null;
   despacho?: IDespacho | null;
-  usuarioSolicitud?: IUser | null;
   itemNomenclador?: IItemNomenclador | null;
+  usuarioSolicitud?: IUser | null;
   insumos?: IInsumo[] | null;
   individuo?: IIndividuo | null;
 }
@@ -38,8 +38,8 @@ export class SolicitudPrestacion implements ISolicitudPrestacion {
     public internacion?: boolean | null,
     public observaciones?: string | null,
     public despacho?: IDespacho | null,
-    public usuarioSolicitud?: IUser | null,
     public itemNomenclador?: IItemNomenclador | null,
+    public usuarioSolicitud?: IUser | null,
     public insumos?: IInsumo[] | null,
     public individuo?: IIndividuo | null
   ) {

@@ -35,7 +35,7 @@ export class DespachoService {
   updateConResponsableLogueado(despacho: IDespacho, campoUsuarioResponsable: string): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(despacho);
     return this.http
-      .put<IDespacho>(`${this.resourceUrl}/${getDespachoIdentifier(despacho) as number}/res/{campoUsuarioResponsable}`, copy, {
+      .put<IDespacho>(`${this.resourceUrl}/${getDespachoIdentifier(despacho) as number}/res/${campoUsuarioResponsable}`, copy, {
         observe: 'response',
       })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
