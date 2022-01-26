@@ -182,8 +182,11 @@ public class SolicitudPrestacionResource {
         @RequestParam(required = false, defaultValue = "false") boolean eagerload,
         @PathVariable String tipo
     ) {
-        log.debug("REST request to get all SolicitudPrestacions");
-        return solicitudPrestacionRepository.findAllByTipo(tipo);
+        log.debug("REST request to get all SolicitudPrestacions por Tipo " + tipo);
+        List<SolicitudPrestacion> toRet = solicitudPrestacionRepository.findAllWithEagerRelationships();
+        toRet.removeIf(s -> !s.getTipo().equals(tipo)); // Filter
+
+        return toRet;
     }
 
     /**
