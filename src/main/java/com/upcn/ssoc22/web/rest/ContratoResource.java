@@ -126,6 +126,9 @@ public class ContratoResource {
                 if (contrato.getFechaAlta() != null) {
                     existingContrato.setFechaAlta(contrato.getFechaAlta());
                 }
+                if (contrato.getFechaBaja() != null) {
+                    existingContrato.setFechaBaja(contrato.getFechaBaja());
+                }
                 if (contrato.getParticularidades() != null) {
                     existingContrato.setParticularidades(contrato.getParticularidades());
                 }

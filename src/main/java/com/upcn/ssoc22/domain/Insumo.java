@@ -45,7 +45,10 @@ public class Insumo implements Serializable {
 
     @ManyToMany(mappedBy = "insumos")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "despacho", "itemNomenclador", "insumos", "individuo" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "individuo", "cliente" },
+        allowSetters = true
+    )
     private Set<SolicitudPrestacion> solicitudPrestacions = new HashSet<>();
 
     @ManyToMany(mappedBy = "insumos")

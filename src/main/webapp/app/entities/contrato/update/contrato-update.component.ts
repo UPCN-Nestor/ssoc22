@@ -28,6 +28,7 @@ export class ContratoUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     fechaAlta: [],
+    fechaBaja: [],
     particularidades: [],
     plan: [],
     cliente: [],
@@ -46,6 +47,7 @@ export class ContratoUpdateComponent implements OnInit {
       if (contrato.id === undefined) {
         const today = dayjs().startOf('day');
         contrato.fechaAlta = today;
+        contrato.fechaBaja = today;
       }
 
       this.updateForm(contrato);
@@ -99,6 +101,7 @@ export class ContratoUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: contrato.id,
       fechaAlta: contrato.fechaAlta ? contrato.fechaAlta.format(DATE_TIME_FORMAT) : null,
+      fechaBaja: contrato.fechaBaja ? contrato.fechaBaja.format(DATE_TIME_FORMAT) : null,
       particularidades: contrato.particularidades,
       plan: contrato.plan,
       cliente: contrato.cliente,
@@ -129,6 +132,7 @@ export class ContratoUpdateComponent implements OnInit {
       ...new Contrato(),
       id: this.editForm.get(['id'])!.value,
       fechaAlta: this.editForm.get(['fechaAlta'])!.value ? dayjs(this.editForm.get(['fechaAlta'])!.value, DATE_TIME_FORMAT) : undefined,
+      fechaBaja: this.editForm.get(['fechaBaja'])!.value ? dayjs(this.editForm.get(['fechaBaja'])!.value, DATE_TIME_FORMAT) : undefined,
       particularidades: this.editForm.get(['particularidades'])!.value,
       plan: this.editForm.get(['plan'])!.value,
       cliente: this.editForm.get(['cliente'])!.value,

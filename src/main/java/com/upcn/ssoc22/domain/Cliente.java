@@ -38,7 +38,10 @@ public class Cliente implements Serializable {
 
     @OneToMany(mappedBy = "enPadron")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "padrons", "adhesions", "contratoes", "enPadron", "facturas", "itemFacturas" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
+        allowSetters = true
+    )
     private Set<Cliente> padrons = new HashSet<>();
 
     @OneToMany(mappedBy = "cliente")
@@ -51,8 +54,19 @@ public class Cliente implements Serializable {
     @JsonIgnoreProperties(value = { "plan", "cliente" }, allowSetters = true)
     private Set<Contrato> contratoes = new HashSet<>();
 
+    @OneToMany(mappedBy = "cliente")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(
+        value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "individuo", "cliente" },
+        allowSetters = true
+    )
+    private Set<SolicitudPrestacion> solicitudPrestacions = new HashSet<>();
+
     @ManyToOne
-    @JsonIgnoreProperties(value = { "padrons", "adhesions", "contratoes", "enPadron", "facturas", "itemFacturas" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
+        allowSetters = true
+    )
     private Cliente enPadron;
 
     @OneToMany(mappedBy = "cliente")
@@ -222,6 +236,37 @@ public class Cliente implements Serializable {
     public Cliente removeContrato(Contrato contrato) {
         this.contratoes.remove(contrato);
         contrato.setCliente(null);
+        return this;
+    }
+
+    public Set<SolicitudPrestacion> getSolicitudPrestacions() {
+        return this.solicitudPrestacions;
+    }
+
+    public void setSolicitudPrestacions(Set<SolicitudPrestacion> solicitudPrestacions) {
+        if (this.solicitudPrestacions != null) {
+            this.solicitudPrestacions.forEach(i -> i.setCliente(null));
+        }
+        if (solicitudPrestacions != null) {
+            solicitudPrestacions.forEach(i -> i.setCliente(this));
+        }
+        this.solicitudPrestacions = solicitudPrestacions;
+    }
+
+    public Cliente solicitudPrestacions(Set<SolicitudPrestacion> solicitudPrestacions) {
+        this.setSolicitudPrestacions(solicitudPrestacions);
+        return this;
+    }
+
+    public Cliente addSolicitudPrestacion(SolicitudPrestacion solicitudPrestacion) {
+        this.solicitudPrestacions.add(solicitudPrestacion);
+        solicitudPrestacion.setCliente(this);
+        return this;
+    }
+
+    public Cliente removeSolicitudPrestacion(SolicitudPrestacion solicitudPrestacion) {
+        this.solicitudPrestacions.remove(solicitudPrestacion);
+        solicitudPrestacion.setCliente(null);
         return this;
     }
 

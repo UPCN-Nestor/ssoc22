@@ -72,6 +72,9 @@ class SolicitudPrestacionResourceIT {
     private static final String DEFAULT_OBSERVACIONES = "AAAAAAAAAA";
     private static final String UPDATED_OBSERVACIONES = "BBBBBBBBBB";
 
+    private static final String DEFAULT_INDIVIDUO_ADHOC = "AAAAAAAAAA";
+    private static final String UPDATED_INDIVIDUO_ADHOC = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/solicitud-prestacions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -109,7 +112,8 @@ class SolicitudPrestacionResourceIT {
             .motivoLlamado(DEFAULT_MOTIVO_LLAMADO)
             .seEfectuo(DEFAULT_SE_EFECTUO)
             .internacion(DEFAULT_INTERNACION)
-            .observaciones(DEFAULT_OBSERVACIONES);
+            .observaciones(DEFAULT_OBSERVACIONES)
+            .individuoAdhoc(DEFAULT_INDIVIDUO_ADHOC);
         return solicitudPrestacion;
     }
 
@@ -130,7 +134,8 @@ class SolicitudPrestacionResourceIT {
             .motivoLlamado(UPDATED_MOTIVO_LLAMADO)
             .seEfectuo(UPDATED_SE_EFECTUO)
             .internacion(UPDATED_INTERNACION)
-            .observaciones(UPDATED_OBSERVACIONES);
+            .observaciones(UPDATED_OBSERVACIONES)
+            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC);
         return solicitudPrestacion;
     }
 
@@ -164,6 +169,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getSeEfectuo()).isEqualTo(DEFAULT_SE_EFECTUO);
         assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(DEFAULT_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(DEFAULT_OBSERVACIONES);
+        assertThat(testSolicitudPrestacion.getIndividuoAdhoc()).isEqualTo(DEFAULT_INDIVIDUO_ADHOC);
     }
 
     @Test
@@ -207,7 +213,8 @@ class SolicitudPrestacionResourceIT {
             .andExpect(jsonPath("$.[*].motivoLlamado").value(hasItem(DEFAULT_MOTIVO_LLAMADO)))
             .andExpect(jsonPath("$.[*].seEfectuo").value(hasItem(DEFAULT_SE_EFECTUO.booleanValue())))
             .andExpect(jsonPath("$.[*].internacion").value(hasItem(DEFAULT_INTERNACION.booleanValue())))
-            .andExpect(jsonPath("$.[*].observaciones").value(hasItem(DEFAULT_OBSERVACIONES)));
+            .andExpect(jsonPath("$.[*].observaciones").value(hasItem(DEFAULT_OBSERVACIONES)))
+            .andExpect(jsonPath("$.[*].individuoAdhoc").value(hasItem(DEFAULT_INDIVIDUO_ADHOC)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -249,7 +256,8 @@ class SolicitudPrestacionResourceIT {
             .andExpect(jsonPath("$.motivoLlamado").value(DEFAULT_MOTIVO_LLAMADO))
             .andExpect(jsonPath("$.seEfectuo").value(DEFAULT_SE_EFECTUO.booleanValue()))
             .andExpect(jsonPath("$.internacion").value(DEFAULT_INTERNACION.booleanValue()))
-            .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES));
+            .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES))
+            .andExpect(jsonPath("$.individuoAdhoc").value(DEFAULT_INDIVIDUO_ADHOC));
     }
 
     @Test
@@ -281,7 +289,8 @@ class SolicitudPrestacionResourceIT {
             .motivoLlamado(UPDATED_MOTIVO_LLAMADO)
             .seEfectuo(UPDATED_SE_EFECTUO)
             .internacion(UPDATED_INTERNACION)
-            .observaciones(UPDATED_OBSERVACIONES);
+            .observaciones(UPDATED_OBSERVACIONES)
+            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -305,6 +314,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getSeEfectuo()).isEqualTo(UPDATED_SE_EFECTUO);
         assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(UPDATED_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
+        assertThat(testSolicitudPrestacion.getIndividuoAdhoc()).isEqualTo(UPDATED_INDIVIDUO_ADHOC);
     }
 
     @Test
@@ -385,7 +395,8 @@ class SolicitudPrestacionResourceIT {
             .edad(UPDATED_EDAD)
             .motivoLlamado(UPDATED_MOTIVO_LLAMADO)
             .internacion(UPDATED_INTERNACION)
-            .observaciones(UPDATED_OBSERVACIONES);
+            .observaciones(UPDATED_OBSERVACIONES)
+            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -409,6 +420,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getSeEfectuo()).isEqualTo(DEFAULT_SE_EFECTUO);
         assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(UPDATED_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
+        assertThat(testSolicitudPrestacion.getIndividuoAdhoc()).isEqualTo(UPDATED_INDIVIDUO_ADHOC);
     }
 
     @Test
@@ -433,7 +445,8 @@ class SolicitudPrestacionResourceIT {
             .motivoLlamado(UPDATED_MOTIVO_LLAMADO)
             .seEfectuo(UPDATED_SE_EFECTUO)
             .internacion(UPDATED_INTERNACION)
-            .observaciones(UPDATED_OBSERVACIONES);
+            .observaciones(UPDATED_OBSERVACIONES)
+            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -457,6 +470,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getSeEfectuo()).isEqualTo(UPDATED_SE_EFECTUO);
         assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(UPDATED_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
+        assertThat(testSolicitudPrestacion.getIndividuoAdhoc()).isEqualTo(UPDATED_INDIVIDUO_ADHOC);
     }
 
     @Test

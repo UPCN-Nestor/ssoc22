@@ -26,6 +26,9 @@ public class Contrato implements Serializable {
     @Column(name = "fecha_alta")
     private ZonedDateTime fechaAlta;
 
+    @Column(name = "fecha_baja")
+    private ZonedDateTime fechaBaja;
+
     @Column(name = "particularidades")
     private String particularidades;
 
@@ -34,7 +37,10 @@ public class Contrato implements Serializable {
     private Plan plan;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "padrons", "adhesions", "contratoes", "enPadron", "facturas", "itemFacturas" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
+        allowSetters = true
+    )
     private Cliente cliente;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -63,6 +69,19 @@ public class Contrato implements Serializable {
 
     public void setFechaAlta(ZonedDateTime fechaAlta) {
         this.fechaAlta = fechaAlta;
+    }
+
+    public ZonedDateTime getFechaBaja() {
+        return this.fechaBaja;
+    }
+
+    public Contrato fechaBaja(ZonedDateTime fechaBaja) {
+        this.setFechaBaja(fechaBaja);
+        return this;
+    }
+
+    public void setFechaBaja(ZonedDateTime fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 
     public String getParticularidades() {
@@ -129,6 +148,7 @@ public class Contrato implements Serializable {
         return "Contrato{" +
             "id=" + getId() +
             ", fechaAlta='" + getFechaAlta() + "'" +
+            ", fechaBaja='" + getFechaBaja() + "'" +
             ", particularidades='" + getParticularidades() + "'" +
             "}";
     }

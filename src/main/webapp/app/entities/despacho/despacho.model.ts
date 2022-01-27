@@ -1,5 +1,4 @@
 import dayjs from 'dayjs/esm';
-import { IPrestador } from 'app/entities/prestador/prestador.model';
 import { IChofer } from 'app/entities/chofer/chofer.model';
 import { IMedico } from 'app/entities/medico/medico.model';
 import { IEnfermero } from 'app/entities/enfermero/enfermero.model';
@@ -12,7 +11,6 @@ export interface IDespacho {
   horaSalida?: dayjs.Dayjs | null;
   horaLlegada?: dayjs.Dayjs | null;
   horaLibre?: dayjs.Dayjs | null;
-  prestador?: IPrestador | null;
   chofer?: IChofer | null;
   medico?: IMedico | null;
   enfermero?: IEnfermero | null;
@@ -29,7 +27,6 @@ export class Despacho implements IDespacho {
     public horaSalida?: dayjs.Dayjs | null,
     public horaLlegada?: dayjs.Dayjs | null,
     public horaLibre?: dayjs.Dayjs | null,
-    public prestador?: IPrestador | null,
     public chofer?: IChofer | null,
     public medico?: IMedico | null,
     public enfermero?: IEnfermero | null,

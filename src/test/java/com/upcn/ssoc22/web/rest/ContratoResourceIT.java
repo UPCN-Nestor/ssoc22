@@ -37,6 +37,9 @@ class ContratoResourceIT {
     private static final ZonedDateTime DEFAULT_FECHA_ALTA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_FECHA_ALTA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
+    private static final ZonedDateTime DEFAULT_FECHA_BAJA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_FECHA_BAJA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
     private static final String DEFAULT_PARTICULARIDADES = "AAAAAAAAAA";
     private static final String UPDATED_PARTICULARIDADES = "BBBBBBBBBB";
 
@@ -64,7 +67,10 @@ class ContratoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Contrato createEntity(EntityManager em) {
-        Contrato contrato = new Contrato().fechaAlta(DEFAULT_FECHA_ALTA).particularidades(DEFAULT_PARTICULARIDADES);
+        Contrato contrato = new Contrato()
+            .fechaAlta(DEFAULT_FECHA_ALTA)
+            .fechaBaja(DEFAULT_FECHA_BAJA)
+            .particularidades(DEFAULT_PARTICULARIDADES);
         return contrato;
     }
 
@@ -75,7 +81,10 @@ class ContratoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Contrato createUpdatedEntity(EntityManager em) {
-        Contrato contrato = new Contrato().fechaAlta(UPDATED_FECHA_ALTA).particularidades(UPDATED_PARTICULARIDADES);
+        Contrato contrato = new Contrato()
+            .fechaAlta(UPDATED_FECHA_ALTA)
+            .fechaBaja(UPDATED_FECHA_BAJA)
+            .particularidades(UPDATED_PARTICULARIDADES);
         return contrato;
     }
 
@@ -98,6 +107,7 @@ class ContratoResourceIT {
         assertThat(contratoList).hasSize(databaseSizeBeforeCreate + 1);
         Contrato testContrato = contratoList.get(contratoList.size() - 1);
         assertThat(testContrato.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
+        assertThat(testContrato.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
         assertThat(testContrato.getParticularidades()).isEqualTo(DEFAULT_PARTICULARIDADES);
     }
 
@@ -132,6 +142,7 @@ class ContratoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(contrato.getId().intValue())))
             .andExpect(jsonPath("$.[*].fechaAlta").value(hasItem(sameInstant(DEFAULT_FECHA_ALTA))))
+            .andExpect(jsonPath("$.[*].fechaBaja").value(hasItem(sameInstant(DEFAULT_FECHA_BAJA))))
             .andExpect(jsonPath("$.[*].particularidades").value(hasItem(DEFAULT_PARTICULARIDADES)));
     }
 
@@ -148,6 +159,7 @@ class ContratoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(contrato.getId().intValue()))
             .andExpect(jsonPath("$.fechaAlta").value(sameInstant(DEFAULT_FECHA_ALTA)))
+            .andExpect(jsonPath("$.fechaBaja").value(sameInstant(DEFAULT_FECHA_BAJA)))
             .andExpect(jsonPath("$.particularidades").value(DEFAULT_PARTICULARIDADES));
     }
 
@@ -170,7 +182,7 @@ class ContratoResourceIT {
         Contrato updatedContrato = contratoRepository.findById(contrato.getId()).get();
         // Disconnect from session so that the updates on updatedContrato are not directly saved in db
         em.detach(updatedContrato);
-        updatedContrato.fechaAlta(UPDATED_FECHA_ALTA).particularidades(UPDATED_PARTICULARIDADES);
+        updatedContrato.fechaAlta(UPDATED_FECHA_ALTA).fechaBaja(UPDATED_FECHA_BAJA).particularidades(UPDATED_PARTICULARIDADES);
 
         restContratoMockMvc
             .perform(
@@ -185,6 +197,7 @@ class ContratoResourceIT {
         assertThat(contratoList).hasSize(databaseSizeBeforeUpdate);
         Contrato testContrato = contratoList.get(contratoList.size() - 1);
         assertThat(testContrato.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
+        assertThat(testContrato.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testContrato.getParticularidades()).isEqualTo(UPDATED_PARTICULARIDADES);
     }
 
@@ -269,6 +282,7 @@ class ContratoResourceIT {
         assertThat(contratoList).hasSize(databaseSizeBeforeUpdate);
         Contrato testContrato = contratoList.get(contratoList.size() - 1);
         assertThat(testContrato.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
+        assertThat(testContrato.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
         assertThat(testContrato.getParticularidades()).isEqualTo(DEFAULT_PARTICULARIDADES);
     }
 
@@ -284,7 +298,7 @@ class ContratoResourceIT {
         Contrato partialUpdatedContrato = new Contrato();
         partialUpdatedContrato.setId(contrato.getId());
 
-        partialUpdatedContrato.fechaAlta(UPDATED_FECHA_ALTA).particularidades(UPDATED_PARTICULARIDADES);
+        partialUpdatedContrato.fechaAlta(UPDATED_FECHA_ALTA).fechaBaja(UPDATED_FECHA_BAJA).particularidades(UPDATED_PARTICULARIDADES);
 
         restContratoMockMvc
             .perform(
@@ -299,6 +313,7 @@ class ContratoResourceIT {
         assertThat(contratoList).hasSize(databaseSizeBeforeUpdate);
         Contrato testContrato = contratoList.get(contratoList.size() - 1);
         assertThat(testContrato.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
+        assertThat(testContrato.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testContrato.getParticularidades()).isEqualTo(UPDATED_PARTICULARIDADES);
     }
 

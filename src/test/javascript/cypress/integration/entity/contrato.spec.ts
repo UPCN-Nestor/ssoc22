@@ -150,7 +150,9 @@ describe('Contrato e2e test', () => {
     it('should create an instance of Contrato', () => {
       cy.get(`[data-cy="fechaAlta"]`).type('2022-01-23T16:18').should('have.value', '2022-01-23T16:18');
 
-      cy.get(`[data-cy="particularidades"]`).type('Inteligente transmitting').should('have.value', 'Inteligente transmitting');
+      cy.get(`[data-cy="fechaBaja"]`).type('2022-01-24T02:51').should('have.value', '2022-01-24T02:51');
+
+      cy.get(`[data-cy="particularidades"]`).type('grupo').should('have.value', 'grupo');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

@@ -34,7 +34,6 @@ export class DespachoUpdatePage {
   horaLlegadaInput = element(by.id('field_horaLlegada'));
   horaLibreInput = element(by.id('field_horaLibre'));
 
-  prestadorSelect = element(by.id('field_prestador'));
   choferSelect = element(by.id('field_chofer'));
   medicoSelect = element(by.id('field_medico'));
   enfermeroSelect = element(by.id('field_enfermero'));
@@ -77,22 +76,6 @@ export class DespachoUpdatePage {
 
   async getHoraLibreInput(): Promise<string> {
     return await this.horaLibreInput.getAttribute('value');
-  }
-
-  async prestadorSelectLastOption(): Promise<void> {
-    await this.prestadorSelect.all(by.tagName('option')).last().click();
-  }
-
-  async prestadorSelectOption(option: string): Promise<void> {
-    await this.prestadorSelect.sendKeys(option);
-  }
-
-  getPrestadorSelect(): ElementFinder {
-    return this.prestadorSelect;
-  }
-
-  async getPrestadorSelectedOption(): Promise<string> {
-    return await this.prestadorSelect.element(by.css('option:checked')).getText();
   }
 
   async choferSelectLastOption(): Promise<void> {

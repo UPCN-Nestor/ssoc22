@@ -17,6 +17,9 @@
             <column name="fecha_alta" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
+            <column name="fecha_baja" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
             <column name="estado" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -32,6 +35,7 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="adhesion" columnName="fecha_alta" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="adhesion" columnName="fecha_baja" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -52,6 +56,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="fecha_alta" type="date"/>
+            <column name="fecha_baja" type="date"/>
             <column name="estado" type="string"/>
             <column name="condicion" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

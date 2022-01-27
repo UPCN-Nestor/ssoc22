@@ -26,6 +26,7 @@ describe('Contrato Service', () => {
     elemDefault = {
       id: 0,
       fechaAlta: currentDate,
+      fechaBaja: currentDate,
       particularidades: 'AAAAAAA',
     };
   });
@@ -35,6 +36,7 @@ describe('Contrato Service', () => {
       const returnedFromService = Object.assign(
         {
           fechaAlta: currentDate.format(DATE_TIME_FORMAT),
+          fechaBaja: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
@@ -51,6 +53,7 @@ describe('Contrato Service', () => {
         {
           id: 0,
           fechaAlta: currentDate.format(DATE_TIME_FORMAT),
+          fechaBaja: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
@@ -58,6 +61,7 @@ describe('Contrato Service', () => {
       const expected = Object.assign(
         {
           fechaAlta: currentDate,
+          fechaBaja: currentDate,
         },
         returnedFromService
       );
@@ -74,6 +78,7 @@ describe('Contrato Service', () => {
         {
           id: 1,
           fechaAlta: currentDate.format(DATE_TIME_FORMAT),
+          fechaBaja: currentDate.format(DATE_TIME_FORMAT),
           particularidades: 'BBBBBB',
         },
         elemDefault
@@ -82,6 +87,7 @@ describe('Contrato Service', () => {
       const expected = Object.assign(
         {
           fechaAlta: currentDate,
+          fechaBaja: currentDate,
         },
         returnedFromService
       );
@@ -96,6 +102,7 @@ describe('Contrato Service', () => {
     it('should partial update a Contrato', () => {
       const patchObject = Object.assign(
         {
+          fechaBaja: currentDate.format(DATE_TIME_FORMAT),
           particularidades: 'BBBBBB',
         },
         new Contrato()
@@ -106,6 +113,7 @@ describe('Contrato Service', () => {
       const expected = Object.assign(
         {
           fechaAlta: currentDate,
+          fechaBaja: currentDate,
         },
         returnedFromService
       );
@@ -122,6 +130,7 @@ describe('Contrato Service', () => {
         {
           id: 1,
           fechaAlta: currentDate.format(DATE_TIME_FORMAT),
+          fechaBaja: currentDate.format(DATE_TIME_FORMAT),
           particularidades: 'BBBBBB',
         },
         elemDefault
@@ -130,6 +139,7 @@ describe('Contrato Service', () => {
       const expected = Object.assign(
         {
           fechaAlta: currentDate,
+          fechaBaja: currentDate,
         },
         returnedFromService
       );
@@ -179,7 +189,7 @@ describe('Contrato Service', () => {
       });
 
       it('should add only unique Contrato to an array', () => {
-        const contratoArray: IContrato[] = [{ id: 123 }, { id: 456 }, { id: 86353 }];
+        const contratoArray: IContrato[] = [{ id: 123 }, { id: 456 }, { id: 97667 }];
         const contratoCollection: IContrato[] = [{ id: 123 }];
         expectedResult = service.addContratoToCollectionIfMissing(contratoCollection, ...contratoArray);
         expect(expectedResult).toHaveLength(3);

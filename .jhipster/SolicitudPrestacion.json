@@ -44,6 +44,10 @@
     {
       "fieldName": "observaciones",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "individuoAdhoc",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
@@ -66,6 +70,12 @@
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityName": "prestador",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "prestador",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityName": "user",
       "otherEntityRelationshipName": "solicitudPrestacion",
       "relationshipName": "usuarioSolicitud",
@@ -82,6 +92,12 @@
       "otherEntityName": "individuo",
       "otherEntityRelationshipName": "solicitudPrestacion",
       "relationshipName": "individuo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "solicitudPrestacion",
+      "relationshipName": "cliente",
       "relationshipType": "many-to-one"
     }
   ],

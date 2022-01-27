@@ -12,6 +12,8 @@ import { IDespacho } from 'app/entities/despacho/despacho.model';
 import { DespachoService } from 'app/entities/despacho/service/despacho.service';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
 import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
+import { IPrestador } from 'app/entities/prestador/prestador.model';
+import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
@@ -19,6 +21,8 @@ import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 import { IndividuoService } from 'app/entities/individuo/service/individuo.service';
+import { ICliente } from 'app/entities/cliente/cliente.model';
+import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 
 import { SolicitudPrestacionUpdateComponent } from './solicitud-prestacion-update.component';
 
@@ -29,9 +33,11 @@ describe('SolicitudPrestacion Management Update Component', () => {
   let solicitudPrestacionService: SolicitudPrestacionService;
   let despachoService: DespachoService;
   let itemNomencladorService: ItemNomencladorService;
+  let prestadorService: PrestadorService;
   let userService: UserService;
   let insumoService: InsumoService;
   let individuoService: IndividuoService;
+  let clienteService: ClienteService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,9 +61,11 @@ describe('SolicitudPrestacion Management Update Component', () => {
     solicitudPrestacionService = TestBed.inject(SolicitudPrestacionService);
     despachoService = TestBed.inject(DespachoService);
     itemNomencladorService = TestBed.inject(ItemNomencladorService);
+    prestadorService = TestBed.inject(PrestadorService);
     userService = TestBed.inject(UserService);
     insumoService = TestBed.inject(InsumoService);
     individuoService = TestBed.inject(IndividuoService);
+    clienteService = TestBed.inject(ClienteService);
 
     comp = fixture.componentInstance;
   });
@@ -101,6 +109,25 @@ describe('SolicitudPrestacion Management Update Component', () => {
         ...additionalItemNomencladors
       );
       expect(comp.itemNomencladorsSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should call Prestador query and add missing value', () => {
+      const solicitudPrestacion: ISolicitudPrestacion = { id: 456 };
+      const prestador: IPrestador = { id: 65158 };
+      solicitudPrestacion.prestador = prestador;
+
+      const prestadorCollection: IPrestador[] = [{ id: 93502 }];
+      jest.spyOn(prestadorService, 'query').mockReturnValue(of(new HttpResponse({ body: prestadorCollection })));
+      const additionalPrestadors = [prestador];
+      const expectedCollection: IPrestador[] = [...additionalPrestadors, ...prestadorCollection];
+      jest.spyOn(prestadorService, 'addPrestadorToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ solicitudPrestacion });
+      comp.ngOnInit();
+
+      expect(prestadorService.query).toHaveBeenCalled();
+      expect(prestadorService.addPrestadorToCollectionIfMissing).toHaveBeenCalledWith(prestadorCollection, ...additionalPrestadors);
+      expect(comp.prestadorsSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should call User query and add missing value', () => {
@@ -160,18 +187,41 @@ describe('SolicitudPrestacion Management Update Component', () => {
       expect(comp.individuosSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Cliente query and add missing value', () => {
+      const solicitudPrestacion: ISolicitudPrestacion = { id: 456 };
+      const cliente: ICliente = { id: 48703 };
+      solicitudPrestacion.cliente = cliente;
+
+      const clienteCollection: ICliente[] = [{ id: 12575 }];
+      jest.spyOn(clienteService, 'query').mockReturnValue(of(new HttpResponse({ body: clienteCollection })));
+      const additionalClientes = [cliente];
+      const expectedCollection: ICliente[] = [...additionalClientes, ...clienteCollection];
+      jest.spyOn(clienteService, 'addClienteToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ solicitudPrestacion });
+      comp.ngOnInit();
+
+      expect(clienteService.query).toHaveBeenCalled();
+      expect(clienteService.addClienteToCollectionIfMissing).toHaveBeenCalledWith(clienteCollection, ...additionalClientes);
+      expect(comp.clientesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const solicitudPrestacion: ISolicitudPrestacion = { id: 456 };
       const despacho: IDespacho = { id: 14419 };
       solicitudPrestacion.despacho = despacho;
       const itemNomenclador: IItemNomenclador = { id: 22519 };
       solicitudPrestacion.itemNomenclador = itemNomenclador;
+      const prestador: IPrestador = { id: 89506 };
+      solicitudPrestacion.prestador = prestador;
       const usuarioSolicitud: IUser = { id: 38818 };
       solicitudPrestacion.usuarioSolicitud = usuarioSolicitud;
       const insumos: IInsumo = { id: 7828 };
       solicitudPrestacion.insumos = [insumos];
       const individuo: IIndividuo = { id: 56995 };
       solicitudPrestacion.individuo = individuo;
+      const cliente: ICliente = { id: 73913 };
+      solicitudPrestacion.cliente = cliente;
 
       activatedRoute.data = of({ solicitudPrestacion });
       comp.ngOnInit();
@@ -179,9 +229,11 @@ describe('SolicitudPrestacion Management Update Component', () => {
       expect(comp.editForm.value).toEqual(expect.objectContaining(solicitudPrestacion));
       expect(comp.despachosCollection).toContain(despacho);
       expect(comp.itemNomencladorsSharedCollection).toContain(itemNomenclador);
+      expect(comp.prestadorsSharedCollection).toContain(prestador);
       expect(comp.usersSharedCollection).toContain(usuarioSolicitud);
       expect(comp.insumosSharedCollection).toContain(insumos);
       expect(comp.individuosSharedCollection).toContain(individuo);
+      expect(comp.clientesSharedCollection).toContain(cliente);
     });
   });
 
@@ -266,6 +318,14 @@ describe('SolicitudPrestacion Management Update Component', () => {
       });
     });
 
+    describe('trackPrestadorById', () => {
+      it('Should return tracked Prestador primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackPrestadorById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
     describe('trackUserById', () => {
       it('Should return tracked User primary key', () => {
         const entity = { id: 123 };
@@ -286,6 +346,14 @@ describe('SolicitudPrestacion Management Update Component', () => {
       it('Should return tracked Individuo primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackIndividuoById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
+    describe('trackClienteById', () => {
+      it('Should return tracked Cliente primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackClienteById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

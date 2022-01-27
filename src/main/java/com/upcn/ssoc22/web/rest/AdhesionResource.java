@@ -126,6 +126,9 @@ public class AdhesionResource {
                 if (adhesion.getFechaAlta() != null) {
                     existingAdhesion.setFechaAlta(adhesion.getFechaAlta());
                 }
+                if (adhesion.getFechaBaja() != null) {
+                    existingAdhesion.setFechaBaja(adhesion.getFechaBaja());
+                }
                 if (adhesion.getEstado() != null) {
                     existingAdhesion.setEstado(adhesion.getEstado());
                 }

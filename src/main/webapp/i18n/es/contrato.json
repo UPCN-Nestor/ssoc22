@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "fechaAlta": "Fecha Alta",
+      "fechaBaja": "Fecha Baja",
       "particularidades": "Particularidades",
       "plan": "Plan",
       "cliente": "Cliente"

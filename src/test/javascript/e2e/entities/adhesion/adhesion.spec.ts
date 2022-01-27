@@ -44,6 +44,7 @@ describe('Adhesion e2e test', () => {
 
     await promise.all([
       adhesionUpdatePage.setFechaAltaInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      adhesionUpdatePage.setFechaBajaInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       adhesionUpdatePage.setEstadoInput('estado'),
       adhesionUpdatePage.setCondicionInput('condicion'),
       adhesionUpdatePage.individuoSelectLastOption(),

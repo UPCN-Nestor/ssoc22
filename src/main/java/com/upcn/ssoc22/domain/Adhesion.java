@@ -26,6 +26,9 @@ public class Adhesion implements Serializable {
     @Column(name = "fecha_alta")
     private ZonedDateTime fechaAlta;
 
+    @Column(name = "fecha_baja")
+    private ZonedDateTime fechaBaja;
+
     @Column(name = "estado")
     private String estado;
 
@@ -37,7 +40,10 @@ public class Adhesion implements Serializable {
     private Individuo individuo;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "padrons", "adhesions", "contratoes", "enPadron", "facturas", "itemFacturas" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
+        allowSetters = true
+    )
     private Cliente cliente;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -66,6 +72,19 @@ public class Adhesion implements Serializable {
 
     public void setFechaAlta(ZonedDateTime fechaAlta) {
         this.fechaAlta = fechaAlta;
+    }
+
+    public ZonedDateTime getFechaBaja() {
+        return this.fechaBaja;
+    }
+
+    public Adhesion fechaBaja(ZonedDateTime fechaBaja) {
+        this.setFechaBaja(fechaBaja);
+        return this;
+    }
+
+    public void setFechaBaja(ZonedDateTime fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 
     public String getEstado() {
@@ -145,6 +164,7 @@ public class Adhesion implements Serializable {
         return "Adhesion{" +
             "id=" + getId() +
             ", fechaAlta='" + getFechaAlta() + "'" +
+            ", fechaBaja='" + getFechaBaja() + "'" +
             ", estado='" + getEstado() + "'" +
             ", condicion='" + getCondicion() + "'" +
             "}";

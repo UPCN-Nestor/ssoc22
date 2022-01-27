@@ -8,8 +8,6 @@ import { of, Subject, from } from 'rxjs';
 
 import { DespachoService } from '../service/despacho.service';
 import { IDespacho, Despacho } from '../despacho.model';
-import { IPrestador } from 'app/entities/prestador/prestador.model';
-import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
 import { IChofer } from 'app/entities/chofer/chofer.model';
 import { ChoferService } from 'app/entities/chofer/service/chofer.service';
 import { IMedico } from 'app/entities/medico/medico.model';
@@ -29,7 +27,6 @@ describe('Despacho Management Update Component', () => {
   let fixture: ComponentFixture<DespachoUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let despachoService: DespachoService;
-  let prestadorService: PrestadorService;
   let choferService: ChoferService;
   let medicoService: MedicoService;
   let enfermeroService: EnfermeroService;
@@ -56,7 +53,6 @@ describe('Despacho Management Update Component', () => {
     fixture = TestBed.createComponent(DespachoUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     despachoService = TestBed.inject(DespachoService);
-    prestadorService = TestBed.inject(PrestadorService);
     choferService = TestBed.inject(ChoferService);
     medicoService = TestBed.inject(MedicoService);
     enfermeroService = TestBed.inject(EnfermeroService);
@@ -67,25 +63,6 @@ describe('Despacho Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
-    it('Should call Prestador query and add missing value', () => {
-      const despacho: IDespacho = { id: 456 };
-      const prestador: IPrestador = { id: 81842 };
-      despacho.prestador = prestador;
-
-      const prestadorCollection: IPrestador[] = [{ id: 19569 }];
-      jest.spyOn(prestadorService, 'query').mockReturnValue(of(new HttpResponse({ body: prestadorCollection })));
-      const additionalPrestadors = [prestador];
-      const expectedCollection: IPrestador[] = [...additionalPrestadors, ...prestadorCollection];
-      jest.spyOn(prestadorService, 'addPrestadorToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ despacho });
-      comp.ngOnInit();
-
-      expect(prestadorService.query).toHaveBeenCalled();
-      expect(prestadorService.addPrestadorToCollectionIfMissing).toHaveBeenCalledWith(prestadorCollection, ...additionalPrestadors);
-      expect(comp.prestadorsSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should call Chofer query and add missing value', () => {
       const despacho: IDespacho = { id: 456 };
       const chofer: IChofer = { id: 36245 };
@@ -187,8 +164,6 @@ describe('Despacho Management Update Component', () => {
 
     it('Should update editForm', () => {
       const despacho: IDespacho = { id: 456 };
-      const prestador: IPrestador = { id: 61870 };
-      despacho.prestador = prestador;
       const chofer: IChofer = { id: 8395 };
       despacho.chofer = chofer;
       const medico: IMedico = { id: 70617 };
@@ -208,7 +183,6 @@ describe('Despacho Management Update Component', () => {
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(despacho));
-      expect(comp.prestadorsSharedCollection).toContain(prestador);
       expect(comp.chofersSharedCollection).toContain(chofer);
       expect(comp.medicosSharedCollection).toContain(medico);
       expect(comp.enfermerosSharedCollection).toContain(enfermero);
@@ -284,14 +258,6 @@ describe('Despacho Management Update Component', () => {
   });
 
   describe('Tracking relationships identifiers', () => {
-    describe('trackPrestadorById', () => {
-      it('Should return tracked Prestador primary key', () => {
-        const entity = { id: 123 };
-        const trackResult = comp.trackPrestadorById(0, entity);
-        expect(trackResult).toEqual(entity.id);
-      });
-    });
-
     describe('trackChoferById', () => {
       it('Should return tracked Chofer primary key', () => {
         const entity = { id: 123 };

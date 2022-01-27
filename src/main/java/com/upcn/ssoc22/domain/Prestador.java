@@ -42,8 +42,11 @@ public class Prestador implements Serializable {
 
     @OneToMany(mappedBy = "prestador")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "prestador", "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
-    private Set<Despacho> despachos = new HashSet<>();
+    @JsonIgnoreProperties(
+        value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "individuo", "cliente" },
+        allowSetters = true
+    )
+    private Set<SolicitudPrestacion> solicitudPrestacions = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -111,34 +114,34 @@ public class Prestador implements Serializable {
         return this;
     }
 
-    public Set<Despacho> getDespachos() {
-        return this.despachos;
+    public Set<SolicitudPrestacion> getSolicitudPrestacions() {
+        return this.solicitudPrestacions;
     }
 
-    public void setDespachos(Set<Despacho> despachos) {
-        if (this.despachos != null) {
-            this.despachos.forEach(i -> i.setPrestador(null));
+    public void setSolicitudPrestacions(Set<SolicitudPrestacion> solicitudPrestacions) {
+        if (this.solicitudPrestacions != null) {
+            this.solicitudPrestacions.forEach(i -> i.setPrestador(null));
         }
-        if (despachos != null) {
-            despachos.forEach(i -> i.setPrestador(this));
+        if (solicitudPrestacions != null) {
+            solicitudPrestacions.forEach(i -> i.setPrestador(this));
         }
-        this.despachos = despachos;
+        this.solicitudPrestacions = solicitudPrestacions;
     }
 
-    public Prestador despachos(Set<Despacho> despachos) {
-        this.setDespachos(despachos);
+    public Prestador solicitudPrestacions(Set<SolicitudPrestacion> solicitudPrestacions) {
+        this.setSolicitudPrestacions(solicitudPrestacions);
         return this;
     }
 
-    public Prestador addDespacho(Despacho despacho) {
-        this.despachos.add(despacho);
-        despacho.setPrestador(this);
+    public Prestador addSolicitudPrestacion(SolicitudPrestacion solicitudPrestacion) {
+        this.solicitudPrestacions.add(solicitudPrestacion);
+        solicitudPrestacion.setPrestador(this);
         return this;
     }
 
-    public Prestador removeDespacho(Despacho despacho) {
-        this.despachos.remove(despacho);
-        despacho.setPrestador(null);
+    public Prestador removeSolicitudPrestacion(SolicitudPrestacion solicitudPrestacion) {
+        this.solicitudPrestacions.remove(solicitudPrestacion);
+        solicitudPrestacion.setPrestador(null);
         return this;
     }
 

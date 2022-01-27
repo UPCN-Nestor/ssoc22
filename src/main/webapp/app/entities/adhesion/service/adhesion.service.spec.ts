@@ -26,6 +26,7 @@ describe('Adhesion Service', () => {
     elemDefault = {
       id: 0,
       fechaAlta: currentDate,
+      fechaBaja: currentDate,
       estado: 'AAAAAAA',
       condicion: 'AAAAAAA',
     };
@@ -36,6 +37,7 @@ describe('Adhesion Service', () => {
       const returnedFromService = Object.assign(
         {
           fechaAlta: currentDate.format(DATE_TIME_FORMAT),
+          fechaBaja: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
@@ -52,6 +54,7 @@ describe('Adhesion Service', () => {
         {
           id: 0,
           fechaAlta: currentDate.format(DATE_TIME_FORMAT),
+          fechaBaja: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
@@ -59,6 +62,7 @@ describe('Adhesion Service', () => {
       const expected = Object.assign(
         {
           fechaAlta: currentDate,
+          fechaBaja: currentDate,
         },
         returnedFromService
       );
@@ -75,6 +79,7 @@ describe('Adhesion Service', () => {
         {
           id: 1,
           fechaAlta: currentDate.format(DATE_TIME_FORMAT),
+          fechaBaja: currentDate.format(DATE_TIME_FORMAT),
           estado: 'BBBBBB',
           condicion: 'BBBBBB',
         },
@@ -84,6 +89,7 @@ describe('Adhesion Service', () => {
       const expected = Object.assign(
         {
           fechaAlta: currentDate,
+          fechaBaja: currentDate,
         },
         returnedFromService
       );
@@ -103,6 +109,7 @@ describe('Adhesion Service', () => {
       const expected = Object.assign(
         {
           fechaAlta: currentDate,
+          fechaBaja: currentDate,
         },
         returnedFromService
       );
@@ -119,6 +126,7 @@ describe('Adhesion Service', () => {
         {
           id: 1,
           fechaAlta: currentDate.format(DATE_TIME_FORMAT),
+          fechaBaja: currentDate.format(DATE_TIME_FORMAT),
           estado: 'BBBBBB',
           condicion: 'BBBBBB',
         },
@@ -128,6 +136,7 @@ describe('Adhesion Service', () => {
       const expected = Object.assign(
         {
           fechaAlta: currentDate,
+          fechaBaja: currentDate,
         },
         returnedFromService
       );
@@ -177,7 +186,7 @@ describe('Adhesion Service', () => {
       });
 
       it('should add only unique Adhesion to an array', () => {
-        const adhesionArray: IAdhesion[] = [{ id: 123 }, { id: 456 }, { id: 14216 }];
+        const adhesionArray: IAdhesion[] = [{ id: 123 }, { id: 456 }, { id: 54236 }];
         const adhesionCollection: IAdhesion[] = [{ id: 123 }];
         expectedResult = service.addAdhesionToCollectionIfMissing(adhesionCollection, ...adhesionArray);
         expect(expectedResult).toHaveLength(3);

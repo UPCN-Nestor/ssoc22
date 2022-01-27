@@ -55,7 +55,11 @@ public class SolicitudPrestacion implements Serializable {
     @Column(name = "observaciones")
     private String observaciones;
 
-    @JsonIgnoreProperties(value = { "prestador", "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
+    @Column(name = "individuo_adhoc")
+    private String individuoAdhoc;
+
+    // No ignorar Usuarios salida, llegada y libre, van en la grilla
+    @JsonIgnoreProperties(value = { "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Despacho despacho;
@@ -63,6 +67,10 @@ public class SolicitudPrestacion implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "prestacion", "solicitudPrestacions", "provisions", "prestadors" }, allowSetters = true)
     private ItemNomenclador itemNomenclador;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "itemNomencladors", "solicitudPrestacions" }, allowSetters = true)
+    private Prestador prestador;
 
     @ManyToOne
     private User usuarioSolicitud;
@@ -80,6 +88,13 @@ public class SolicitudPrestacion implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "adhesions", "solicitudPrestacions" }, allowSetters = true)
     private Individuo individuo;
+
+    @ManyToOne
+    @JsonIgnoreProperties(
+        value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
+        allowSetters = true
+    )
+    private Cliente cliente;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -226,6 +241,19 @@ public class SolicitudPrestacion implements Serializable {
         this.observaciones = observaciones;
     }
 
+    public String getIndividuoAdhoc() {
+        return this.individuoAdhoc;
+    }
+
+    public SolicitudPrestacion individuoAdhoc(String individuoAdhoc) {
+        this.setIndividuoAdhoc(individuoAdhoc);
+        return this;
+    }
+
+    public void setIndividuoAdhoc(String individuoAdhoc) {
+        this.individuoAdhoc = individuoAdhoc;
+    }
+
     public Despacho getDespacho() {
         return this.despacho;
     }
@@ -249,6 +277,19 @@ public class SolicitudPrestacion implements Serializable {
 
     public SolicitudPrestacion itemNomenclador(ItemNomenclador itemNomenclador) {
         this.setItemNomenclador(itemNomenclador);
+        return this;
+    }
+
+    public Prestador getPrestador() {
+        return this.prestador;
+    }
+
+    public void setPrestador(Prestador prestador) {
+        this.prestador = prestador;
+    }
+
+    public SolicitudPrestacion prestador(Prestador prestador) {
+        this.setPrestador(prestador);
         return this;
     }
 
@@ -303,6 +344,19 @@ public class SolicitudPrestacion implements Serializable {
         return this;
     }
 
+    public Cliente getCliente() {
+        return this.cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public SolicitudPrestacion cliente(Cliente cliente) {
+        this.setCliente(cliente);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -337,6 +391,7 @@ public class SolicitudPrestacion implements Serializable {
             ", seEfectuo='" + getSeEfectuo() + "'" +
             ", internacion='" + getInternacion() + "'" +
             ", observaciones='" + getObservaciones() + "'" +
+            ", individuoAdhoc='" + getIndividuoAdhoc() + "'" +
             "}";
     }
 }

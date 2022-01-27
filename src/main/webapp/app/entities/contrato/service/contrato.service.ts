@@ -76,12 +76,14 @@ export class ContratoService {
   protected convertDateFromClient(contrato: IContrato): IContrato {
     return Object.assign({}, contrato, {
       fechaAlta: contrato.fechaAlta?.isValid() ? contrato.fechaAlta.toJSON() : undefined,
+      fechaBaja: contrato.fechaBaja?.isValid() ? contrato.fechaBaja.toJSON() : undefined,
     });
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
       res.body.fechaAlta = res.body.fechaAlta ? dayjs(res.body.fechaAlta) : undefined;
+      res.body.fechaBaja = res.body.fechaBaja ? dayjs(res.body.fechaBaja) : undefined;
     }
     return res;
   }
@@ -90,6 +92,7 @@ export class ContratoService {
     if (res.body) {
       res.body.forEach((contrato: IContrato) => {
         contrato.fechaAlta = contrato.fechaAlta ? dayjs(contrato.fechaAlta) : undefined;
+        contrato.fechaBaja = contrato.fechaBaja ? dayjs(contrato.fechaBaja) : undefined;
       });
     }
     return res;

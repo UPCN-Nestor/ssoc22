@@ -33,10 +33,6 @@ public class Despacho implements Serializable {
     private ZonedDateTime horaLibre;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "itemNomencladors", "despachos" }, allowSetters = true)
-    private Prestador prestador;
-
-    @ManyToOne
     @JsonIgnoreProperties(value = { "despachos" }, allowSetters = true)
     private Chofer chofer;
 
@@ -61,7 +57,10 @@ public class Despacho implements Serializable {
     @ManyToOne
     private User usuarioLibre;
 
-    @JsonIgnoreProperties(value = { "despacho", "itemNomenclador", "usuarioSolicitud", "insumos", "individuo" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "individuo", "cliente" },
+        allowSetters = true
+    )
     @OneToOne(mappedBy = "despacho")
     private SolicitudPrestacion solicitudPrestacion;
 
@@ -117,19 +116,6 @@ public class Despacho implements Serializable {
 
     public void setHoraLibre(ZonedDateTime horaLibre) {
         this.horaLibre = horaLibre;
-    }
-
-    public Prestador getPrestador() {
-        return this.prestador;
-    }
-
-    public void setPrestador(Prestador prestador) {
-        this.prestador = prestador;
-    }
-
-    public Despacho prestador(Prestador prestador) {
-        this.setPrestador(prestador);
-        return this;
     }
 
     public Chofer getChofer() {

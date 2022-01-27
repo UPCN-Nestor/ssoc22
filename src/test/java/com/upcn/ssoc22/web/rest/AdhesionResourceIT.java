@@ -37,6 +37,9 @@ class AdhesionResourceIT {
     private static final ZonedDateTime DEFAULT_FECHA_ALTA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_FECHA_ALTA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
+    private static final ZonedDateTime DEFAULT_FECHA_BAJA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_FECHA_BAJA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
     private static final String DEFAULT_ESTADO = "AAAAAAAAAA";
     private static final String UPDATED_ESTADO = "BBBBBBBBBB";
 
@@ -67,7 +70,11 @@ class AdhesionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Adhesion createEntity(EntityManager em) {
-        Adhesion adhesion = new Adhesion().fechaAlta(DEFAULT_FECHA_ALTA).estado(DEFAULT_ESTADO).condicion(DEFAULT_CONDICION);
+        Adhesion adhesion = new Adhesion()
+            .fechaAlta(DEFAULT_FECHA_ALTA)
+            .fechaBaja(DEFAULT_FECHA_BAJA)
+            .estado(DEFAULT_ESTADO)
+            .condicion(DEFAULT_CONDICION);
         return adhesion;
     }
 
@@ -78,7 +85,11 @@ class AdhesionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Adhesion createUpdatedEntity(EntityManager em) {
-        Adhesion adhesion = new Adhesion().fechaAlta(UPDATED_FECHA_ALTA).estado(UPDATED_ESTADO).condicion(UPDATED_CONDICION);
+        Adhesion adhesion = new Adhesion()
+            .fechaAlta(UPDATED_FECHA_ALTA)
+            .fechaBaja(UPDATED_FECHA_BAJA)
+            .estado(UPDATED_ESTADO)
+            .condicion(UPDATED_CONDICION);
         return adhesion;
     }
 
@@ -101,6 +112,7 @@ class AdhesionResourceIT {
         assertThat(adhesionList).hasSize(databaseSizeBeforeCreate + 1);
         Adhesion testAdhesion = adhesionList.get(adhesionList.size() - 1);
         assertThat(testAdhesion.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
+        assertThat(testAdhesion.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
         assertThat(testAdhesion.getEstado()).isEqualTo(DEFAULT_ESTADO);
         assertThat(testAdhesion.getCondicion()).isEqualTo(DEFAULT_CONDICION);
     }
@@ -136,6 +148,7 @@ class AdhesionResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(adhesion.getId().intValue())))
             .andExpect(jsonPath("$.[*].fechaAlta").value(hasItem(sameInstant(DEFAULT_FECHA_ALTA))))
+            .andExpect(jsonPath("$.[*].fechaBaja").value(hasItem(sameInstant(DEFAULT_FECHA_BAJA))))
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO)))
             .andExpect(jsonPath("$.[*].condicion").value(hasItem(DEFAULT_CONDICION)));
     }
@@ -153,6 +166,7 @@ class AdhesionResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(adhesion.getId().intValue()))
             .andExpect(jsonPath("$.fechaAlta").value(sameInstant(DEFAULT_FECHA_ALTA)))
+            .andExpect(jsonPath("$.fechaBaja").value(sameInstant(DEFAULT_FECHA_BAJA)))
             .andExpect(jsonPath("$.estado").value(DEFAULT_ESTADO))
             .andExpect(jsonPath("$.condicion").value(DEFAULT_CONDICION));
     }
@@ -176,7 +190,7 @@ class AdhesionResourceIT {
         Adhesion updatedAdhesion = adhesionRepository.findById(adhesion.getId()).get();
         // Disconnect from session so that the updates on updatedAdhesion are not directly saved in db
         em.detach(updatedAdhesion);
-        updatedAdhesion.fechaAlta(UPDATED_FECHA_ALTA).estado(UPDATED_ESTADO).condicion(UPDATED_CONDICION);
+        updatedAdhesion.fechaAlta(UPDATED_FECHA_ALTA).fechaBaja(UPDATED_FECHA_BAJA).estado(UPDATED_ESTADO).condicion(UPDATED_CONDICION);
 
         restAdhesionMockMvc
             .perform(
@@ -191,6 +205,7 @@ class AdhesionResourceIT {
         assertThat(adhesionList).hasSize(databaseSizeBeforeUpdate);
         Adhesion testAdhesion = adhesionList.get(adhesionList.size() - 1);
         assertThat(testAdhesion.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
+        assertThat(testAdhesion.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testAdhesion.getEstado()).isEqualTo(UPDATED_ESTADO);
         assertThat(testAdhesion.getCondicion()).isEqualTo(UPDATED_CONDICION);
     }
@@ -263,7 +278,7 @@ class AdhesionResourceIT {
         Adhesion partialUpdatedAdhesion = new Adhesion();
         partialUpdatedAdhesion.setId(adhesion.getId());
 
-        partialUpdatedAdhesion.condicion(UPDATED_CONDICION);
+        partialUpdatedAdhesion.estado(UPDATED_ESTADO);
 
         restAdhesionMockMvc
             .perform(
@@ -278,8 +293,9 @@ class AdhesionResourceIT {
         assertThat(adhesionList).hasSize(databaseSizeBeforeUpdate);
         Adhesion testAdhesion = adhesionList.get(adhesionList.size() - 1);
         assertThat(testAdhesion.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
-        assertThat(testAdhesion.getEstado()).isEqualTo(DEFAULT_ESTADO);
-        assertThat(testAdhesion.getCondicion()).isEqualTo(UPDATED_CONDICION);
+        assertThat(testAdhesion.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
+        assertThat(testAdhesion.getEstado()).isEqualTo(UPDATED_ESTADO);
+        assertThat(testAdhesion.getCondicion()).isEqualTo(DEFAULT_CONDICION);
     }
 
     @Test
@@ -294,7 +310,11 @@ class AdhesionResourceIT {
         Adhesion partialUpdatedAdhesion = new Adhesion();
         partialUpdatedAdhesion.setId(adhesion.getId());
 
-        partialUpdatedAdhesion.fechaAlta(UPDATED_FECHA_ALTA).estado(UPDATED_ESTADO).condicion(UPDATED_CONDICION);
+        partialUpdatedAdhesion
+            .fechaAlta(UPDATED_FECHA_ALTA)
+            .fechaBaja(UPDATED_FECHA_BAJA)
+            .estado(UPDATED_ESTADO)
+            .condicion(UPDATED_CONDICION);
 
         restAdhesionMockMvc
             .perform(
@@ -309,6 +329,7 @@ class AdhesionResourceIT {
         assertThat(adhesionList).hasSize(databaseSizeBeforeUpdate);
         Adhesion testAdhesion = adhesionList.get(adhesionList.size() - 1);
         assertThat(testAdhesion.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
+        assertThat(testAdhesion.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testAdhesion.getEstado()).isEqualTo(UPDATED_ESTADO);
         assertThat(testAdhesion.getCondicion()).isEqualTo(UPDATED_CONDICION);
     }

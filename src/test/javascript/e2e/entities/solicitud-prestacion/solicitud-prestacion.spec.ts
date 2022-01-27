@@ -60,11 +60,14 @@ describe('SolicitudPrestacion e2e test', () => {
       solicitudPrestacionUpdatePage.getSeEfectuoInput().click(),
       solicitudPrestacionUpdatePage.getInternacionInput().click(),
       solicitudPrestacionUpdatePage.setObservacionesInput('observaciones'),
+      solicitudPrestacionUpdatePage.setIndividuoAdhocInput('individuoAdhoc'),
       solicitudPrestacionUpdatePage.despachoSelectLastOption(),
       solicitudPrestacionUpdatePage.itemNomencladorSelectLastOption(),
+      solicitudPrestacionUpdatePage.prestadorSelectLastOption(),
       solicitudPrestacionUpdatePage.usuarioSolicitudSelectLastOption(),
       // solicitudPrestacionUpdatePage.insumoSelectLastOption(),
       solicitudPrestacionUpdatePage.individuoSelectLastOption(),
+      solicitudPrestacionUpdatePage.clienteSelectLastOption(),
     ]);
 
     await solicitudPrestacionUpdatePage.save();

@@ -34,6 +34,7 @@
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.adhesion.fechaAlta">Fecha Alta</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.adhesion.fechaBaja">Fecha Baja</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.adhesion.estado">Estado</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.adhesion.condicion">Condicion</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.adhesion.individuo">Individuo</span></th>
@@ -47,6 +48,7 @@
             <a [routerLink]="['/adhesion', adhesion.id, 'view']">{{ adhesion.id }}</a>
           </td>
           <td>{{ adhesion.fechaAlta | formatMediumDatetime }}</td>
+          <td>{{ adhesion.fechaBaja | formatMediumDatetime }}</td>
           <td>{{ adhesion.estado }}</td>
           <td>{{ adhesion.condicion }}</td>
           <td>

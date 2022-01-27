@@ -23,9 +23,6 @@
             <column name="hora_libre" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
-            <column name="prestador_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="chofer_id" type="bigint">
                 <constraints nullable="true" />
             </column>

@@ -44,6 +44,7 @@ describe('Contrato e2e test', () => {
 
     await promise.all([
       contratoUpdatePage.setFechaAltaInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      contratoUpdatePage.setFechaBajaInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       contratoUpdatePage.setParticularidadesInput('particularidades'),
       contratoUpdatePage.planSelectLastOption(),
       contratoUpdatePage.clienteSelectLastOption(),

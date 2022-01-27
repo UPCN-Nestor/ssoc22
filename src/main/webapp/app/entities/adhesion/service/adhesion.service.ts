@@ -76,12 +76,14 @@ export class AdhesionService {
   protected convertDateFromClient(adhesion: IAdhesion): IAdhesion {
     return Object.assign({}, adhesion, {
       fechaAlta: adhesion.fechaAlta?.isValid() ? adhesion.fechaAlta.toJSON() : undefined,
+      fechaBaja: adhesion.fechaBaja?.isValid() ? adhesion.fechaBaja.toJSON() : undefined,
     });
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
       res.body.fechaAlta = res.body.fechaAlta ? dayjs(res.body.fechaAlta) : undefined;
+      res.body.fechaBaja = res.body.fechaBaja ? dayjs(res.body.fechaBaja) : undefined;
     }
     return res;
   }
@@ -90,6 +92,7 @@ export class AdhesionService {
     if (res.body) {
       res.body.forEach((adhesion: IAdhesion) => {
         adhesion.fechaAlta = adhesion.fechaAlta ? dayjs(adhesion.fechaAlta) : undefined;
+        adhesion.fechaBaja = adhesion.fechaBaja ? dayjs(adhesion.fechaBaja) : undefined;
       });
     }
     return res;

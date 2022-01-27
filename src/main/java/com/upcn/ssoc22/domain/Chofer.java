@@ -29,7 +29,10 @@ public class Chofer implements Serializable {
 
     @OneToMany(mappedBy = "chofer")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "prestador", "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "chofer", "medico", "enfermero", "movil", "usuarioSalida", "usuarioLlegada", "usuarioLibre", "solicitudPrestacion" },
+        allowSetters = true
+    )
     private Set<Despacho> despachos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

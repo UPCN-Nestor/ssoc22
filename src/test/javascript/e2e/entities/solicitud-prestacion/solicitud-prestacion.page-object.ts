@@ -40,12 +40,15 @@ export class SolicitudPrestacionUpdatePage {
   seEfectuoInput = element(by.id('field_seEfectuo'));
   internacionInput = element(by.id('field_internacion'));
   observacionesInput = element(by.id('field_observaciones'));
+  individuoAdhocInput = element(by.id('field_individuoAdhoc'));
 
   despachoSelect = element(by.id('field_despacho'));
   itemNomencladorSelect = element(by.id('field_itemNomenclador'));
+  prestadorSelect = element(by.id('field_prestador'));
   usuarioSolicitudSelect = element(by.id('field_usuarioSolicitud'));
   insumoSelect = element(by.id('field_insumo'));
   individuoSelect = element(by.id('field_individuo'));
+  clienteSelect = element(by.id('field_cliente'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -131,6 +134,14 @@ export class SolicitudPrestacionUpdatePage {
     return await this.observacionesInput.getAttribute('value');
   }
 
+  async setIndividuoAdhocInput(individuoAdhoc: string): Promise<void> {
+    await this.individuoAdhocInput.sendKeys(individuoAdhoc);
+  }
+
+  async getIndividuoAdhocInput(): Promise<string> {
+    return await this.individuoAdhocInput.getAttribute('value');
+  }
+
   async despachoSelectLastOption(): Promise<void> {
     await this.despachoSelect.all(by.tagName('option')).last().click();
   }
@@ -161,6 +172,22 @@ export class SolicitudPrestacionUpdatePage {
 
   async getItemNomencladorSelectedOption(): Promise<string> {
     return await this.itemNomencladorSelect.element(by.css('option:checked')).getText();
+  }
+
+  async prestadorSelectLastOption(): Promise<void> {
+    await this.prestadorSelect.all(by.tagName('option')).last().click();
+  }
+
+  async prestadorSelectOption(option: string): Promise<void> {
+    await this.prestadorSelect.sendKeys(option);
+  }
+
+  getPrestadorSelect(): ElementFinder {
+    return this.prestadorSelect;
+  }
+
+  async getPrestadorSelectedOption(): Promise<string> {
+    return await this.prestadorSelect.element(by.css('option:checked')).getText();
   }
 
   async usuarioSolicitudSelectLastOption(): Promise<void> {
@@ -209,6 +236,22 @@ export class SolicitudPrestacionUpdatePage {
 
   async getIndividuoSelectedOption(): Promise<string> {
     return await this.individuoSelect.element(by.css('option:checked')).getText();
+  }
+
+  async clienteSelectLastOption(): Promise<void> {
+    await this.clienteSelect.all(by.tagName('option')).last().click();
+  }
+
+  async clienteSelectOption(option: string): Promise<void> {
+    await this.clienteSelect.sendKeys(option);
+  }
+
+  getClienteSelect(): ElementFinder {
+    return this.clienteSelect;
+  }
+
+  async getClienteSelectedOption(): Promise<string> {
+    return await this.clienteSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

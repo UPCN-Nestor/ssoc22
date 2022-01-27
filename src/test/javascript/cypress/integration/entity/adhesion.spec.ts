@@ -150,9 +150,11 @@ describe('Adhesion e2e test', () => {
     it('should create an instance of Adhesion', () => {
       cy.get(`[data-cy="fechaAlta"]`).type('2022-01-24T10:20').should('have.value', '2022-01-24T10:20');
 
-      cy.get(`[data-cy="estado"]`).type('Peso hacking').should('have.value', 'Peso hacking');
+      cy.get(`[data-cy="fechaBaja"]`).type('2022-01-23T23:30').should('have.value', '2022-01-23T23:30');
 
-      cy.get(`[data-cy="condicion"]`).type('Seguro').should('have.value', 'Seguro');
+      cy.get(`[data-cy="estado"]`).type('Gorro Hormigon Seguro').should('have.value', 'Gorro Hormigon Seguro');
+
+      cy.get(`[data-cy="condicion"]`).type('analizada Arroyo Intercambiable').should('have.value', 'analizada Arroyo Intercambiable');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

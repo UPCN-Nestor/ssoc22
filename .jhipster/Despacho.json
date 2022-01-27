@@ -25,12 +25,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "prestador",
-      "otherEntityRelationshipName": "despacho",
-      "relationshipName": "prestador",
-      "relationshipType": "many-to-one"
-    },
-    {
       "otherEntityName": "chofer",
       "otherEntityRelationshipName": "despacho",
       "relationshipName": "chofer",

@@ -1,12 +1,12 @@
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
-import { IDespacho } from 'app/entities/despacho/despacho.model';
+import { ISolicitudPrestacion } from 'app/entities/solicitud-prestacion/solicitud-prestacion.model';
 
 export interface IPrestador {
   id?: number;
   nombre?: string | null;
   condicion?: string | null;
   itemNomencladors?: IItemNomenclador[] | null;
-  despachos?: IDespacho[] | null;
+  solicitudPrestacions?: ISolicitudPrestacion[] | null;
 }
 
 export class Prestador implements IPrestador {
@@ -15,7 +15,7 @@ export class Prestador implements IPrestador {
     public nombre?: string | null,
     public condicion?: string | null,
     public itemNomencladors?: IItemNomenclador[] | null,
-    public despachos?: IDespacho[] | null
+    public solicitudPrestacions?: ISolicitudPrestacion[] | null
   ) {}
 }
 

@@ -162,6 +162,9 @@ public class SolicitudPrestacionResource {
                 if (solicitudPrestacion.getObservaciones() != null) {
                     existingSolicitudPrestacion.setObservaciones(solicitudPrestacion.getObservaciones());
                 }
+                if (solicitudPrestacion.getIndividuoAdhoc() != null) {
+                    existingSolicitudPrestacion.setIndividuoAdhoc(solicitudPrestacion.getIndividuoAdhoc());
+                }
 
                 return existingSolicitudPrestacion;
             })

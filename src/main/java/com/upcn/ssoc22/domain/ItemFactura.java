@@ -23,7 +23,10 @@ public class ItemFactura implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "padrons", "adhesions", "contratoes", "enPadron", "facturas", "itemFacturas" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
+        allowSetters = true
+    )
     private Cliente cliente;
 
     @ManyToOne

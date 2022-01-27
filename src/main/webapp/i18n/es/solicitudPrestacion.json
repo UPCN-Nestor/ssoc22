@@ -28,11 +28,14 @@
       "seEfectuo": "Se Efectuo",
       "internacion": "Internacion",
       "observaciones": "Observaciones",
+      "individuoAdhoc": "Individuo Adhoc",
       "despacho": "Despacho",
       "itemNomenclador": "Item Nomenclador",
+      "prestador": "Prestador",
       "usuarioSolicitud": "Usuario Solicitud",
       "insumo": "Insumo",
-      "individuo": "Individuo"
+      "individuo": "Individuo",
+      "cliente": "Cliente"
     }
   }
 }

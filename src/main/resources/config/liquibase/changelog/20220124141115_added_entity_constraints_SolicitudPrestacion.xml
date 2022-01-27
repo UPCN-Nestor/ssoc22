@@ -20,6 +20,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="item_nomenclador"/>
 
+        <addForeignKeyConstraint baseColumnNames="prestador_id"
+                                 baseTableName="solicitud_prestacion"
+                                 constraintName="fk_solicitud_prestacion__prestador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestador"/>
+
         <addForeignKeyConstraint baseColumnNames="usuario_solicitud_id"
                                  baseTableName="solicitud_prestacion"
                                  constraintName="fk_solicitud_prestacion__usuario_solicitud_id"
@@ -43,5 +49,11 @@
                                  constraintName="fk_solicitud_prestacion__individuo_id"
                                  referencedColumnNames="id"
                                  referencedTableName="individuo"/>
+
+        <addForeignKeyConstraint baseColumnNames="cliente_id"
+                                 baseTableName="solicitud_prestacion"
+                                 constraintName="fk_solicitud_prestacion__cliente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cliente"/>
     </changeSet>
 </databaseChangeLog>

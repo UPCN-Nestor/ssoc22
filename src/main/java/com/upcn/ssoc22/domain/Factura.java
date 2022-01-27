@@ -32,7 +32,10 @@ public class Factura implements Serializable {
     private String numeroInterno;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "padrons", "adhesions", "contratoes", "enPadron", "facturas", "itemFacturas" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
+        allowSetters = true
+    )
     private Cliente cliente;
 
     @OneToMany(mappedBy = "factura")

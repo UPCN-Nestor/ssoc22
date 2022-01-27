@@ -56,6 +56,10 @@
         <dd>
           <span>{{ solicitudPrestacion.observaciones }}</span>
         </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.individuoAdhoc">Individuo Adhoc</span></dt>
+        <dd>
+          <span>{{ solicitudPrestacion.individuoAdhoc }}</span>
+        </dd>
         <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.despacho">Despacho</span></dt>
         <dd>
           <div *ngIf="solicitudPrestacion.despacho">
@@ -68,6 +72,12 @@
             <a [routerLink]="['/item-nomenclador', solicitudPrestacion.itemNomenclador?.id, 'view']">{{
               solicitudPrestacion.itemNomenclador?.id
             }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.prestador">Prestador</span></dt>
+        <dd>
+          <div *ngIf="solicitudPrestacion.prestador">
+            <a [routerLink]="['/prestador', solicitudPrestacion.prestador?.id, 'view']">{{ solicitudPrestacion.prestador?.id }}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.usuarioSolicitud">Usuario Solicitud</span></dt>
@@ -85,6 +95,12 @@
         <dd>
           <div *ngIf="solicitudPrestacion.individuo">
             <a [routerLink]="['/individuo', solicitudPrestacion.individuo?.id, 'view']">{{ solicitudPrestacion.individuo?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.cliente">Cliente</span></dt>
+        <dd>
+          <div *ngIf="solicitudPrestacion.cliente">
+            <a [routerLink]="['/cliente', solicitudPrestacion.cliente?.id, 'view']">{{ solicitudPrestacion.cliente?.id }}</a>
           </div>
         </dd>
       </dl>

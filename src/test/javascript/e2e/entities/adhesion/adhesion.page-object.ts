@@ -31,6 +31,7 @@ export class AdhesionUpdatePage {
 
   idInput = element(by.id('field_id'));
   fechaAltaInput = element(by.id('field_fechaAlta'));
+  fechaBajaInput = element(by.id('field_fechaBaja'));
   estadoInput = element(by.id('field_estado'));
   condicionInput = element(by.id('field_condicion'));
 
@@ -55,6 +56,14 @@ export class AdhesionUpdatePage {
 
   async getFechaAltaInput(): Promise<string> {
     return await this.fechaAltaInput.getAttribute('value');
+  }
+
+  async setFechaBajaInput(fechaBaja: string): Promise<void> {
+    await this.fechaBajaInput.sendKeys(fechaBaja);
+  }
+
+  async getFechaBajaInput(): Promise<string> {
+    return await this.fechaBajaInput.getAttribute('value');
   }
 
   async setEstadoInput(estado: string): Promise<void> {

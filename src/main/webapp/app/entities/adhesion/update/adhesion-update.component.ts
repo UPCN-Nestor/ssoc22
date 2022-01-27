@@ -28,6 +28,7 @@ export class AdhesionUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     fechaAlta: [],
+    fechaBaja: [],
     estado: [],
     condicion: [],
     individuo: [],
@@ -47,6 +48,7 @@ export class AdhesionUpdateComponent implements OnInit {
       if (adhesion.id === undefined) {
         const today = dayjs().startOf('day');
         adhesion.fechaAlta = today;
+        adhesion.fechaBaja = today;
       }
 
       this.updateForm(adhesion);
@@ -100,6 +102,7 @@ export class AdhesionUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: adhesion.id,
       fechaAlta: adhesion.fechaAlta ? adhesion.fechaAlta.format(DATE_TIME_FORMAT) : null,
+      fechaBaja: adhesion.fechaBaja ? adhesion.fechaBaja.format(DATE_TIME_FORMAT) : null,
       estado: adhesion.estado,
       condicion: adhesion.condicion,
       individuo: adhesion.individuo,
@@ -138,6 +141,7 @@ export class AdhesionUpdateComponent implements OnInit {
       ...new Adhesion(),
       id: this.editForm.get(['id'])!.value,
       fechaAlta: this.editForm.get(['fechaAlta'])!.value ? dayjs(this.editForm.get(['fechaAlta'])!.value, DATE_TIME_FORMAT) : undefined,
+      fechaBaja: this.editForm.get(['fechaBaja'])!.value ? dayjs(this.editForm.get(['fechaBaja'])!.value, DATE_TIME_FORMAT) : undefined,
       estado: this.editForm.get(['estado'])!.value,
       condicion: this.editForm.get(['condicion'])!.value,
       individuo: this.editForm.get(['individuo'])!.value,

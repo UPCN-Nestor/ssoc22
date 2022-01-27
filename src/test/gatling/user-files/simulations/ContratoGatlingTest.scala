@@ -72,6 +72,7 @@ class ContratoGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "fechaAlta":"2020-01-01T00:00:00.000Z"
+                , "fechaBaja":"2020-01-01T00:00:00.000Z"
                 , "particularidades":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))

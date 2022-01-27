@@ -31,6 +31,7 @@ export class ContratoUpdatePage {
 
   idInput = element(by.id('field_id'));
   fechaAltaInput = element(by.id('field_fechaAlta'));
+  fechaBajaInput = element(by.id('field_fechaBaja'));
   particularidadesInput = element(by.id('field_particularidades'));
 
   planSelect = element(by.id('field_plan'));
@@ -54,6 +55,14 @@ export class ContratoUpdatePage {
 
   async getFechaAltaInput(): Promise<string> {
     return await this.fechaAltaInput.getAttribute('value');
+  }
+
+  async setFechaBajaInput(fechaBaja: string): Promise<void> {
+    await this.fechaBajaInput.sendKeys(fechaBaja);
+  }
+
+  async getFechaBajaInput(): Promise<string> {
+    return await this.fechaBajaInput.getAttribute('value');
   }
 
   async setParticularidadesInput(particularidades: string): Promise<void> {

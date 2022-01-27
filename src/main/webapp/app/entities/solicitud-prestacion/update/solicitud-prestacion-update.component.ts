@@ -14,12 +14,16 @@ import { IDespacho } from 'app/entities/despacho/despacho.model';
 import { DespachoService } from 'app/entities/despacho/service/despacho.service';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
 import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
+import { IPrestador } from 'app/entities/prestador/prestador.model';
+import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 import { IndividuoService } from 'app/entities/individuo/service/individuo.service';
+import { ICliente } from 'app/entities/cliente/cliente.model';
+import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 
 @Component({
   selector: 'jhi-solicitud-prestacion-update',
@@ -30,9 +34,11 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
 
   despachosCollection: IDespacho[] = [];
   itemNomencladorsSharedCollection: IItemNomenclador[] = [];
+  prestadorsSharedCollection: IPrestador[] = [];
   usersSharedCollection: IUser[] = [];
   insumosSharedCollection: IInsumo[] = [];
   individuosSharedCollection: IIndividuo[] = [];
+  clientesSharedCollection: ICliente[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -46,20 +52,25 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     seEfectuo: [],
     internacion: [],
     observaciones: [],
+    individuoAdhoc: [],
     despacho: [],
     itemNomenclador: [],
+    prestador: [],
     usuarioSolicitud: [],
     insumos: [],
     individuo: [],
+    cliente: [],
   });
 
   constructor(
     protected solicitudPrestacionService: SolicitudPrestacionService,
     protected despachoService: DespachoService,
     protected itemNomencladorService: ItemNomencladorService,
+    protected prestadorService: PrestadorService,
     protected userService: UserService,
     protected insumoService: InsumoService,
     protected individuoService: IndividuoService,
+    protected clienteService: ClienteService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -99,6 +110,10 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  trackPrestadorById(index: number, item: IPrestador): number {
+    return item.id!;
+  }
+
   trackUserById(index: number, item: IUser): number {
     return item.id!;
   }
@@ -108,6 +123,10 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
   }
 
   trackIndividuoById(index: number, item: IIndividuo): number {
+    return item.id!;
+  }
+
+  trackClienteById(index: number, item: ICliente): number {
     return item.id!;
   }
 
@@ -154,11 +173,14 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       seEfectuo: solicitudPrestacion.seEfectuo,
       internacion: solicitudPrestacion.internacion,
       observaciones: solicitudPrestacion.observaciones,
+      individuoAdhoc: solicitudPrestacion.individuoAdhoc,
       despacho: solicitudPrestacion.despacho,
       itemNomenclador: solicitudPrestacion.itemNomenclador,
+      prestador: solicitudPrestacion.prestador,
       usuarioSolicitud: solicitudPrestacion.usuarioSolicitud,
       insumos: solicitudPrestacion.insumos,
       individuo: solicitudPrestacion.individuo,
+      cliente: solicitudPrestacion.cliente,
     });
 
     this.despachosCollection = this.despachoService.addDespachoToCollectionIfMissing(
@@ -168,6 +190,10 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     this.itemNomencladorsSharedCollection = this.itemNomencladorService.addItemNomencladorToCollectionIfMissing(
       this.itemNomencladorsSharedCollection,
       solicitudPrestacion.itemNomenclador
+    );
+    this.prestadorsSharedCollection = this.prestadorService.addPrestadorToCollectionIfMissing(
+      this.prestadorsSharedCollection,
+      solicitudPrestacion.prestador
     );
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(
       this.usersSharedCollection,
@@ -180,6 +206,10 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     this.individuosSharedCollection = this.individuoService.addIndividuoToCollectionIfMissing(
       this.individuosSharedCollection,
       solicitudPrestacion.individuo
+    );
+    this.clientesSharedCollection = this.clienteService.addClienteToCollectionIfMissing(
+      this.clientesSharedCollection,
+      solicitudPrestacion.cliente
     );
   }
 
@@ -203,6 +233,16 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
         )
       )
       .subscribe((itemNomencladors: IItemNomenclador[]) => (this.itemNomencladorsSharedCollection = itemNomencladors));
+
+    this.prestadorService
+      .query()
+      .pipe(map((res: HttpResponse<IPrestador[]>) => res.body ?? []))
+      .pipe(
+        map((prestadors: IPrestador[]) =>
+          this.prestadorService.addPrestadorToCollectionIfMissing(prestadors, this.editForm.get('prestador')!.value)
+        )
+      )
+      .subscribe((prestadors: IPrestador[]) => (this.prestadorsSharedCollection = prestadors));
 
     this.userService
       .query()
@@ -229,6 +269,14 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
         )
       )
       .subscribe((individuos: IIndividuo[]) => (this.individuosSharedCollection = individuos));
+
+    this.clienteService
+      .query()
+      .pipe(map((res: HttpResponse<ICliente[]>) => res.body ?? []))
+      .pipe(
+        map((clientes: ICliente[]) => this.clienteService.addClienteToCollectionIfMissing(clientes, this.editForm.get('cliente')!.value))
+      )
+      .subscribe((clientes: ICliente[]) => (this.clientesSharedCollection = clientes));
   }
 
   protected createFromForm(): ISolicitudPrestacion {
@@ -247,11 +295,14 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       seEfectuo: this.editForm.get(['seEfectuo'])!.value,
       internacion: this.editForm.get(['internacion'])!.value,
       observaciones: this.editForm.get(['observaciones'])!.value,
+      individuoAdhoc: this.editForm.get(['individuoAdhoc'])!.value,
       despacho: this.editForm.get(['despacho'])!.value,
       itemNomenclador: this.editForm.get(['itemNomenclador'])!.value,
+      prestador: this.editForm.get(['prestador'])!.value,
       usuarioSolicitud: this.editForm.get(['usuarioSolicitud'])!.value,
       insumos: this.editForm.get(['insumos'])!.value,
       individuo: this.editForm.get(['individuo'])!.value,
+      cliente: this.editForm.get(['cliente'])!.value,
     };
   }
 }

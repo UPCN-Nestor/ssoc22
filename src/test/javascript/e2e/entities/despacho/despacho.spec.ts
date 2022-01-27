@@ -46,7 +46,6 @@ describe('Despacho e2e test', () => {
       despachoUpdatePage.setHoraSalidaInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       despachoUpdatePage.setHoraLlegadaInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       despachoUpdatePage.setHoraLibreInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      despachoUpdatePage.prestadorSelectLastOption(),
       despachoUpdatePage.choferSelectLastOption(),
       despachoUpdatePage.medicoSelectLastOption(),
       despachoUpdatePage.enfermeroSelectLastOption(),

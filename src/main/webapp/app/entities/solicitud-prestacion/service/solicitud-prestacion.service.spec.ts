@@ -35,6 +35,7 @@ describe('SolicitudPrestacion Service', () => {
       seEfectuo: false,
       internacion: false,
       observaciones: 'AAAAAAA',
+      individuoAdhoc: 'AAAAAAA',
     };
   });
 
@@ -91,6 +92,7 @@ describe('SolicitudPrestacion Service', () => {
           seEfectuo: true,
           internacion: true,
           observaciones: 'BBBBBB',
+          individuoAdhoc: 'BBBBBB',
         },
         elemDefault
       );
@@ -120,6 +122,7 @@ describe('SolicitudPrestacion Service', () => {
           edad: 1,
           seEfectuo: true,
           observaciones: 'BBBBBB',
+          individuoAdhoc: 'BBBBBB',
         },
         new SolicitudPrestacion()
       );
@@ -154,6 +157,7 @@ describe('SolicitudPrestacion Service', () => {
           seEfectuo: true,
           internacion: true,
           observaciones: 'BBBBBB',
+          individuoAdhoc: 'BBBBBB',
         },
         elemDefault
       );
@@ -210,7 +214,7 @@ describe('SolicitudPrestacion Service', () => {
       });
 
       it('should add only unique SolicitudPrestacion to an array', () => {
-        const solicitudPrestacionArray: ISolicitudPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 94227 }];
+        const solicitudPrestacionArray: ISolicitudPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 40282 }];
         const solicitudPrestacionCollection: ISolicitudPrestacion[] = [{ id: 123 }];
         expectedResult = service.addSolicitudPrestacionToCollectionIfMissing(solicitudPrestacionCollection, ...solicitudPrestacionArray);
         expect(expectedResult).toHaveLength(3);

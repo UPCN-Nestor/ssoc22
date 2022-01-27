@@ -1,9 +1,11 @@
 import dayjs from 'dayjs/esm';
 import { IDespacho } from 'app/entities/despacho/despacho.model';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
+import { IPrestador } from 'app/entities/prestador/prestador.model';
 import { IUser } from 'app/entities/user/user.model';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
+import { ICliente } from 'app/entities/cliente/cliente.model';
 
 export interface ISolicitudPrestacion {
   id?: number;
@@ -17,11 +19,14 @@ export interface ISolicitudPrestacion {
   seEfectuo?: boolean | null;
   internacion?: boolean | null;
   observaciones?: string | null;
+  individuoAdhoc?: string | null;
   despacho?: IDespacho | null;
   itemNomenclador?: IItemNomenclador | null;
+  prestador?: IPrestador | null;
   usuarioSolicitud?: IUser | null;
   insumos?: IInsumo[] | null;
   individuo?: IIndividuo | null;
+  cliente?: ICliente | null;
 }
 
 export class SolicitudPrestacion implements ISolicitudPrestacion {
@@ -37,11 +42,14 @@ export class SolicitudPrestacion implements ISolicitudPrestacion {
     public seEfectuo?: boolean | null,
     public internacion?: boolean | null,
     public observaciones?: string | null,
+    public individuoAdhoc?: string | null,
     public despacho?: IDespacho | null,
     public itemNomenclador?: IItemNomenclador | null,
+    public prestador?: IPrestador | null,
     public usuarioSolicitud?: IUser | null,
     public insumos?: IInsumo[] | null,
-    public individuo?: IIndividuo | null
+    public individuo?: IIndividuo | null,
+    public cliente?: ICliente | null
   ) {
     this.seEfectuo = this.seEfectuo ?? false;
     this.internacion = this.internacion ?? false;

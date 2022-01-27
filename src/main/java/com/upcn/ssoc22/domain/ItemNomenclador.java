@@ -37,7 +37,10 @@ public class ItemNomenclador implements Serializable {
 
     @OneToMany(mappedBy = "itemNomenclador")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "despacho", "itemNomenclador", "insumos", "individuo" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "individuo", "cliente" },
+        allowSetters = true
+    )
     private Set<SolicitudPrestacion> solicitudPrestacions = new HashSet<>();
 
     @OneToMany(mappedBy = "itemNomenclador")
@@ -47,7 +50,7 @@ public class ItemNomenclador implements Serializable {
 
     @ManyToMany(mappedBy = "itemNomencladors")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "itemNomencladors", "despachos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "itemNomencladors", "solicitudPrestacions" }, allowSetters = true)
     private Set<Prestador> prestadors = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

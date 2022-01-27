@@ -28,9 +28,9 @@
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityName": "despacho",
+      "otherEntityName": "solicitudPrestacion",
       "otherEntityRelationshipName": "prestador",
-      "relationshipName": "despacho",
+      "relationshipName": "solicitudPrestacion",
       "relationshipType": "one-to-many"
     }
   ],

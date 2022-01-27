@@ -107,6 +107,20 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.individuoAdhoc" for="field_individuoAdhoc"
+            >Individuo Adhoc</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="individuoAdhoc"
+            id="field_individuoAdhoc"
+            data-cy="individuoAdhoc"
+            formControlName="individuoAdhoc"
+          />
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.despacho" for="field_despacho">Despacho</label>
           <select class="form-control" id="field_despacho" data-cy="despacho" name="despacho" formControlName="despacho">
             <option [ngValue]="null"></option>
@@ -140,6 +154,19 @@
               *ngFor="let itemNomencladorOption of itemNomencladorsSharedCollection; trackBy: trackItemNomencladorById"
             >
               {{ itemNomencladorOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.prestador" for="field_prestador">Prestador</label>
+          <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="prestadorOption.id === editForm.get('prestador')!.value?.id ? editForm.get('prestador')!.value : prestadorOption"
+              *ngFor="let prestadorOption of prestadorsSharedCollection; trackBy: trackPrestadorById"
+            >
+              {{ prestadorOption.id }}
             </option>
           </select>
         </div>
@@ -188,6 +215,19 @@
               *ngFor="let individuoOption of individuosSharedCollection; trackBy: trackIndividuoById"
             >
               {{ individuoOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.cliente" for="field_cliente">Cliente</label>
+          <select class="form-control" id="field_cliente" data-cy="cliente" name="cliente" formControlName="cliente">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="clienteOption.id === editForm.get('cliente')!.value?.id ? editForm.get('cliente')!.value : clienteOption"
+              *ngFor="let clienteOption of clientesSharedCollection; trackBy: trackClienteById"
+            >
+              {{ clienteOption.id }}
             </option>
           </select>
         </div>

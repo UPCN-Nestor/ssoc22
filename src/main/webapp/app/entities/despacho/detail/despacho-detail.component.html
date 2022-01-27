@@ -26,12 +26,6 @@
         <dd>
           <span>{{ despacho.horaLibre | formatMediumDatetime }}</span>
         </dd>
-        <dt><span jhiTranslate="ssoc22App.despacho.prestador">Prestador</span></dt>
-        <dd>
-          <div *ngIf="despacho.prestador">
-            <a [routerLink]="['/prestador', despacho.prestador?.id, 'view']">{{ despacho.prestador?.id }}</a>
-          </div>
-        </dd>
         <dt><span jhiTranslate="ssoc22App.despacho.chofer">Chofer</span></dt>
         <dd>
           <div *ngIf="despacho.chofer">

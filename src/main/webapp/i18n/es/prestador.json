@@ -21,7 +21,7 @@
       "nombre": "Nombre",
       "condicion": "Condicion",
       "itemNomenclador": "Item Nomenclador",
-      "despacho": "Despacho"
+      "solicitudPrestacion": "Solicitud Prestacion"
     }
   }
 }

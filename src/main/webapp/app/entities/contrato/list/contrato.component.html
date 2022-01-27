@@ -34,6 +34,7 @@
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.contrato.fechaAlta">Fecha Alta</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.contrato.fechaBaja">Fecha Baja</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.contrato.particularidades">Particularidades</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.contrato.plan">Plan</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.contrato.cliente">Cliente</span></th>
@@ -46,6 +47,7 @@
             <a [routerLink]="['/contrato', contrato.id, 'view']">{{ contrato.id }}</a>
           </td>
           <td>{{ contrato.fechaAlta | formatMediumDatetime }}</td>
+          <td>{{ contrato.fechaBaja | formatMediumDatetime }}</td>
           <td>{{ contrato.particularidades }}</td>
           <td>
             <div *ngIf="contrato.plan">

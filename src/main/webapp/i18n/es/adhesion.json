@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "fechaAlta": "Fecha Alta",
+      "fechaBaja": "Fecha Baja",
       "estado": "Estado",
       "condicion": "Condicion",
       "individuo": "Individuo",

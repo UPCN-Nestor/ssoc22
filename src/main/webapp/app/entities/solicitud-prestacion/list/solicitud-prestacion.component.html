@@ -43,11 +43,14 @@
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.seEfectuo">Se Efectuo</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.internacion">Internacion</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.individuoAdhoc">Individuo Adhoc</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.despacho">Despacho</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador">Item Nomenclador</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.prestador">Prestador</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.usuarioSolicitud">Usuario Solicitud</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.insumo">Insumo</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.individuo">Individuo</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.cliente">Cliente</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -66,6 +69,7 @@
           <td>{{ solicitudPrestacion.seEfectuo }}</td>
           <td>{{ solicitudPrestacion.internacion }}</td>
           <td>{{ solicitudPrestacion.observaciones }}</td>
+          <td>{{ solicitudPrestacion.individuoAdhoc }}</td>
           <td>
             <div *ngIf="solicitudPrestacion.despacho">
               <a [routerLink]="['/despacho', solicitudPrestacion.despacho?.id, 'view']">{{ solicitudPrestacion.despacho?.id }}</a>
@@ -76,6 +80,11 @@
               <a [routerLink]="['/item-nomenclador', solicitudPrestacion.itemNomenclador?.id, 'view']">{{
                 solicitudPrestacion.itemNomenclador?.id
               }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="solicitudPrestacion.prestador">
+              <a [routerLink]="['/prestador', solicitudPrestacion.prestador?.id, 'view']">{{ solicitudPrestacion.prestador?.id }}</a>
             </div>
           </td>
           <td>
@@ -90,6 +99,11 @@
           <td>
             <div *ngIf="solicitudPrestacion.individuo">
               <a [routerLink]="['/individuo', solicitudPrestacion.individuo?.id, 'view']">{{ solicitudPrestacion.individuo?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="solicitudPrestacion.cliente">
+              <a [routerLink]="['/cliente', solicitudPrestacion.cliente?.id, 'view']">{{ solicitudPrestacion.cliente?.id }}</a>
             </div>
           </td>
           <td class="text-right">
