@@ -32,9 +32,18 @@ export class ClienteService {
     return this.http.get<ICliente>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findPorNroSocio(socio: number): Observable<EntityResponseType> {
+    return this.http.get<ICliente>(`${this.resourceUrl}/socio/${socio}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ICliente[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  queryPorNombreParcial(nombre: string, req?: any): Observable<HttpResponse<ICliente[]>> {
+    const options = createRequestOption(req);
+    return this.http.get<ICliente[]>(this.resourceUrl + '/parcial/' + nombre, { params: options, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

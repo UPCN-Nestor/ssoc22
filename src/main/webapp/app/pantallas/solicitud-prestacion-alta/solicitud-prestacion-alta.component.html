@@ -1,34 +1,79 @@
 <div class="row justify-content-center p-4">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-solicitud-prestacion-heading" [class.text-secondary]="tipo == 'Emergencia'">
-        Nueva {{ tipo }} - {{ formatShortTime(editForm.get('horaSolicitud')!.value) }}
-      </h2>
+    <h2 id="jhi-solicitud-prestacion-heading" [class.text-secondary]="tipo == 'Emergencia'">
+      Nueva {{ tipo }} - {{ formatShortTime(editForm.get('horaSolicitud')!.value) }}
+    </h2>
+
+    <div class="pt-3">
+      <jhi-alert-error></jhi-alert-error>
 
       <div>
-        <jhi-alert-error></jhi-alert-error>
+        <label class="" for="form-socio">Socio</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend" id="form-socio">
+            <div ngbDropdown class="d-inline-block">
+              <button class="btn btn-outline-secondary" id="dropdownBasicTipoSocio" ngbDropdownToggle>{{ tipoCliente }}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasicTipoSocio">
+                <button ngbDropdownItem (click)="cambiarTipoCliente('Socio')">Socio</button>
+                <button ngbDropdownItem (click)="cambiarTipoCliente('Particular')">Particular</button>
+                <button ngbDropdownItem (click)="cambiarTipoCliente('S/E')">Sin especificar</button>
+              </div>
+            </div>
+          </div>
+          <input
+            type="text"
+            class="form-control w-25"
+            placeholder="Nº"
+            [disabled]="deshabilitarNumeroSocio"
+            [(ngModel)]="numeroSocioSeleccionado"
+            (change)="selectNumeroSocio($event)"
+          />
 
-        <div class="form-group">
-          <label class="form-control-label" for="typeahead-http">Paciente</label>
           <input
             id="typeahead-http"
             type="text"
-            class="form-control"
+            class="form-control w-50"
             [class.is-invalid]="searchFailed"
-            [(ngModel)]="nombreIndividuoSeleccionado"
+            [disabled]="deshabilitarNombreSocio"
+            [(ngModel)]="clienteSeleccionado"
             [ngbTypeahead]="search"
-            placeholder="Buscar por nombre"
+            placeholder="{{ tipoCliente === 'Socio' ? 'Buscar por nombre' : 'Nombre' }}"
             [resultFormatter]="resultFormatter"
             [inputFormatter]="inputFormatter"
-            (change)="limpiar()"
-            (selectItem)="selectItem($event)"
+            (selectItem)="selectNombreSocio($event)"
+            [ngModelOptions]="{ standalone: true }"
           />
-          <small *ngIf="searching" class="form-text text-muted">Buscando...</small>
+          <!--<small *ngIf="searching" class="form-text text-muted">Buscando...</small>-->
           <div class="invalid-feedback" *ngIf="searchFailed">No se pudieron cargar las sugerencias.</div>
+
+          {{ clienteSeleccionado | json }}
         </div>
+      </div>
 
-        {{ individuoSeleccionado | json }}
+      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <!--
+          <div class="form-group">
+            <label class="form-control-label" for="typeahead-http">Paciente</label>
+            <input
+              id="typeahead-http"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="searchFailed"
+              [(ngModel)]="nombreIndividuoSeleccionado"
+              [ngbTypeahead]="search"
+              placeholder="Buscar por nombre"
+              [resultFormatter]="resultFormatter"
+              [inputFormatter]="inputFormatter"
+              (selectItem)="selectItem($event)"
+              [ngModelOptions]="{standalone: true}"
+            />
+            
+            <small *ngIf="searching" class="form-text text-muted">Buscando...</small>
+            <div class="invalid-feedback" *ngIf="searchFailed">No se pudieron cargar las sugerencias.</div>
+          </div>
 
+          {{ individuoSeleccionado | json }}
+          -->
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.domicilio" for="field_domicilio">Domicilio</label>
           <input type="text" class="form-control" name="domicilio" id="field_domicilio" data-cy="domicilio" formControlName="domicilio" />
@@ -72,62 +117,62 @@
 
         <!-- Sólo para bonos -->
         <!--
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador" for="field_itemNomenclador"
-            >Item Nomenclador</label
-          >
-          <select
-            class="form-control"
-            id="field_itemNomenclador"
-            data-cy="itemNomenclador"
-            name="itemNomenclador"
-            formControlName="itemNomenclador"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                itemNomencladorOption.id === editForm.get('itemNomenclador')!.value?.id
-                  ? editForm.get('itemNomenclador')!.value
-                  : itemNomencladorOption
-              "
-              *ngFor="let itemNomencladorOption of itemNomencladorsSharedCollection; trackBy: trackItemNomencladorById"
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador" for="field_itemNomenclador"
+              >Item Nomenclador</label
             >
-              {{ itemNomencladorOption.id }}
-            </option>
-          </select>
-        </div>
-        -->
+            <select
+              class="form-control"
+              id="field_itemNomenclador"
+              data-cy="itemNomenclador"
+              name="itemNomenclador"
+              formControlName="itemNomenclador"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                  itemNomencladorOption.id === editForm.get('itemNomenclador')!.value?.id
+                    ? editForm.get('itemNomenclador')!.value
+                    : itemNomencladorOption
+                "
+                *ngFor="let itemNomencladorOption of itemNomencladorsSharedCollection; trackBy: trackItemNomencladorById"
+              >
+                {{ itemNomencladorOption.id }}
+              </option>
+            </select>
+          </div>
+          -->
 
         <!--
-        <div class="form-group">
-          <label jhiTranslate="ssoc22App.solicitudPrestacion.insumo" for="field_insumos">Insumo</label>
-          <select class="form-control" id="field_insumos" data-cy="insumo" multiple name="insumos" formControlName="insumos">
-            <option
-              [ngValue]="getSelectedInsumo(insumoOption, editForm.get('insumos')!.value)"
-              *ngFor="let insumoOption of insumosSharedCollection; trackBy: trackInsumoById"
-            >
-              {{ insumoOption.id }}
-            </option>
-          </select>
+          <div class="form-group">
+            <label jhiTranslate="ssoc22App.solicitudPrestacion.insumo" for="field_insumos">Insumo</label>
+            <select class="form-control" id="field_insumos" data-cy="insumo" multiple name="insumos" formControlName="insumos">
+              <option
+                [ngValue]="getSelectedInsumo(insumoOption, editForm.get('insumos')!.value)"
+                *ngFor="let insumoOption of insumosSharedCollection; trackBy: trackInsumoById"
+              >
+                {{ insumoOption.id }}
+              </option>
+            </select>
+          </div>
+          -->
+
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
         </div>
-        -->
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>

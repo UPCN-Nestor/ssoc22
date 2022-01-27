@@ -155,6 +155,12 @@ public class ClienteResource {
         return clienteRepository.findAll();
     }
 
+    @GetMapping("/clientes/parcial/{parcial}")
+    public List<Cliente> getAllClientesPorNombreParcial(@PathVariable String parcial) {
+        log.debug("REST request to get all Clientes por nombre parcial: " + parcial);
+        return clienteRepository.findByNombreIgnoreCaseContaining(parcial);
+    }
+
     /**
      * {@code GET  /clientes/:id} : get the "id" cliente.
      *
@@ -165,6 +171,13 @@ public class ClienteResource {
     public ResponseEntity<Cliente> getCliente(@PathVariable Long id) {
         log.debug("REST request to get Cliente : {}", id);
         Optional<Cliente> cliente = clienteRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(cliente);
+    }
+
+    @GetMapping("/clientes/socio/{socio}")
+    public ResponseEntity<Cliente> getClienteByNroSocio(@PathVariable Integer socio) {
+        log.debug("REST request to get Cliente : {}", socio);
+        Optional<Cliente> cliente = clienteRepository.findBySocio(socio);
         return ResponseUtil.wrapOrNotFound(cliente);
     }
 

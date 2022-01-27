@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -21,6 +21,8 @@ import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 import { IndividuoService } from 'app/entities/individuo/service/individuo.service';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { ICliente } from 'app/entities/cliente/cliente.model';
+import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 
 @Component({
   selector: 'jhi-solicitud-prestacion-alta',
@@ -30,10 +32,18 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
   isSaving = false;
   tipo = '';
 
+  // Socio
+  tipoCliente = 'Socio';
+  deshabilitarNumeroSocio = false;
+  deshabilitarNombreSocio = false;
+
   // Typeahead
+
+  @ViewChild('typeahead-http') typeaheadHttp: ElementRef | null = null;
+
   searchFailed = false;
-  nombreIndividuoSeleccionado = '';
-  individuoSeleccionado: IIndividuo | null = null;
+  numeroSocioSeleccionado: number | null = null;
+  clienteSeleccionado: ICliente | null = null;
   searching = false;
 
   despachosCollection: IDespacho[] = [];
@@ -67,6 +77,7 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
     protected itemNomencladorService: ItemNomencladorService,
     protected userService: UserService,
     protected insumoService: InsumoService,
+    protected clienteService: ClienteService,
     protected individuoService: IndividuoService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -136,7 +147,7 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
   }
 
   // *** Prueba typeahead
-  search: OperatorFunction<string, readonly IIndividuo[]> = (text$: Observable<string>) =>
+  search: OperatorFunction<string, readonly ICliente[]> = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -144,7 +155,7 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
       switchMap(term =>
         term.length < 3
           ? []
-          : this.individuoService.queryPorNombreParcial(term).pipe(
+          : this.clienteService.queryPorNombreParcial(term).pipe(
               map(res => res.body!) // Extrae array de Httpresponse
             )
       ),
@@ -156,14 +167,33 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
   // eslint-disable-next-line
   inputFormatter: (item: any) => string = i => i.nombre || '';
 
-  selectItem(event: NgbTypeaheadSelectItemEvent<IIndividuo>): void {
-    this.individuoSeleccionado = event.item;
-  }
-
-  limpiar(): void {
-    this.individuoSeleccionado = null;
+  selectNombreSocio(event: NgbTypeaheadSelectItemEvent<ICliente>): void {
+    this.clienteSeleccionado = event.item;
+    this.numeroSocioSeleccionado = this.clienteSeleccionado.socio!;
   }
   // *** Fin typeahead
+
+  selectNumeroSocio(ev: any): void {
+    this.clienteService.findPorNroSocio(ev.target.value as number).subscribe(cliente => {
+      this.clienteSeleccionado = cliente.body;
+      this.typeaheadHttp!.nativeElement.val = this.clienteSeleccionado ? this.clienteSeleccionado.nombre! : '';
+    });
+  }
+
+  cambiarTipoCliente(tipoCliente: string): void {
+    this.tipoCliente = tipoCliente;
+    if (tipoCliente === 'Socio') {
+      this.deshabilitarNumeroSocio = false;
+      this.deshabilitarNombreSocio = false;
+      this.clienteSeleccionado = null;
+      this.numeroSocioSeleccionado = null;
+    } else {
+      this.deshabilitarNumeroSocio = true;
+      this.deshabilitarNombreSocio = true;
+      this.clienteSeleccionado = null;
+      this.numeroSocioSeleccionado = null;
+    }
+  }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISolicitudPrestacion>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
