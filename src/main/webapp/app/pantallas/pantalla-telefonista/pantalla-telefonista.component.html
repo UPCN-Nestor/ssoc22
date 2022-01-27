@@ -1,5 +1,5 @@
 <div>
-  <ul ngbNav #nav="ngbNav" class="nav-tabs mb-4">
+  <ul ngbNav #nav="ngbNav" class="nav-tabs mb-4" activeId="bonos">
     <li ngbNavItem>
       <a ngbNavLink
         ><h6>
@@ -298,6 +298,36 @@
         ><h6>Traslado Larga Distancia<span class="badge badge-info ml-2"></span></h6
       ></a>
       <ng-template ngbNavContent></ng-template>
+    </li>
+
+    <!-- Esto va a terminar en otra pantalla -->
+    <li ngbNavItem ngbNavItem="bonos">
+      <a ngbNavLink
+        ><h6>Bonos<span class="badge badge-info ml-2"></span></h6
+      ></a>
+      <ng-template ngbNavContent>
+        <h4 id="page-heading">
+          <div class="d-flex flex-row">
+            <div font-weight-bold>Bonos</div>
+
+            <div class="ml-auto">
+              <button class="btn btn-info" (click)="loadAll()" [disabled]="isLoading">
+                <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+              </button>
+
+              <button
+                id="jh-create-entity"
+                data-cy="entityCreateButton"
+                class="btn btn-primary jh-create-entity create-solicitud-prestacion"
+                (click)="popupBono()"
+              >
+                <fa-icon icon="plus"></fa-icon>
+                <span>Nuevo bono</span>
+              </button>
+            </div>
+          </div>
+        </h4>
+      </ng-template>
     </li>
   </ul>
 

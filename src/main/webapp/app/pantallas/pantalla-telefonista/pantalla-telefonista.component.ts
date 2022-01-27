@@ -11,6 +11,7 @@ import { SolicitudPrestacionService } from 'app/entities/solicitud-prestacion/se
 import { ISolicitudPrestacion } from 'app/entities/solicitud-prestacion/solicitud-prestacion.model';
 import dayjs, { Dayjs } from 'dayjs/esm';
 import { SolicitudPrestacionAltaComponent } from '../solicitud-prestacion-alta/solicitud-prestacion-alta.component';
+import { SolicitudPrestacionBonoComponent } from '../solicitud-prestacion-bono/solicitud-prestacion-bono.component';
 
 @Component({
   selector: 'jhi-pantalla-telefonista',
@@ -119,6 +120,15 @@ export class PantallaTelefonistaComponent implements OnInit {
   popupAlta(tipo: string): void {
     const modalRef = this.modalService.open(SolicitudPrestacionAltaComponent, { size: 'lg', backdrop: true });
     modalRef.componentInstance.tipo = tipo;
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(reason => {
+      alert('x');
+    });
+  }
+
+  // Esto va a terminar en otra pantalla
+  popupBono(): void {
+    const modalRef = this.modalService.open(SolicitudPrestacionBonoComponent, { size: 'lg', backdrop: true });
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
       alert('x');
