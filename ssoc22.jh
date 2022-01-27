@@ -37,12 +37,14 @@ entity Tarifa {
 
 entity Adhesion {
 	fechaAlta ZonedDateTime
+    fechaBaja ZonedDateTime
     estado String
     condicion String
 }
 
 entity Contrato {
 	fechaAlta ZonedDateTime
+    fechaBaja ZonedDateTime
     particularidades String
 }
 
