@@ -12,7 +12,7 @@ application {
     clientTheme minty,
     languages [es],
     nativeLanguage es,
-    testFrameworks	[cypress, protractor, cucumber, gatling]
+    testFrameworks [cypress, protractor, cucumber, gatling]
   }
   entities *
 }
@@ -122,6 +122,7 @@ entity SolicitudPrestacion {
     seEfectuo Boolean
     internacion Boolean
     observaciones String
+    individuoAdhoc String
 }
 
 entity ItemNomenclador {
@@ -142,6 +143,7 @@ relationship OneToMany {
     Plan to Provision{plan}
     Provision to ReglaPrestacion{provision}
     Individuo to SolicitudPrestacion{individuo}
+    Cliente to SolicitudPrestacion{cliente}
     Prestacion to ItemNomenclador{prestacion}
     Plan to Tarifa{plan}
 }
@@ -153,7 +155,7 @@ relationship ManyToOne {
     ItemFactura to Factura,
     MovimientoStock to Insumo,
     SolicitudPrestacion to ItemNomenclador
-    Despacho to Prestador
+    SolicitudPrestacion to Prestador
     Despacho to Chofer
     Despacho to Medico
     Despacho to Enfermero

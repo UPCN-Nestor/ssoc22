@@ -30,64 +30,51 @@
             [inputFormatter]="inputFormatter"
             (selectItem)="selectNombreSocio($event)"
             [ngModelOptions]="{ standalone: true }"
+            required
           />
           <!--<small *ngIf="searching" class="form-text text-muted">Buscando...</small>-->
           <div class="invalid-feedback" *ngIf="searchFailed">No se pudieron cargar las sugerencias.</div>
-
-          {{ clienteSeleccionado | json }}
         </div>
       </div>
 
       <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-        <!--
-          <div class="form-group">
-            <label class="form-control-label" for="typeahead-http">Paciente</label>
-            <input
-              id="typeahead-http"
-              type="text"
-              class="form-control"
-              [class.is-invalid]="searchFailed"
-              [(ngModel)]="nombreIndividuoSeleccionado"
-              [ngbTypeahead]="search"
-              placeholder="Buscar por nombre"
-              [resultFormatter]="resultFormatter"
-              [inputFormatter]="inputFormatter"
-              (selectItem)="selectItem($event)"
-              [ngModelOptions]="{standalone: true}"
-            />
-            
-            <small *ngIf="searching" class="form-text text-muted">Buscando...</small>
-            <div class="invalid-feedback" *ngIf="searchFailed">No se pudieron cargar las sugerencias.</div>
-          </div>
-
-          {{ individuoSeleccionado | json }}
-          -->
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.domicilio" for="field_domicilio">Domicilio</label>
-          <input type="text" class="form-control" name="domicilio" id="field_domicilio" data-cy="domicilio" formControlName="domicilio" />
+          <label class="form-control-label" for="field_individuo">Paciente</label>
+          <select class="form-control" id="field_individuo" data-cy="individuo" name="individuo" formControlName="individuo" required>
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="individuoOption.id === editForm.get('individuo')!.value?.id ? editForm.get('individuo')!.value : individuoOption"
+              *ngFor="let individuoOption of individuosDeCliente; trackBy: trackIndividuoById"
+            >
+              {{ individuoOption.nombre }}
+            </option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.telefono" for="field_telefono">Telefono</label>
-          <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.edad" for="field_edad">Edad</label>
-          <input type="number" class="form-control" name="edad" id="field_edad" data-cy="edad" formControlName="edad" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" for="field_motivoLlamado">Motivo del llamado</label>
-          <input
-            type="text"
+          <label class="form-control-label" for="field_itemNomenclador">Práctica</label>
+          <select
             class="form-control"
-            name="motivoLlamado"
-            id="field_motivoLlamado"
-            data-cy="motivoLlamado"
-            formControlName="motivoLlamado"
-          />
+            id="field_itemNomenclador"
+            data-cy="itemNomenclador"
+            name="itemNomenclador"
+            formControlName="itemNomenclador"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                itemNomencladorOption.id === editForm.get('itemNomenclador')!.value?.id
+                  ? editForm.get('itemNomenclador')!.value
+                  : itemNomencladorOption
+              "
+              *ngFor="let itemNomencladorOption of itemNomencladorsSharedCollection; trackBy: trackItemNomencladorById"
+            >
+              {{ itemNomencladorOption.id }}
+            </option>
+          </select>
         </div>
+
+        Prestador
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.observaciones" for="field_observaciones"
@@ -102,34 +89,6 @@
             formControlName="observaciones"
           />
         </div>
-
-        <!-- Sólo para bonos -->
-        <!--
-          <div class="form-group">
-            <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.itemNomenclador" for="field_itemNomenclador"
-              >Item Nomenclador</label
-            >
-            <select
-              class="form-control"
-              id="field_itemNomenclador"
-              data-cy="itemNomenclador"
-              name="itemNomenclador"
-              formControlName="itemNomenclador"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                  itemNomencladorOption.id === editForm.get('itemNomenclador')!.value?.id
-                    ? editForm.get('itemNomenclador')!.value
-                    : itemNomencladorOption
-                "
-                *ngFor="let itemNomencladorOption of itemNomencladorsSharedCollection; trackBy: trackItemNomencladorById"
-              >
-                {{ itemNomencladorOption.id }}
-              </option>
-            </select>
-          </div>
-          -->
 
         <!--
           <div class="form-group">

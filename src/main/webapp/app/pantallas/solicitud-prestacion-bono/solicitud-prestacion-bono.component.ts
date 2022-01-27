@@ -20,7 +20,7 @@ import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 import { IndividuoService } from 'app/entities/individuo/service/individuo.service';
-import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 
@@ -32,19 +32,18 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   isSaving = false;
   tipo = '';
 
-  // Socio
+  // *** Socio
   tipoCliente = 'Socio';
   deshabilitarNumeroSocio = false;
   deshabilitarNombreSocio = false;
-
-  // Typeahead
-
-  @ViewChild('typeahead-http') typeaheadHttp: ElementRef | null = null;
 
   searchFailed = false;
   numeroSocioSeleccionado: number | null = null;
   clienteSeleccionado: ICliente | null = null;
   searching = false;
+  // *** End socio
+
+  individuosDeCliente: IIndividuo[] | null = [];
 
   despachosCollection: IDespacho[] = [];
   itemNomencladorsSharedCollection: IItemNomenclador[] = [];
@@ -80,7 +79,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     protected clienteService: ClienteService,
     protected individuoService: IndividuoService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -102,7 +102,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    this.modalService.dismissAll();
+    //window.history.back();
   }
 
   save(): void {
@@ -170,13 +171,21 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   selectNombreSocio(event: NgbTypeaheadSelectItemEvent<ICliente>): void {
     this.clienteSeleccionado = event.item;
     this.numeroSocioSeleccionado = this.clienteSeleccionado.socio!;
+    this.individuoService.queryPorAdhesion(this.clienteSeleccionado.id!).subscribe(is => {
+      this.individuosDeCliente = is.body;
+    });
   }
   // *** Fin typeahead
 
   selectNumeroSocio(ev: any): void {
     this.clienteService.findPorNroSocio(ev.target.value as number).subscribe(cliente => {
       this.clienteSeleccionado = cliente.body;
-      this.typeaheadHttp!.nativeElement.val = this.clienteSeleccionado ? this.clienteSeleccionado.nombre! : '';
+
+      if (this.clienteSeleccionado) {
+        this.individuoService.queryPorAdhesion(this.clienteSeleccionado.id!).subscribe(is => {
+          this.individuosDeCliente = is.body;
+        });
+      }
     });
   }
 

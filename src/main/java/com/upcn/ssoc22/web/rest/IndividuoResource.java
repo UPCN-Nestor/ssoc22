@@ -157,6 +157,12 @@ public class IndividuoResource {
         return individuoRepository.findByNombreContaining(parcial);
     }
 
+    @GetMapping("/individuos/poradhesion/{idcliente}")
+    public List<Individuo> getAllIndividuosPorAdhesion(@PathVariable Long idcliente) {
+        log.debug("REST request to get all Individuos por adhesión a idcliente " + idcliente);
+        return individuoRepository.findByAdhesion(idcliente);
+    }
+
     /**
      * {@code GET  /individuos/:id} : get the "id" individuo.
      *

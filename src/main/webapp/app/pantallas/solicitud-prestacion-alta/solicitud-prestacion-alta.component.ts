@@ -20,7 +20,7 @@ import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 import { IndividuoService } from 'app/entities/individuo/service/individuo.service';
-import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 
@@ -38,9 +38,6 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
   deshabilitarNombreSocio = false;
 
   // Typeahead
-
-  @ViewChild('typeahead-http') typeaheadHttp: ElementRef | null = null;
-
   searchFailed = false;
   numeroSocioSeleccionado: number | null = null;
   clienteSeleccionado: ICliente | null = null;
@@ -80,7 +77,8 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
     protected clienteService: ClienteService,
     protected individuoService: IndividuoService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -102,7 +100,8 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    //window.history.back();
+    this.modalService.dismissAll();
   }
 
   save(): void {
@@ -176,7 +175,6 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
   selectNumeroSocio(ev: any): void {
     this.clienteService.findPorNroSocio(ev.target.value as number).subscribe(cliente => {
       this.clienteSeleccionado = cliente.body;
-      this.typeaheadHttp!.nativeElement.val = this.clienteSeleccionado ? this.clienteSeleccionado.nombre! : '';
     });
   }
 

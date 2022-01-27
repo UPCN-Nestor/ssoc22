@@ -1,11 +1,4 @@
-id;fecha_alta;estado;condicion
-1;2022-01-24T04:29:28;real-time interface;Tunisian
-2;2022-01-24T07:00:54;compress;Travesía Granito Clonado
-3;2022-01-24T05:58:53;Decoración;SSL
-4;2022-01-24T12:47:30;Guapa Rústico;Vía maximizada
-5;2022-01-24T10:30:07;Decoración;extend parsing
-6;2022-01-24T03:19:47;Murcia;innovate Artesanal
-7;2022-01-23T19:53:57;Mancha back-end Morado;Account Cambridgeshire Compartible
-8;2022-01-23T19:19:58;Rojo Berkshire;Grupo communities Universal
-9;2022-01-24T01:46:58;Acero Futuro;International invoice connect
-10;2022-01-24T04:38:27;reinvent Pequeño;Implementación Sterling
+id;fecha_alta;estado;condicion;individuo_id;cliente_id
+1;2022-01-24T04:29:28;real-time interface;Tunisian;1;1
+2;2022-01-24T07:00:54;compress;Travesía Granito Clonado;1;2
+3;2022-01-24T05:58:53;Decoración;SSL;2;2
