@@ -9,6 +9,8 @@ import { IProvision, Provision } from '../provision.model';
 import { ProvisionService } from '../service/provision.service';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
 import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
+import { IPrestacion } from 'app/entities/prestacion/prestacion.model';
+import { PrestacionService } from 'app/entities/prestacion/service/prestacion.service';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IPlan } from 'app/entities/plan/plan.model';
@@ -22,12 +24,14 @@ export class ProvisionUpdateComponent implements OnInit {
   isSaving = false;
 
   itemNomencladorsSharedCollection: IItemNomenclador[] = [];
+  prestacionsSharedCollection: IPrestacion[] = [];
   insumosSharedCollection: IInsumo[] = [];
   plansSharedCollection: IPlan[] = [];
 
   editForm = this.fb.group({
     id: [],
     itemNomenclador: [],
+    prestacion: [],
     insumos: [],
     plan: [],
   });
@@ -35,6 +39,7 @@ export class ProvisionUpdateComponent implements OnInit {
   constructor(
     protected provisionService: ProvisionService,
     protected itemNomencladorService: ItemNomencladorService,
+    protected prestacionService: PrestacionService,
     protected insumoService: InsumoService,
     protected planService: PlanService,
     protected activatedRoute: ActivatedRoute,
@@ -64,6 +69,10 @@ export class ProvisionUpdateComponent implements OnInit {
   }
 
   trackItemNomencladorById(index: number, item: IItemNomenclador): number {
+    return item.id!;
+  }
+
+  trackPrestacionById(index: number, item: IPrestacion): number {
     return item.id!;
   }
 
@@ -109,6 +118,7 @@ export class ProvisionUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: provision.id,
       itemNomenclador: provision.itemNomenclador,
+      prestacion: provision.prestacion,
       insumos: provision.insumos,
       plan: provision.plan,
     });
@@ -116,6 +126,10 @@ export class ProvisionUpdateComponent implements OnInit {
     this.itemNomencladorsSharedCollection = this.itemNomencladorService.addItemNomencladorToCollectionIfMissing(
       this.itemNomencladorsSharedCollection,
       provision.itemNomenclador
+    );
+    this.prestacionsSharedCollection = this.prestacionService.addPrestacionToCollectionIfMissing(
+      this.prestacionsSharedCollection,
+      provision.prestacion
     );
     this.insumosSharedCollection = this.insumoService.addInsumoToCollectionIfMissing(
       this.insumosSharedCollection,
@@ -134,6 +148,16 @@ export class ProvisionUpdateComponent implements OnInit {
         )
       )
       .subscribe((itemNomencladors: IItemNomenclador[]) => (this.itemNomencladorsSharedCollection = itemNomencladors));
+
+    this.prestacionService
+      .query()
+      .pipe(map((res: HttpResponse<IPrestacion[]>) => res.body ?? []))
+      .pipe(
+        map((prestacions: IPrestacion[]) =>
+          this.prestacionService.addPrestacionToCollectionIfMissing(prestacions, this.editForm.get('prestacion')!.value)
+        )
+      )
+      .subscribe((prestacions: IPrestacion[]) => (this.prestacionsSharedCollection = prestacions));
 
     this.insumoService
       .query()
@@ -157,6 +181,7 @@ export class ProvisionUpdateComponent implements OnInit {
       ...new Provision(),
       id: this.editForm.get(['id'])!.value,
       itemNomenclador: this.editForm.get(['itemNomenclador'])!.value,
+      prestacion: this.editForm.get(['prestacion'])!.value,
       insumos: this.editForm.get(['insumos'])!.value,
       plan: this.editForm.get(['plan'])!.value,
     };

@@ -39,6 +39,21 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.provision.prestacion" for="field_prestacion">Prestacion</label>
+          <select class="form-control" id="field_prestacion" data-cy="prestacion" name="prestacion" formControlName="prestacion">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                prestacionOption.id === editForm.get('prestacion')!.value?.id ? editForm.get('prestacion')!.value : prestacionOption
+              "
+              *ngFor="let prestacionOption of prestacionsSharedCollection; trackBy: trackPrestacionById"
+            >
+              {{ prestacionOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label jhiTranslate="ssoc22App.provision.insumo" for="field_insumos">Insumo</label>
           <select class="form-control" id="field_insumos" data-cy="insumo" multiple name="insumos" formControlName="insumos">
             <option

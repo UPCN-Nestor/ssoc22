@@ -10,6 +10,8 @@ import { ProvisionService } from '../service/provision.service';
 import { IProvision, Provision } from '../provision.model';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
 import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
+import { IPrestacion } from 'app/entities/prestacion/prestacion.model';
+import { PrestacionService } from 'app/entities/prestacion/service/prestacion.service';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IPlan } from 'app/entities/plan/plan.model';
@@ -23,6 +25,7 @@ describe('Provision Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let provisionService: ProvisionService;
   let itemNomencladorService: ItemNomencladorService;
+  let prestacionService: PrestacionService;
   let insumoService: InsumoService;
   let planService: PlanService;
 
@@ -47,6 +50,7 @@ describe('Provision Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     provisionService = TestBed.inject(ProvisionService);
     itemNomencladorService = TestBed.inject(ItemNomencladorService);
+    prestacionService = TestBed.inject(PrestacionService);
     insumoService = TestBed.inject(InsumoService);
     planService = TestBed.inject(PlanService);
 
@@ -74,6 +78,25 @@ describe('Provision Management Update Component', () => {
         ...additionalItemNomencladors
       );
       expect(comp.itemNomencladorsSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should call Prestacion query and add missing value', () => {
+      const provision: IProvision = { id: 456 };
+      const prestacion: IPrestacion = { id: 82313 };
+      provision.prestacion = prestacion;
+
+      const prestacionCollection: IPrestacion[] = [{ id: 36093 }];
+      jest.spyOn(prestacionService, 'query').mockReturnValue(of(new HttpResponse({ body: prestacionCollection })));
+      const additionalPrestacions = [prestacion];
+      const expectedCollection: IPrestacion[] = [...additionalPrestacions, ...prestacionCollection];
+      jest.spyOn(prestacionService, 'addPrestacionToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ provision });
+      comp.ngOnInit();
+
+      expect(prestacionService.query).toHaveBeenCalled();
+      expect(prestacionService.addPrestacionToCollectionIfMissing).toHaveBeenCalledWith(prestacionCollection, ...additionalPrestacions);
+      expect(comp.prestacionsSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should call Insumo query and add missing value', () => {
@@ -118,6 +141,8 @@ describe('Provision Management Update Component', () => {
       const provision: IProvision = { id: 456 };
       const itemNomenclador: IItemNomenclador = { id: 86640 };
       provision.itemNomenclador = itemNomenclador;
+      const prestacion: IPrestacion = { id: 77731 };
+      provision.prestacion = prestacion;
       const insumos: IInsumo = { id: 98107 };
       provision.insumos = [insumos];
       const plan: IPlan = { id: 4040 };
@@ -128,6 +153,7 @@ describe('Provision Management Update Component', () => {
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(provision));
       expect(comp.itemNomencladorsSharedCollection).toContain(itemNomenclador);
+      expect(comp.prestacionsSharedCollection).toContain(prestacion);
       expect(comp.insumosSharedCollection).toContain(insumos);
       expect(comp.plansSharedCollection).toContain(plan);
     });
@@ -202,6 +228,14 @@ describe('Provision Management Update Component', () => {
       it('Should return tracked ItemNomenclador primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackItemNomencladorById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
+    describe('trackPrestacionById', () => {
+      it('Should return tracked Prestacion primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackPrestacionById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

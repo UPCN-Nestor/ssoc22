@@ -36,6 +36,12 @@
       "ownerSide": true,
       "relationshipName": "insumo",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "provision",
+      "otherEntityRelationshipName": "prestacion",
+      "relationshipName": "provision",
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "no"

@@ -14,6 +14,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="item_nomenclador"/>
 
+        <addForeignKeyConstraint baseColumnNames="prestacion_id"
+                                 baseTableName="provision"
+                                 constraintName="fk_provision__prestacion_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestacion"/>
+
         <addForeignKeyConstraint baseColumnNames="provision_id"
                                  baseTableName="rel_provision__insumo"
                                  constraintName="fk_rel_provision__insumo__provision_id"

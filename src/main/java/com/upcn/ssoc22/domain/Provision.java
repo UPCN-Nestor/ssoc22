@@ -33,6 +33,10 @@ public class Provision implements Serializable {
     @JsonIgnoreProperties(value = { "prestacion", "solicitudPrestacions", "provisions", "prestadors" }, allowSetters = true)
     private ItemNomenclador itemNomenclador;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "itemNomencladors", "insumos", "provisions" }, allowSetters = true)
+    private Prestacion prestacion;
+
     @ManyToMany
     @JoinTable(
         name = "rel_provision__insumo",
@@ -103,6 +107,19 @@ public class Provision implements Serializable {
 
     public Provision itemNomenclador(ItemNomenclador itemNomenclador) {
         this.setItemNomenclador(itemNomenclador);
+        return this;
+    }
+
+    public Prestacion getPrestacion() {
+        return this.prestacion;
+    }
+
+    public void setPrestacion(Prestacion prestacion) {
+        this.prestacion = prestacion;
+    }
+
+    public Provision prestacion(Prestacion prestacion) {
+        this.setPrestacion(prestacion);
         return this;
     }
 

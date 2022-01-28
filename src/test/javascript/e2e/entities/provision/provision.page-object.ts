@@ -32,6 +32,7 @@ export class ProvisionUpdatePage {
   idInput = element(by.id('field_id'));
 
   itemNomencladorSelect = element(by.id('field_itemNomenclador'));
+  prestacionSelect = element(by.id('field_prestacion'));
   insumoSelect = element(by.id('field_insumo'));
   planSelect = element(by.id('field_plan'));
 
@@ -61,6 +62,22 @@ export class ProvisionUpdatePage {
 
   async getItemNomencladorSelectedOption(): Promise<string> {
     return await this.itemNomencladorSelect.element(by.css('option:checked')).getText();
+  }
+
+  async prestacionSelectLastOption(): Promise<void> {
+    await this.prestacionSelect.all(by.tagName('option')).last().click();
+  }
+
+  async prestacionSelectOption(option: string): Promise<void> {
+    await this.prestacionSelect.sendKeys(option);
+  }
+
+  getPrestacionSelect(): ElementFinder {
+    return this.prestacionSelect;
+  }
+
+  async getPrestacionSelectedOption(): Promise<string> {
+    return await this.prestacionSelect.element(by.css('option:checked')).getText();
   }
 
   async insumoSelectLastOption(): Promise<void> {

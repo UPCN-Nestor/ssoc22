@@ -24,6 +24,12 @@
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityName": "prestacion",
+      "otherEntityRelationshipName": "provision",
+      "relationshipName": "prestacion",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityName": "insumo",
       "otherEntityRelationshipName": "provision",
       "ownerSide": true,

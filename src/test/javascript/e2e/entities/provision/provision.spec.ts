@@ -44,6 +44,7 @@ describe('Provision e2e test', () => {
 
     await promise.all([
       provisionUpdatePage.itemNomencladorSelectLastOption(),
+      provisionUpdatePage.prestacionSelectLastOption(),
       // provisionUpdatePage.insumoSelectLastOption(),
       provisionUpdatePage.planSelectLastOption(),
     ]);

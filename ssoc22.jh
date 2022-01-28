@@ -162,7 +162,8 @@ relationship ManyToOne {
     Despacho to Medico
     Despacho to Enfermero
     Despacho to Movil
-    Provision to ItemNomenclador
+    Provision to ItemNomenclador 
+    Provision to Prestacion // Ej. "todos los bonos"
     SolicitudPrestacion{usuarioSolicitud} to User
     Despacho{usuarioSalida} to User
     Despacho{usuarioLlegada} to User

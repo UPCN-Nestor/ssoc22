@@ -17,6 +17,9 @@
             <column name="item_nomenclador_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="prestacion_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="plan_id" type="bigint">
                 <constraints nullable="true" />
             </column>

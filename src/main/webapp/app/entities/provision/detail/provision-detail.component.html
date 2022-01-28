@@ -20,6 +20,12 @@
             <a [routerLink]="['/item-nomenclador', provision.itemNomenclador?.id, 'view']">{{ provision.itemNomenclador?.id }}</a>
           </div>
         </dd>
+        <dt><span jhiTranslate="ssoc22App.provision.prestacion">Prestacion</span></dt>
+        <dd>
+          <div *ngIf="provision.prestacion">
+            <a [routerLink]="['/prestacion', provision.prestacion?.id, 'view']">{{ provision.prestacion?.id }}</a>
+          </div>
+        </dd>
         <dt><span jhiTranslate="ssoc22App.provision.insumo">Insumo</span></dt>
         <dd>
           <span *ngFor="let insumo of provision.insumos; let last = last">

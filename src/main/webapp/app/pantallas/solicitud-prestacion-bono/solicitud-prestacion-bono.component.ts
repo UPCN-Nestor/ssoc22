@@ -23,6 +23,8 @@ import { IndividuoService } from 'app/entities/individuo/service/individuo.servi
 import { NgbModal, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
+import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
+import { IPrestador } from 'app/entities/prestador/prestador.model';
 
 @Component({
   selector: 'jhi-solicitud-prestacion-bono',
@@ -36,6 +38,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   tipoCliente = 'Socio';
   deshabilitarNumeroSocio = false;
   deshabilitarNombreSocio = false;
+  errorCliente = '';
 
   searchFailed = false;
   numeroSocioSeleccionado: number | null = null;
@@ -50,6 +53,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   usersSharedCollection: IUser[] = [];
   insumosSharedCollection: IInsumo[] = [];
   individuosSharedCollection: IIndividuo[] = [];
+  prestadorsSharedCollection: IPrestador[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -80,7 +84,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     protected individuoService: IndividuoService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected prestadorService: PrestadorService
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +122,10 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   trackDespachoById(index: number, item: IDespacho): number {
+    return item.id!;
+  }
+
+  trackPrestadorById(index: number, item: IPrestador): number {
     return item.id!;
   }
 
@@ -169,8 +178,11 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   inputFormatter: (item: any) => string = i => i.nombre || '';
 
   selectNombreSocio(event: NgbTypeaheadSelectItemEvent<ICliente>): void {
+    this.errorCliente = '';
+    this.individuosDeCliente = null;
     this.clienteSeleccionado = event.item;
     this.numeroSocioSeleccionado = this.clienteSeleccionado.socio!;
+
     this.individuoService.queryPorAdhesion(this.clienteSeleccionado.id!).subscribe(is => {
       this.individuosDeCliente = is.body;
     });
@@ -178,15 +190,24 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   // *** Fin typeahead
 
   selectNumeroSocio(ev: any): void {
-    this.clienteService.findPorNroSocio(ev.target.value as number).subscribe(cliente => {
-      this.clienteSeleccionado = cliente.body;
+    this.clienteService.findPorNroSocio(ev.target.value as number).subscribe(
+      cliente => {
+        this.errorCliente = '';
+        this.individuosDeCliente = null;
+        this.clienteSeleccionado = cliente.body;
 
-      if (this.clienteSeleccionado) {
-        this.individuoService.queryPorAdhesion(this.clienteSeleccionado.id!).subscribe(is => {
-          this.individuosDeCliente = is.body;
-        });
+        if (this.clienteSeleccionado) {
+          this.individuoService.queryPorAdhesion(this.clienteSeleccionado.id!).subscribe(is => {
+            this.individuosDeCliente = is.body;
+          });
+        }
+      },
+      err => {
+        this.errorCliente = 'No se encontró un cliente con ese número de socio';
+        this.individuosDeCliente = null;
+        this.clienteSeleccionado = null;
       }
-    });
+    );
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISolicitudPrestacion>>): void {
@@ -296,6 +317,16 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
         )
       )
       .subscribe((individuos: IIndividuo[]) => (this.individuosSharedCollection = individuos));
+
+    this.prestadorService
+      .query()
+      .pipe(map((res: HttpResponse<IPrestador[]>) => res.body ?? []))
+      .pipe(
+        map((prestadors: IPrestador[]) =>
+          this.prestadorService.addPrestadorToCollectionIfMissing(prestadors, this.editForm.get('prestador')!.value)
+        )
+      )
+      .subscribe((prestadors: IPrestador[]) => (this.prestadorsSharedCollection = prestadors));
   }
 
   protected createFromForm(): ISolicitudPrestacion {

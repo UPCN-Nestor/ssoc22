@@ -3,11 +3,11 @@
     <h2 id="jhi-solicitud-prestacion-heading" [class.text-secondary]="tipo == 'Emergencia'">Emitir bono</h2>
 
     <div class="pt-3">
-      <jhi-alert-error></jhi-alert-error>
+      <!--<jhi-alert-error></jhi-alert-error>-->
 
-      <div>
+      <div class="mb-2">
         <label class="" for="form-socio">Socio</label>
-        <div class="input-group mb-3">
+        <div class="input-group">
           <input
             type="text"
             class="form-control w-25"
@@ -35,6 +35,7 @@
           <!--<small *ngIf="searching" class="form-text text-muted">Buscando...</small>-->
           <div class="invalid-feedback" *ngIf="searchFailed">No se pudieron cargar las sugerencias.</div>
         </div>
+        <small class="form-text text-danger">{{ errorCliente }}</small>
       </div>
 
       <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
@@ -74,7 +75,18 @@
           </select>
         </div>
 
-        Prestador
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.prestador" for="field_prestador">Prestador</label>
+          <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="prestadorOption.id === editForm.get('prestador')!.value?.id ? editForm.get('prestador')!.value : prestadorOption"
+              *ngFor="let prestadorOption of prestadorsSharedCollection; trackBy: trackPrestadorById"
+            >
+              {{ prestadorOption.id }}
+            </option>
+          </select>
+        </div>
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.observaciones" for="field_observaciones"
