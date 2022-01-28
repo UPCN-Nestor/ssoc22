@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.upcn.ssoc22.IntegrationTest;
 import com.upcn.ssoc22.domain.Provision;
 import com.upcn.ssoc22.repository.ProvisionRepository;
+import com.upcn.ssoc22.service.ProvisionService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -48,6 +49,9 @@ class ProvisionResourceIT {
 
     @Mock
     private ProvisionRepository provisionRepositoryMock;
+
+    @Mock
+    private ProvisionService provisionServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -133,20 +137,20 @@ class ProvisionResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllProvisionsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(provisionRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(provisionServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restProvisionMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(provisionRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(provisionServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllProvisionsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(provisionRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(provisionServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restProvisionMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(provisionRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(provisionServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

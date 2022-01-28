@@ -1,7 +1,5 @@
 {
-  "applications": [
-    "ssoc22"
-  ],
+  "applications": ["ssoc22"],
   "changelogDate": "20220124140115",
   "dto": "no",
   "embedded": false,
@@ -14,35 +12,35 @@
   "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "reglaPrestacion",
       "otherEntityRelationshipName": "provision",
-      "relationshipName": "reglaPrestacion"
+      "relationshipName": "reglaPrestacion",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "itemNomenclador",
       "otherEntityRelationshipName": "provision",
-      "relationshipName": "itemNomenclador"
+      "relationshipName": "itemNomenclador",
+      "relationshipType": "many-to-one"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "prestacion",
       "otherEntityRelationshipName": "provision",
-      "relationshipName": "prestacion"
+      "relationshipName": "prestacion",
+      "relationshipType": "many-to-one"
     },
     {
-      "relationshipType": "many-to-many",
       "otherEntityName": "insumo",
       "otherEntityRelationshipName": "provision",
+      "ownerSide": true,
       "relationshipName": "insumo",
-      "ownerSide": true
+      "relationshipType": "many-to-many"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "plan",
       "otherEntityRelationshipName": "provision",
-      "relationshipName": "plan"
+      "relationshipName": "plan",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

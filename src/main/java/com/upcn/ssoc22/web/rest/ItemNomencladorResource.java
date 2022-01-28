@@ -10,6 +10,7 @@ import com.upcn.ssoc22.domain.ReglaPrestacion;
 import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.repository.ContratoRepository;
 import com.upcn.ssoc22.repository.ItemNomencladorRepository;
+import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.web.rest.errors.AdhesionNoHabilitadaException;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -46,15 +47,18 @@ public class ItemNomencladorResource {
     private final ItemNomencladorRepository itemNomencladorRepository;
     private final AdhesionRepository adhesionRepository;
     private final ContratoRepository contratoRepository;
+    private final ProvisionService provisionService;
 
     public ItemNomencladorResource(
         ItemNomencladorRepository itemNomencladorRepository,
         AdhesionRepository adhesionRepository,
-        ContratoRepository contratoRepository
+        ContratoRepository contratoRepository,
+        ProvisionService provisionService
     ) {
         this.itemNomencladorRepository = itemNomencladorRepository;
         this.adhesionRepository = adhesionRepository;
         this.contratoRepository = contratoRepository;
+        this.provisionService = provisionService;
     }
 
     /**

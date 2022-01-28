@@ -2,6 +2,7 @@ package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.Provision;
 import com.upcn.ssoc22.repository.ProvisionRepository;
+import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -22,7 +22,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ProvisionResource {
 
     private final Logger log = LoggerFactory.getLogger(ProvisionResource.class);
@@ -32,9 +31,12 @@ public class ProvisionResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ProvisionService provisionService;
+
     private final ProvisionRepository provisionRepository;
 
-    public ProvisionResource(ProvisionRepository provisionRepository) {
+    public ProvisionResource(ProvisionService provisionService, ProvisionRepository provisionRepository) {
+        this.provisionService = provisionService;
         this.provisionRepository = provisionRepository;
     }
 
@@ -51,7 +53,7 @@ public class ProvisionResource {
         if (provision.getId() != null) {
             throw new BadRequestAlertException("A new provision cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Provision result = provisionRepository.save(provision);
+        Provision result = provisionService.save(provision);
         return ResponseEntity
             .created(new URI("/api/provisions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -85,7 +87,7 @@ public class ProvisionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Provision result = provisionRepository.save(provision);
+        Provision result = provisionService.save(provision);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, provision.getId().toString()))
@@ -120,12 +122,7 @@ public class ProvisionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Provision> result = provisionRepository
-            .findById(provision.getId())
-            .map(existingProvision -> {
-                return existingProvision;
-            })
-            .map(provisionRepository::save);
+        Optional<Provision> result = provisionService.partialUpdate(provision);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -142,7 +139,7 @@ public class ProvisionResource {
     @GetMapping("/provisions")
     public List<Provision> getAllProvisions(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Provisions");
-        return provisionRepository.findAllWithEagerRelationships();
+        return provisionService.findAll();
     }
 
     /**
@@ -154,7 +151,7 @@ public class ProvisionResource {
     @GetMapping("/provisions/{id}")
     public ResponseEntity<Provision> getProvision(@PathVariable Long id) {
         log.debug("REST request to get Provision : {}", id);
-        Optional<Provision> provision = provisionRepository.findOneWithEagerRelationships(id);
+        Optional<Provision> provision = provisionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(provision);
     }
 
@@ -167,7 +164,7 @@ public class ProvisionResource {
     @DeleteMapping("/provisions/{id}")
     public ResponseEntity<Void> deleteProvision(@PathVariable Long id) {
         log.debug("REST request to delete Provision : {}", id);
-        provisionRepository.deleteById(id);
+        provisionService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
