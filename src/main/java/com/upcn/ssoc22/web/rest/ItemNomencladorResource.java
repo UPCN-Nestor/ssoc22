@@ -1,10 +1,21 @@
 package com.upcn.ssoc22.web.rest;
 
+import com.upcn.ssoc22.domain.Adhesion;
+import com.upcn.ssoc22.domain.Cliente;
+import com.upcn.ssoc22.domain.Contrato;
 import com.upcn.ssoc22.domain.ItemNomenclador;
+import com.upcn.ssoc22.domain.Plan;
+import com.upcn.ssoc22.domain.Provision;
+import com.upcn.ssoc22.domain.ReglaPrestacion;
+import com.upcn.ssoc22.repository.AdhesionRepository;
+import com.upcn.ssoc22.repository.ContratoRepository;
 import com.upcn.ssoc22.repository.ItemNomencladorRepository;
+import com.upcn.ssoc22.web.rest.errors.AdhesionNoHabilitadaException;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -33,9 +44,17 @@ public class ItemNomencladorResource {
     private String applicationName;
 
     private final ItemNomencladorRepository itemNomencladorRepository;
+    private final AdhesionRepository adhesionRepository;
+    private final ContratoRepository contratoRepository;
 
-    public ItemNomencladorResource(ItemNomencladorRepository itemNomencladorRepository) {
+    public ItemNomencladorResource(
+        ItemNomencladorRepository itemNomencladorRepository,
+        AdhesionRepository adhesionRepository,
+        ContratoRepository contratoRepository
+    ) {
         this.itemNomencladorRepository = itemNomencladorRepository;
+        this.adhesionRepository = adhesionRepository;
+        this.contratoRepository = contratoRepository;
     }
 
     /**
@@ -148,6 +167,33 @@ public class ItemNomencladorResource {
     @GetMapping("/item-nomencladors")
     public List<ItemNomenclador> getAllItemNomencladors() {
         log.debug("REST request to get all ItemNomencladors");
+        return itemNomencladorRepository.findAll();
+    }
+
+    // Busco los EXPLÍCITAMENTE habilitados por adhesión, esto lo usaríamos para los bonos
+    @GetMapping("/item-nomencladors/poradhesion/{adhesionid}")
+    public List<ItemNomenclador> getAllItemNomencladorsHabilitadosPorAdhesion(@PathVariable Long adhesionid)
+        throws AdhesionNoHabilitadaException {
+        log.debug("REST request to get all ItemNomencladors habilitados para adhesión " + adhesionid);
+
+        List<ItemNomenclador> toRet = new LinkedList<ItemNomenclador>();
+
+        Adhesion a = adhesionRepository.findById(adhesionid).get();
+
+        if (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) throw new AdhesionNoHabilitadaException();
+
+        for (Contrato c : a.getCliente().getContratoes()) {
+            // No tomo en cuenta los contratos vencidos.
+            if (c.getFechaBaja() != null && c.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) continue;
+
+            Plan p = c.getPlan();
+
+            for (Provision prov : p.getProvisions()) {
+                boolean cumple = true;
+                for (ReglaPrestacion r : prov.getReglaPrestacions()) {}
+            }
+        }
+
         return itemNomencladorRepository.findAll();
     }
 

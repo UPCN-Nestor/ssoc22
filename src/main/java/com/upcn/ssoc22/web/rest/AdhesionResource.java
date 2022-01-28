@@ -157,6 +157,12 @@ public class AdhesionResource {
         return adhesionRepository.findAll();
     }
 
+    @GetMapping("/adhesions/cliente/{idcliente}")
+    public List<Adhesion> getAllVigentesByClienteId(@PathVariable Long idcliente) {
+        log.debug("REST request to get all Adhesions");
+        return adhesionRepository.findAllVigentesByClienteId(idcliente);
+    }
+
     /**
      * {@code GET  /adhesions/:id} : get the "id" adhesion.
      *

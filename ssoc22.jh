@@ -61,6 +61,7 @@ entity Factura {
     numeroInterno String
 }
 
+@service(serviceImpl)
 entity Provision {}
 
 entity ReglaPrestacion {

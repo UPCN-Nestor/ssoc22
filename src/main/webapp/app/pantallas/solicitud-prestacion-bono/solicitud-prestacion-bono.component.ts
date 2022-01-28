@@ -25,6 +25,8 @@ import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
 import { IPrestador } from 'app/entities/prestador/prestador.model';
+import { Adhesion, IAdhesion } from 'app/entities/adhesion/adhesion.model';
+import { AdhesionService } from 'app/entities/adhesion/service/adhesion.service';
 
 @Component({
   selector: 'jhi-solicitud-prestacion-bono',
@@ -46,7 +48,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   searching = false;
   // *** End socio
 
-  individuosDeCliente: IIndividuo[] | null = [];
+  adhesionesDeCliente: IAdhesion[] | null = [];
+  practicasHabilitadas: IItemNomenclador[] | null = [];
 
   despachosCollection: IDespacho[] = [];
   itemNomencladorsSharedCollection: IItemNomenclador[] = [];
@@ -85,7 +88,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
     protected modalService: NgbModal,
-    protected prestadorService: PrestadorService
+    protected prestadorService: PrestadorService,
+    protected adhesionService: AdhesionService
   ) {}
 
   ngOnInit(): void {
@@ -122,6 +126,10 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   trackDespachoById(index: number, item: IDespacho): number {
+    return item.id!;
+  }
+
+  trackAdhesionById(index: number, item: IAdhesion): number {
     return item.id!;
   }
 
@@ -178,13 +186,12 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   inputFormatter: (item: any) => string = i => i.nombre || '';
 
   selectNombreSocio(event: NgbTypeaheadSelectItemEvent<ICliente>): void {
-    this.errorCliente = '';
-    this.individuosDeCliente = null;
+    this.limpiarCampos();
     this.clienteSeleccionado = event.item;
     this.numeroSocioSeleccionado = this.clienteSeleccionado.socio!;
 
-    this.individuoService.queryPorAdhesion(this.clienteSeleccionado.id!).subscribe(is => {
-      this.individuosDeCliente = is.body;
+    this.adhesionService.queryPorCliente(this.clienteSeleccionado.id!).subscribe(as => {
+      this.adhesionesDeCliente = as.body;
     });
   }
   // *** Fin typeahead
@@ -192,22 +199,27 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   selectNumeroSocio(ev: any): void {
     this.clienteService.findPorNroSocio(ev.target.value as number).subscribe(
       cliente => {
-        this.errorCliente = '';
-        this.individuosDeCliente = null;
+        this.limpiarCampos();
         this.clienteSeleccionado = cliente.body;
 
         if (this.clienteSeleccionado) {
-          this.individuoService.queryPorAdhesion(this.clienteSeleccionado.id!).subscribe(is => {
-            this.individuosDeCliente = is.body;
+          this.adhesionService.queryPorCliente(this.clienteSeleccionado.id!).subscribe(as => {
+            this.adhesionesDeCliente = as.body;
           });
         }
       },
       err => {
         this.errorCliente = 'No se encontró un cliente con ese número de socio';
-        this.individuosDeCliente = null;
+        this.adhesionesDeCliente = null;
         this.clienteSeleccionado = null;
       }
     );
+  }
+
+  limpiarCampos(): void {
+    this.errorCliente = '';
+    this.adhesionesDeCliente = null;
+    this.practicasHabilitadas = null;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISolicitudPrestacion>>): void {

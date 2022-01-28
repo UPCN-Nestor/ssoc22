@@ -44,10 +44,14 @@
           <select class="form-control" id="field_individuo" data-cy="individuo" name="individuo" formControlName="individuo" required>
             <option [ngValue]="null"></option>
             <option
-              [ngValue]="individuoOption.id === editForm.get('individuo')!.value?.id ? editForm.get('individuo')!.value : individuoOption"
-              *ngFor="let individuoOption of individuosDeCliente; trackBy: trackIndividuoById"
+              [ngValue]="
+                adhesionOption.individuo!.id === editForm.get('individuo')!.value?.id
+                  ? editForm.get('individuo')!.value
+                  : adhesionOption.individuo!
+              "
+              *ngFor="let adhesionOption of adhesionesDeCliente; trackBy: trackAdhesionById"
             >
-              {{ individuoOption.nombre }}
+              {{ adhesionOption.individuo!.nombre }}
             </option>
           </select>
         </div>
@@ -75,6 +79,7 @@
           </select>
         </div>
 
+        <!--
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.prestador" for="field_prestador">Prestador</label>
           <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador">
@@ -87,7 +92,7 @@
             </option>
           </select>
         </div>
-
+-->
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.observaciones" for="field_observaciones"
             >Observaciones</label

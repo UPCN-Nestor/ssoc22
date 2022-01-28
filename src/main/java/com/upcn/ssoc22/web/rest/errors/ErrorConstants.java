@@ -13,5 +13,8 @@ public final class ErrorConstants {
     public static final URI EMAIL_ALREADY_USED_TYPE = URI.create(PROBLEM_BASE_URL + "/email-already-used");
     public static final URI LOGIN_ALREADY_USED_TYPE = URI.create(PROBLEM_BASE_URL + "/login-already-used");
 
+    public static final URI PRESTACION_NO_HABILITADA_TYPE = URI.create(PROBLEM_BASE_URL + "/prestacion-no-habilitada");
+    public static final URI ADHESION_NO_HABILITADA_TYPE = URI.create(PROBLEM_BASE_URL + "/adhesion-no-habilitada");
+
     private ErrorConstants() {}
 }
