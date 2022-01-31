@@ -19,7 +19,7 @@
       },
       "id": "ID",
       "nombre": "Nombre",
-      "carencia": "Carencia",
+      "diasCarencia": "Dias Carencia",
       "codigo": "Codigo",
       "prestacion": "Prestacion",
       "solicitudPrestacion": "Solicitud Prestacion",

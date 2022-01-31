@@ -31,7 +31,7 @@ export class ItemNomencladorUpdatePage {
 
   idInput = element(by.id('field_id'));
   nombreInput = element(by.id('field_nombre'));
-  carenciaInput = element(by.id('field_carencia'));
+  diasCarenciaInput = element(by.id('field_diasCarencia'));
   codigoInput = element(by.id('field_codigo'));
 
   prestacionSelect = element(by.id('field_prestacion'));
@@ -56,12 +56,12 @@ export class ItemNomencladorUpdatePage {
     return await this.nombreInput.getAttribute('value');
   }
 
-  async setCarenciaInput(carencia: string): Promise<void> {
-    await this.carenciaInput.sendKeys(carencia);
+  async setDiasCarenciaInput(diasCarencia: string): Promise<void> {
+    await this.diasCarenciaInput.sendKeys(diasCarencia);
   }
 
-  async getCarenciaInput(): Promise<string> {
-    return await this.carenciaInput.getAttribute('value');
+  async getDiasCarenciaInput(): Promise<string> {
+    return await this.diasCarenciaInput.getAttribute('value');
   }
 
   async setCodigoInput(codigo: string): Promise<void> {

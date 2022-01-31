@@ -129,8 +129,8 @@ public class PrestacionResource {
                 if (prestacion.getPrecio() != null) {
                     existingPrestacion.setPrecio(prestacion.getPrecio());
                 }
-                if (prestacion.getCarencia() != null) {
-                    existingPrestacion.setCarencia(prestacion.getCarencia());
+                if (prestacion.getDiasCarencia() != null) {
+                    existingPrestacion.setDiasCarencia(prestacion.getDiasCarencia());
                 }
                 if (prestacion.getNombre() != null) {
                     existingPrestacion.setNombre(prestacion.getNombre());

@@ -1,7 +1,5 @@
 {
-  "applications": [
-    "ssoc22"
-  ],
+  "applications": ["ssoc22"],
   "changelogDate": "20220124140315",
   "dto": "no",
   "embedded": false,
@@ -35,23 +33,23 @@
   "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "itemNomenclador",
       "otherEntityRelationshipName": "prestacion",
-      "relationshipName": "itemNomenclador"
+      "relationshipName": "itemNomenclador",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "many-to-many",
       "otherEntityName": "insumo",
       "otherEntityRelationshipName": "prestacion",
+      "ownerSide": true,
       "relationshipName": "insumo",
-      "ownerSide": true
+      "relationshipType": "many-to-many"
     },
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "provision",
       "otherEntityRelationshipName": "prestacion",
-      "relationshipName": "provision"
+      "relationshipName": "provision",
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "no"

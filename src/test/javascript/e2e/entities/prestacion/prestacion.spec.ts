@@ -45,7 +45,7 @@ describe('Prestacion e2e test', () => {
     await promise.all([
       prestacionUpdatePage.setTipoInput('tipo'),
       prestacionUpdatePage.setPrecioInput('5'),
-      prestacionUpdatePage.setCarenciaInput('PT12S'),
+      prestacionUpdatePage.setDiasCarenciaInput('5'),
       prestacionUpdatePage.setNombreInput('nombre'),
       prestacionUpdatePage.setCodigoInput('codigo'),
       // prestacionUpdatePage.insumoSelectLastOption(),

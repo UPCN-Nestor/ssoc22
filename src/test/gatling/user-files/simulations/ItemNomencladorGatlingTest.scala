@@ -72,7 +72,7 @@ class ItemNomencladorGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "nombre":"SAMPLE_TEXT"
-                , "carencia":null
+                , "diasCarencia":"0"
                 , "codigo":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))

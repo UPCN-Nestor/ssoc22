@@ -22,7 +22,7 @@ describe('ItemNomenclador Service', () => {
     elemDefault = {
       id: 0,
       nombre: 'AAAAAAA',
-      carencia: 'PT1S',
+      diasCarencia: 0,
       codigo: 'AAAAAAA',
     };
   });
@@ -60,7 +60,7 @@ describe('ItemNomenclador Service', () => {
         {
           id: 1,
           nombre: 'BBBBBB',
-          carencia: 'BBBBBB',
+          diasCarencia: 1,
           codigo: 'BBBBBB',
         },
         elemDefault
@@ -78,7 +78,7 @@ describe('ItemNomenclador Service', () => {
     it('should partial update a ItemNomenclador', () => {
       const patchObject = Object.assign(
         {
-          carencia: 'BBBBBB',
+          diasCarencia: 1,
           codigo: 'BBBBBB',
         },
         new ItemNomenclador()
@@ -100,7 +100,7 @@ describe('ItemNomenclador Service', () => {
         {
           id: 1,
           nombre: 'BBBBBB',
-          carencia: 'BBBBBB',
+          diasCarencia: 1,
           codigo: 'BBBBBB',
         },
         elemDefault

@@ -2,7 +2,6 @@ package com.upcn.ssoc22.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -28,8 +27,8 @@ public class ItemNomenclador implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "carencia")
-    private Duration carencia;
+    @Column(name = "dias_carencia")
+    private Integer diasCarencia;
 
     @Column(name = "codigo")
     private String codigo;
@@ -84,17 +83,17 @@ public class ItemNomenclador implements Serializable {
         this.nombre = nombre;
     }
 
-    public Duration getCarencia() {
-        return this.carencia;
+    public Integer getDiasCarencia() {
+        return this.diasCarencia;
     }
 
-    public ItemNomenclador carencia(Duration carencia) {
-        this.setCarencia(carencia);
+    public ItemNomenclador diasCarencia(Integer diasCarencia) {
+        this.setDiasCarencia(diasCarencia);
         return this;
     }
 
-    public void setCarencia(Duration carencia) {
-        this.carencia = carencia;
+    public void setDiasCarencia(Integer diasCarencia) {
+        this.diasCarencia = diasCarencia;
     }
 
     public String getCodigo() {
@@ -241,7 +240,7 @@ public class ItemNomenclador implements Serializable {
         return "ItemNomenclador{" +
             "id=" + getId() +
             ", nombre='" + getNombre() + "'" +
-            ", carencia='" + getCarencia() + "'" +
+            ", diasCarencia=" + getDiasCarencia() +
             ", codigo='" + getCodigo() + "'" +
             "}";
     }

@@ -17,7 +17,7 @@
             <column name="nombre" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="carencia" type="bigint">
+            <column name="dias_carencia" type="integer">
                 <constraints nullable="true" />
             </column>
             <column name="codigo" type="varchar(255)">
@@ -48,7 +48,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="nombre" type="string"/>
-            <column name="carencia" type="numeric"/>
+            <column name="dias_carencia" type="numeric"/>
             <column name="codigo" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

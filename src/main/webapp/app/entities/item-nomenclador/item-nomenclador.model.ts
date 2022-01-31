@@ -6,7 +6,7 @@ import { IPrestador } from 'app/entities/prestador/prestador.model';
 export interface IItemNomenclador {
   id?: number;
   nombre?: string | null;
-  carencia?: string | null;
+  diasCarencia?: number | null;
   codigo?: string | null;
   prestacion?: IPrestacion | null;
   solicitudPrestacions?: ISolicitudPrestacion[] | null;
@@ -18,7 +18,7 @@ export class ItemNomenclador implements IItemNomenclador {
   constructor(
     public id?: number,
     public nombre?: string | null,
-    public carencia?: string | null,
+    public diasCarencia?: number | null,
     public codigo?: string | null,
     public prestacion?: IPrestacion | null,
     public solicitudPrestacions?: ISolicitudPrestacion[] | null,

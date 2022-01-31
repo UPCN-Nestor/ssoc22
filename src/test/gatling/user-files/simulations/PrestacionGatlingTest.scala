@@ -73,7 +73,7 @@ class PrestacionGatlingTest extends Simulation {
             .body(StringBody("""{
                 "tipo":"SAMPLE_TEXT"
                 , "precio":"0"
-                , "carencia":null
+                , "diasCarencia":"0"
                 , "nombre":"SAMPLE_TEXT"
                 , "codigo":"SAMPLE_TEXT"
                 }""")).asJson

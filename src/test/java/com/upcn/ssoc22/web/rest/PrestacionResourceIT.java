@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.upcn.ssoc22.IntegrationTest;
 import com.upcn.ssoc22.domain.Prestacion;
 import com.upcn.ssoc22.repository.PrestacionRepository;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -44,8 +43,8 @@ class PrestacionResourceIT {
     private static final Float DEFAULT_PRECIO = 1F;
     private static final Float UPDATED_PRECIO = 2F;
 
-    private static final Duration DEFAULT_CARENCIA = Duration.ofHours(6);
-    private static final Duration UPDATED_CARENCIA = Duration.ofHours(12);
+    private static final Integer DEFAULT_DIAS_CARENCIA = 1;
+    private static final Integer UPDATED_DIAS_CARENCIA = 2;
 
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
@@ -83,7 +82,7 @@ class PrestacionResourceIT {
         Prestacion prestacion = new Prestacion()
             .tipo(DEFAULT_TIPO)
             .precio(DEFAULT_PRECIO)
-            .carencia(DEFAULT_CARENCIA)
+            .diasCarencia(DEFAULT_DIAS_CARENCIA)
             .nombre(DEFAULT_NOMBRE)
             .codigo(DEFAULT_CODIGO);
         return prestacion;
@@ -99,7 +98,7 @@ class PrestacionResourceIT {
         Prestacion prestacion = new Prestacion()
             .tipo(UPDATED_TIPO)
             .precio(UPDATED_PRECIO)
-            .carencia(UPDATED_CARENCIA)
+            .diasCarencia(UPDATED_DIAS_CARENCIA)
             .nombre(UPDATED_NOMBRE)
             .codigo(UPDATED_CODIGO);
         return prestacion;
@@ -125,7 +124,7 @@ class PrestacionResourceIT {
         Prestacion testPrestacion = prestacionList.get(prestacionList.size() - 1);
         assertThat(testPrestacion.getTipo()).isEqualTo(DEFAULT_TIPO);
         assertThat(testPrestacion.getPrecio()).isEqualTo(DEFAULT_PRECIO);
-        assertThat(testPrestacion.getCarencia()).isEqualTo(DEFAULT_CARENCIA);
+        assertThat(testPrestacion.getDiasCarencia()).isEqualTo(DEFAULT_DIAS_CARENCIA);
         assertThat(testPrestacion.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testPrestacion.getCodigo()).isEqualTo(DEFAULT_CODIGO);
     }
@@ -162,7 +161,7 @@ class PrestacionResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(prestacion.getId().intValue())))
             .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)))
             .andExpect(jsonPath("$.[*].precio").value(hasItem(DEFAULT_PRECIO.doubleValue())))
-            .andExpect(jsonPath("$.[*].carencia").value(hasItem(DEFAULT_CARENCIA.toString())))
+            .andExpect(jsonPath("$.[*].diasCarencia").value(hasItem(DEFAULT_DIAS_CARENCIA)))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].codigo").value(hasItem(DEFAULT_CODIGO)));
     }
@@ -199,7 +198,7 @@ class PrestacionResourceIT {
             .andExpect(jsonPath("$.id").value(prestacion.getId().intValue()))
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO))
             .andExpect(jsonPath("$.precio").value(DEFAULT_PRECIO.doubleValue()))
-            .andExpect(jsonPath("$.carencia").value(DEFAULT_CARENCIA.toString()))
+            .andExpect(jsonPath("$.diasCarencia").value(DEFAULT_DIAS_CARENCIA))
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
             .andExpect(jsonPath("$.codigo").value(DEFAULT_CODIGO));
     }
@@ -226,7 +225,7 @@ class PrestacionResourceIT {
         updatedPrestacion
             .tipo(UPDATED_TIPO)
             .precio(UPDATED_PRECIO)
-            .carencia(UPDATED_CARENCIA)
+            .diasCarencia(UPDATED_DIAS_CARENCIA)
             .nombre(UPDATED_NOMBRE)
             .codigo(UPDATED_CODIGO);
 
@@ -244,7 +243,7 @@ class PrestacionResourceIT {
         Prestacion testPrestacion = prestacionList.get(prestacionList.size() - 1);
         assertThat(testPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testPrestacion.getPrecio()).isEqualTo(UPDATED_PRECIO);
-        assertThat(testPrestacion.getCarencia()).isEqualTo(UPDATED_CARENCIA);
+        assertThat(testPrestacion.getDiasCarencia()).isEqualTo(UPDATED_DIAS_CARENCIA);
         assertThat(testPrestacion.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testPrestacion.getCodigo()).isEqualTo(UPDATED_CODIGO);
     }
@@ -317,7 +316,7 @@ class PrestacionResourceIT {
         Prestacion partialUpdatedPrestacion = new Prestacion();
         partialUpdatedPrestacion.setId(prestacion.getId());
 
-        partialUpdatedPrestacion.tipo(UPDATED_TIPO).carencia(UPDATED_CARENCIA).nombre(UPDATED_NOMBRE);
+        partialUpdatedPrestacion.tipo(UPDATED_TIPO).diasCarencia(UPDATED_DIAS_CARENCIA).nombre(UPDATED_NOMBRE);
 
         restPrestacionMockMvc
             .perform(
@@ -333,7 +332,7 @@ class PrestacionResourceIT {
         Prestacion testPrestacion = prestacionList.get(prestacionList.size() - 1);
         assertThat(testPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testPrestacion.getPrecio()).isEqualTo(DEFAULT_PRECIO);
-        assertThat(testPrestacion.getCarencia()).isEqualTo(UPDATED_CARENCIA);
+        assertThat(testPrestacion.getDiasCarencia()).isEqualTo(UPDATED_DIAS_CARENCIA);
         assertThat(testPrestacion.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testPrestacion.getCodigo()).isEqualTo(DEFAULT_CODIGO);
     }
@@ -353,7 +352,7 @@ class PrestacionResourceIT {
         partialUpdatedPrestacion
             .tipo(UPDATED_TIPO)
             .precio(UPDATED_PRECIO)
-            .carencia(UPDATED_CARENCIA)
+            .diasCarencia(UPDATED_DIAS_CARENCIA)
             .nombre(UPDATED_NOMBRE)
             .codigo(UPDATED_CODIGO);
 
@@ -371,7 +370,7 @@ class PrestacionResourceIT {
         Prestacion testPrestacion = prestacionList.get(prestacionList.size() - 1);
         assertThat(testPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testPrestacion.getPrecio()).isEqualTo(UPDATED_PRECIO);
-        assertThat(testPrestacion.getCarencia()).isEqualTo(UPDATED_CARENCIA);
+        assertThat(testPrestacion.getDiasCarencia()).isEqualTo(UPDATED_DIAS_CARENCIA);
         assertThat(testPrestacion.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testPrestacion.getCodigo()).isEqualTo(UPDATED_CODIGO);
     }

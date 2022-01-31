@@ -150,7 +150,7 @@ describe('ItemNomenclador e2e test', () => {
     it('should create an instance of ItemNomenclador', () => {
       cy.get(`[data-cy="nombre"]`).type('Tala Cambridgeshire withdrawal').should('have.value', 'Tala Cambridgeshire withdrawal');
 
-      cy.get(`[data-cy="carencia"]`).type('PT33M').should('have.value', 'PT33M');
+      cy.get(`[data-cy="diasCarencia"]`).type('55248').should('have.value', '55248');
 
       cy.get(`[data-cy="codigo"]`).type('payment override cliente').should('have.value', 'payment override cliente');
 

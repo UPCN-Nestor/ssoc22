@@ -47,7 +47,7 @@ describe('ItemNomenclador e2e test', () => {
 
     await promise.all([
       itemNomencladorUpdatePage.setNombreInput('nombre'),
-      itemNomencladorUpdatePage.setCarenciaInput('PT12S'),
+      itemNomencladorUpdatePage.setDiasCarenciaInput('5'),
       itemNomencladorUpdatePage.setCodigoInput('codigo'),
       itemNomencladorUpdatePage.prestacionSelectLastOption(),
     ]);

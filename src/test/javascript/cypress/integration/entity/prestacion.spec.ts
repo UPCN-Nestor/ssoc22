@@ -152,7 +152,7 @@ describe('Prestacion e2e test', () => {
 
       cy.get(`[data-cy="precio"]`).type('67802').should('have.value', '67802');
 
-      cy.get(`[data-cy="carencia"]`).type('PT58M').should('have.value', 'PT58M');
+      cy.get(`[data-cy="diasCarencia"]`).type('97115').should('have.value', '97115');
 
       cy.get(`[data-cy="nombre"]`).type('rich Planificador Central').should('have.value', 'rich Planificador Central');
 

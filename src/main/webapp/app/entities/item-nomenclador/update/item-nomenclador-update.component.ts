@@ -22,7 +22,7 @@ export class ItemNomencladorUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     nombre: [],
-    carencia: [],
+    diasCarencia: [],
     codigo: [],
     prestacion: [],
   });
@@ -83,7 +83,7 @@ export class ItemNomencladorUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: itemNomenclador.id,
       nombre: itemNomenclador.nombre,
-      carencia: itemNomenclador.carencia,
+      diasCarencia: itemNomenclador.diasCarencia,
       codigo: itemNomenclador.codigo,
       prestacion: itemNomenclador.prestacion,
     });
@@ -111,7 +111,7 @@ export class ItemNomencladorUpdateComponent implements OnInit {
       ...new ItemNomenclador(),
       id: this.editForm.get(['id'])!.value,
       nombre: this.editForm.get(['nombre'])!.value,
-      carencia: this.editForm.get(['carencia'])!.value,
+      diasCarencia: this.editForm.get(['diasCarencia'])!.value,
       codigo: this.editForm.get(['codigo'])!.value,
       prestacion: this.editForm.get(['prestacion'])!.value,
     };

@@ -20,7 +20,7 @@
       "id": "ID",
       "tipo": "Tipo",
       "precio": "Precio",
-      "carencia": "Carencia",
+      "diasCarencia": "Dias Carencia",
       "nombre": "Nombre",
       "codigo": "Codigo",
       "itemNomenclador": "Item Nomenclador",
