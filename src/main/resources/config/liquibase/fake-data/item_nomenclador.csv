@@ -1,11 +1,8 @@
-id;nombre;carencia;codigo
-1;circuit Granito;60902;generación División multi-byte
-2;Algodón;52237;Moda Cataluña program
-3;Informática;85865;models
-4;Hormigon;85983;Muelle Asociado
-5;Vía;26849;empower
-6;Algodón;97601;Account Videojuegos SMS
-7;direccional card;70997;FTP
-8;Funcionario;39586;withdrawal
-9;B2B global;94483;implement
-10;primary Nacional state;27519;Guapo Account up
+id;nombre;carencia;codigo;prestacion_id
+1;Radiografía;2;100;1
+2;Atención Médica;;200;2
+3;Emergencia;;300;3
+4;Traslado Local;;400;4
+5;Traslado a Distancia;;500;5
+6;Sepelio;;600;6
+7;Clínico;;101;1

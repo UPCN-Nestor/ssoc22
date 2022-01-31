@@ -1,11 +1,7 @@
 id;tipo;precio;carencia;nombre;codigo
-1;Algodón deposit Lempira;82250;69994;Malawi Bricolaje Dinánmico;Violeta Guinea
-2;Madera Lari;71166;18261;de Account Moda;protocolo
-3;Práctico Dinánmico Corporativo;36565;99630;Plástico Ensalada;Avon
-4;Atún redundant Torrente;85589;91484;nacional;de
-5;Interacciones extend XSS;99829;6467;Franc;Marroquinería
-6;Bangladesh Reactivo Barbados;67759;2874;Centralizado pixel Seguridada;communities Finlandia
-7;jerarquía Metal;47179;21016;Colonia;Ladrillo núcleo Cambridgeshire
-8;Extremadura;57150;95407;Berkshire;Plástico matrix
-9;bypassing;86679;3935;mobile En;Bicicleta
-10;GB;82296;94040;Fácil Savings;Asistente
+1;bono;1000;1;Bono;100
+2;domicilio;3000;1;Atención Médica;200
+3;emergencia;4000;1;Emergencia;300
+4;traslado;8000;1;Traslado Local;400
+5;traslado;20000;1;Traslado a Distancia;500
+6;sepelio;25000;1;Sepelio;600
