@@ -32,7 +32,7 @@ public class ReglaPrestacion implements Serializable {
     private String datos;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "insumos", "plan" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "prestacion", "insumos", "plan" }, allowSetters = true)
     private Provision provision;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -1,22 +1,12 @@
 package com.upcn.ssoc22.web.rest;
 
-import com.upcn.ssoc22.domain.Adhesion;
-import com.upcn.ssoc22.domain.Cliente;
-import com.upcn.ssoc22.domain.Contrato;
 import com.upcn.ssoc22.domain.ItemNomenclador;
-import com.upcn.ssoc22.domain.Plan;
-import com.upcn.ssoc22.domain.Provision;
-import com.upcn.ssoc22.domain.ReglaPrestacion;
-import com.upcn.ssoc22.repository.AdhesionRepository;
-import com.upcn.ssoc22.repository.ContratoRepository;
 import com.upcn.ssoc22.repository.ItemNomencladorRepository;
-import com.upcn.ssoc22.service.ProvisionService;
+import com.upcn.ssoc22.service.ItemNomencladorService;
 import com.upcn.ssoc22.web.rest.errors.AdhesionNoHabilitadaException;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.ZonedDateTime;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -34,7 +23,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ItemNomencladorResource {
 
     private final Logger log = LoggerFactory.getLogger(ItemNomencladorResource.class);
@@ -44,21 +32,13 @@ public class ItemNomencladorResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ItemNomencladorRepository itemNomencladorRepository;
-    private final AdhesionRepository adhesionRepository;
-    private final ContratoRepository contratoRepository;
-    private final ProvisionService provisionService;
+    private final ItemNomencladorService itemNomencladorService;
 
-    public ItemNomencladorResource(
-        ItemNomencladorRepository itemNomencladorRepository,
-        AdhesionRepository adhesionRepository,
-        ContratoRepository contratoRepository,
-        ProvisionService provisionService
-    ) {
+    private final ItemNomencladorRepository itemNomencladorRepository;
+
+    public ItemNomencladorResource(ItemNomencladorService itemNomencladorService, ItemNomencladorRepository itemNomencladorRepository) {
+        this.itemNomencladorService = itemNomencladorService;
         this.itemNomencladorRepository = itemNomencladorRepository;
-        this.adhesionRepository = adhesionRepository;
-        this.contratoRepository = contratoRepository;
-        this.provisionService = provisionService;
     }
 
     /**
@@ -74,7 +54,7 @@ public class ItemNomencladorResource {
         if (itemNomenclador.getId() != null) {
             throw new BadRequestAlertException("A new itemNomenclador cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ItemNomenclador result = itemNomencladorRepository.save(itemNomenclador);
+        ItemNomenclador result = itemNomencladorService.save(itemNomenclador);
         return ResponseEntity
             .created(new URI("/api/item-nomencladors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -108,7 +88,7 @@ public class ItemNomencladorResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ItemNomenclador result = itemNomencladorRepository.save(itemNomenclador);
+        ItemNomenclador result = itemNomencladorService.save(itemNomenclador);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, itemNomenclador.getId().toString()))
@@ -143,19 +123,7 @@ public class ItemNomencladorResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ItemNomenclador> result = itemNomencladorRepository
-            .findById(itemNomenclador.getId())
-            .map(existingItemNomenclador -> {
-                if (itemNomenclador.getNombre() != null) {
-                    existingItemNomenclador.setNombre(itemNomenclador.getNombre());
-                }
-                if (itemNomenclador.getCarencia() != null) {
-                    existingItemNomenclador.setCarencia(itemNomenclador.getCarencia());
-                }
-
-                return existingItemNomenclador;
-            })
-            .map(itemNomencladorRepository::save);
+        Optional<ItemNomenclador> result = itemNomencladorService.partialUpdate(itemNomenclador);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -171,7 +139,7 @@ public class ItemNomencladorResource {
     @GetMapping("/item-nomencladors")
     public List<ItemNomenclador> getAllItemNomencladors() {
         log.debug("REST request to get all ItemNomencladors");
-        return itemNomencladorRepository.findAll();
+        return itemNomencladorService.findAll();
     }
 
     // Busco los EXPLÍCITAMENTE habilitados por adhesión, esto lo usaríamos para los bonos
@@ -180,25 +148,7 @@ public class ItemNomencladorResource {
         throws AdhesionNoHabilitadaException {
         log.debug("REST request to get all ItemNomencladors habilitados para adhesión " + adhesionid);
 
-        List<ItemNomenclador> toRet = new LinkedList<ItemNomenclador>();
-
-        Adhesion a = adhesionRepository.findById(adhesionid).get();
-
-        if (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) throw new AdhesionNoHabilitadaException();
-
-        for (Contrato c : a.getCliente().getContratoes()) {
-            // No tomo en cuenta los contratos vencidos.
-            if (c.getFechaBaja() != null && c.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) continue;
-
-            Plan p = c.getPlan();
-
-            for (Provision prov : p.getProvisions()) {
-                boolean cumple = true;
-                for (ReglaPrestacion r : prov.getReglaPrestacions()) {}
-            }
-        }
-
-        return itemNomencladorRepository.findAll();
+        return itemNomencladorService.getAllItemNomencladorsHabilitadosPorAdhesion(adhesionid);
     }
 
     /**
@@ -210,7 +160,7 @@ public class ItemNomencladorResource {
     @GetMapping("/item-nomencladors/{id}")
     public ResponseEntity<ItemNomenclador> getItemNomenclador(@PathVariable Long id) {
         log.debug("REST request to get ItemNomenclador : {}", id);
-        Optional<ItemNomenclador> itemNomenclador = itemNomencladorRepository.findById(id);
+        Optional<ItemNomenclador> itemNomenclador = itemNomencladorService.findOne(id);
         return ResponseUtil.wrapOrNotFound(itemNomenclador);
     }
 
@@ -223,7 +173,7 @@ public class ItemNomencladorResource {
     @DeleteMapping("/item-nomencladors/{id}")
     public ResponseEntity<Void> deleteItemNomenclador(@PathVariable Long id) {
         log.debug("REST request to delete ItemNomenclador : {}", id);
-        itemNomencladorRepository.deleteById(id);
+        itemNomencladorService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

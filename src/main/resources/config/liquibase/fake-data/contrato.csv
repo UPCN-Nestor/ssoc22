@@ -1,11 +1,11 @@
-id;fecha_alta;fecha_baja;particularidades
-1;2022-01-24T03:29:35;2022-01-24T10:15:12;Algodón éxito
-2;2022-01-24T11:20:33;2022-01-24T07:30:57;Rústico Electrónica
-3;2022-01-24T04:42:45;2022-01-23T17:28:29;Acero synthesize
-4;2022-01-23T20:28:43;2022-01-23T19:06:51;Poland
-5;2022-01-24T05:53:25;2022-01-24T04:04:17;Cedi Iran
-6;2022-01-24T13:42:45;2022-01-24T08:12:05;Producto Russian
-7;2022-01-24T01:04:51;2022-01-23T14:27:30;Nepalese
-8;2022-01-24T13:43:49;2022-01-24T00:41:56;Hormigon bluetooth
-9;2022-01-23T15:49:45;2022-01-24T10:33:20;Agente de Muelle
-10;2022-01-24T11:02:38;2022-01-24T02:35:42;Mercados
+id;fecha_alta;fecha_baja;particularidades;cliente_id;plan_id
+1;2022-01-24T03:29:35;null;Algodón éxito;1;1
+2;2022-01-24T11:20:33;2022-01-24T07:30:57;Rústico Electrónica;1;2
+3;2022-01-24T04:42:45;2022-05-23T17:28:29;Acero synthesize;1;3
+4;2022-01-23T20:28:43;null;Poland;1;4
+5;2022-01-24T05:53:25;null;Cedi Iran;2;1
+6;2022-01-24T13:42:45;null;Producto Russian;2;2
+7;2022-01-24T01:04:51;null;Nepalese;2;3
+8;2022-01-24T13:43:49;null;Hormigon bluetooth;3;3
+9;2022-01-23T15:49:45;null;Agente de Muelle;3;4
+10;2022-01-24T11:02:38;null;Mercados;4;4

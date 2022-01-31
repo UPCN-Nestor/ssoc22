@@ -5,6 +5,7 @@ import com.upcn.ssoc22.domain.Provision;
 import com.upcn.ssoc22.domain.ReglaPrestacion;
 import com.upcn.ssoc22.repository.ProvisionRepository;
 import com.upcn.ssoc22.service.ProvisionService;
+import com.upcn.ssoc22.service.ReglaPrestacionService;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -24,9 +25,11 @@ public class ProvisionServiceImpl implements ProvisionService {
     private final Logger log = LoggerFactory.getLogger(ProvisionServiceImpl.class);
 
     private final ProvisionRepository provisionRepository;
+    private final ReglaPrestacionService reglaPrestacionService;
 
-    public ProvisionServiceImpl(ProvisionRepository provisionRepository) {
+    public ProvisionServiceImpl(ProvisionRepository provisionRepository, ReglaPrestacionService reglaPrestacionService) {
         this.provisionRepository = provisionRepository;
+        this.reglaPrestacionService = reglaPrestacionService;
     }
 
     @Override
@@ -71,12 +74,14 @@ public class ProvisionServiceImpl implements ProvisionService {
         provisionRepository.deleteById(id);
     }
 
-    boolean estaHabilitadaPara(Provision p, Adhesion a) {
+    public boolean estaHabilitadaPara(Provision p, Adhesion a) {
         boolean habilitada = false;
 
         for (ReglaPrestacion r : p.getReglaPrestacions()) {
+            log.debug(">>> Regla de habilitación: " + r.getId());
             if (r.getTipoRegla().equals("Habilita")) {
-                if (r.habilita(a)) {
+                if (reglaPrestacionService.habilita(r, a)) {
+                    log.debug(">>> Ok.");
                     habilitada = true;
                     break;
                 }

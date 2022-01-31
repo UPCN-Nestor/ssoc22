@@ -32,7 +32,7 @@ public class ItemNomenclador implements Serializable {
     private Duration carencia;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "itemNomencladors", "insumos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "itemNomencladors", "insumos", "provisions" }, allowSetters = true)
     private Prestacion prestacion;
 
     @OneToMany(mappedBy = "itemNomenclador")
@@ -45,7 +45,7 @@ public class ItemNomenclador implements Serializable {
 
     @OneToMany(mappedBy = "itemNomenclador")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "insumos", "plan" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "prestacion", "insumos", "plan" }, allowSetters = true)
     private Set<Provision> provisions = new HashSet<>();
 
     @ManyToMany(mappedBy = "itemNomencladors")

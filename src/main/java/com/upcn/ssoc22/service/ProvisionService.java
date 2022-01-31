@@ -57,4 +57,6 @@ public interface ProvisionService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    boolean estaHabilitadaPara(Provision p, Adhesion a);
 }

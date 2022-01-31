@@ -64,6 +64,7 @@ entity Factura {
 @service(serviceImpl)
 entity Provision {}
 
+@service(serviceImpl)
 entity ReglaPrestacion {
 	codigoRegla String
     tipoRegla String
@@ -128,6 +129,7 @@ entity SolicitudPrestacion {
     individuoAdhoc String
 }
 
+@service(serviceImpl)
 entity ItemNomenclador {
 	nombre String
     carencia Duration

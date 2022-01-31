@@ -2,6 +2,7 @@ package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.ReglaPrestacion;
 import com.upcn.ssoc22.repository.ReglaPrestacionRepository;
+import com.upcn.ssoc22.service.ReglaPrestacionService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -22,7 +22,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ReglaPrestacionResource {
 
     private final Logger log = LoggerFactory.getLogger(ReglaPrestacionResource.class);
@@ -32,9 +31,12 @@ public class ReglaPrestacionResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ReglaPrestacionService reglaPrestacionService;
+
     private final ReglaPrestacionRepository reglaPrestacionRepository;
 
-    public ReglaPrestacionResource(ReglaPrestacionRepository reglaPrestacionRepository) {
+    public ReglaPrestacionResource(ReglaPrestacionService reglaPrestacionService, ReglaPrestacionRepository reglaPrestacionRepository) {
+        this.reglaPrestacionService = reglaPrestacionService;
         this.reglaPrestacionRepository = reglaPrestacionRepository;
     }
 
@@ -51,7 +53,7 @@ public class ReglaPrestacionResource {
         if (reglaPrestacion.getId() != null) {
             throw new BadRequestAlertException("A new reglaPrestacion cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ReglaPrestacion result = reglaPrestacionRepository.save(reglaPrestacion);
+        ReglaPrestacion result = reglaPrestacionService.save(reglaPrestacion);
         return ResponseEntity
             .created(new URI("/api/regla-prestacions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -85,7 +87,7 @@ public class ReglaPrestacionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ReglaPrestacion result = reglaPrestacionRepository.save(reglaPrestacion);
+        ReglaPrestacion result = reglaPrestacionService.save(reglaPrestacion);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, reglaPrestacion.getId().toString()))
@@ -120,22 +122,7 @@ public class ReglaPrestacionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ReglaPrestacion> result = reglaPrestacionRepository
-            .findById(reglaPrestacion.getId())
-            .map(existingReglaPrestacion -> {
-                if (reglaPrestacion.getCodigoRegla() != null) {
-                    existingReglaPrestacion.setCodigoRegla(reglaPrestacion.getCodigoRegla());
-                }
-                if (reglaPrestacion.getTipoRegla() != null) {
-                    existingReglaPrestacion.setTipoRegla(reglaPrestacion.getTipoRegla());
-                }
-                if (reglaPrestacion.getDatos() != null) {
-                    existingReglaPrestacion.setDatos(reglaPrestacion.getDatos());
-                }
-
-                return existingReglaPrestacion;
-            })
-            .map(reglaPrestacionRepository::save);
+        Optional<ReglaPrestacion> result = reglaPrestacionService.partialUpdate(reglaPrestacion);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -151,7 +138,7 @@ public class ReglaPrestacionResource {
     @GetMapping("/regla-prestacions")
     public List<ReglaPrestacion> getAllReglaPrestacions() {
         log.debug("REST request to get all ReglaPrestacions");
-        return reglaPrestacionRepository.findAll();
+        return reglaPrestacionService.findAll();
     }
 
     /**
@@ -163,7 +150,7 @@ public class ReglaPrestacionResource {
     @GetMapping("/regla-prestacions/{id}")
     public ResponseEntity<ReglaPrestacion> getReglaPrestacion(@PathVariable Long id) {
         log.debug("REST request to get ReglaPrestacion : {}", id);
-        Optional<ReglaPrestacion> reglaPrestacion = reglaPrestacionRepository.findById(id);
+        Optional<ReglaPrestacion> reglaPrestacion = reglaPrestacionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(reglaPrestacion);
     }
 
@@ -176,7 +163,7 @@ public class ReglaPrestacionResource {
     @DeleteMapping("/regla-prestacions/{id}")
     public ResponseEntity<Void> deleteReglaPrestacion(@PathVariable Long id) {
         log.debug("REST request to delete ReglaPrestacion : {}", id);
-        reglaPrestacionRepository.deleteById(id);
+        reglaPrestacionService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
