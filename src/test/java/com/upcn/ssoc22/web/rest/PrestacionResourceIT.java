@@ -47,6 +47,9 @@ class PrestacionResourceIT {
     private static final Duration DEFAULT_CARENCIA = Duration.ofHours(6);
     private static final Duration UPDATED_CARENCIA = Duration.ofHours(12);
 
+    private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
+    private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/prestacions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -74,7 +77,11 @@ class PrestacionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Prestacion createEntity(EntityManager em) {
-        Prestacion prestacion = new Prestacion().tipo(DEFAULT_TIPO).precio(DEFAULT_PRECIO).carencia(DEFAULT_CARENCIA);
+        Prestacion prestacion = new Prestacion()
+            .tipo(DEFAULT_TIPO)
+            .precio(DEFAULT_PRECIO)
+            .carencia(DEFAULT_CARENCIA)
+            .nombre(DEFAULT_NOMBRE);
         return prestacion;
     }
 
@@ -85,7 +92,11 @@ class PrestacionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Prestacion createUpdatedEntity(EntityManager em) {
-        Prestacion prestacion = new Prestacion().tipo(UPDATED_TIPO).precio(UPDATED_PRECIO).carencia(UPDATED_CARENCIA);
+        Prestacion prestacion = new Prestacion()
+            .tipo(UPDATED_TIPO)
+            .precio(UPDATED_PRECIO)
+            .carencia(UPDATED_CARENCIA)
+            .nombre(UPDATED_NOMBRE);
         return prestacion;
     }
 
@@ -110,6 +121,7 @@ class PrestacionResourceIT {
         assertThat(testPrestacion.getTipo()).isEqualTo(DEFAULT_TIPO);
         assertThat(testPrestacion.getPrecio()).isEqualTo(DEFAULT_PRECIO);
         assertThat(testPrestacion.getCarencia()).isEqualTo(DEFAULT_CARENCIA);
+        assertThat(testPrestacion.getNombre()).isEqualTo(DEFAULT_NOMBRE);
     }
 
     @Test
@@ -144,7 +156,8 @@ class PrestacionResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(prestacion.getId().intValue())))
             .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)))
             .andExpect(jsonPath("$.[*].precio").value(hasItem(DEFAULT_PRECIO.doubleValue())))
-            .andExpect(jsonPath("$.[*].carencia").value(hasItem(DEFAULT_CARENCIA.toString())));
+            .andExpect(jsonPath("$.[*].carencia").value(hasItem(DEFAULT_CARENCIA.toString())))
+            .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -179,7 +192,8 @@ class PrestacionResourceIT {
             .andExpect(jsonPath("$.id").value(prestacion.getId().intValue()))
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO))
             .andExpect(jsonPath("$.precio").value(DEFAULT_PRECIO.doubleValue()))
-            .andExpect(jsonPath("$.carencia").value(DEFAULT_CARENCIA.toString()));
+            .andExpect(jsonPath("$.carencia").value(DEFAULT_CARENCIA.toString()))
+            .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE));
     }
 
     @Test
@@ -201,7 +215,7 @@ class PrestacionResourceIT {
         Prestacion updatedPrestacion = prestacionRepository.findById(prestacion.getId()).get();
         // Disconnect from session so that the updates on updatedPrestacion are not directly saved in db
         em.detach(updatedPrestacion);
-        updatedPrestacion.tipo(UPDATED_TIPO).precio(UPDATED_PRECIO).carencia(UPDATED_CARENCIA);
+        updatedPrestacion.tipo(UPDATED_TIPO).precio(UPDATED_PRECIO).carencia(UPDATED_CARENCIA).nombre(UPDATED_NOMBRE);
 
         restPrestacionMockMvc
             .perform(
@@ -218,6 +232,7 @@ class PrestacionResourceIT {
         assertThat(testPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testPrestacion.getPrecio()).isEqualTo(UPDATED_PRECIO);
         assertThat(testPrestacion.getCarencia()).isEqualTo(UPDATED_CARENCIA);
+        assertThat(testPrestacion.getNombre()).isEqualTo(UPDATED_NOMBRE);
     }
 
     @Test
@@ -288,7 +303,7 @@ class PrestacionResourceIT {
         Prestacion partialUpdatedPrestacion = new Prestacion();
         partialUpdatedPrestacion.setId(prestacion.getId());
 
-        partialUpdatedPrestacion.tipo(UPDATED_TIPO).carencia(UPDATED_CARENCIA);
+        partialUpdatedPrestacion.tipo(UPDATED_TIPO).carencia(UPDATED_CARENCIA).nombre(UPDATED_NOMBRE);
 
         restPrestacionMockMvc
             .perform(
@@ -305,6 +320,7 @@ class PrestacionResourceIT {
         assertThat(testPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testPrestacion.getPrecio()).isEqualTo(DEFAULT_PRECIO);
         assertThat(testPrestacion.getCarencia()).isEqualTo(UPDATED_CARENCIA);
+        assertThat(testPrestacion.getNombre()).isEqualTo(UPDATED_NOMBRE);
     }
 
     @Test
@@ -319,7 +335,7 @@ class PrestacionResourceIT {
         Prestacion partialUpdatedPrestacion = new Prestacion();
         partialUpdatedPrestacion.setId(prestacion.getId());
 
-        partialUpdatedPrestacion.tipo(UPDATED_TIPO).precio(UPDATED_PRECIO).carencia(UPDATED_CARENCIA);
+        partialUpdatedPrestacion.tipo(UPDATED_TIPO).precio(UPDATED_PRECIO).carencia(UPDATED_CARENCIA).nombre(UPDATED_NOMBRE);
 
         restPrestacionMockMvc
             .perform(
@@ -336,6 +352,7 @@ class PrestacionResourceIT {
         assertThat(testPrestacion.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testPrestacion.getPrecio()).isEqualTo(UPDATED_PRECIO);
         assertThat(testPrestacion.getCarencia()).isEqualTo(UPDATED_CARENCIA);
+        assertThat(testPrestacion.getNombre()).isEqualTo(UPDATED_NOMBRE);
     }
 
     @Test

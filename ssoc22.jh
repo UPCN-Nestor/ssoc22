@@ -75,6 +75,7 @@ entity Prestacion {
 	tipo String
     precio Float
     carencia Duration
+    nombre String
 }
 
 entity Insumo {

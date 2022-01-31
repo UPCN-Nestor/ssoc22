@@ -46,6 +46,7 @@ describe('Prestacion e2e test', () => {
       prestacionUpdatePage.setTipoInput('tipo'),
       prestacionUpdatePage.setPrecioInput('5'),
       prestacionUpdatePage.setCarenciaInput('PT12S'),
+      prestacionUpdatePage.setNombreInput('nombre'),
       // prestacionUpdatePage.insumoSelectLastOption(),
     ]);
 

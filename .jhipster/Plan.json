@@ -1,11 +1,9 @@
 {
-  "applications": [
-    "ssoc22"
-  ],
+  "applications": ["ssoc22"],
   "changelogDate": "20220124135815",
   "dto": "no",
   "embedded": false,
-  "entityTableName": "plan",
+  "entityTableName": "jhi_plan",
   "fields": [
     {
       "fieldName": "habilitaciones",
@@ -27,22 +25,22 @@
   "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "provision",
       "otherEntityRelationshipName": "plan",
-      "relationshipName": "provision"
+      "relationshipName": "provision",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "tarifa",
       "otherEntityRelationshipName": "plan",
-      "relationshipName": "tarifa"
+      "relationshipName": "tarifa",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "contrato",
       "otherEntityRelationshipName": "plan",
-      "relationshipName": "contrato"
+      "relationshipName": "contrato",
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "no"

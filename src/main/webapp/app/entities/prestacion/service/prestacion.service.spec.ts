@@ -24,6 +24,7 @@ describe('Prestacion Service', () => {
       tipo: 'AAAAAAA',
       precio: 0,
       carencia: 'PT1S',
+      nombre: 'AAAAAAA',
     };
   });
 
@@ -62,6 +63,7 @@ describe('Prestacion Service', () => {
           tipo: 'BBBBBB',
           precio: 1,
           carencia: 'BBBBBB',
+          nombre: 'BBBBBB',
         },
         elemDefault
       );
@@ -96,6 +98,7 @@ describe('Prestacion Service', () => {
           tipo: 'BBBBBB',
           precio: 1,
           carencia: 'BBBBBB',
+          nombre: 'BBBBBB',
         },
         elemDefault
       );
@@ -147,7 +150,7 @@ describe('Prestacion Service', () => {
       });
 
       it('should add only unique Prestacion to an array', () => {
-        const prestacionArray: IPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 1859 }];
+        const prestacionArray: IPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 73703 }];
         const prestacionCollection: IPrestacion[] = [{ id: 123 }];
         expectedResult = service.addPrestacionToCollectionIfMissing(prestacionCollection, ...prestacionArray);
         expect(expectedResult).toHaveLength(3);

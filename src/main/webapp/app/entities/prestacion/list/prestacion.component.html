@@ -36,6 +36,7 @@
           <th scope="col"><span jhiTranslate="ssoc22App.prestacion.tipo">Tipo</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.prestacion.precio">Precio</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.prestacion.carencia">Carencia</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.prestacion.nombre">Nombre</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.prestacion.insumo">Insumo</span></th>
           <th scope="col"></th>
         </tr>
@@ -48,6 +49,7 @@
           <td>{{ prestacion.tipo }}</td>
           <td>{{ prestacion.precio }}</td>
           <td title="{{ prestacion.carencia }}">{{ prestacion.carencia | duration }}</td>
+          <td>{{ prestacion.nombre }}</td>
           <td>
             <span *ngFor="let insumo of prestacion.insumos; let last = last">
               <a class="form-control-static" [routerLink]="['/insumo', insumo.id, 'view']">{{ insumo.id }}</a

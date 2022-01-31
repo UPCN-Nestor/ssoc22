@@ -34,6 +34,9 @@ public class Prestacion implements Serializable {
     @Column(name = "carencia")
     private Duration carencia;
 
+    @Column(name = "nombre")
+    private String nombre;
+
     @OneToMany(mappedBy = "prestacion")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "prestacion", "solicitudPrestacions", "provisions", "prestadors" }, allowSetters = true)
@@ -48,6 +51,11 @@ public class Prestacion implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "movimientoStocks", "prestacions", "solicitudPrestacions", "provisions" }, allowSetters = true)
     private Set<Insumo> insumos = new HashSet<>();
+
+    @OneToMany(mappedBy = "prestacion")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "prestacion", "insumos", "plan" }, allowSetters = true)
+    private Set<Provision> provisions = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -101,6 +109,19 @@ public class Prestacion implements Serializable {
 
     public void setCarencia(Duration carencia) {
         this.carencia = carencia;
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public Prestacion nombre(String nombre) {
+        this.setNombre(nombre);
+        return this;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Set<ItemNomenclador> getItemNomencladors() {
@@ -159,6 +180,37 @@ public class Prestacion implements Serializable {
         return this;
     }
 
+    public Set<Provision> getProvisions() {
+        return this.provisions;
+    }
+
+    public void setProvisions(Set<Provision> provisions) {
+        if (this.provisions != null) {
+            this.provisions.forEach(i -> i.setPrestacion(null));
+        }
+        if (provisions != null) {
+            provisions.forEach(i -> i.setPrestacion(this));
+        }
+        this.provisions = provisions;
+    }
+
+    public Prestacion provisions(Set<Provision> provisions) {
+        this.setProvisions(provisions);
+        return this;
+    }
+
+    public Prestacion addProvision(Provision provision) {
+        this.provisions.add(provision);
+        provision.setPrestacion(this);
+        return this;
+    }
+
+    public Prestacion removeProvision(Provision provision) {
+        this.provisions.remove(provision);
+        provision.setPrestacion(null);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -186,6 +238,7 @@ public class Prestacion implements Serializable {
             ", tipo='" + getTipo() + "'" +
             ", precio=" + getPrecio() +
             ", carencia='" + getCarencia() + "'" +
+            ", nombre='" + getNombre() + "'" +
             "}";
     }
 }

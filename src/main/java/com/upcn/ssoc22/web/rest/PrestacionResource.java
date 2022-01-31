@@ -132,6 +132,9 @@ public class PrestacionResource {
                 if (prestacion.getCarencia() != null) {
                     existingPrestacion.setCarencia(prestacion.getCarencia());
                 }
+                if (prestacion.getNombre() != null) {
+                    existingPrestacion.setNombre(prestacion.getNombre());
+                }
 
                 return existingPrestacion;
             })

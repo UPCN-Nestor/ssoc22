@@ -33,6 +33,7 @@ export class PrestacionUpdatePage {
   tipoInput = element(by.id('field_tipo'));
   precioInput = element(by.id('field_precio'));
   carenciaInput = element(by.id('field_carencia'));
+  nombreInput = element(by.id('field_nombre'));
 
   insumoSelect = element(by.id('field_insumo'));
 
@@ -70,6 +71,14 @@ export class PrestacionUpdatePage {
 
   async getCarenciaInput(): Promise<string> {
     return await this.carenciaInput.getAttribute('value');
+  }
+
+  async setNombreInput(nombre: string): Promise<void> {
+    await this.nombreInput.sendKeys(nombre);
+  }
+
+  async getNombreInput(): Promise<string> {
+    return await this.nombreInput.getAttribute('value');
   }
 
   async insumoSelectLastOption(): Promise<void> {

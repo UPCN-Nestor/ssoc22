@@ -24,6 +24,7 @@ export class PrestacionUpdateComponent implements OnInit {
     tipo: [],
     precio: [],
     carencia: [],
+    nombre: [],
     insumos: [],
   });
 
@@ -96,6 +97,7 @@ export class PrestacionUpdateComponent implements OnInit {
       tipo: prestacion.tipo,
       precio: prestacion.precio,
       carencia: prestacion.carencia,
+      nombre: prestacion.nombre,
       insumos: prestacion.insumos,
     });
 
@@ -124,6 +126,7 @@ export class PrestacionUpdateComponent implements OnInit {
       tipo: this.editForm.get(['tipo'])!.value,
       precio: this.editForm.get(['precio'])!.value,
       carencia: this.editForm.get(['carencia'])!.value,
+      nombre: this.editForm.get(['nombre'])!.value,
       insumos: this.editForm.get(['insumos'])!.value,
     };
   }

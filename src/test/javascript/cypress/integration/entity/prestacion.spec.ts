@@ -154,6 +154,8 @@ describe('Prestacion e2e test', () => {
 
       cy.get(`[data-cy="carencia"]`).type('PT58M').should('have.value', 'PT58M');
 
+      cy.get(`[data-cy="nombre"]`).type('rich Planificador Central').should('have.value', 'rich Planificador Central');
+
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

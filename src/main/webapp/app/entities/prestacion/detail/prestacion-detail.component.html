@@ -26,6 +26,10 @@
         <dd>
           <span>{{ prestacion.carencia | duration }} ({{ prestacion.carencia }})</span>
         </dd>
+        <dt><span jhiTranslate="ssoc22App.prestacion.nombre">Nombre</span></dt>
+        <dd>
+          <span>{{ prestacion.nombre }}</span>
+        </dd>
         <dt><span jhiTranslate="ssoc22App.prestacion.insumo">Insumo</span></dt>
         <dd>
           <span *ngFor="let insumo of prestacion.insumos; let last = last">
