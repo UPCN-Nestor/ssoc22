@@ -65,6 +65,7 @@
             data-cy="itemNomenclador"
             name="itemNomenclador"
             formControlName="itemNomenclador"
+            (ngModelChange)="selectItemNomenclador($event)"
             required
           >
             <option [ngValue]="null"></option>
@@ -81,7 +82,19 @@
           </select>
         </div>
 
-        <!--
+        <div class="form-group">
+          <label class="form-control-label" for="field_precioReal">Precio</label>
+          <input
+            readonly
+            type="number"
+            class="form-control"
+            name="precioReal"
+            id="field_precioReal"
+            data-cy="precioReal"
+            formControlName="precioReal"
+          />
+        </div>
+
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.prestador" for="field_prestador">Prestador</label>
           <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador">
@@ -94,7 +107,7 @@
             </option>
           </select>
         </div>
--->
+
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.observaciones" for="field_observaciones"
             >Observaciones</label

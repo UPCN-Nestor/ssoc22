@@ -1,7 +1,10 @@
 package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.SolicitudPrestacion;
+import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.repository.SolicitudPrestacionRepository;
+import com.upcn.ssoc22.service.ItemNomencladorService;
+import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.service.UserService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -36,10 +39,16 @@ public class SolicitudPrestacionResource {
 
     private final SolicitudPrestacionRepository solicitudPrestacionRepository;
     private final UserService userService;
+    private final ItemNomencladorService itemNomencladorService;
 
-    public SolicitudPrestacionResource(SolicitudPrestacionRepository solicitudPrestacionRepository, UserService userService) {
+    public SolicitudPrestacionResource(
+        SolicitudPrestacionRepository solicitudPrestacionRepository,
+        UserService userService,
+        ItemNomencladorService itemNomencladorService
+    ) {
         this.solicitudPrestacionRepository = solicitudPrestacionRepository;
         this.userService = userService;
+        this.itemNomencladorService = itemNomencladorService;
     }
 
     /**
@@ -196,6 +205,17 @@ public class SolicitudPrestacionResource {
         log.debug("REST request to get all SolicitudPrestacions por Tipo " + tipo);
         List<SolicitudPrestacion> toRet = solicitudPrestacionRepository.findAllWithEagerRelationships();
         toRet.removeIf(s -> !s.getTipo().equals(tipo)); // Filter
+
+        return toRet;
+    }
+
+    // Este endpoint queda definido acá porque se consume al generar solicitudes de prestación.
+    // Se llama a ProviisonService porque es la "menor" entidad que contiene toda la información necesaria.
+    // Esto puede cambiar si se requiere que cada ItemNomenclador tenga diferente precio (i.e. en el caso de bonos).
+    @GetMapping("/solicitud-prestacions/precioreal/{itemnomencladorid}/{adhesionid}")
+    public float getPrecioReal(@PathVariable Long itemnomencladorid, @PathVariable Long adhesionid) {
+        log.debug("REST request to get precio real de item nomenclador " + itemnomencladorid + " y adhesión " + adhesionid);
+        float toRet = itemNomencladorService.getPrecioReal(itemnomencladorid, adhesionid);
 
         return toRet;
     }

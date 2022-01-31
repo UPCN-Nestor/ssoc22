@@ -50,4 +50,6 @@ public interface ReglaPrestacionService {
     boolean procesarReglaDeHabilitacion(ReglaPrestacion r, Adhesion a);
 
     int procesarReglaDeCarencia(ReglaPrestacion r, Adhesion a);
+
+    float procesarReglaDeDescuento(ReglaPrestacion r, Adhesion a, float precioBase);
 }

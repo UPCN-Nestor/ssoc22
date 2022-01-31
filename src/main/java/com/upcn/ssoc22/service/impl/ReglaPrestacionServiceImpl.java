@@ -91,4 +91,14 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
         }
         return 0;
     }
+
+    @Override
+    public float procesarReglaDeDescuento(ReglaPrestacion r, Adhesion a, float precioBase) {
+        if (r.getCodigoRegla().equals("D1")) {
+            // Ejemplo
+            return precioBase * (100 - (Integer.parseInt(r.getDatos()))) / 100;
+        }
+
+        return precioBase;
+    }
 }

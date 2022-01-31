@@ -3,6 +3,7 @@ package com.upcn.ssoc22.service.impl;
 import com.upcn.ssoc22.domain.Adhesion;
 import com.upcn.ssoc22.domain.Provision;
 import com.upcn.ssoc22.domain.ReglaPrestacion;
+import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.repository.ProvisionRepository;
 import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.service.ReglaPrestacionService;
@@ -26,10 +27,16 @@ public class ProvisionServiceImpl implements ProvisionService {
 
     private final ProvisionRepository provisionRepository;
     private final ReglaPrestacionService reglaPrestacionService;
+    private final AdhesionRepository adhesionRepository;
 
-    public ProvisionServiceImpl(ProvisionRepository provisionRepository, ReglaPrestacionService reglaPrestacionService) {
+    public ProvisionServiceImpl(
+        ProvisionRepository provisionRepository,
+        ReglaPrestacionService reglaPrestacionService,
+        AdhesionRepository adhesionRepository
+    ) {
         this.provisionRepository = provisionRepository;
         this.reglaPrestacionService = reglaPrestacionService;
+        this.adhesionRepository = adhesionRepository;
     }
 
     @Override
@@ -103,5 +110,18 @@ public class ProvisionServiceImpl implements ProvisionService {
         }
 
         return dias;
+    }
+
+    public float procesarDescuento(Provision prov, Adhesion a, float precioBase) {
+        float precio = precioBase;
+
+        for (ReglaPrestacion r : prov.getReglaPrestacions()) {
+            if (r.getTipoRegla().equals("Descuento")) {
+                log.debug(">>> Regla de descuento: " + r.getId());
+                precio = reglaPrestacionService.procesarReglaDeDescuento(r, a, precioBase);
+            }
+        }
+
+        return precio;
     }
 }

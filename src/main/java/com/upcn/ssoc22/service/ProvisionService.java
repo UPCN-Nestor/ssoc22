@@ -61,4 +61,6 @@ public interface ProvisionService {
     boolean estaHabilitadaPara(Provision p, Adhesion a);
 
     int diasCarencia(Provision p, Adhesion a);
+
+    float procesarDescuento(Provision prov, Adhesion a, float precioBase);
 }

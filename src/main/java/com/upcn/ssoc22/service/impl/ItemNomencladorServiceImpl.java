@@ -156,4 +156,39 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
 
         return masReciente.plusDays(carenciaFinal).compareTo(ZonedDateTime.now()) < 0;
     }
+
+    public float getPrecioReal(Long itemnomencladorid, Long adhesionid) {
+        ItemNomenclador i = itemNomencladorRepository.getById(itemnomencladorid);
+        Adhesion a = adhesionRepository.getById(adhesionid);
+
+        float precioBase = i.getPrestacion().getPrecio(); // Acá se puede implementar fácilmente precios por ítem nomenclador individual
+        float precioMenor = precioBase;
+
+        if (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) throw new AdhesionNoHabilitadaException();
+
+        for (Contrato c : a.getCliente().getContratoes()) {
+            log.debug("> Contrato: " + c.getId());
+
+            // No tomo en cuenta los contratos vencidos.
+            if (c.getFechaBaja() != null && c.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) continue;
+
+            Plan p = c.getPlan();
+            log.debug("> Plan: " + p.getId());
+
+            for (Provision prov : p.getProvisions()) {
+                log.debug(
+                    ">> Provisión " +
+                    prov.getId() +
+                    " sobre " +
+                    (prov.getPrestacion() != null ? prov.getPrestacion().getNombre() : prov.getItemNomenclador().getNombre())
+                );
+                float precioEncontrado = provisionService.procesarDescuento(prov, a, precioBase);
+                // Devuelvo el mejor descuento (ej. si en un plan tengo "-30% en bonos y -50% específicamente en radiografías", o incluso eso mismo en dos planes diferentes)
+                precioMenor = precioEncontrado < precioMenor ? precioEncontrado : precioMenor;
+            }
+        }
+
+        log.debug("> Precio hallado: " + precioMenor);
+        return precioMenor;
+    }
 }

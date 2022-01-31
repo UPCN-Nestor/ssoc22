@@ -77,6 +77,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     usuarioSolicitud: [],
     insumos: [],
     individuo: [],
+    precioReal: [],
   });
 
   constructor(
@@ -219,17 +220,34 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   selectIndividuo(adhesion: any): void {
-    this.editForm.patchValue({ individuo: adhesion.individuo, itemNomenclador: null });
+    this.editForm.patchValue({ individuo: adhesion.individuo, itemNomenclador: null, precioReal: null });
+
+    this.adhesionSeleccionada = adhesion;
+
     this.itemNomencladorService.queryPorAdhesion(adhesion.id).subscribe(res => {
       this.itemNomencladorsSharedCollection = res.body ? res.body : [];
     });
+  }
+
+  selectItemNomenclador(item: any): void {
+    const itemnomencladorid = this.editForm.get('itemNomenclador')?.value?.id;
+    const adhesionid = this.adhesionSeleccionada?.id;
+
+    // eslint-disable-next-line
+    //alert("" + itemnomencladorid + " " + adhesionid);
+
+    if (itemnomencladorid != null && adhesionid != null) {
+      this.solicitudPrestacionService.getPrecioReal(itemnomencladorid, adhesionid).subscribe(res => {
+        this.editForm.patchValue({ precioReal: res.body });
+      });
+    }
   }
 
   limpiarCampos(): void {
     this.errorCliente = '';
     this.adhesionesDeCliente = null;
     this.practicasHabilitadas = null;
-    this.editForm.patchValue({ itemNomenclador: null });
+    this.editForm.patchValue({ itemNomenclador: null, precioReal: null });
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISolicitudPrestacion>>): void {
@@ -269,6 +287,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
       usuarioSolicitud: solicitudPrestacion.usuarioSolicitud,
       insumos: solicitudPrestacion.insumos,
       individuo: solicitudPrestacion.individuo,
+      precioReal: solicitudPrestacion.precioReal,
     });
 
     this.despachosCollection = this.despachoService.addDespachoToCollectionIfMissing(
