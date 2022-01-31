@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -96,7 +97,7 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
     public List<ItemNomenclador> getAllItemNomencladorsHabilitadosPorAdhesion(Long adhesionid) throws AdhesionNoHabilitadaException {
         log.debug("REST request to get all ItemNomencladors habilitados para adhesión " + adhesionid);
 
-        List<ItemNomenclador> toRet = new LinkedList<ItemNomenclador>();
+        Set<ItemNomenclador> toRet = new HashSet<ItemNomenclador>();
 
         Adhesion a = adhesionRepository.findById(adhesionid).get();
 
@@ -140,7 +141,9 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
             }
         }
 
-        return toRet;
+        List<ItemNomenclador> toRetList = Arrays.asList(toRet.toArray(new ItemNomenclador[0]));
+
+        return toRetList;
     }
 
     boolean cumpleCarenciaDefinidaODefault(ItemNomenclador i, Adhesion a, Contrato c, int diasCarenciaSegunProvision) {
