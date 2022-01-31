@@ -21,6 +21,7 @@ describe('Plan Service', () => {
 
     elemDefault = {
       id: 0,
+      nombre: 'AAAAAAA',
       habilitaciones: 'AAAAAAA',
       descuentos: 'AAAAAAA',
       restricciones: 'AAAAAAA',
@@ -59,6 +60,7 @@ describe('Plan Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          nombre: 'BBBBBB',
           habilitaciones: 'BBBBBB',
           descuentos: 'BBBBBB',
           restricciones: 'BBBBBB',
@@ -78,6 +80,7 @@ describe('Plan Service', () => {
     it('should partial update a Plan', () => {
       const patchObject = Object.assign(
         {
+          nombre: 'BBBBBB',
           habilitaciones: 'BBBBBB',
           descuentos: 'BBBBBB',
           restricciones: 'BBBBBB',
@@ -100,6 +103,7 @@ describe('Plan Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          nombre: 'BBBBBB',
           habilitaciones: 'BBBBBB',
           descuentos: 'BBBBBB',
           restricciones: 'BBBBBB',
@@ -154,7 +158,7 @@ describe('Plan Service', () => {
       });
 
       it('should add only unique Plan to an array', () => {
-        const planArray: IPlan[] = [{ id: 123 }, { id: 456 }, { id: 93928 }];
+        const planArray: IPlan[] = [{ id: 123 }, { id: 456 }, { id: 39003 }];
         const planCollection: IPlan[] = [{ id: 123 }];
         expectedResult = service.addPlanToCollectionIfMissing(planCollection, ...planArray);
         expect(expectedResult).toHaveLength(3);

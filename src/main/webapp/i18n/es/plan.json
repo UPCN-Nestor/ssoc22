@@ -18,6 +18,7 @@
         "title": "Plan"
       },
       "id": "ID",
+      "nombre": "Nombre",
       "habilitaciones": "Habilitaciones",
       "descuentos": "Descuentos",
       "restricciones": "Restricciones",

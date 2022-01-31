@@ -119,6 +119,9 @@ public class PlanResource {
         Optional<Plan> result = planRepository
             .findById(plan.getId())
             .map(existingPlan -> {
+                if (plan.getNombre() != null) {
+                    existingPlan.setNombre(plan.getNombre());
+                }
                 if (plan.getHabilitaciones() != null) {
                     existingPlan.setHabilitaciones(plan.getHabilitaciones());
                 }

@@ -4,6 +4,7 @@ import { IContrato } from 'app/entities/contrato/contrato.model';
 
 export interface IPlan {
   id?: number;
+  nombre?: string | null;
   habilitaciones?: string | null;
   descuentos?: string | null;
   restricciones?: string | null;
@@ -15,6 +16,7 @@ export interface IPlan {
 export class Plan implements IPlan {
   constructor(
     public id?: number,
+    public nombre?: string | null,
     public habilitaciones?: string | null,
     public descuentos?: string | null,
     public restricciones?: string | null,

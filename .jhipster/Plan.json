@@ -6,6 +6,10 @@
   "entityTableName": "jhi_plan",
   "fields": [
     {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "habilitaciones",
       "fieldType": "String"
     },

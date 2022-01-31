@@ -29,6 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class PlanResourceIT {
 
+    private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
+    private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
+
     private static final String DEFAULT_HABILITACIONES = "AAAAAAAAAA";
     private static final String UPDATED_HABILITACIONES = "BBBBBBBBBB";
 
@@ -62,7 +65,11 @@ class PlanResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Plan createEntity(EntityManager em) {
-        Plan plan = new Plan().habilitaciones(DEFAULT_HABILITACIONES).descuentos(DEFAULT_DESCUENTOS).restricciones(DEFAULT_RESTRICCIONES);
+        Plan plan = new Plan()
+            .nombre(DEFAULT_NOMBRE)
+            .habilitaciones(DEFAULT_HABILITACIONES)
+            .descuentos(DEFAULT_DESCUENTOS)
+            .restricciones(DEFAULT_RESTRICCIONES);
         return plan;
     }
 
@@ -73,7 +80,11 @@ class PlanResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Plan createUpdatedEntity(EntityManager em) {
-        Plan plan = new Plan().habilitaciones(UPDATED_HABILITACIONES).descuentos(UPDATED_DESCUENTOS).restricciones(UPDATED_RESTRICCIONES);
+        Plan plan = new Plan()
+            .nombre(UPDATED_NOMBRE)
+            .habilitaciones(UPDATED_HABILITACIONES)
+            .descuentos(UPDATED_DESCUENTOS)
+            .restricciones(UPDATED_RESTRICCIONES);
         return plan;
     }
 
@@ -95,6 +106,7 @@ class PlanResourceIT {
         List<Plan> planList = planRepository.findAll();
         assertThat(planList).hasSize(databaseSizeBeforeCreate + 1);
         Plan testPlan = planList.get(planList.size() - 1);
+        assertThat(testPlan.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testPlan.getHabilitaciones()).isEqualTo(DEFAULT_HABILITACIONES);
         assertThat(testPlan.getDescuentos()).isEqualTo(DEFAULT_DESCUENTOS);
         assertThat(testPlan.getRestricciones()).isEqualTo(DEFAULT_RESTRICCIONES);
@@ -130,6 +142,7 @@ class PlanResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(plan.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].habilitaciones").value(hasItem(DEFAULT_HABILITACIONES)))
             .andExpect(jsonPath("$.[*].descuentos").value(hasItem(DEFAULT_DESCUENTOS)))
             .andExpect(jsonPath("$.[*].restricciones").value(hasItem(DEFAULT_RESTRICCIONES)));
@@ -147,6 +160,7 @@ class PlanResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(plan.getId().intValue()))
+            .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
             .andExpect(jsonPath("$.habilitaciones").value(DEFAULT_HABILITACIONES))
             .andExpect(jsonPath("$.descuentos").value(DEFAULT_DESCUENTOS))
             .andExpect(jsonPath("$.restricciones").value(DEFAULT_RESTRICCIONES));
@@ -171,7 +185,11 @@ class PlanResourceIT {
         Plan updatedPlan = planRepository.findById(plan.getId()).get();
         // Disconnect from session so that the updates on updatedPlan are not directly saved in db
         em.detach(updatedPlan);
-        updatedPlan.habilitaciones(UPDATED_HABILITACIONES).descuentos(UPDATED_DESCUENTOS).restricciones(UPDATED_RESTRICCIONES);
+        updatedPlan
+            .nombre(UPDATED_NOMBRE)
+            .habilitaciones(UPDATED_HABILITACIONES)
+            .descuentos(UPDATED_DESCUENTOS)
+            .restricciones(UPDATED_RESTRICCIONES);
 
         restPlanMockMvc
             .perform(
@@ -185,6 +203,7 @@ class PlanResourceIT {
         List<Plan> planList = planRepository.findAll();
         assertThat(planList).hasSize(databaseSizeBeforeUpdate);
         Plan testPlan = planList.get(planList.size() - 1);
+        assertThat(testPlan.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testPlan.getHabilitaciones()).isEqualTo(UPDATED_HABILITACIONES);
         assertThat(testPlan.getDescuentos()).isEqualTo(UPDATED_DESCUENTOS);
         assertThat(testPlan.getRestricciones()).isEqualTo(UPDATED_RESTRICCIONES);
@@ -258,7 +277,7 @@ class PlanResourceIT {
         Plan partialUpdatedPlan = new Plan();
         partialUpdatedPlan.setId(plan.getId());
 
-        partialUpdatedPlan.descuentos(UPDATED_DESCUENTOS);
+        partialUpdatedPlan.habilitaciones(UPDATED_HABILITACIONES);
 
         restPlanMockMvc
             .perform(
@@ -272,8 +291,9 @@ class PlanResourceIT {
         List<Plan> planList = planRepository.findAll();
         assertThat(planList).hasSize(databaseSizeBeforeUpdate);
         Plan testPlan = planList.get(planList.size() - 1);
-        assertThat(testPlan.getHabilitaciones()).isEqualTo(DEFAULT_HABILITACIONES);
-        assertThat(testPlan.getDescuentos()).isEqualTo(UPDATED_DESCUENTOS);
+        assertThat(testPlan.getNombre()).isEqualTo(DEFAULT_NOMBRE);
+        assertThat(testPlan.getHabilitaciones()).isEqualTo(UPDATED_HABILITACIONES);
+        assertThat(testPlan.getDescuentos()).isEqualTo(DEFAULT_DESCUENTOS);
         assertThat(testPlan.getRestricciones()).isEqualTo(DEFAULT_RESTRICCIONES);
     }
 
@@ -289,7 +309,11 @@ class PlanResourceIT {
         Plan partialUpdatedPlan = new Plan();
         partialUpdatedPlan.setId(plan.getId());
 
-        partialUpdatedPlan.habilitaciones(UPDATED_HABILITACIONES).descuentos(UPDATED_DESCUENTOS).restricciones(UPDATED_RESTRICCIONES);
+        partialUpdatedPlan
+            .nombre(UPDATED_NOMBRE)
+            .habilitaciones(UPDATED_HABILITACIONES)
+            .descuentos(UPDATED_DESCUENTOS)
+            .restricciones(UPDATED_RESTRICCIONES);
 
         restPlanMockMvc
             .perform(
@@ -303,6 +327,7 @@ class PlanResourceIT {
         List<Plan> planList = planRepository.findAll();
         assertThat(planList).hasSize(databaseSizeBeforeUpdate);
         Plan testPlan = planList.get(planList.size() - 1);
+        assertThat(testPlan.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testPlan.getHabilitaciones()).isEqualTo(UPDATED_HABILITACIONES);
         assertThat(testPlan.getDescuentos()).isEqualTo(UPDATED_DESCUENTOS);
         assertThat(testPlan.getRestricciones()).isEqualTo(UPDATED_RESTRICCIONES);

@@ -24,6 +24,9 @@ public class Plan implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "nombre")
+    private String nombre;
+
     @Column(name = "habilitaciones")
     private String habilitaciones;
 
@@ -35,7 +38,7 @@ public class Plan implements Serializable {
 
     @OneToMany(mappedBy = "plan")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "insumos", "plan" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "prestacion", "insumos", "plan" }, allowSetters = true)
     private Set<Provision> provisions = new HashSet<>();
 
     @OneToMany(mappedBy = "plan")
@@ -61,6 +64,19 @@ public class Plan implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public Plan nombre(String nombre) {
+        this.setNombre(nombre);
+        return this;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getHabilitaciones() {
@@ -219,6 +235,7 @@ public class Plan implements Serializable {
     public String toString() {
         return "Plan{" +
             "id=" + getId() +
+            ", nombre='" + getNombre() + "'" +
             ", habilitaciones='" + getHabilitaciones() + "'" +
             ", descuentos='" + getDescuentos() + "'" +
             ", restricciones='" + getRestricciones() + "'" +

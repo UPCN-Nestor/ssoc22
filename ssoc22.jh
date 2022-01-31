@@ -49,6 +49,7 @@ entity Contrato {
 }
 
 entity Plan {
+    nombre String
     habilitaciones String
     descuentos String
     restricciones String    

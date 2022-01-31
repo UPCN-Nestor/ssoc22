@@ -43,6 +43,7 @@ describe('Plan e2e test', () => {
     await planComponentsPage.clickOnCreateButton();
 
     await promise.all([
+      planUpdatePage.setNombreInput('nombre'),
       planUpdatePage.setHabilitacionesInput('habilitaciones'),
       planUpdatePage.setDescuentosInput('descuentos'),
       planUpdatePage.setRestriccionesInput('restricciones'),

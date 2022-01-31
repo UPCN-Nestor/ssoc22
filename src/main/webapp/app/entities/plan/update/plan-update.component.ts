@@ -17,6 +17,7 @@ export class PlanUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
+    nombre: [],
     habilitaciones: [],
     descuentos: [],
     restricciones: [],
@@ -66,6 +67,7 @@ export class PlanUpdateComponent implements OnInit {
   protected updateForm(plan: IPlan): void {
     this.editForm.patchValue({
       id: plan.id,
+      nombre: plan.nombre,
       habilitaciones: plan.habilitaciones,
       descuentos: plan.descuentos,
       restricciones: plan.restricciones,
@@ -76,6 +78,7 @@ export class PlanUpdateComponent implements OnInit {
     return {
       ...new Plan(),
       id: this.editForm.get(['id'])!.value,
+      nombre: this.editForm.get(['nombre'])!.value,
       habilitaciones: this.editForm.get(['habilitaciones'])!.value,
       descuentos: this.editForm.get(['descuentos'])!.value,
       restricciones: this.editForm.get(['restricciones'])!.value,

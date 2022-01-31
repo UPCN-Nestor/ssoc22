@@ -148,11 +148,13 @@ describe('Plan e2e test', () => {
     });
 
     it('should create an instance of Plan', () => {
-      cy.get(`[data-cy="habilitaciones"]`).type('Galicia Salchichas bluetooth').should('have.value', 'Galicia Salchichas bluetooth');
+      cy.get(`[data-cy="nombre"]`).type('Galicia Salchichas bluetooth').should('have.value', 'Galicia Salchichas bluetooth');
 
-      cy.get(`[data-cy="descuentos"]`).type('override Muelle conglomeración').should('have.value', 'override Muelle conglomeración');
+      cy.get(`[data-cy="habilitaciones"]`).type('override Muelle conglomeración').should('have.value', 'override Muelle conglomeración');
 
-      cy.get(`[data-cy="restricciones"]`).type('Borders overriding Subida').should('have.value', 'Borders overriding Subida');
+      cy.get(`[data-cy="descuentos"]`).type('Borders overriding Subida').should('have.value', 'Borders overriding Subida');
+
+      cy.get(`[data-cy="restricciones"]`).type('Aplicaciones Ecuador deposit').should('have.value', 'Aplicaciones Ecuador deposit');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

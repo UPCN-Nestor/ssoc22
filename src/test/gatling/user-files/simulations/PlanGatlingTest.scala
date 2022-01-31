@@ -71,7 +71,8 @@ class PlanGatlingTest extends Simulation {
             .post("/api/plans")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "habilitaciones":"SAMPLE_TEXT"
+                "nombre":"SAMPLE_TEXT"
+                , "habilitaciones":"SAMPLE_TEXT"
                 , "descuentos":"SAMPLE_TEXT"
                 , "restricciones":"SAMPLE_TEXT"
                 }""")).asJson

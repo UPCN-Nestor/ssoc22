@@ -33,6 +33,7 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.plan.nombre">Nombre</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.plan.habilitaciones">Habilitaciones</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.plan.descuentos">Descuentos</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.plan.restricciones">Restricciones</span></th>
@@ -44,6 +45,7 @@
           <td>
             <a [routerLink]="['/plan', plan.id, 'view']">{{ plan.id }}</a>
           </td>
+          <td>{{ plan.nombre }}</td>
           <td>{{ plan.habilitaciones }}</td>
           <td>{{ plan.descuentos }}</td>
           <td>{{ plan.restricciones }}</td>

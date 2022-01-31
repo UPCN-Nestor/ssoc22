@@ -30,6 +30,7 @@ export class PlanUpdatePage {
   cancelButton = element(by.id('cancel-save'));
 
   idInput = element(by.id('field_id'));
+  nombreInput = element(by.id('field_nombre'));
   habilitacionesInput = element(by.id('field_habilitaciones'));
   descuentosInput = element(by.id('field_descuentos'));
   restriccionesInput = element(by.id('field_restricciones'));
@@ -44,6 +45,14 @@ export class PlanUpdatePage {
 
   async getIdInput(): Promise<string> {
     return await this.idInput.getAttribute('value');
+  }
+
+  async setNombreInput(nombre: string): Promise<void> {
+    await this.nombreInput.sendKeys(nombre);
+  }
+
+  async getNombreInput(): Promise<string> {
+    return await this.nombreInput.getAttribute('value');
   }
 
   async setHabilitacionesInput(habilitaciones: string): Promise<void> {
