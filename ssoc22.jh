@@ -130,6 +130,7 @@ entity SolicitudPrestacion {
     internacion Boolean
     observaciones String
     individuoAdhoc String
+    precioReal Float
 }
 
 @service(serviceImpl)

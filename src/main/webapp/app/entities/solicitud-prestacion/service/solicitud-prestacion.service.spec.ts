@@ -36,6 +36,7 @@ describe('SolicitudPrestacion Service', () => {
       internacion: false,
       observaciones: 'AAAAAAA',
       individuoAdhoc: 'AAAAAAA',
+      precioReal: 0,
     };
   });
 
@@ -93,6 +94,7 @@ describe('SolicitudPrestacion Service', () => {
           internacion: true,
           observaciones: 'BBBBBB',
           individuoAdhoc: 'BBBBBB',
+          precioReal: 1,
         },
         elemDefault
       );
@@ -158,6 +160,7 @@ describe('SolicitudPrestacion Service', () => {
           internacion: true,
           observaciones: 'BBBBBB',
           individuoAdhoc: 'BBBBBB',
+          precioReal: 1,
         },
         elemDefault
       );
@@ -214,7 +217,7 @@ describe('SolicitudPrestacion Service', () => {
       });
 
       it('should add only unique SolicitudPrestacion to an array', () => {
-        const solicitudPrestacionArray: ISolicitudPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 40282 }];
+        const solicitudPrestacionArray: ISolicitudPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 50320 }];
         const solicitudPrestacionCollection: ISolicitudPrestacion[] = [{ id: 123 }];
         expectedResult = service.addSolicitudPrestacionToCollectionIfMissing(solicitudPrestacionCollection, ...solicitudPrestacionArray);
         expect(expectedResult).toHaveLength(3);

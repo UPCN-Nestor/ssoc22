@@ -174,6 +174,8 @@ describe('SolicitudPrestacion e2e test', () => {
 
       cy.get(`[data-cy="individuoAdhoc"]`).type('disintermediate').should('have.value', 'disintermediate');
 
+      cy.get(`[data-cy="precioReal"]`).type('69001').should('have.value', '69001');
+
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

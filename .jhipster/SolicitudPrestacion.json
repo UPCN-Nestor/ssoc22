@@ -48,6 +48,10 @@
     {
       "fieldName": "individuoAdhoc",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "precioReal",
+      "fieldType": "Float"
     }
   ],
   "fluentMethods": true,

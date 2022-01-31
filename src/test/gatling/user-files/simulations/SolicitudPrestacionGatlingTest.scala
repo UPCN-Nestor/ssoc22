@@ -82,6 +82,7 @@ class SolicitudPrestacionGatlingTest extends Simulation {
                 , "internacion":null
                 , "observaciones":"SAMPLE_TEXT"
                 , "individuoAdhoc":"SAMPLE_TEXT"
+                , "precioReal":"0"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_solicitudPrestacion_url"))).exitHereIfFailed

@@ -75,6 +75,9 @@ class SolicitudPrestacionResourceIT {
     private static final String DEFAULT_INDIVIDUO_ADHOC = "AAAAAAAAAA";
     private static final String UPDATED_INDIVIDUO_ADHOC = "BBBBBBBBBB";
 
+    private static final Float DEFAULT_PRECIO_REAL = 1F;
+    private static final Float UPDATED_PRECIO_REAL = 2F;
+
     private static final String ENTITY_API_URL = "/api/solicitud-prestacions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -113,7 +116,8 @@ class SolicitudPrestacionResourceIT {
             .seEfectuo(DEFAULT_SE_EFECTUO)
             .internacion(DEFAULT_INTERNACION)
             .observaciones(DEFAULT_OBSERVACIONES)
-            .individuoAdhoc(DEFAULT_INDIVIDUO_ADHOC);
+            .individuoAdhoc(DEFAULT_INDIVIDUO_ADHOC)
+            .precioReal(DEFAULT_PRECIO_REAL);
         return solicitudPrestacion;
     }
 
@@ -135,7 +139,8 @@ class SolicitudPrestacionResourceIT {
             .seEfectuo(UPDATED_SE_EFECTUO)
             .internacion(UPDATED_INTERNACION)
             .observaciones(UPDATED_OBSERVACIONES)
-            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC);
+            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC)
+            .precioReal(UPDATED_PRECIO_REAL);
         return solicitudPrestacion;
     }
 
@@ -170,6 +175,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(DEFAULT_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(DEFAULT_OBSERVACIONES);
         assertThat(testSolicitudPrestacion.getIndividuoAdhoc()).isEqualTo(DEFAULT_INDIVIDUO_ADHOC);
+        assertThat(testSolicitudPrestacion.getPrecioReal()).isEqualTo(DEFAULT_PRECIO_REAL);
     }
 
     @Test
@@ -214,7 +220,8 @@ class SolicitudPrestacionResourceIT {
             .andExpect(jsonPath("$.[*].seEfectuo").value(hasItem(DEFAULT_SE_EFECTUO.booleanValue())))
             .andExpect(jsonPath("$.[*].internacion").value(hasItem(DEFAULT_INTERNACION.booleanValue())))
             .andExpect(jsonPath("$.[*].observaciones").value(hasItem(DEFAULT_OBSERVACIONES)))
-            .andExpect(jsonPath("$.[*].individuoAdhoc").value(hasItem(DEFAULT_INDIVIDUO_ADHOC)));
+            .andExpect(jsonPath("$.[*].individuoAdhoc").value(hasItem(DEFAULT_INDIVIDUO_ADHOC)))
+            .andExpect(jsonPath("$.[*].precioReal").value(hasItem(DEFAULT_PRECIO_REAL.doubleValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -257,7 +264,8 @@ class SolicitudPrestacionResourceIT {
             .andExpect(jsonPath("$.seEfectuo").value(DEFAULT_SE_EFECTUO.booleanValue()))
             .andExpect(jsonPath("$.internacion").value(DEFAULT_INTERNACION.booleanValue()))
             .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES))
-            .andExpect(jsonPath("$.individuoAdhoc").value(DEFAULT_INDIVIDUO_ADHOC));
+            .andExpect(jsonPath("$.individuoAdhoc").value(DEFAULT_INDIVIDUO_ADHOC))
+            .andExpect(jsonPath("$.precioReal").value(DEFAULT_PRECIO_REAL.doubleValue()));
     }
 
     @Test
@@ -290,7 +298,8 @@ class SolicitudPrestacionResourceIT {
             .seEfectuo(UPDATED_SE_EFECTUO)
             .internacion(UPDATED_INTERNACION)
             .observaciones(UPDATED_OBSERVACIONES)
-            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC);
+            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC)
+            .precioReal(UPDATED_PRECIO_REAL);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -315,6 +324,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(UPDATED_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
         assertThat(testSolicitudPrestacion.getIndividuoAdhoc()).isEqualTo(UPDATED_INDIVIDUO_ADHOC);
+        assertThat(testSolicitudPrestacion.getPrecioReal()).isEqualTo(UPDATED_PRECIO_REAL);
     }
 
     @Test
@@ -396,7 +406,8 @@ class SolicitudPrestacionResourceIT {
             .motivoLlamado(UPDATED_MOTIVO_LLAMADO)
             .internacion(UPDATED_INTERNACION)
             .observaciones(UPDATED_OBSERVACIONES)
-            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC);
+            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC)
+            .precioReal(UPDATED_PRECIO_REAL);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -421,6 +432,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(UPDATED_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
         assertThat(testSolicitudPrestacion.getIndividuoAdhoc()).isEqualTo(UPDATED_INDIVIDUO_ADHOC);
+        assertThat(testSolicitudPrestacion.getPrecioReal()).isEqualTo(UPDATED_PRECIO_REAL);
     }
 
     @Test
@@ -446,7 +458,8 @@ class SolicitudPrestacionResourceIT {
             .seEfectuo(UPDATED_SE_EFECTUO)
             .internacion(UPDATED_INTERNACION)
             .observaciones(UPDATED_OBSERVACIONES)
-            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC);
+            .individuoAdhoc(UPDATED_INDIVIDUO_ADHOC)
+            .precioReal(UPDATED_PRECIO_REAL);
 
         restSolicitudPrestacionMockMvc
             .perform(
@@ -471,6 +484,7 @@ class SolicitudPrestacionResourceIT {
         assertThat(testSolicitudPrestacion.getInternacion()).isEqualTo(UPDATED_INTERNACION);
         assertThat(testSolicitudPrestacion.getObservaciones()).isEqualTo(UPDATED_OBSERVACIONES);
         assertThat(testSolicitudPrestacion.getIndividuoAdhoc()).isEqualTo(UPDATED_INDIVIDUO_ADHOC);
+        assertThat(testSolicitudPrestacion.getPrecioReal()).isEqualTo(UPDATED_PRECIO_REAL);
     }
 
     @Test

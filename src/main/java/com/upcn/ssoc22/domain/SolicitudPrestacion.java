@@ -58,7 +58,9 @@ public class SolicitudPrestacion implements Serializable {
     @Column(name = "individuo_adhoc")
     private String individuoAdhoc;
 
-    // No ignorar Usuarios salida, llegada y libre, van en la grilla
+    @Column(name = "precio_real")
+    private Float precioReal;
+
     @JsonIgnoreProperties(value = { "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
@@ -254,6 +256,19 @@ public class SolicitudPrestacion implements Serializable {
         this.individuoAdhoc = individuoAdhoc;
     }
 
+    public Float getPrecioReal() {
+        return this.precioReal;
+    }
+
+    public SolicitudPrestacion precioReal(Float precioReal) {
+        this.setPrecioReal(precioReal);
+        return this;
+    }
+
+    public void setPrecioReal(Float precioReal) {
+        this.precioReal = precioReal;
+    }
+
     public Despacho getDespacho() {
         return this.despacho;
     }
@@ -392,6 +407,7 @@ public class SolicitudPrestacion implements Serializable {
             ", internacion='" + getInternacion() + "'" +
             ", observaciones='" + getObservaciones() + "'" +
             ", individuoAdhoc='" + getIndividuoAdhoc() + "'" +
+            ", precioReal=" + getPrecioReal() +
             "}";
     }
 }

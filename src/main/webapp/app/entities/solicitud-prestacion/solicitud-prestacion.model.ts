@@ -20,6 +20,7 @@ export interface ISolicitudPrestacion {
   internacion?: boolean | null;
   observaciones?: string | null;
   individuoAdhoc?: string | null;
+  precioReal?: number | null;
   despacho?: IDespacho | null;
   itemNomenclador?: IItemNomenclador | null;
   prestador?: IPrestador | null;
@@ -43,6 +44,7 @@ export class SolicitudPrestacion implements ISolicitudPrestacion {
     public internacion?: boolean | null,
     public observaciones?: string | null,
     public individuoAdhoc?: string | null,
+    public precioReal?: number | null,
     public despacho?: IDespacho | null,
     public itemNomenclador?: IItemNomenclador | null,
     public prestador?: IPrestador | null,

@@ -41,6 +41,7 @@ export class SolicitudPrestacionUpdatePage {
   internacionInput = element(by.id('field_internacion'));
   observacionesInput = element(by.id('field_observaciones'));
   individuoAdhocInput = element(by.id('field_individuoAdhoc'));
+  precioRealInput = element(by.id('field_precioReal'));
 
   despachoSelect = element(by.id('field_despacho'));
   itemNomencladorSelect = element(by.id('field_itemNomenclador'));
@@ -140,6 +141,14 @@ export class SolicitudPrestacionUpdatePage {
 
   async getIndividuoAdhocInput(): Promise<string> {
     return await this.individuoAdhocInput.getAttribute('value');
+  }
+
+  async setPrecioRealInput(precioReal: string): Promise<void> {
+    await this.precioRealInput.sendKeys(precioReal);
+  }
+
+  async getPrecioRealInput(): Promise<string> {
+    return await this.precioRealInput.getAttribute('value');
   }
 
   async despachoSelectLastOption(): Promise<void> {
