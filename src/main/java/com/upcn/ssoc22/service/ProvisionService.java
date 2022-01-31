@@ -59,4 +59,6 @@ public interface ProvisionService {
     void delete(Long id);
 
     boolean estaHabilitadaPara(Provision p, Adhesion a);
+
+    int diasCarencia(Provision p, Adhesion a);
 }

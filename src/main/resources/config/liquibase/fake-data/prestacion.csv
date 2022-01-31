@@ -1,4 +1,4 @@
-id;tipo;precio;carencia;nombre;codigo
+id;tipo;precio;dias_carencia;nombre;codigo
 1;bono;1000;1;Bono;100
 2;domicilio;3000;1;Atención Médica;200
 3;emergencia;4000;1;Emergencia;300

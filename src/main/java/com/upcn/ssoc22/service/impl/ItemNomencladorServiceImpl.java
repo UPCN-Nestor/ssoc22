@@ -13,6 +13,7 @@ import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.web.rest.errors.AdhesionNoHabilitadaException;
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -62,8 +63,8 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
                 if (itemNomenclador.getNombre() != null) {
                     existingItemNomenclador.setNombre(itemNomenclador.getNombre());
                 }
-                if (itemNomenclador.getCarencia() != null) {
-                    existingItemNomenclador.setCarencia(itemNomenclador.getCarencia());
+                if (itemNomenclador.getDiasCarencia() != null) {
+                    existingItemNomenclador.setDiasCarencia(itemNomenclador.getDiasCarencia());
                 }
 
                 return existingItemNomenclador;
@@ -111,17 +112,28 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
             log.debug("> Plan: " + p.getId());
 
             for (Provision prov : p.getProvisions()) {
-                log.debug(">> Provisión: " + prov.getId());
+                log.debug(
+                    ">> Provisión " +
+                    prov.getId() +
+                    " sobre " +
+                    (prov.getPrestacion() != null ? prov.getPrestacion().getNombre() : prov.getItemNomenclador().getNombre())
+                );
+
+                // En realidad creo que este IF es lo único que diferencia Bonos de la lógica de las demás prestaciones
                 if (provisionService.estaHabilitadaPara(prov, a)) {
                     // Si la Provisión es sobre una Prestación, agrego como disponibles todos los ItemNomencladors asociados. Si no, sólo el indicado.
                     if (prov.getPrestacion() != null) {
-                        List<ItemNomenclador> toAdd = Arrays.asList(
-                            prov.getPrestacion().getItemNomencladors().toArray(new ItemNomenclador[0])
+                        LinkedList<ItemNomenclador> toAdd = new LinkedList<ItemNomenclador>(
+                            Arrays.asList(prov.getPrestacion().getItemNomencladors().toArray(new ItemNomenclador[0]))
                         );
-                        toAdd.removeIf(i -> !cumpleCarenciaDefault(i, a, c));
+                        int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
+                        toAdd.removeIf(i -> !cumpleCarenciaDefinidaODefault(i, a, c, diasCarenciaSegunProvision));
                         toRet.addAll(toAdd);
                     } else {
-                        if (cumpleCarenciaDefault(prov.getItemNomenclador(), a, c)) toRet.add(prov.getItemNomenclador());
+                        int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
+                        if (cumpleCarenciaDefinidaODefault(prov.getItemNomenclador(), a, c, diasCarenciaSegunProvision)) toRet.add(
+                            prov.getItemNomenclador()
+                        );
                     }
                     log.debug(">> Habilitada.");
                 }
@@ -131,13 +143,17 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
         return toRet;
     }
 
-    boolean cumpleCarenciaDefault(ItemNomenclador i, Adhesion a, Contrato c) {
+    boolean cumpleCarenciaDefinidaODefault(ItemNomenclador i, Adhesion a, Contrato c, int diasCarenciaSegunProvision) {
         ZonedDateTime fechaAdhesion = a.getFechaAlta();
         ZonedDateTime fechaContrato = c.getFechaAlta();
         ZonedDateTime masReciente = fechaAdhesion.compareTo(fechaContrato) > 0 ? fechaAdhesion : fechaContrato;
 
         // Tomo la carencia de la práctica, o si no la de la prestación que la engloba.
-        Duration carenciaDefault = i.getCarencia() == null ? i.getPrestacion().getCarencia() : i.getCarencia();
-        return masReciente.plus(carenciaDefault).compareTo(ZonedDateTime.now()) < 0;
+        Integer carenciaDefault = i.getDiasCarencia() == null ? i.getPrestacion().getDiasCarencia() : i.getDiasCarencia();
+        Integer carenciaFinal = diasCarenciaSegunProvision > 0 ? diasCarenciaSegunProvision : carenciaDefault;
+
+        log.debug("Mayor alta entre adhesión y contrato: " + masReciente + ", carencia hallada: " + carenciaFinal);
+
+        return masReciente.plusDays(carenciaFinal).compareTo(ZonedDateTime.now()) < 0;
     }
 }

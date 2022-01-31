@@ -1,5 +1,5 @@
-id;nombre;carencia;codigo;prestacion_id
-1;Radiografía;2;100;1
+id;nombre;dias_carencia;codigo;prestacion_id
+1;Radiografía;90;100;1
 2;Atención Médica;;200;2
 3;Emergencia;;300;3
 4;Traslado Local;;400;4

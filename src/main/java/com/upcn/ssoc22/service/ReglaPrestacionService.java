@@ -48,4 +48,6 @@ public interface ReglaPrestacionService {
     void delete(Long id);
 
     boolean procesarReglaDeHabilitacion(ReglaPrestacion r, Adhesion a);
+
+    int procesarReglaDeCarencia(ReglaPrestacion r, Adhesion a);
 }

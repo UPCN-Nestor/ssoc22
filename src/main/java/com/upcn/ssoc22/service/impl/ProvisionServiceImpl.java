@@ -78,8 +78,8 @@ public class ProvisionServiceImpl implements ProvisionService {
         boolean habilitada = false;
 
         for (ReglaPrestacion r : p.getReglaPrestacions()) {
-            log.debug(">>> Regla de habilitación: " + r.getId());
             if (r.getTipoRegla().equals("Habilita")) {
+                log.debug(">>> Regla de habilitación: " + r.getId());
                 if (reglaPrestacionService.procesarReglaDeHabilitacion(r, a)) {
                     log.debug(">>> Ok.");
                     habilitada = true;
@@ -89,5 +89,19 @@ public class ProvisionServiceImpl implements ProvisionService {
         }
 
         return habilitada;
+    }
+
+    public int diasCarencia(Provision p, Adhesion a) {
+        int dias = 0;
+
+        for (ReglaPrestacion r : p.getReglaPrestacions()) {
+            if (r.getTipoRegla().equals("Carencia")) {
+                log.debug(">>> Regla de carencia: " + r.getId());
+                int carencia = reglaPrestacionService.procesarReglaDeCarencia(r, a);
+                dias = dias > carencia ? dias : carencia; // Se queda la mayor carencia entre las reglas aplicadas
+            }
+        }
+
+        return dias;
     }
 }

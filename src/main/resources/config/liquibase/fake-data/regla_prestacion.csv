@@ -1,2 +1,4 @@
 id;codigo_regla;tipo_regla;datos;provision_id
 1;H1;Habilita;;1
+2;H1;Habilita;;2
+3;C1;Carencia;5;2

@@ -82,4 +82,13 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
 
         return false;
     }
+
+    @Override
+    public int procesarReglaDeCarencia(ReglaPrestacion r, Adhesion a) {
+        if (r.getCodigoRegla().equals("C1")) {
+            // Ejemplo
+            return Integer.parseInt(r.getDatos());
+        }
+        return 0;
+    }
 }

@@ -219,7 +219,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   selectIndividuo(adhesion: any): void {
-    this.editForm.patchValue({ individuo: adhesion.individuo });
+    this.editForm.patchValue({ individuo: adhesion.individuo, itemNomenclador: null });
     this.itemNomencladorService.queryPorAdhesion(adhesion.id).subscribe(res => {
       this.itemNomencladorsSharedCollection = res.body ? res.body : [];
     });
@@ -229,6 +229,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     this.errorCliente = '';
     this.adhesionesDeCliente = null;
     this.practicasHabilitadas = null;
+    this.editForm.patchValue({ itemNomenclador: null });
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISolicitudPrestacion>>): void {
