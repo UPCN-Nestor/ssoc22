@@ -34,6 +34,7 @@ export class PrestacionUpdatePage {
   precioInput = element(by.id('field_precio'));
   carenciaInput = element(by.id('field_carencia'));
   nombreInput = element(by.id('field_nombre'));
+  codigoInput = element(by.id('field_codigo'));
 
   insumoSelect = element(by.id('field_insumo'));
 
@@ -79,6 +80,14 @@ export class PrestacionUpdatePage {
 
   async getNombreInput(): Promise<string> {
     return await this.nombreInput.getAttribute('value');
+  }
+
+  async setCodigoInput(codigo: string): Promise<void> {
+    await this.codigoInput.sendKeys(codigo);
+  }
+
+  async getCodigoInput(): Promise<string> {
+    return await this.codigoInput.getAttribute('value');
   }
 
   async insumoSelectLastOption(): Promise<void> {

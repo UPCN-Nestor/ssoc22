@@ -31,6 +31,9 @@ public class ItemNomenclador implements Serializable {
     @Column(name = "carencia")
     private Duration carencia;
 
+    @Column(name = "codigo")
+    private String codigo;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "itemNomencladors", "insumos", "provisions" }, allowSetters = true)
     private Prestacion prestacion;
@@ -92,6 +95,19 @@ public class ItemNomenclador implements Serializable {
 
     public void setCarencia(Duration carencia) {
         this.carencia = carencia;
+    }
+
+    public String getCodigo() {
+        return this.codigo;
+    }
+
+    public ItemNomenclador codigo(String codigo) {
+        this.setCodigo(codigo);
+        return this;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public Prestacion getPrestacion() {
@@ -226,6 +242,7 @@ public class ItemNomenclador implements Serializable {
             "id=" + getId() +
             ", nombre='" + getNombre() + "'" +
             ", carencia='" + getCarencia() + "'" +
+            ", codigo='" + getCodigo() + "'" +
             "}";
     }
 }

@@ -23,6 +23,7 @@ export class ItemNomencladorUpdateComponent implements OnInit {
     id: [],
     nombre: [],
     carencia: [],
+    codigo: [],
     prestacion: [],
   });
 
@@ -83,6 +84,7 @@ export class ItemNomencladorUpdateComponent implements OnInit {
       id: itemNomenclador.id,
       nombre: itemNomenclador.nombre,
       carencia: itemNomenclador.carencia,
+      codigo: itemNomenclador.codigo,
       prestacion: itemNomenclador.prestacion,
     });
 
@@ -110,6 +112,7 @@ export class ItemNomencladorUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       nombre: this.editForm.get(['nombre'])!.value,
       carencia: this.editForm.get(['carencia'])!.value,
+      codigo: this.editForm.get(['codigo'])!.value,
       prestacion: this.editForm.get(['prestacion'])!.value,
     };
   }

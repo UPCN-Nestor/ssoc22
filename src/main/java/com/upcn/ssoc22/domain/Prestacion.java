@@ -37,6 +37,9 @@ public class Prestacion implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "codigo")
+    private String codigo;
+
     @OneToMany(mappedBy = "prestacion")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "prestacion", "solicitudPrestacions", "provisions", "prestadors" }, allowSetters = true)
@@ -122,6 +125,19 @@ public class Prestacion implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getCodigo() {
+        return this.codigo;
+    }
+
+    public Prestacion codigo(String codigo) {
+        this.setCodigo(codigo);
+        return this;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public Set<ItemNomenclador> getItemNomencladors() {
@@ -239,6 +255,7 @@ public class Prestacion implements Serializable {
             ", precio=" + getPrecio() +
             ", carencia='" + getCarencia() + "'" +
             ", nombre='" + getNombre() + "'" +
+            ", codigo='" + getCodigo() + "'" +
             "}";
     }
 }

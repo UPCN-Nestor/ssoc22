@@ -7,6 +7,7 @@ export interface IItemNomenclador {
   id?: number;
   nombre?: string | null;
   carencia?: string | null;
+  codigo?: string | null;
   prestacion?: IPrestacion | null;
   solicitudPrestacions?: ISolicitudPrestacion[] | null;
   provisions?: IProvision[] | null;
@@ -18,6 +19,7 @@ export class ItemNomenclador implements IItemNomenclador {
     public id?: number,
     public nombre?: string | null,
     public carencia?: string | null,
+    public codigo?: string | null,
     public prestacion?: IPrestacion | null,
     public solicitudPrestacions?: ISolicitudPrestacion[] | null,
     public provisions?: IProvision[] | null,

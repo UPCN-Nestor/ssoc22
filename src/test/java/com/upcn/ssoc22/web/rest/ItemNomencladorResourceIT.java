@@ -36,6 +36,9 @@ class ItemNomencladorResourceIT {
     private static final Duration DEFAULT_CARENCIA = Duration.ofHours(6);
     private static final Duration UPDATED_CARENCIA = Duration.ofHours(12);
 
+    private static final String DEFAULT_CODIGO = "AAAAAAAAAA";
+    private static final String UPDATED_CODIGO = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/item-nomencladors";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -60,7 +63,7 @@ class ItemNomencladorResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ItemNomenclador createEntity(EntityManager em) {
-        ItemNomenclador itemNomenclador = new ItemNomenclador().nombre(DEFAULT_NOMBRE).carencia(DEFAULT_CARENCIA);
+        ItemNomenclador itemNomenclador = new ItemNomenclador().nombre(DEFAULT_NOMBRE).carencia(DEFAULT_CARENCIA).codigo(DEFAULT_CODIGO);
         return itemNomenclador;
     }
 
@@ -71,7 +74,7 @@ class ItemNomencladorResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ItemNomenclador createUpdatedEntity(EntityManager em) {
-        ItemNomenclador itemNomenclador = new ItemNomenclador().nombre(UPDATED_NOMBRE).carencia(UPDATED_CARENCIA);
+        ItemNomenclador itemNomenclador = new ItemNomenclador().nombre(UPDATED_NOMBRE).carencia(UPDATED_CARENCIA).codigo(UPDATED_CODIGO);
         return itemNomenclador;
     }
 
@@ -97,6 +100,7 @@ class ItemNomencladorResourceIT {
         ItemNomenclador testItemNomenclador = itemNomencladorList.get(itemNomencladorList.size() - 1);
         assertThat(testItemNomenclador.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testItemNomenclador.getCarencia()).isEqualTo(DEFAULT_CARENCIA);
+        assertThat(testItemNomenclador.getCodigo()).isEqualTo(DEFAULT_CODIGO);
     }
 
     @Test
@@ -132,7 +136,8 @@ class ItemNomencladorResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(itemNomenclador.getId().intValue())))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
-            .andExpect(jsonPath("$.[*].carencia").value(hasItem(DEFAULT_CARENCIA.toString())));
+            .andExpect(jsonPath("$.[*].carencia").value(hasItem(DEFAULT_CARENCIA.toString())))
+            .andExpect(jsonPath("$.[*].codigo").value(hasItem(DEFAULT_CODIGO)));
     }
 
     @Test
@@ -148,7 +153,8 @@ class ItemNomencladorResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(itemNomenclador.getId().intValue()))
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
-            .andExpect(jsonPath("$.carencia").value(DEFAULT_CARENCIA.toString()));
+            .andExpect(jsonPath("$.carencia").value(DEFAULT_CARENCIA.toString()))
+            .andExpect(jsonPath("$.codigo").value(DEFAULT_CODIGO));
     }
 
     @Test
@@ -170,7 +176,7 @@ class ItemNomencladorResourceIT {
         ItemNomenclador updatedItemNomenclador = itemNomencladorRepository.findById(itemNomenclador.getId()).get();
         // Disconnect from session so that the updates on updatedItemNomenclador are not directly saved in db
         em.detach(updatedItemNomenclador);
-        updatedItemNomenclador.nombre(UPDATED_NOMBRE).carencia(UPDATED_CARENCIA);
+        updatedItemNomenclador.nombre(UPDATED_NOMBRE).carencia(UPDATED_CARENCIA).codigo(UPDATED_CODIGO);
 
         restItemNomencladorMockMvc
             .perform(
@@ -186,6 +192,7 @@ class ItemNomencladorResourceIT {
         ItemNomenclador testItemNomenclador = itemNomencladorList.get(itemNomencladorList.size() - 1);
         assertThat(testItemNomenclador.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testItemNomenclador.getCarencia()).isEqualTo(UPDATED_CARENCIA);
+        assertThat(testItemNomenclador.getCodigo()).isEqualTo(UPDATED_CODIGO);
     }
 
     @Test
@@ -258,6 +265,8 @@ class ItemNomencladorResourceIT {
         ItemNomenclador partialUpdatedItemNomenclador = new ItemNomenclador();
         partialUpdatedItemNomenclador.setId(itemNomenclador.getId());
 
+        partialUpdatedItemNomenclador.codigo(UPDATED_CODIGO);
+
         restItemNomencladorMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedItemNomenclador.getId())
@@ -272,6 +281,7 @@ class ItemNomencladorResourceIT {
         ItemNomenclador testItemNomenclador = itemNomencladorList.get(itemNomencladorList.size() - 1);
         assertThat(testItemNomenclador.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testItemNomenclador.getCarencia()).isEqualTo(DEFAULT_CARENCIA);
+        assertThat(testItemNomenclador.getCodigo()).isEqualTo(UPDATED_CODIGO);
     }
 
     @Test
@@ -286,7 +296,7 @@ class ItemNomencladorResourceIT {
         ItemNomenclador partialUpdatedItemNomenclador = new ItemNomenclador();
         partialUpdatedItemNomenclador.setId(itemNomenclador.getId());
 
-        partialUpdatedItemNomenclador.nombre(UPDATED_NOMBRE).carencia(UPDATED_CARENCIA);
+        partialUpdatedItemNomenclador.nombre(UPDATED_NOMBRE).carencia(UPDATED_CARENCIA).codigo(UPDATED_CODIGO);
 
         restItemNomencladorMockMvc
             .perform(
@@ -302,6 +312,7 @@ class ItemNomencladorResourceIT {
         ItemNomenclador testItemNomenclador = itemNomencladorList.get(itemNomencladorList.size() - 1);
         assertThat(testItemNomenclador.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testItemNomenclador.getCarencia()).isEqualTo(UPDATED_CARENCIA);
+        assertThat(testItemNomenclador.getCodigo()).isEqualTo(UPDATED_CODIGO);
     }
 
     @Test

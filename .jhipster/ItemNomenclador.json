@@ -12,6 +12,10 @@
     {
       "fieldName": "carencia",
       "fieldType": "Duration"
+    },
+    {
+      "fieldName": "codigo",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

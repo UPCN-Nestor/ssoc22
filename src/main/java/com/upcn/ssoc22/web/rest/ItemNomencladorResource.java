@@ -3,7 +3,6 @@ package com.upcn.ssoc22.web.rest;
 import com.upcn.ssoc22.domain.ItemNomenclador;
 import com.upcn.ssoc22.repository.ItemNomencladorRepository;
 import com.upcn.ssoc22.service.ItemNomencladorService;
-import com.upcn.ssoc22.web.rest.errors.AdhesionNoHabilitadaException;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -140,15 +139,6 @@ public class ItemNomencladorResource {
     public List<ItemNomenclador> getAllItemNomencladors() {
         log.debug("REST request to get all ItemNomencladors");
         return itemNomencladorService.findAll();
-    }
-
-    // Busco los EXPLÍCITAMENTE habilitados por adhesión, esto lo usaríamos para los bonos
-    @GetMapping("/item-nomencladors/poradhesion/{adhesionid}")
-    public List<ItemNomenclador> getAllItemNomencladorsHabilitadosPorAdhesion(@PathVariable Long adhesionid)
-        throws AdhesionNoHabilitadaException {
-        log.debug("REST request to get all ItemNomencladors habilitados para adhesión " + adhesionid);
-
-        return itemNomencladorService.getAllItemNomencladorsHabilitadosPorAdhesion(adhesionid);
     }
 
     /**

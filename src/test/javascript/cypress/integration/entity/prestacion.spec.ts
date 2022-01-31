@@ -156,6 +156,8 @@ describe('Prestacion e2e test', () => {
 
       cy.get(`[data-cy="nombre"]`).type('rich Planificador Central').should('have.value', 'rich Planificador Central');
 
+      cy.get(`[data-cy="codigo"]`).type('invoice e-markets').should('have.value', 'invoice e-markets');
+
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

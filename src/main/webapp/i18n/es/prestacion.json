@@ -22,6 +22,7 @@
       "precio": "Precio",
       "carencia": "Carencia",
       "nombre": "Nombre",
+      "codigo": "Codigo",
       "itemNomenclador": "Item Nomenclador",
       "insumo": "Insumo",
       "provision": "Provision"

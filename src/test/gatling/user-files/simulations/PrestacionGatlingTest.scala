@@ -75,6 +75,7 @@ class PrestacionGatlingTest extends Simulation {
                 , "precio":"0"
                 , "carencia":null
                 , "nombre":"SAMPLE_TEXT"
+                , "codigo":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_prestacion_url"))).exitHereIfFailed

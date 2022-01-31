@@ -135,6 +135,9 @@ public class PrestacionResource {
                 if (prestacion.getNombre() != null) {
                     existingPrestacion.setNombre(prestacion.getNombre());
                 }
+                if (prestacion.getCodigo() != null) {
+                    existingPrestacion.setCodigo(prestacion.getCodigo());
+                }
 
                 return existingPrestacion;
             })

@@ -25,6 +25,7 @@ describe('Prestacion Service', () => {
       precio: 0,
       carencia: 'PT1S',
       nombre: 'AAAAAAA',
+      codigo: 'AAAAAAA',
     };
   });
 
@@ -64,6 +65,7 @@ describe('Prestacion Service', () => {
           precio: 1,
           carencia: 'BBBBBB',
           nombre: 'BBBBBB',
+          codigo: 'BBBBBB',
         },
         elemDefault
       );
@@ -78,7 +80,12 @@ describe('Prestacion Service', () => {
     });
 
     it('should partial update a Prestacion', () => {
-      const patchObject = Object.assign({}, new Prestacion());
+      const patchObject = Object.assign(
+        {
+          codigo: 'BBBBBB',
+        },
+        new Prestacion()
+      );
 
       const returnedFromService = Object.assign(patchObject, elemDefault);
 
@@ -99,6 +106,7 @@ describe('Prestacion Service', () => {
           precio: 1,
           carencia: 'BBBBBB',
           nombre: 'BBBBBB',
+          codigo: 'BBBBBB',
         },
         elemDefault
       );
@@ -150,7 +158,7 @@ describe('Prestacion Service', () => {
       });
 
       it('should add only unique Prestacion to an array', () => {
-        const prestacionArray: IPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 73703 }];
+        const prestacionArray: IPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 88815 }];
         const prestacionCollection: IPrestacion[] = [{ id: 123 }];
         expectedResult = service.addPrestacionToCollectionIfMissing(prestacionCollection, ...prestacionArray);
         expect(expectedResult).toHaveLength(3);

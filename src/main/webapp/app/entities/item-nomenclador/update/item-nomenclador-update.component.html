@@ -28,6 +28,11 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.itemNomenclador.codigo" for="field_codigo">Codigo</label>
+          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.itemNomenclador.prestacion" for="field_prestacion">Prestacion</label>
           <select class="form-control" id="field_prestacion" data-cy="prestacion" name="prestacion" formControlName="prestacion">
             <option [ngValue]="null"></option>

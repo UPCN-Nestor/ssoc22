@@ -76,6 +76,7 @@ entity Prestacion {
     precio Float
     carencia Duration
     nombre String
+    codigo String
 }
 
 entity Insumo {
@@ -134,6 +135,7 @@ entity SolicitudPrestacion {
 entity ItemNomenclador {
 	nombre String
     carencia Duration
+    codigo String
 }
 
 entity Prestador {

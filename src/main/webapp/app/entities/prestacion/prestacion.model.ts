@@ -8,6 +8,7 @@ export interface IPrestacion {
   precio?: number | null;
   carencia?: string | null;
   nombre?: string | null;
+  codigo?: string | null;
   itemNomencladors?: IItemNomenclador[] | null;
   insumos?: IInsumo[] | null;
   provisions?: IProvision[] | null;
@@ -20,6 +21,7 @@ export class Prestacion implements IPrestacion {
     public precio?: number | null,
     public carencia?: string | null,
     public nombre?: string | null,
+    public codigo?: string | null,
     public itemNomencladors?: IItemNomenclador[] | null,
     public insumos?: IInsumo[] | null,
     public provisions?: IProvision[] | null

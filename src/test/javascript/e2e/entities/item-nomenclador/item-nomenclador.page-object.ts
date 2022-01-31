@@ -32,6 +32,7 @@ export class ItemNomencladorUpdatePage {
   idInput = element(by.id('field_id'));
   nombreInput = element(by.id('field_nombre'));
   carenciaInput = element(by.id('field_carencia'));
+  codigoInput = element(by.id('field_codigo'));
 
   prestacionSelect = element(by.id('field_prestacion'));
 
@@ -61,6 +62,14 @@ export class ItemNomencladorUpdatePage {
 
   async getCarenciaInput(): Promise<string> {
     return await this.carenciaInput.getAttribute('value');
+  }
+
+  async setCodigoInput(codigo: string): Promise<void> {
+    await this.codigoInput.sendKeys(codigo);
+  }
+
+  async getCodigoInput(): Promise<string> {
+    return await this.codigoInput.getAttribute('value');
   }
 
   async prestacionSelectLastOption(): Promise<void> {

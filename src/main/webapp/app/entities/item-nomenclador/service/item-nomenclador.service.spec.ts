@@ -23,6 +23,7 @@ describe('ItemNomenclador Service', () => {
       id: 0,
       nombre: 'AAAAAAA',
       carencia: 'PT1S',
+      codigo: 'AAAAAAA',
     };
   });
 
@@ -60,6 +61,7 @@ describe('ItemNomenclador Service', () => {
           id: 1,
           nombre: 'BBBBBB',
           carencia: 'BBBBBB',
+          codigo: 'BBBBBB',
         },
         elemDefault
       );
@@ -77,6 +79,7 @@ describe('ItemNomenclador Service', () => {
       const patchObject = Object.assign(
         {
           carencia: 'BBBBBB',
+          codigo: 'BBBBBB',
         },
         new ItemNomenclador()
       );
@@ -98,6 +101,7 @@ describe('ItemNomenclador Service', () => {
           id: 1,
           nombre: 'BBBBBB',
           carencia: 'BBBBBB',
+          codigo: 'BBBBBB',
         },
         elemDefault
       );
@@ -149,7 +153,7 @@ describe('ItemNomenclador Service', () => {
       });
 
       it('should add only unique ItemNomenclador to an array', () => {
-        const itemNomencladorArray: IItemNomenclador[] = [{ id: 123 }, { id: 456 }, { id: 82887 }];
+        const itemNomencladorArray: IItemNomenclador[] = [{ id: 123 }, { id: 456 }, { id: 26134 }];
         const itemNomencladorCollection: IItemNomenclador[] = [{ id: 123 }];
         expectedResult = service.addItemNomencladorToCollectionIfMissing(itemNomencladorCollection, ...itemNomencladorArray);
         expect(expectedResult).toHaveLength(3);

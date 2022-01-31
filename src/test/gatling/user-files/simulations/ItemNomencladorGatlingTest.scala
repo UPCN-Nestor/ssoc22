@@ -73,6 +73,7 @@ class ItemNomencladorGatlingTest extends Simulation {
             .body(StringBody("""{
                 "nombre":"SAMPLE_TEXT"
                 , "carencia":null
+                , "codigo":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_itemNomenclador_url"))).exitHereIfFailed

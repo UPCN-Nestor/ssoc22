@@ -35,6 +35,7 @@
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.itemNomenclador.nombre">Nombre</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.itemNomenclador.carencia">Carencia</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.itemNomenclador.codigo">Codigo</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.itemNomenclador.prestacion">Prestacion</span></th>
           <th scope="col"></th>
         </tr>
@@ -46,6 +47,7 @@
           </td>
           <td>{{ itemNomenclador.nombre }}</td>
           <td title="{{ itemNomenclador.carencia }}">{{ itemNomenclador.carencia | duration }}</td>
+          <td>{{ itemNomenclador.codigo }}</td>
           <td>
             <div *ngIf="itemNomenclador.prestacion">
               <a [routerLink]="['/prestacion', itemNomenclador.prestacion?.id, 'view']">{{ itemNomenclador.prestacion?.id }}</a>

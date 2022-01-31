@@ -20,6 +20,10 @@
     {
       "fieldName": "nombre",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "codigo",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

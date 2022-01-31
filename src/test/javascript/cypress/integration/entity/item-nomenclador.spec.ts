@@ -152,6 +152,8 @@ describe('ItemNomenclador e2e test', () => {
 
       cy.get(`[data-cy="carencia"]`).type('PT33M').should('have.value', 'PT33M');
 
+      cy.get(`[data-cy="codigo"]`).type('payment override cliente').should('have.value', 'payment override cliente');
+
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

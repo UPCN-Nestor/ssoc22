@@ -30,6 +30,10 @@
         <dd>
           <span>{{ prestacion.nombre }}</span>
         </dd>
+        <dt><span jhiTranslate="ssoc22App.prestacion.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ prestacion.codigo }}</span>
+        </dd>
         <dt><span jhiTranslate="ssoc22App.prestacion.insumo">Insumo</span></dt>
         <dd>
           <span *ngFor="let insumo of prestacion.insumos; let last = last">
