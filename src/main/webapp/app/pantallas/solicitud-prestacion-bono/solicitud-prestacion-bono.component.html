@@ -38,24 +38,26 @@
         <small class="form-text text-danger">{{ errorCliente }}</small>
       </div>
 
-      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-        <div class="form-group">
-          <label class="form-control-label" for="field_individuo">Paciente</label>
-          <select class="form-control" id="field_individuo" data-cy="individuo" name="individuo" formControlName="individuo" required>
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                adhesionOption.individuo!.id === editForm.get('individuo')!.value?.id
-                  ? editForm.get('individuo')!.value
-                  : adhesionOption.individuo!
-              "
-              *ngFor="let adhesionOption of adhesionesDeCliente; trackBy: trackAdhesionById"
-            >
-              {{ adhesionOption.individuo!.nombre }}
-            </option>
-          </select>
-        </div>
+      <div class="form-group">
+        <label class="form-control-label" for="field_individuo">Paciente</label>
+        <select
+          class="form-control"
+          id="field_individuo"
+          data-cy="individuo"
+          name="individuo"
+          required
+          [ngModel]="adhesionSeleccionada"
+          (ngModelChange)="selectIndividuo($event)"
+        >
+          >
+          <option [ngValue]="null"></option>
+          <option [ngValue]="adhesionOption" *ngFor="let adhesionOption of adhesionesDeCliente; trackBy: trackAdhesionById">
+            {{ adhesionOption.individuo!.nombre }}
+          </option>
+        </select>
+      </div>
 
+      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
         <div class="form-group">
           <label class="form-control-label" for="field_itemNomenclador">Práctica</label>
           <select
@@ -64,6 +66,7 @@
             data-cy="itemNomenclador"
             name="itemNomenclador"
             formControlName="itemNomenclador"
+            required
           >
             <option [ngValue]="null"></option>
             <option

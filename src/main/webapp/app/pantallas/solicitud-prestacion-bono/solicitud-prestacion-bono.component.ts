@@ -51,6 +51,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   adhesionesDeCliente: IAdhesion[] | null = [];
   practicasHabilitadas: IItemNomenclador[] | null = [];
 
+  adhesionSeleccionada: IAdhesion | null = null;
+
   despachosCollection: IDespacho[] = [];
   itemNomencladorsSharedCollection: IItemNomenclador[] = [];
   usersSharedCollection: IUser[] = [];
@@ -216,6 +218,13 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     );
   }
 
+  selectIndividuo(adhesion: any): void {
+    this.editForm.patchValue({ individuo: adhesion.individuo });
+    this.itemNomencladorService.queryPorAdhesion(adhesion.id).subscribe(res => {
+      this.itemNomencladorsSharedCollection = res.body ? res.body : [];
+    });
+  }
+
   limpiarCampos(): void {
     this.errorCliente = '';
     this.adhesionesDeCliente = null;
@@ -293,7 +302,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
         )
       )
       .subscribe((despachos: IDespacho[]) => (this.despachosCollection = despachos));
-
+    /*
     this.itemNomencladorService
       .query()
       .pipe(map((res: HttpResponse<IItemNomenclador[]>) => res.body ?? []))
@@ -303,7 +312,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
         )
       )
       .subscribe((itemNomencladors: IItemNomenclador[]) => (this.itemNomencladorsSharedCollection = itemNomencladors));
-
+*/
     this.userService
       .query()
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))

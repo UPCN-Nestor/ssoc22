@@ -11,7 +11,10 @@ import com.upcn.ssoc22.repository.ItemNomencladorRepository;
 import com.upcn.ssoc22.service.ItemNomencladorService;
 import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.web.rest.errors.AdhesionNoHabilitadaException;
+import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -110,12 +113,31 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
             for (Provision prov : p.getProvisions()) {
                 log.debug(">> Provisión: " + prov.getId());
                 if (provisionService.estaHabilitadaPara(prov, a)) {
-                    toRet.add(prov.getItemNomenclador());
+                    // Si la Provisión es sobre una Prestación, agrego como disponibles todos los ItemNomencladors asociados. Si no, sólo el indicado.
+                    if (prov.getPrestacion() != null) {
+                        List<ItemNomenclador> toAdd = Arrays.asList(
+                            prov.getPrestacion().getItemNomencladors().toArray(new ItemNomenclador[0])
+                        );
+                        toAdd.removeIf(i -> !cumpleCarenciaDefault(i, a, c));
+                        toRet.addAll(toAdd);
+                    } else {
+                        if (cumpleCarenciaDefault(prov.getItemNomenclador(), a, c)) toRet.add(prov.getItemNomenclador());
+                    }
                     log.debug(">> Habilitada.");
                 }
             }
         }
 
         return toRet;
+    }
+
+    boolean cumpleCarenciaDefault(ItemNomenclador i, Adhesion a, Contrato c) {
+        ZonedDateTime fechaAdhesion = a.getFechaAlta();
+        ZonedDateTime fechaContrato = c.getFechaAlta();
+        ZonedDateTime masReciente = fechaAdhesion.compareTo(fechaContrato) > 0 ? fechaAdhesion : fechaContrato;
+
+        // Tomo la carencia de la práctica, o si no la de la prestación que la engloba.
+        Duration carenciaDefault = i.getCarencia() == null ? i.getPrestacion().getCarencia() : i.getCarencia();
+        return masReciente.plus(carenciaDefault).compareTo(ZonedDateTime.now()) < 0;
     }
 }

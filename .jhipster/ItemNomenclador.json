@@ -1,5 +1,7 @@
 {
-  "applications": ["ssoc22"],
+  "applications": [
+    "ssoc22"
+  ],
   "changelogDate": "20220124141215",
   "dto": "no",
   "embedded": false,
@@ -10,8 +12,8 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "carencia",
-      "fieldType": "Duration"
+      "fieldName": "diasCarencia",
+      "fieldType": "Integer"
     },
     {
       "fieldName": "codigo",
@@ -25,29 +27,29 @@
   "readOnly": false,
   "relationships": [
     {
+      "relationshipType": "many-to-one",
       "otherEntityName": "prestacion",
       "otherEntityRelationshipName": "itemNomenclador",
-      "relationshipName": "prestacion",
-      "relationshipType": "many-to-one"
+      "relationshipName": "prestacion"
     },
     {
+      "relationshipType": "one-to-many",
       "otherEntityName": "solicitudPrestacion",
       "otherEntityRelationshipName": "itemNomenclador",
-      "relationshipName": "solicitudPrestacion",
-      "relationshipType": "one-to-many"
+      "relationshipName": "solicitudPrestacion"
     },
     {
+      "relationshipType": "one-to-many",
       "otherEntityName": "provision",
       "otherEntityRelationshipName": "itemNomenclador",
-      "relationshipName": "provision",
-      "relationshipType": "one-to-many"
+      "relationshipName": "provision"
     },
     {
+      "relationshipType": "many-to-many",
       "otherEntityName": "prestador",
       "otherEntityRelationshipName": "itemNomenclador",
-      "ownerSide": false,
       "relationshipName": "prestador",
-      "relationshipType": "many-to-many"
+      "ownerSide": false
     }
   ],
   "service": "serviceImpl"

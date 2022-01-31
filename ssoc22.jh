@@ -75,7 +75,7 @@ entity ReglaPrestacion {
 entity Prestacion {
 	tipo String
     precio Float
-    carencia Duration
+    diasCarencia Integer
     nombre String
     codigo String
 }
@@ -135,7 +135,7 @@ entity SolicitudPrestacion {
 @service(serviceImpl)
 entity ItemNomenclador {
 	nombre String
-    carencia Duration
+    diasCarencia Integer
     codigo String
 }
 

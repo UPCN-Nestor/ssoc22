@@ -80,7 +80,7 @@ public class ProvisionServiceImpl implements ProvisionService {
         for (ReglaPrestacion r : p.getReglaPrestacions()) {
             log.debug(">>> Regla de habilitación: " + r.getId());
             if (r.getTipoRegla().equals("Habilita")) {
-                if (reglaPrestacionService.habilita(r, a)) {
+                if (reglaPrestacionService.procesarReglaDeHabilitacion(r, a)) {
                     log.debug(">>> Ok.");
                     habilitada = true;
                     break;

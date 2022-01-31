@@ -141,6 +141,12 @@ public class ItemNomencladorResource {
         return itemNomencladorService.findAll();
     }
 
+    @GetMapping("/item-nomencladors/poradhesion/{adhesionid}")
+    public List<ItemNomenclador> getAllItemNomencladors(@PathVariable Long adhesionid) {
+        log.debug("REST request to get all ItemNomencladors por id adhesión: " + adhesionid);
+        return itemNomencladorService.getAllItemNomencladorsHabilitadosPorAdhesion(adhesionid);
+    }
+
     /**
      * {@code GET  /item-nomencladors/:id} : get the "id" itemNomenclador.
      *

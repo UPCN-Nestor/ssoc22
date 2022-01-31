@@ -74,7 +74,12 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
         reglaPrestacionRepository.deleteById(id);
     }
 
-    public boolean habilita(ReglaPrestacion r, Adhesion a) {
+    public boolean procesarReglaDeHabilitacion(ReglaPrestacion r, Adhesion a) {
+        if (r.getCodigoRegla().equals("H1")) {
+            // Ejemplo
+            return true;
+        }
+
         return false;
     }
 }

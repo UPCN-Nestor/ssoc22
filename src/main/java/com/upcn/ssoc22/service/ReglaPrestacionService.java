@@ -47,5 +47,5 @@ public interface ReglaPrestacionService {
      */
     void delete(Long id);
 
-    boolean habilita(ReglaPrestacion r, Adhesion a);
+    boolean procesarReglaDeHabilitacion(ReglaPrestacion r, Adhesion a);
 }
