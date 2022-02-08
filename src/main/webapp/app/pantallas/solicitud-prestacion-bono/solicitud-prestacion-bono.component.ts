@@ -2,8 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, OperatorFunction } from 'rxjs';
-import { debounceTime, distinctUntilChanged, finalize, first, map, switchMap, tap } from 'rxjs/operators';
+import { merge, Observable, OperatorFunction, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, finalize, first, map, switchMap, tap } from 'rxjs/operators';
 
 import dayjs, { Dayjs } from 'dayjs/esm';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
@@ -20,7 +20,7 @@ import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 import { IndividuoService } from 'app/entities/individuo/service/individuo.service';
-import { NgbModal, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
@@ -47,6 +47,16 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   clienteSeleccionado: ICliente | null = null;
   searching = false;
   // *** End socio
+
+  // *** Práctica typeahead
+  @ViewChild('instance', { static: true }) instance: NgbTypeahead | null = null;
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+
+  errorPractica = '';
+  practicaSearchFailed = false;
+  practicaSeleccionada: IItemNomenclador | null = null;
+  // *** En práctica typeahead
 
   adhesionesDeCliente: IAdhesion[] | null = [];
   practicasHabilitadas: IItemNomenclador[] | null = [];
@@ -167,7 +177,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     return option;
   }
 
-  // *** Prueba typeahead
+  // *** Typeahead cliente
   search: OperatorFunction<string, readonly ICliente[]> = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(300),
@@ -187,6 +197,33 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   resultFormatter: (item: any) => string = i => i.nombre || '';
   // eslint-disable-next-line
   inputFormatter: (item: any) => string = i => i.nombre || '';
+
+  // *** Typeahead práctica
+
+  practicaSearch: OperatorFunction<string, readonly IItemNomenclador[]> = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance!.isPopupOpen()));
+    const inputFocus$ = this.focus$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      switchMap(term =>
+        this.adhesionSeleccionada
+          ? term.length === 0
+            ? this.itemNomencladorService.queryPorAdhesion(this.adhesionSeleccionada.id!).pipe(
+                map(res => res.body!) // Extrae array de Httpresponse
+              )
+            : this.itemNomencladorService.queryPorAdhesionYNombreParcial(this.adhesionSeleccionada.id!, term).pipe(
+                map(res => res.body!) // Extrae array de Httpresponse
+              )
+          : []
+      )
+    );
+  };
+
+  // eslint-disable-next-line
+  practicaResultFormatter: (item: any) => string = i => i.nombre || '';
+  // eslint-disable-next-line
+  practicaInputFormatter: (item: any) => string = i => i.nombre || '';
 
   selectNombreSocio(event: NgbTypeaheadSelectItemEvent<ICliente>): void {
     this.limpiarCampos();
@@ -222,6 +259,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   selectIndividuo(adhesion: any): void {
     this.editForm.patchValue({ individuo: adhesion.individuo, itemNomenclador: null, precioReal: null });
 
+    this.practicaSeleccionada = null;
     this.adhesionSeleccionada = adhesion;
 
     this.itemNomencladorService.queryPorAdhesion(adhesion.id).subscribe(res => {
@@ -230,6 +268,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   selectItemNomenclador(item: any): void {
+    this.editForm.patchValue({ itemNomenclador: item });
     const itemnomencladorid = this.editForm.get('itemNomenclador')?.value?.id;
     const adhesionid = this.adhesionSeleccionada?.id;
 

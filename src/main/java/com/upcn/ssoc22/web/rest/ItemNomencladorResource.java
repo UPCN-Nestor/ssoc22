@@ -6,6 +6,7 @@ import com.upcn.ssoc22.service.ItemNomencladorService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -142,9 +143,22 @@ public class ItemNomencladorResource {
     }
 
     @GetMapping("/item-nomencladors/poradhesion/{adhesionid}")
-    public List<ItemNomenclador> getAllItemNomencladors(@PathVariable Long adhesionid) {
+    public List<ItemNomenclador> getAllItemNomencladorsHabilitadosPorAdhesion(@PathVariable Long adhesionid) {
         log.debug("REST request to get all ItemNomencladors por id adhesión: " + adhesionid);
         return itemNomencladorService.getAllItemNomencladorsHabilitadosPorAdhesion(adhesionid);
+    }
+
+    @GetMapping("/item-nomencladors/poradhesionynombreparcial/{adhesionid}/{nombre}")
+    public List<ItemNomenclador> getAllItemNomencladors(@PathVariable Long adhesionid, @PathVariable String nombre) {
+        log.debug("REST request to get all ItemNomencladors por id adhesión: " + adhesionid + " y nombre parcial: " + nombre);
+        ArrayList<ItemNomenclador> toRet = new ArrayList<ItemNomenclador>(
+            itemNomencladorService.getAllItemNomencladorsHabilitadosPorAdhesion(adhesionid)
+        );
+        if (toRet.size() > 0) toRet.removeIf(i -> {
+            return !i.getNombre().toUpperCase().contains(nombre.toUpperCase());
+        });
+
+        return toRet;
     }
 
     /**

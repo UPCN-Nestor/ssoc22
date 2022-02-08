@@ -143,6 +143,9 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
 
         List<ItemNomenclador> toRetList = Arrays.asList(toRet.toArray(new ItemNomenclador[0]));
 
+        toRetList.sort((i1, i2) -> {
+            return i1.getNombre().compareTo(i2.getNombre());
+        });
         return toRetList;
     }
 
