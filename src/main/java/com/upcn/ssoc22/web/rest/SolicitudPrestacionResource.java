@@ -204,7 +204,7 @@ public class SolicitudPrestacionResource {
     ) {
         log.debug("REST request to get all SolicitudPrestacions por Tipo " + tipo);
         List<SolicitudPrestacion> toRet = solicitudPrestacionRepository.findAllWithEagerRelationships();
-        toRet.removeIf(s -> !s.getTipo().equals(tipo)); // Filter
+        toRet.removeIf(s -> !s.getTipo().toUpperCase().equals(tipo.toUpperCase())); // Filter
 
         return toRet;
     }

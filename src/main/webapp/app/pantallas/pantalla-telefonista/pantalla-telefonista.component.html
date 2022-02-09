@@ -319,7 +319,7 @@
                 id="jh-create-entity"
                 data-cy="entityCreateButton"
                 class="btn btn-primary jh-create-entity create-solicitud-prestacion"
-                (click)="popupBono()"
+                (click)="popupBono(null)"
               >
                 <fa-icon icon="plus"></fa-icon>
                 <span>Nuevo bono</span>
@@ -327,6 +327,90 @@
             </div>
           </div>
         </h4>
+
+        <div class="table-responsive" id="entities" *ngIf="solicitudBonos && solicitudBonos.length > 0">
+          <table class="table table-striped table-sm table-hover" aria-describedby="page-heading">
+            <thead>
+              <tr>
+                <th scope="col"><span>#</span></th>
+                <th scope="col"><span>Solic.</span></th>
+                <th scope="col"><span>Salida</span></th>
+                <th scope="col"><span>Llegada</span></th>
+                <th scope="col"><span>Libre</span></th>
+                <th scope="col"><span>Paciente</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.domicilio">Domicilio</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.telefono">Telefono</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.edad">Edad</span></th>
+
+                <th scope="col"><span>Motivo</span></th>
+                <th scope="col"><span>¿Se efectuó?</span></th>
+                <th scope="col"><span>¿Internación?</span></th>
+                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let solicitudPrestacion of solicitudBonos; trackBy: trackId" data-cy="entityTable">
+                <td>{{ solicitudPrestacion.numero }}</td>
+                <td>{{ solicitudPrestacion.horaSolicitud | formatShortTime }}</td>
+                <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaSalida) }}</td>
+                <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaLlegada) }}</td>
+                <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaLibre) }}</td>
+                <td>
+                  <div *ngIf="solicitudPrestacion.individuo">
+                    <a (click)="popupPaciente(solicitudPrestacion.individuo!)">{{ solicitudPrestacion.individuo?.nombre }}</a>
+                  </div>
+                </td>
+                <td>{{ solicitudPrestacion.domicilio }}</td>
+                <td>{{ solicitudPrestacion.telefono }}</td>
+                <td>{{ solicitudPrestacion.edad }}</td>
+                <td>{{ solicitudPrestacion.motivoLlamado }}</td>
+                <td class="text-center">
+                  <div *ngIf="solicitudPrestacion.seEfectuo"><fa-icon icon="check"></fa-icon></div>
+                  <div *ngIf="!solicitudPrestacion.seEfectuo"><fa-icon icon="times"></fa-icon></div>
+                </td>
+                <td class="text-center">
+                  <div *ngIf="solicitudPrestacion.internacion"><fa-icon icon="check"></fa-icon></div>
+                  <div *ngIf="!solicitudPrestacion.internacion"><fa-icon icon="times"></fa-icon></div>
+                </td>
+                <td>{{ solicitudPrestacion.observaciones }}</td>
+
+                <td class="text-right">
+                  <div class="btn-group">
+                    <!--
+                    <button
+                      type="submit"
+                      [routerLink]="['/solicitud-prestacion', solicitudPrestacion.id, 'view']"
+                      class="btn btn-info btn-sm"
+                      data-cy="entityDetailsButton"
+                    >
+                      <fa-icon icon="eye"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                    </button>
+                    -->
+
+                    <button
+                      type="submit"
+                      (click)="popupBono(solicitudPrestacion)"
+                      class="btn btn-outline-primary btn-sm"
+                      data-cy="entityEditButton"
+                    >
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                      <span class="d-none d-md-inline">Modificar</span>
+                    </button>
+
+                    <!--
+                      <button type="submit" (click)="delete(solicitudPrestacion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                        <fa-icon icon="times"></fa-icon>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                      </button>
+                      -->
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </ng-template>
     </li>
   </ul>

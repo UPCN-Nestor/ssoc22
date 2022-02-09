@@ -236,6 +236,7 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       )
       .subscribe((itemNomencladors: IItemNomenclador[]) => (this.itemNomencladorsSharedCollection = itemNomencladors));
 
+    // eslint-disable-next-line
     this.prestadorService
       .query()
       .pipe(map((res: HttpResponse<IPrestador[]>) => res.body ?? []))

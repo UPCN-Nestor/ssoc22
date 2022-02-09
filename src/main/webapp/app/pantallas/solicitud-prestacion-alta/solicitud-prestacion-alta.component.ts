@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, OperatorFunction } from 'rxjs';
-import { debounceTime, distinctUntilChanged, finalize, first, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, finalize, map, switchMap, tap } from 'rxjs/operators';
 
 import dayjs, { Dayjs } from 'dayjs/esm';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
@@ -11,7 +11,7 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { ISolicitudPrestacion, SolicitudPrestacion } from '../../entities/solicitud-prestacion/solicitud-prestacion.model';
 import { SolicitudPrestacionService } from '../../entities/solicitud-prestacion/service/solicitud-prestacion.service';
 import { IDespacho } from 'app/entities/despacho/despacho.model';
-import { DespachoService, EntityArrayResponseType } from 'app/entities/despacho/service/despacho.service';
+import { DespachoService } from 'app/entities/despacho/service/despacho.service';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
 import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
 import { IUser } from 'app/entities/user/user.model';
@@ -100,7 +100,7 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
   }
 
   previousState(): void {
-    //window.history.back();
+    // window.history.back();
     this.modalService.dismissAll();
   }
 

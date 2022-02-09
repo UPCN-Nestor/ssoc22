@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge, Observable, OperatorFunction, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, finalize, first, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, finalize, map, switchMap, tap } from 'rxjs/operators';
 
 import dayjs, { Dayjs } from 'dayjs/esm';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
@@ -11,7 +11,7 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { ISolicitudPrestacion, SolicitudPrestacion } from '../../entities/solicitud-prestacion/solicitud-prestacion.model';
 import { SolicitudPrestacionService } from '../../entities/solicitud-prestacion/service/solicitud-prestacion.service';
 import { IDespacho } from 'app/entities/despacho/despacho.model';
-import { DespachoService, EntityArrayResponseType } from 'app/entities/despacho/service/despacho.service';
+import { DespachoService } from 'app/entities/despacho/service/despacho.service';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
 import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
 import { IUser } from 'app/entities/user/user.model';
@@ -25,7 +25,7 @@ import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
 import { IPrestador } from 'app/entities/prestador/prestador.model';
-import { Adhesion, IAdhesion } from 'app/entities/adhesion/adhesion.model';
+import { IAdhesion } from 'app/entities/adhesion/adhesion.model';
 import { AdhesionService } from 'app/entities/adhesion/service/adhesion.service';
 
 @Component({
@@ -35,6 +35,8 @@ import { AdhesionService } from 'app/entities/adhesion/service/adhesion.service'
 export class SolicitudPrestacionBonoComponent implements OnInit {
   isSaving = false;
   tipo = '';
+
+  solicitudPrestacionBonoParaModificar: ISolicitudPrestacion | null = null;
 
   // *** Socio
   tipoCliente = 'Socio';
@@ -88,6 +90,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     insumos: [],
     individuo: [],
     precioReal: [],
+    prestador: [],
   });
 
   constructor(
@@ -102,21 +105,30 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     protected fb: FormBuilder,
     protected modalService: NgbModal,
     protected prestadorService: PrestadorService,
-    protected adhesionService: AdhesionService
-  ) {}
+    protected adhesionService: AdhesionService,
+    protected router: Router
+  ) {
+    // eslint-disable-next-line
+    this.router.events.subscribe(console.log);
+  }
 
   ngOnInit(): void {
-    const solicitudPrestacion = new SolicitudPrestacion();
-    const ahora = dayjs(dayjs(), DATE_TIME_FORMAT);
-    solicitudPrestacion.horaSolicitud = ahora;
-    // Número: autogenerado en servidor.
-    // Ítem nomenclador: asignado unívocamente en el servidor a partir del tipo de solicitud.
-    // Usuario solicitud: asignado en el servidor.
-    solicitudPrestacion.seEfectuo = false;
-    solicitudPrestacion.internacion = false;
-    solicitudPrestacion.tipo = this.tipo;
+    if (!this.solicitudPrestacionBonoParaModificar) {
+      const nueva = new SolicitudPrestacion();
+      const ahora = dayjs(dayjs(), DATE_TIME_FORMAT);
+      nueva.horaSolicitud = ahora;
+      // Número: autogenerado en servidor.
+      // Usuario solicitud: asignado en el servidor.
+      nueva.seEfectuo = false;
+      nueva.internacion = false;
+      nueva.tipo = this.tipo;
+      this.updateForm(nueva);
+    } else {
+      this.clienteSeleccionado = this.solicitudPrestacionBonoParaModificar.cliente!;
+      this.updateForm(this.solicitudPrestacionBonoParaModificar);
+    }
 
-    this.updateForm(solicitudPrestacion);
+    this.loadRelationshipsOptions();
   }
 
   formatShortTime(d: Dayjs | null | undefined): string {
@@ -125,7 +137,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
 
   previousState(): void {
     this.modalService.dismissAll();
-    //window.history.back();
+    // window.history.back();
   }
 
   save(): void {
@@ -178,6 +190,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   // *** Typeahead cliente
+
   search: OperatorFunction<string, readonly ICliente[]> = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(300),
@@ -197,6 +210,17 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   resultFormatter: (item: any) => string = i => i.nombre || '';
   // eslint-disable-next-line
   inputFormatter: (item: any) => string = i => i.nombre || '';
+
+  selectNombreSocio(event: NgbTypeaheadSelectItemEvent<ICliente>): void {
+    this.limpiarCampos();
+    this.clienteSeleccionado = event.item;
+    this.numeroSocioSeleccionado = this.clienteSeleccionado.socio!;
+
+    this.adhesionService.queryPorCliente(this.clienteSeleccionado.id!).subscribe(as => {
+      this.adhesionesDeCliente = as.body;
+    });
+  }
+  // *** Fin typeahead cliente
 
   // *** Typeahead práctica
 
@@ -225,16 +249,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   // eslint-disable-next-line
   practicaInputFormatter: (item: any) => string = i => i.nombre || '';
 
-  selectNombreSocio(event: NgbTypeaheadSelectItemEvent<ICliente>): void {
-    this.limpiarCampos();
-    this.clienteSeleccionado = event.item;
-    this.numeroSocioSeleccionado = this.clienteSeleccionado.socio!;
-
-    this.adhesionService.queryPorCliente(this.clienteSeleccionado.id!).subscribe(as => {
-      this.adhesionesDeCliente = as.body;
-    });
-  }
-  // *** Fin typeahead
+  // ** Fin typeahead práctica
 
   selectNumeroSocio(ev: any): void {
     this.clienteService.findPorNroSocio(ev.target.value as number).subscribe(
@@ -248,7 +263,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
           });
         }
       },
-      err => {
+      () => {
         this.errorCliente = 'No se encontró un cliente con ese número de socio';
         this.adhesionesDeCliente = null;
         this.clienteSeleccionado = null;
@@ -257,7 +272,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   selectIndividuo(adhesion: any): void {
-    this.editForm.patchValue({ individuo: adhesion.individuo, itemNomenclador: null, precioReal: null });
+    this.editForm.patchValue({ individuo: adhesion.individuo, itemNomenclador: null, precioReal: null, prestador: null });
 
     this.practicaSeleccionada = null;
     this.adhesionSeleccionada = adhesion;
@@ -273,11 +288,16 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     const adhesionid = this.adhesionSeleccionada?.id;
 
     // eslint-disable-next-line
-    //alert("" + itemnomencladorid + " " + adhesionid);
+    // alert("" + itemnomencladorid + " " + adhesionid);
 
     if (itemnomencladorid != null && adhesionid != null) {
       this.solicitudPrestacionService.getPrecioReal(itemnomencladorid, adhesionid).subscribe(res => {
         this.editForm.patchValue({ precioReal: res.body });
+      });
+
+      this.prestadorService.queryPorItemNomenclador(item.id).subscribe(res => {
+        // alert(res.body!);
+        this.prestadorsSharedCollection = res.body!;
       });
     }
   }
@@ -286,7 +306,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     this.errorCliente = '';
     this.adhesionesDeCliente = null;
     this.practicasHabilitadas = null;
-    this.editForm.patchValue({ itemNomenclador: null, precioReal: null });
+    this.editForm.patchValue({ itemNomenclador: null, precioReal: null, prestador: null });
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISolicitudPrestacion>>): void {
@@ -327,6 +347,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
       insumos: solicitudPrestacion.insumos,
       individuo: solicitudPrestacion.individuo,
       precioReal: solicitudPrestacion.precioReal,
+      cliente: solicitudPrestacion.cliente,
+      prestador: solicitudPrestacion.prestador,
     });
 
     this.despachosCollection = this.despachoService.addDespachoToCollectionIfMissing(
@@ -413,7 +435,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     return {
       ...new SolicitudPrestacion(),
       id: this.editForm.get(['id'])!.value,
-      tipo: this.editForm.get(['tipo'])!.value,
+      tipo: 'Bono',
       numero: this.editForm.get(['numero'])!.value,
       horaSolicitud: this.editForm.get(['horaSolicitud'])!.value
         ? dayjs(this.editForm.get(['horaSolicitud'])!.value, DATE_TIME_FORMAT)
@@ -430,6 +452,9 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
       usuarioSolicitud: this.editForm.get(['usuarioSolicitud'])!.value,
       insumos: this.editForm.get(['insumos'])!.value,
       individuo: this.editForm.get(['individuo'])!.value,
+      precioReal: this.editForm.get(['precioReal'])!.value,
+      cliente: this.clienteSeleccionado,
+      prestador: this.editForm.get(['prestador'])!.value,
     };
   }
 }

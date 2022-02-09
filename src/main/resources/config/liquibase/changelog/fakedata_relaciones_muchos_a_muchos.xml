@@ -1,0 +1,19 @@
+<databaseChangeLog    
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+                        
+    <changeSet id="20220208-xxx-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/prestador-itemnomenclador.csv"
+                  separator=";"
+                  tableName="REL_PRESTADOR__ITEM_NOMENCLADOR"
+                  usePreparedStatements="true">
+            <column name="item_nomenclador_id" type="numeric"/>
+            <column name="prestador_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>     
+    </changeSet>
+</databaseChangeLog>

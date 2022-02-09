@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { Despacho } from 'app/entities/despacho/despacho.model';
 import { DespachoService } from 'app/entities/despacho/service/despacho.service';
-import { IndividuoDetailComponent } from 'app/entities/individuo/detail/individuo-detail.component';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 import { IndividuoPopupComponent } from 'app/entities/individuo/popup/individuo-popup.component';
 import { SolicitudPrestacionService } from 'app/entities/solicitud-prestacion/service/solicitud-prestacion.service';
@@ -21,6 +20,7 @@ import { SolicitudPrestacionBonoComponent } from '../solicitud-prestacion-bono/s
 export class PantallaTelefonistaComponent implements OnInit {
   solicitudAtencionMedica?: ISolicitudPrestacion[];
   solicitudEmergencia?: ISolicitudPrestacion[];
+  solicitudBonos?: ISolicitudPrestacion[];
   isLoading = false;
 
   constructor(
@@ -46,6 +46,16 @@ export class PantallaTelefonistaComponent implements OnInit {
       next: (res: HttpResponse<ISolicitudPrestacion[]>) => {
         this.isLoading = false;
         this.solicitudEmergencia = res.body ?? [];
+      },
+      error: () => {
+        this.isLoading = false;
+      },
+    });
+
+    this.solicitudPrestacionService.queryPorTipo('Bono').subscribe({
+      next: (res: HttpResponse<ISolicitudPrestacion[]>) => {
+        this.isLoading = false;
+        this.solicitudBonos = res.body ?? [];
       },
       error: () => {
         this.isLoading = false;
@@ -112,7 +122,7 @@ export class PantallaTelefonistaComponent implements OnInit {
     const modalRef = this.modalService.open(IndividuoPopupComponent, { size: 'lg', backdrop: true });
     modalRef.componentInstance.individuo = p;
     // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
+    modalRef.closed.subscribe(() => {
       alert('x');
     });
   }
@@ -121,16 +131,21 @@ export class PantallaTelefonistaComponent implements OnInit {
     const modalRef = this.modalService.open(SolicitudPrestacionAltaComponent, { size: 'lg', backdrop: true });
     modalRef.componentInstance.tipo = tipo;
     // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
+    modalRef.closed.subscribe(() => {
       alert('x');
     });
   }
 
   // Esto va a terminar en otra pantalla
-  popupBono(): void {
+  popupBono(aModificar: ISolicitudPrestacion | null): void {
     const modalRef = this.modalService.open(SolicitudPrestacionBonoComponent, { size: 'lg', backdrop: true });
+
+    if (aModificar) {
+      modalRef.componentInstance.solicitudPrestacionBonoParaModificar = aModificar;
+    }
+
     // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
+    modalRef.closed.subscribe(() => {
       alert('x');
     });
   }

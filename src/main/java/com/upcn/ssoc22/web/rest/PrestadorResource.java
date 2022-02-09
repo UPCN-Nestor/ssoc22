@@ -152,6 +152,12 @@ public class PrestadorResource {
         return prestadorRepository.findAllWithEagerRelationships();
     }
 
+    @GetMapping("/prestadors/poritemnomenclador/{id}")
+    public List<Prestador> getAllPrestadors(@PathVariable Long id) {
+        log.debug("REST request to get all Prestadors by itemnomenclador id " + id);
+        return prestadorRepository.findAllByItemNomencladorId(id);
+    }
+
     /**
      * {@code GET  /prestadors/:id} : get the "id" prestador.
      *

@@ -126,13 +126,13 @@
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.prestador" for="field_prestador">Prestador</label>
-          <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador">
+          <select class="form-control" id="field_prestador" data-cy="prestador" name="prestador" formControlName="prestador" required>
             <option [ngValue]="null"></option>
             <option
               [ngValue]="prestadorOption.id === editForm.get('prestador')!.value?.id ? editForm.get('prestador')!.value : prestadorOption"
               *ngFor="let prestadorOption of prestadorsSharedCollection; trackBy: trackPrestadorById"
             >
-              {{ prestadorOption.id }}
+              {{ prestadorOption.nombre }}
             </option>
           </select>
         </div>

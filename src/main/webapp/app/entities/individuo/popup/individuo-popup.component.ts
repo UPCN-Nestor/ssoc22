@@ -14,7 +14,7 @@ export class IndividuoPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ individuo }) => {
-      //this.individuo = individuo;
+      // this.individuo = individuo;
     });
   }
 

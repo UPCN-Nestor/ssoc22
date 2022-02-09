@@ -25,4 +25,7 @@ public interface PrestadorRepository extends JpaRepository<Prestador, Long> {
 
     @Query("select prestador from Prestador prestador left join fetch prestador.itemNomencladors where prestador.id =:id")
     Optional<Prestador> findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query("select distinct prestador from Prestador prestador left join prestador.itemNomencladors i where :id in i")
+    List<Prestador> findAllByItemNomencladorId(@Param("id") Long id);
 }

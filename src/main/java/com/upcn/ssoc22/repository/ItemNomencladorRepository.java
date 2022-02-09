@@ -1,6 +1,7 @@
 package com.upcn.ssoc22.repository;
 
 import com.upcn.ssoc22.domain.ItemNomenclador;
+import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 

@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // TEST
     const source = timer(0, 100);
-    source.subscribe(v => {
+    source.subscribe(() => {
       /* eslint no-console: "off" */
       this.testSineVal = Math.sin(new Date().getTime()) * 100;
     });
