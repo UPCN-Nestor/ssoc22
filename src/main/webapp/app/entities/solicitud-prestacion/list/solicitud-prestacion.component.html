@@ -50,8 +50,7 @@
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.prestador">Prestador</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.usuarioSolicitud">Usuario Solicitud</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.insumo">Insumo</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.individuo">Individuo</span></th>
-          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.cliente">Cliente</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.adhesion">Adhesion</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -99,13 +98,8 @@
             </span>
           </td>
           <td>
-            <div *ngIf="solicitudPrestacion.individuo">
-              <a [routerLink]="['/individuo', solicitudPrestacion.individuo?.id, 'view']">{{ solicitudPrestacion.individuo?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="solicitudPrestacion.cliente">
-              <a [routerLink]="['/cliente', solicitudPrestacion.cliente?.id, 'view']">{{ solicitudPrestacion.cliente?.id }}</a>
+            <div *ngIf="solicitudPrestacion.adhesion">
+              <a [routerLink]="['/adhesion', solicitudPrestacion.adhesion?.id, 'view']">{{ solicitudPrestacion.adhesion?.id }}</a>
             </div>
           </td>
           <td class="text-right">

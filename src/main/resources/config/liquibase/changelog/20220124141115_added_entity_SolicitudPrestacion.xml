@@ -62,10 +62,7 @@
             <column name="usuario_solicitud_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="individuo_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="cliente_id" type="bigint">
+            <column name="adhesion_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

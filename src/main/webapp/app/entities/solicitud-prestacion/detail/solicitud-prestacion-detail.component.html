@@ -95,16 +95,10 @@
             >{{ last ? '' : ', ' }}
           </span>
         </dd>
-        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.individuo">Individuo</span></dt>
+        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.adhesion">Adhesion</span></dt>
         <dd>
-          <div *ngIf="solicitudPrestacion.individuo">
-            <a [routerLink]="['/individuo', solicitudPrestacion.individuo?.id, 'view']">{{ solicitudPrestacion.individuo?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="ssoc22App.solicitudPrestacion.cliente">Cliente</span></dt>
-        <dd>
-          <div *ngIf="solicitudPrestacion.cliente">
-            <a [routerLink]="['/cliente', solicitudPrestacion.cliente?.id, 'view']">{{ solicitudPrestacion.cliente?.id }}</a>
+          <div *ngIf="solicitudPrestacion.adhesion">
+            <a [routerLink]="['/adhesion', solicitudPrestacion.adhesion?.id, 'view']">{{ solicitudPrestacion.adhesion?.id }}</a>
           </div>
         </dd>
       </dl>

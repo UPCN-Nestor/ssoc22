@@ -22,6 +22,7 @@
       "fechaBaja": "Fecha Baja",
       "estado": "Estado",
       "condicion": "Condicion",
+      "solicitudPrestacion": "Solicitud Prestacion",
       "individuo": "Individuo",
       "cliente": "Cliente"
     }

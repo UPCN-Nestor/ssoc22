@@ -3,6 +3,8 @@ package com.upcn.ssoc22.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -35,15 +37,20 @@ public class Adhesion implements Serializable {
     @Column(name = "condicion")
     private String condicion;
 
+    @OneToMany(mappedBy = "adhesion")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(
+        value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "adhesion" },
+        allowSetters = true
+    )
+    private Set<SolicitudPrestacion> solicitudPrestacions = new HashSet<>();
+
     @ManyToOne
-    @JsonIgnoreProperties(value = { "adhesions", "solicitudPrestacions" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "adhesions" }, allowSetters = true)
     private Individuo individuo;
 
     @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "padrons", "adhesions", "contratoes", "enPadron", "facturas", "itemFacturas" }, allowSetters = true)
     private Cliente cliente;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -111,6 +118,37 @@ public class Adhesion implements Serializable {
 
     public void setCondicion(String condicion) {
         this.condicion = condicion;
+    }
+
+    public Set<SolicitudPrestacion> getSolicitudPrestacions() {
+        return this.solicitudPrestacions;
+    }
+
+    public void setSolicitudPrestacions(Set<SolicitudPrestacion> solicitudPrestacions) {
+        if (this.solicitudPrestacions != null) {
+            this.solicitudPrestacions.forEach(i -> i.setAdhesion(null));
+        }
+        if (solicitudPrestacions != null) {
+            solicitudPrestacions.forEach(i -> i.setAdhesion(this));
+        }
+        this.solicitudPrestacions = solicitudPrestacions;
+    }
+
+    public Adhesion solicitudPrestacions(Set<SolicitudPrestacion> solicitudPrestacions) {
+        this.setSolicitudPrestacions(solicitudPrestacions);
+        return this;
+    }
+
+    public Adhesion addSolicitudPrestacion(SolicitudPrestacion solicitudPrestacion) {
+        this.solicitudPrestacions.add(solicitudPrestacion);
+        solicitudPrestacion.setAdhesion(this);
+        return this;
+    }
+
+    public Adhesion removeSolicitudPrestacion(SolicitudPrestacion solicitudPrestacion) {
+        this.solicitudPrestacions.remove(solicitudPrestacion);
+        solicitudPrestacion.setAdhesion(null);
+        return this;
     }
 
     public Individuo getIndividuo() {

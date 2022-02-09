@@ -93,15 +93,9 @@
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityName": "individuo",
+      "otherEntityName": "adhesion",
       "otherEntityRelationshipName": "solicitudPrestacion",
-      "relationshipName": "individuo",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "cliente",
-      "otherEntityRelationshipName": "solicitudPrestacion",
-      "relationshipName": "cliente",
+      "relationshipName": "adhesion",
       "relationshipType": "many-to-one"
     }
   ],

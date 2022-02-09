@@ -35,8 +35,7 @@
       "prestador": "Prestador",
       "usuarioSolicitud": "Usuario Solicitud",
       "insumo": "Insumo",
-      "individuo": "Individuo",
-      "cliente": "Cliente"
+      "adhesion": "Adhesion"
     }
   }
 }

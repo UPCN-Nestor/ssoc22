@@ -29,6 +29,12 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "solicitudPrestacion",
+      "otherEntityRelationshipName": "adhesion",
+      "relationshipName": "solicitudPrestacion",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityName": "individuo",
       "otherEntityRelationshipName": "adhesion",
       "relationshipName": "individuo",

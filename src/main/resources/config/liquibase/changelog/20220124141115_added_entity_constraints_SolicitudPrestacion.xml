@@ -44,16 +44,10 @@
                                  referencedColumnNames="id"
                                  referencedTableName="insumo"/>
 
-        <addForeignKeyConstraint baseColumnNames="individuo_id"
+        <addForeignKeyConstraint baseColumnNames="adhesion_id"
                                  baseTableName="solicitud_prestacion"
-                                 constraintName="fk_solicitud_prestacion__individuo_id"
+                                 constraintName="fk_solicitud_prestacion__adhesion_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="individuo"/>
-
-        <addForeignKeyConstraint baseColumnNames="cliente_id"
-                                 baseTableName="solicitud_prestacion"
-                                 constraintName="fk_solicitud_prestacion__cliente_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="cliente"/>
+                                 referencedTableName="adhesion"/>
     </changeSet>
 </databaseChangeLog>

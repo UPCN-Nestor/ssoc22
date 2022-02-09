@@ -35,17 +35,14 @@ export class IndividuoService {
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IIndividuo>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
-
   queryPorAdhesion(idCliente: number, req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IIndividuo[]>(this.resourceUrl + `/poradhesion/${idCliente}`, { params: options, observe: 'response' });
   }
-
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IIndividuo[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
-
   queryPorNombreParcial(nombre: string, req?: any): Observable<HttpResponse<IIndividuo[]>> {
     const options = createRequestOption(req);
     return this.http.get<IIndividuo[]>(this.resourceUrl + '/parcial/' + nombre, { params: options, observe: 'response' });

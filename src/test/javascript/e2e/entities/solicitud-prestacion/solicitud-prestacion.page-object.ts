@@ -48,8 +48,7 @@ export class SolicitudPrestacionUpdatePage {
   prestadorSelect = element(by.id('field_prestador'));
   usuarioSolicitudSelect = element(by.id('field_usuarioSolicitud'));
   insumoSelect = element(by.id('field_insumo'));
-  individuoSelect = element(by.id('field_individuo'));
-  clienteSelect = element(by.id('field_cliente'));
+  adhesionSelect = element(by.id('field_adhesion'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -231,36 +230,20 @@ export class SolicitudPrestacionUpdatePage {
     return await this.insumoSelect.element(by.css('option:checked')).getText();
   }
 
-  async individuoSelectLastOption(): Promise<void> {
-    await this.individuoSelect.all(by.tagName('option')).last().click();
+  async adhesionSelectLastOption(): Promise<void> {
+    await this.adhesionSelect.all(by.tagName('option')).last().click();
   }
 
-  async individuoSelectOption(option: string): Promise<void> {
-    await this.individuoSelect.sendKeys(option);
+  async adhesionSelectOption(option: string): Promise<void> {
+    await this.adhesionSelect.sendKeys(option);
   }
 
-  getIndividuoSelect(): ElementFinder {
-    return this.individuoSelect;
+  getAdhesionSelect(): ElementFinder {
+    return this.adhesionSelect;
   }
 
-  async getIndividuoSelectedOption(): Promise<string> {
-    return await this.individuoSelect.element(by.css('option:checked')).getText();
-  }
-
-  async clienteSelectLastOption(): Promise<void> {
-    await this.clienteSelect.all(by.tagName('option')).last().click();
-  }
-
-  async clienteSelectOption(option: string): Promise<void> {
-    await this.clienteSelect.sendKeys(option);
-  }
-
-  getClienteSelect(): ElementFinder {
-    return this.clienteSelect;
-  }
-
-  async getClienteSelectedOption(): Promise<string> {
-    return await this.clienteSelect.element(by.css('option:checked')).getText();
+  async getAdhesionSelectedOption(): Promise<string> {
+    return await this.adhesionSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

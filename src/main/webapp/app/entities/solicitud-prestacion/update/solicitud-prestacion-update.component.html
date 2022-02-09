@@ -221,27 +221,14 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.individuo" for="field_individuo">Individuo</label>
-          <select class="form-control" id="field_individuo" data-cy="individuo" name="individuo" formControlName="individuo">
+          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.adhesion" for="field_adhesion">Adhesion</label>
+          <select class="form-control" id="field_adhesion" data-cy="adhesion" name="adhesion" formControlName="adhesion">
             <option [ngValue]="null"></option>
             <option
-              [ngValue]="individuoOption.id === editForm.get('individuo')!.value?.id ? editForm.get('individuo')!.value : individuoOption"
-              *ngFor="let individuoOption of individuosSharedCollection; trackBy: trackIndividuoById"
+              [ngValue]="adhesionOption.id === editForm.get('adhesion')!.value?.id ? editForm.get('adhesion')!.value : adhesionOption"
+              *ngFor="let adhesionOption of adhesionsSharedCollection; trackBy: trackAdhesionById"
             >
-              {{ individuoOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="ssoc22App.solicitudPrestacion.cliente" for="field_cliente">Cliente</label>
-          <select class="form-control" id="field_cliente" data-cy="cliente" name="cliente" formControlName="cliente">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="clienteOption.id === editForm.get('cliente')!.value?.id ? editForm.get('cliente')!.value : clienteOption"
-              *ngFor="let clienteOption of clientesSharedCollection; trackBy: trackClienteById"
-            >
-              {{ clienteOption.id }}
+              {{ adhesionOption.id }}
             </option>
           </select>
         </div>

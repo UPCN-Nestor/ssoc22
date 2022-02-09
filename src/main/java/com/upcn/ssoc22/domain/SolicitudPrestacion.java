@@ -61,7 +61,10 @@ public class SolicitudPrestacion implements Serializable {
     @Column(name = "precio_real")
     private Float precioReal;
 
-    @JsonIgnoreProperties(value = { "chofer", "medico", "enfermero", "movil", "solicitudPrestacion" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "chofer", "medico", "enfermero", "movil", "usuarioSalida", "usuarioLlegada", "usuarioLibre", "solicitudPrestacion" },
+        allowSetters = true
+    )
     @OneToOne
     @JoinColumn(unique = true)
     private Despacho despacho;
@@ -88,15 +91,8 @@ public class SolicitudPrestacion implements Serializable {
     private Set<Insumo> insumos = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "adhesions", "solicitudPrestacions" }, allowSetters = true)
-    private Individuo individuo;
-
-    @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
-        allowSetters = true
-    )
-    private Cliente cliente;
+    @JsonIgnoreProperties(value = { "solicitudPrestacions", "individuo", "cliente" }, allowSetters = true)
+    private Adhesion adhesion;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -346,29 +342,16 @@ public class SolicitudPrestacion implements Serializable {
         return this;
     }
 
-    public Individuo getIndividuo() {
-        return this.individuo;
+    public Adhesion getAdhesion() {
+        return this.adhesion;
     }
 
-    public void setIndividuo(Individuo individuo) {
-        this.individuo = individuo;
+    public void setAdhesion(Adhesion adhesion) {
+        this.adhesion = adhesion;
     }
 
-    public SolicitudPrestacion individuo(Individuo individuo) {
-        this.setIndividuo(individuo);
-        return this;
-    }
-
-    public Cliente getCliente() {
-        return this.cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public SolicitudPrestacion cliente(Cliente cliente) {
-        this.setCliente(cliente);
+    public SolicitudPrestacion adhesion(Adhesion adhesion) {
+        this.setAdhesion(adhesion);
         return this;
     }
 

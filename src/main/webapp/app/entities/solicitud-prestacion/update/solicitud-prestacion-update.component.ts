@@ -20,10 +20,8 @@ import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
-import { IIndividuo } from 'app/entities/individuo/individuo.model';
-import { IndividuoService } from 'app/entities/individuo/service/individuo.service';
-import { ICliente } from 'app/entities/cliente/cliente.model';
-import { ClienteService } from 'app/entities/cliente/service/cliente.service';
+import { IAdhesion } from 'app/entities/adhesion/adhesion.model';
+import { AdhesionService } from 'app/entities/adhesion/service/adhesion.service';
 
 @Component({
   selector: 'jhi-solicitud-prestacion-update',
@@ -37,8 +35,7 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
   prestadorsSharedCollection: IPrestador[] = [];
   usersSharedCollection: IUser[] = [];
   insumosSharedCollection: IInsumo[] = [];
-  individuosSharedCollection: IIndividuo[] = [];
-  clientesSharedCollection: ICliente[] = [];
+  adhesionsSharedCollection: IAdhesion[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -59,8 +56,7 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     prestador: [],
     usuarioSolicitud: [],
     insumos: [],
-    individuo: [],
-    cliente: [],
+    adhesion: [],
   });
 
   constructor(
@@ -70,8 +66,7 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     protected prestadorService: PrestadorService,
     protected userService: UserService,
     protected insumoService: InsumoService,
-    protected individuoService: IndividuoService,
-    protected clienteService: ClienteService,
+    protected adhesionService: AdhesionService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -123,11 +118,7 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  trackIndividuoById(index: number, item: IIndividuo): number {
-    return item.id!;
-  }
-
-  trackClienteById(index: number, item: ICliente): number {
+  trackAdhesionById(index: number, item: IAdhesion): number {
     return item.id!;
   }
 
@@ -181,8 +172,7 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       prestador: solicitudPrestacion.prestador,
       usuarioSolicitud: solicitudPrestacion.usuarioSolicitud,
       insumos: solicitudPrestacion.insumos,
-      individuo: solicitudPrestacion.individuo,
-      cliente: solicitudPrestacion.cliente,
+      adhesion: solicitudPrestacion.adhesion,
     });
 
     this.despachosCollection = this.despachoService.addDespachoToCollectionIfMissing(
@@ -205,13 +195,9 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       this.insumosSharedCollection,
       ...(solicitudPrestacion.insumos ?? [])
     );
-    this.individuosSharedCollection = this.individuoService.addIndividuoToCollectionIfMissing(
-      this.individuosSharedCollection,
-      solicitudPrestacion.individuo
-    );
-    this.clientesSharedCollection = this.clienteService.addClienteToCollectionIfMissing(
-      this.clientesSharedCollection,
-      solicitudPrestacion.cliente
+    this.adhesionsSharedCollection = this.adhesionService.addAdhesionToCollectionIfMissing(
+      this.adhesionsSharedCollection,
+      solicitudPrestacion.adhesion
     );
   }
 
@@ -236,7 +222,6 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       )
       .subscribe((itemNomencladors: IItemNomenclador[]) => (this.itemNomencladorsSharedCollection = itemNomencladors));
 
-    // eslint-disable-next-line
     this.prestadorService
       .query()
       .pipe(map((res: HttpResponse<IPrestador[]>) => res.body ?? []))
@@ -263,23 +248,15 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       )
       .subscribe((insumos: IInsumo[]) => (this.insumosSharedCollection = insumos));
 
-    this.individuoService
+    this.adhesionService
       .query()
-      .pipe(map((res: HttpResponse<IIndividuo[]>) => res.body ?? []))
+      .pipe(map((res: HttpResponse<IAdhesion[]>) => res.body ?? []))
       .pipe(
-        map((individuos: IIndividuo[]) =>
-          this.individuoService.addIndividuoToCollectionIfMissing(individuos, this.editForm.get('individuo')!.value)
+        map((adhesions: IAdhesion[]) =>
+          this.adhesionService.addAdhesionToCollectionIfMissing(adhesions, this.editForm.get('adhesion')!.value)
         )
       )
-      .subscribe((individuos: IIndividuo[]) => (this.individuosSharedCollection = individuos));
-
-    this.clienteService
-      .query()
-      .pipe(map((res: HttpResponse<ICliente[]>) => res.body ?? []))
-      .pipe(
-        map((clientes: ICliente[]) => this.clienteService.addClienteToCollectionIfMissing(clientes, this.editForm.get('cliente')!.value))
-      )
-      .subscribe((clientes: ICliente[]) => (this.clientesSharedCollection = clientes));
+      .subscribe((adhesions: IAdhesion[]) => (this.adhesionsSharedCollection = adhesions));
   }
 
   protected createFromForm(): ISolicitudPrestacion {
@@ -305,8 +282,7 @@ export class SolicitudPrestacionUpdateComponent implements OnInit {
       prestador: this.editForm.get(['prestador'])!.value,
       usuarioSolicitud: this.editForm.get(['usuarioSolicitud'])!.value,
       insumos: this.editForm.get(['insumos'])!.value,
-      individuo: this.editForm.get(['individuo'])!.value,
-      cliente: this.editForm.get(['cliente'])!.value,
+      adhesion: this.editForm.get(['adhesion'])!.value,
     };
   }
 }

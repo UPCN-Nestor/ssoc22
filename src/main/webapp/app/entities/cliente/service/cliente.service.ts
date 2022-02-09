@@ -40,12 +40,10 @@ export class ClienteService {
     const options = createRequestOption(req);
     return this.http.get<ICliente[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
-
   queryPorNombreParcial(nombre: string, req?: any): Observable<HttpResponse<ICliente[]>> {
     const options = createRequestOption(req);
     return this.http.get<ICliente[]>(this.resourceUrl + '/parcial/' + nombre, { params: options, observe: 'response' });
   }
-
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

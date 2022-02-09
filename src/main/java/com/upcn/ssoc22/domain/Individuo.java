@@ -32,16 +32,8 @@ public class Individuo implements Serializable {
 
     @OneToMany(mappedBy = "individuo")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "individuo", "cliente" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "solicitudPrestacions", "individuo", "cliente" }, allowSetters = true)
     private Set<Adhesion> adhesions = new HashSet<>();
-
-    @OneToMany(mappedBy = "individuo")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(
-        value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "individuo", "cliente" },
-        allowSetters = true
-    )
-    private Set<SolicitudPrestacion> solicitudPrestacions = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -112,37 +104,6 @@ public class Individuo implements Serializable {
     public Individuo removeAdhesion(Adhesion adhesion) {
         this.adhesions.remove(adhesion);
         adhesion.setIndividuo(null);
-        return this;
-    }
-
-    public Set<SolicitudPrestacion> getSolicitudPrestacions() {
-        return this.solicitudPrestacions;
-    }
-
-    public void setSolicitudPrestacions(Set<SolicitudPrestacion> solicitudPrestacions) {
-        if (this.solicitudPrestacions != null) {
-            this.solicitudPrestacions.forEach(i -> i.setIndividuo(null));
-        }
-        if (solicitudPrestacions != null) {
-            solicitudPrestacions.forEach(i -> i.setIndividuo(this));
-        }
-        this.solicitudPrestacions = solicitudPrestacions;
-    }
-
-    public Individuo solicitudPrestacions(Set<SolicitudPrestacion> solicitudPrestacions) {
-        this.setSolicitudPrestacions(solicitudPrestacions);
-        return this;
-    }
-
-    public Individuo addSolicitudPrestacion(SolicitudPrestacion solicitudPrestacion) {
-        this.solicitudPrestacions.add(solicitudPrestacion);
-        solicitudPrestacion.setIndividuo(this);
-        return this;
-    }
-
-    public Individuo removeSolicitudPrestacion(SolicitudPrestacion solicitudPrestacion) {
-        this.solicitudPrestacions.remove(solicitudPrestacion);
-        solicitudPrestacion.setIndividuo(null);
         return this;
     }
 

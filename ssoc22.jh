@@ -152,8 +152,7 @@ relationship OneToMany {
     Cliente to Contrato{cliente}
     Plan to Provision{plan}
     Provision to ReglaPrestacion{provision}
-    Individuo to SolicitudPrestacion{individuo}
-    Cliente to SolicitudPrestacion{cliente}
+    Adhesion to SolicitudPrestacion{adhesion}
     Prestacion to ItemNomenclador{prestacion}
     Plan to Tarifa{plan}
 }

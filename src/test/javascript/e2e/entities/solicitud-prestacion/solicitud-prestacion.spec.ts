@@ -67,8 +67,7 @@ describe('SolicitudPrestacion e2e test', () => {
       solicitudPrestacionUpdatePage.prestadorSelectLastOption(),
       solicitudPrestacionUpdatePage.usuarioSolicitudSelectLastOption(),
       // solicitudPrestacionUpdatePage.insumoSelectLastOption(),
-      solicitudPrestacionUpdatePage.individuoSelectLastOption(),
-      solicitudPrestacionUpdatePage.clienteSelectLastOption(),
+      solicitudPrestacionUpdatePage.adhesionSelectLastOption(),
     ]);
 
     await solicitudPrestacionUpdatePage.save();

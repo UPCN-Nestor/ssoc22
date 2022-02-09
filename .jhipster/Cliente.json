@@ -47,12 +47,6 @@
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "solicitudPrestacion",
-      "otherEntityRelationshipName": "cliente",
-      "relationshipName": "solicitudPrestacion",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "cliente",
       "otherEntityRelationshipName": "padron",
       "relationshipName": "enPadron",

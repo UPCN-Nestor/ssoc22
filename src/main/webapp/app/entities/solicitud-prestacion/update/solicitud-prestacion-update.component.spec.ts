@@ -19,10 +19,8 @@ import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
-import { IIndividuo } from 'app/entities/individuo/individuo.model';
-import { IndividuoService } from 'app/entities/individuo/service/individuo.service';
-import { ICliente } from 'app/entities/cliente/cliente.model';
-import { ClienteService } from 'app/entities/cliente/service/cliente.service';
+import { IAdhesion } from 'app/entities/adhesion/adhesion.model';
+import { AdhesionService } from 'app/entities/adhesion/service/adhesion.service';
 
 import { SolicitudPrestacionUpdateComponent } from './solicitud-prestacion-update.component';
 
@@ -36,8 +34,7 @@ describe('SolicitudPrestacion Management Update Component', () => {
   let prestadorService: PrestadorService;
   let userService: UserService;
   let insumoService: InsumoService;
-  let individuoService: IndividuoService;
-  let clienteService: ClienteService;
+  let adhesionService: AdhesionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -64,8 +61,7 @@ describe('SolicitudPrestacion Management Update Component', () => {
     prestadorService = TestBed.inject(PrestadorService);
     userService = TestBed.inject(UserService);
     insumoService = TestBed.inject(InsumoService);
-    individuoService = TestBed.inject(IndividuoService);
-    clienteService = TestBed.inject(ClienteService);
+    adhesionService = TestBed.inject(AdhesionService);
 
     comp = fixture.componentInstance;
   });
@@ -168,42 +164,23 @@ describe('SolicitudPrestacion Management Update Component', () => {
       expect(comp.insumosSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call Individuo query and add missing value', () => {
+    it('Should call Adhesion query and add missing value', () => {
       const solicitudPrestacion: ISolicitudPrestacion = { id: 456 };
-      const individuo: IIndividuo = { id: 57196 };
-      solicitudPrestacion.individuo = individuo;
+      const adhesion: IAdhesion = { id: 17947 };
+      solicitudPrestacion.adhesion = adhesion;
 
-      const individuoCollection: IIndividuo[] = [{ id: 97198 }];
-      jest.spyOn(individuoService, 'query').mockReturnValue(of(new HttpResponse({ body: individuoCollection })));
-      const additionalIndividuos = [individuo];
-      const expectedCollection: IIndividuo[] = [...additionalIndividuos, ...individuoCollection];
-      jest.spyOn(individuoService, 'addIndividuoToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const adhesionCollection: IAdhesion[] = [{ id: 46259 }];
+      jest.spyOn(adhesionService, 'query').mockReturnValue(of(new HttpResponse({ body: adhesionCollection })));
+      const additionalAdhesions = [adhesion];
+      const expectedCollection: IAdhesion[] = [...additionalAdhesions, ...adhesionCollection];
+      jest.spyOn(adhesionService, 'addAdhesionToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ solicitudPrestacion });
       comp.ngOnInit();
 
-      expect(individuoService.query).toHaveBeenCalled();
-      expect(individuoService.addIndividuoToCollectionIfMissing).toHaveBeenCalledWith(individuoCollection, ...additionalIndividuos);
-      expect(comp.individuosSharedCollection).toEqual(expectedCollection);
-    });
-
-    it('Should call Cliente query and add missing value', () => {
-      const solicitudPrestacion: ISolicitudPrestacion = { id: 456 };
-      const cliente: ICliente = { id: 48703 };
-      solicitudPrestacion.cliente = cliente;
-
-      const clienteCollection: ICliente[] = [{ id: 12575 }];
-      jest.spyOn(clienteService, 'query').mockReturnValue(of(new HttpResponse({ body: clienteCollection })));
-      const additionalClientes = [cliente];
-      const expectedCollection: ICliente[] = [...additionalClientes, ...clienteCollection];
-      jest.spyOn(clienteService, 'addClienteToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ solicitudPrestacion });
-      comp.ngOnInit();
-
-      expect(clienteService.query).toHaveBeenCalled();
-      expect(clienteService.addClienteToCollectionIfMissing).toHaveBeenCalledWith(clienteCollection, ...additionalClientes);
-      expect(comp.clientesSharedCollection).toEqual(expectedCollection);
+      expect(adhesionService.query).toHaveBeenCalled();
+      expect(adhesionService.addAdhesionToCollectionIfMissing).toHaveBeenCalledWith(adhesionCollection, ...additionalAdhesions);
+      expect(comp.adhesionsSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
@@ -218,10 +195,8 @@ describe('SolicitudPrestacion Management Update Component', () => {
       solicitudPrestacion.usuarioSolicitud = usuarioSolicitud;
       const insumos: IInsumo = { id: 7828 };
       solicitudPrestacion.insumos = [insumos];
-      const individuo: IIndividuo = { id: 56995 };
-      solicitudPrestacion.individuo = individuo;
-      const cliente: ICliente = { id: 73913 };
-      solicitudPrestacion.cliente = cliente;
+      const adhesion: IAdhesion = { id: 56581 };
+      solicitudPrestacion.adhesion = adhesion;
 
       activatedRoute.data = of({ solicitudPrestacion });
       comp.ngOnInit();
@@ -232,8 +207,7 @@ describe('SolicitudPrestacion Management Update Component', () => {
       expect(comp.prestadorsSharedCollection).toContain(prestador);
       expect(comp.usersSharedCollection).toContain(usuarioSolicitud);
       expect(comp.insumosSharedCollection).toContain(insumos);
-      expect(comp.individuosSharedCollection).toContain(individuo);
-      expect(comp.clientesSharedCollection).toContain(cliente);
+      expect(comp.adhesionsSharedCollection).toContain(adhesion);
     });
   });
 
@@ -342,18 +316,10 @@ describe('SolicitudPrestacion Management Update Component', () => {
       });
     });
 
-    describe('trackIndividuoById', () => {
-      it('Should return tracked Individuo primary key', () => {
+    describe('trackAdhesionById', () => {
+      it('Should return tracked Adhesion primary key', () => {
         const entity = { id: 123 };
-        const trackResult = comp.trackIndividuoById(0, entity);
-        expect(trackResult).toEqual(entity.id);
-      });
-    });
-
-    describe('trackClienteById', () => {
-      it('Should return tracked Cliente primary key', () => {
-        const entity = { id: 123 };
-        const trackResult = comp.trackClienteById(0, entity);
+        const trackResult = comp.trackAdhesionById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

@@ -25,12 +25,6 @@
       "otherEntityRelationshipName": "individuo",
       "relationshipName": "adhesion",
       "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "solicitudPrestacion",
-      "otherEntityRelationshipName": "individuo",
-      "relationshipName": "solicitudPrestacion",
-      "relationshipType": "one-to-many"
     }
   ],
   "service": "no"

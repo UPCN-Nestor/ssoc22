@@ -4,8 +4,7 @@ import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador
 import { IPrestador } from 'app/entities/prestador/prestador.model';
 import { IUser } from 'app/entities/user/user.model';
 import { IInsumo } from 'app/entities/insumo/insumo.model';
-import { IIndividuo } from 'app/entities/individuo/individuo.model';
-import { ICliente } from 'app/entities/cliente/cliente.model';
+import { IAdhesion } from 'app/entities/adhesion/adhesion.model';
 
 export interface ISolicitudPrestacion {
   id?: number;
@@ -26,8 +25,7 @@ export interface ISolicitudPrestacion {
   prestador?: IPrestador | null;
   usuarioSolicitud?: IUser | null;
   insumos?: IInsumo[] | null;
-  individuo?: IIndividuo | null;
-  cliente?: ICliente | null;
+  adhesion?: IAdhesion | null;
 }
 
 export class SolicitudPrestacion implements ISolicitudPrestacion {
@@ -50,8 +48,7 @@ export class SolicitudPrestacion implements ISolicitudPrestacion {
     public prestador?: IPrestador | null,
     public usuarioSolicitud?: IUser | null,
     public insumos?: IInsumo[] | null,
-    public individuo?: IIndividuo | null,
-    public cliente?: ICliente | null
+    public adhesion?: IAdhesion | null
   ) {
     this.seEfectuo = this.seEfectuo ?? false;
     this.internacion = this.internacion ?? false;
