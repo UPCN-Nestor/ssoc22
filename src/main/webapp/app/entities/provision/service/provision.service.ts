@@ -41,6 +41,11 @@ export class ProvisionService {
     return this.http.get<IProvision[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  queryPorPlan(planid: number, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IProvision[]>(this.resourceUrl + `/porplan/${planid}`, { params: options, observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

@@ -12,7 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "contrato")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Contrato implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,10 +33,12 @@ public class Contrato implements Serializable {
     private String particularidades;
 
     @ManyToOne
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "provisions", "tarifas", "contratoes" }, allowSetters = true)
     private Plan plan;
 
     @ManyToOne
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(
         value = { "padrons", "adhesions", "contratoes", "solicitudPrestacions", "enPadron", "facturas", "itemFacturas" },
         allowSetters = true

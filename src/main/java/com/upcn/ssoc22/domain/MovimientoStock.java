@@ -12,7 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "movimiento_stock")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class MovimientoStock implements Serializable {
 
     private static final long serialVersionUID = 1L;

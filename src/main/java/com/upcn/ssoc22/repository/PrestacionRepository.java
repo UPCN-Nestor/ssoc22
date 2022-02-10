@@ -25,4 +25,6 @@ public interface PrestacionRepository extends JpaRepository<Prestacion, Long> {
 
     @Query("select prestacion from Prestacion prestacion left join fetch prestacion.insumos where prestacion.id =:id")
     Optional<Prestacion> findOneWithEagerRelationships(@Param("id") Long id);
+
+    List<Prestacion> findAllByTipo(String tipo);
 }

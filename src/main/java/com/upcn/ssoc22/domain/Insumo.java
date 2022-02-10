@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "insumo")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Insumo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,17 +34,17 @@ public class Insumo implements Serializable {
     private Boolean esModificable;
 
     @OneToMany(mappedBy = "insumo")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "insumo" }, allowSetters = true)
     private Set<MovimientoStock> movimientoStocks = new HashSet<>();
 
     @ManyToMany(mappedBy = "insumos")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "itemNomencladors", "insumos" }, allowSetters = true)
     private Set<Prestacion> prestacions = new HashSet<>();
 
     @ManyToMany(mappedBy = "insumos")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(
         value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "individuo", "cliente" },
         allowSetters = true
@@ -52,7 +52,7 @@ public class Insumo implements Serializable {
     private Set<SolicitudPrestacion> solicitudPrestacions = new HashSet<>();
 
     @ManyToMany(mappedBy = "insumos")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "insumos", "plan" }, allowSetters = true)
     private Set<Provision> provisions = new HashSet<>();
 

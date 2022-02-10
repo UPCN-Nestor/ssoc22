@@ -136,9 +136,9 @@ public class ReglaPrestacionResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of reglaPrestacions in body.
      */
     @GetMapping("/regla-prestacions")
-    public List<ReglaPrestacion> getAllReglaPrestacions() {
+    public List<ReglaPrestacion> getAllReglaPrestacionsPrototipos() {
         log.debug("REST request to get all ReglaPrestacions");
-        return reglaPrestacionService.findAll();
+        return reglaPrestacionService.findAllPrototipos();
     }
 
     /**

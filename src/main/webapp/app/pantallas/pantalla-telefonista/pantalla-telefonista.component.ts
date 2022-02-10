@@ -6,6 +6,7 @@ import { Despacho } from 'app/entities/despacho/despacho.model';
 import { DespachoService } from 'app/entities/despacho/service/despacho.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 import { IndividuoPopupComponent } from 'app/entities/individuo/popup/individuo-popup.component';
+import { SolicitudPrestacionDeleteDialogComponent } from 'app/entities/solicitud-prestacion/delete/solicitud-prestacion-delete-dialog.component';
 import { SolicitudPrestacionService } from 'app/entities/solicitud-prestacion/service/solicitud-prestacion.service';
 import { ISolicitudPrestacion } from 'app/entities/solicitud-prestacion/solicitud-prestacion.model';
 import dayjs, { Dayjs } from 'dayjs/esm';
@@ -60,6 +61,17 @@ export class PantallaTelefonistaComponent implements OnInit {
       error: () => {
         this.isLoading = false;
       },
+    });
+  }
+
+  delete(solicitudPrestacion: ISolicitudPrestacion): void {
+    const modalRef = this.modalService.open(SolicitudPrestacionDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.solicitudPrestacion = solicitudPrestacion;
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'deleted') {
+        this.loadAll();
+      }
     });
   }
 
@@ -146,7 +158,7 @@ export class PantallaTelefonistaComponent implements OnInit {
 
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(() => {
-      alert('x');
+      this.loadAll();
     });
   }
 
@@ -165,15 +177,4 @@ export class PantallaTelefonistaComponent implements OnInit {
   trackId(index: number, item: ISolicitudPrestacion): number {
     return item.id!;
   }
-  /*
-  delete(solicitudPrestacion: ISolicitudPrestacion): void {
-    const modalRef = this.modalService.open(SolicitudPrestacionDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.solicitudPrestacion = solicitudPrestacion;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
-        this.loadAll();
-      }
-    });
-  }*/
 }

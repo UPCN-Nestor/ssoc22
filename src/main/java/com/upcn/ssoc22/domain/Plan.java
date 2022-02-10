@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "jhi_plan")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Plan implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,17 +37,17 @@ public class Plan implements Serializable {
     private String restricciones;
 
     @OneToMany(mappedBy = "plan")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "prestacion", "insumos", "plan" }, allowSetters = true)
     private Set<Provision> provisions = new HashSet<>();
 
     @OneToMany(mappedBy = "plan")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "plan" }, allowSetters = true)
     private Set<Tarifa> tarifas = new HashSet<>();
 
     @OneToMany(mappedBy = "plan")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "plan", "cliente" }, allowSetters = true)
     private Set<Contrato> contratoes = new HashSet<>();
 

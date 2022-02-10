@@ -14,7 +14,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "factura")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,7 +39,7 @@ public class Factura implements Serializable {
     private Cliente cliente;
 
     @OneToMany(mappedBy = "factura")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "cliente", "factura" }, allowSetters = true)
     private Set<ItemFactura> itemFacturas = new HashSet<>();
 

@@ -51,6 +51,7 @@ export class AdhesionService {
       .get<IAdhesion[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
+
   queryPorCliente(idcliente: number, req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http

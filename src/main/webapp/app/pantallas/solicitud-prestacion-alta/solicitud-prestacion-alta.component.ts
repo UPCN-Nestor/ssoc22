@@ -229,7 +229,7 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
       itemNomenclador: solicitudPrestacion.itemNomenclador,
       usuarioSolicitud: solicitudPrestacion.usuarioSolicitud,
       insumos: solicitudPrestacion.insumos,
-      individuo: solicitudPrestacion.individuo,
+      adhesion: solicitudPrestacion.adhesion,
     });
 
     this.despachosCollection = this.despachoService.addDespachoToCollectionIfMissing(
@@ -247,10 +247,6 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
     this.insumosSharedCollection = this.insumoService.addInsumoToCollectionIfMissing(
       this.insumosSharedCollection,
       ...(solicitudPrestacion.insumos ?? [])
-    );
-    this.individuosSharedCollection = this.individuoService.addIndividuoToCollectionIfMissing(
-      this.individuosSharedCollection,
-      solicitudPrestacion.individuo
     );
   }
 
@@ -322,7 +318,7 @@ export class SolicitudPrestacionAltaComponent implements OnInit {
       itemNomenclador: this.editForm.get(['itemNomenclador'])!.value,
       usuarioSolicitud: this.editForm.get(['usuarioSolicitud'])!.value,
       insumos: this.editForm.get(['insumos'])!.value,
-      individuo: this.editForm.get(['individuo'])!.value,
+      adhesion: this.editForm.get(['adhesion'])!.value,
     };
   }
 }

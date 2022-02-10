@@ -6,6 +6,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import { SharedModule } from 'app/shared/shared.module';
 import { SolicitudPrestacionAltaComponent } from './solicitud-prestacion-alta/solicitud-prestacion-alta.component';
 import { SolicitudPrestacionBonoComponent } from './solicitud-prestacion-bono/solicitud-prestacion-bono.component';
+import { PlanAltaComponent } from './plan-alta/plan-alta.component';
 
 const pantallasRoute: Routes = [
   {
@@ -23,10 +24,15 @@ const pantallasRoute: Routes = [
     component: SolicitudPrestacionBonoComponent,
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: 'plan-alta',
+    component: PlanAltaComponent,
+    canActivate: [UserRouteAccessService],
+  },
 ];
 
 @NgModule({
-  declarations: [PantallaTelefonistaComponent, SolicitudPrestacionAltaComponent, SolicitudPrestacionBonoComponent],
+  declarations: [PantallaTelefonistaComponent, SolicitudPrestacionAltaComponent, SolicitudPrestacionBonoComponent, PlanAltaComponent],
   imports: [SharedModule, RouterModule.forChild(pantallasRoute), CommonModule],
   exports: [RouterModule],
 })

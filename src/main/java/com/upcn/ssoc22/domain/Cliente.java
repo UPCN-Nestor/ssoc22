@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "cliente")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,17 +37,17 @@ public class Cliente implements Serializable {
     private String dni;
 
     @OneToMany(mappedBy = "enPadron")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "padrons", "adhesions", "contratoes", "enPadron", "facturas", "itemFacturas" }, allowSetters = true)
     private Set<Cliente> padrons = new HashSet<>();
 
     @OneToMany(mappedBy = "cliente")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "solicitudPrestacions", "individuo", "cliente" }, allowSetters = true)
     private Set<Adhesion> adhesions = new HashSet<>();
 
     @OneToMany(mappedBy = "cliente")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "plan", "cliente" }, allowSetters = true)
     private Set<Contrato> contratoes = new HashSet<>();
 
@@ -56,12 +56,12 @@ public class Cliente implements Serializable {
     private Cliente enPadron;
 
     @OneToMany(mappedBy = "cliente")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "cliente", "itemFacturas" }, allowSetters = true)
     private Set<Factura> facturas = new HashSet<>();
 
     @OneToMany(mappedBy = "cliente")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "cliente", "factura" }, allowSetters = true)
     private Set<ItemFactura> itemFacturas = new HashSet<>();
 

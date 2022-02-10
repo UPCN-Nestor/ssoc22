@@ -79,8 +79,10 @@
                   </div>
                 </td>
                 <td>
-                  <div *ngIf="solicitudPrestacion.individuo">
-                    <a (click)="popupPaciente(solicitudPrestacion.individuo!)">{{ solicitudPrestacion.individuo?.nombre }}</a>
+                  <div *ngIf="solicitudPrestacion.adhesion">
+                    <a (click)="popupPaciente(solicitudPrestacion.adhesion!.individuo!)">{{
+                      solicitudPrestacion.adhesion?.individuo?.nombre
+                    }}</a>
                   </div>
                 </td>
                 <td><span class="text-danger">???</span></td>
@@ -229,8 +231,10 @@
                 <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaLlegada) }}</td>
                 <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaLibre) }}</td>
                 <td>
-                  <div *ngIf="solicitudPrestacion.individuo">
-                    <a (click)="popupPaciente(solicitudPrestacion.individuo!)">{{ solicitudPrestacion.individuo?.nombre }}</a>
+                  <div *ngIf="solicitudPrestacion.adhesion">
+                    <a (click)="popupPaciente(solicitudPrestacion.adhesion!.individuo!)">{{
+                      solicitudPrestacion.adhesion?.individuo?.nombre
+                    }}</a>
                   </div>
                 </td>
                 <td>{{ solicitudPrestacion.domicilio }}</td>
@@ -333,47 +337,38 @@
             <thead>
               <tr>
                 <th scope="col"><span>#</span></th>
-                <th scope="col"><span>Solic.</span></th>
-                <th scope="col"><span>Salida</span></th>
-                <th scope="col"><span>Llegada</span></th>
-                <th scope="col"><span>Libre</span></th>
+                <th scope="col"><span>Fecha</span></th>
+                <th scope="col"><span>Usuario</span></th>
+                <th scope="col"><span>Cliente</span></th>
                 <th scope="col"><span>Paciente</span></th>
-                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.domicilio">Domicilio</span></th>
-                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.telefono">Telefono</span></th>
-                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.edad">Edad</span></th>
-
-                <th scope="col"><span>Motivo</span></th>
-                <th scope="col"><span>¿Se efectuó?</span></th>
-                <th scope="col"><span>¿Internación?</span></th>
-                <th scope="col"><span jhiTranslate="ssoc22App.solicitudPrestacion.observaciones">Observaciones</span></th>
+                <th scope="col"><span>Práctica</span></th>
+                <th scope="col"><span>Prestador</span></th>
+                <th scope="col"><span>Precio</span></th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let solicitudPrestacion of solicitudBonos; trackBy: trackId" data-cy="entityTable">
                 <td>{{ solicitudPrestacion.numero }}</td>
-                <td>{{ solicitudPrestacion.horaSolicitud | formatShortTime }}</td>
-                <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaSalida) }}</td>
-                <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaLlegada) }}</td>
-                <td>{{ formatShortTime(solicitudPrestacion.despacho?.horaLibre) }}</td>
+                <td>{{ solicitudPrestacion.horaSolicitud | formatMediumDatetime }}</td>
+                <td>{{ solicitudPrestacion.usuarioSolicitud?.login }}</td>
                 <td>
-                  <div *ngIf="solicitudPrestacion.individuo">
-                    <a (click)="popupPaciente(solicitudPrestacion.individuo!)">{{ solicitudPrestacion.individuo?.nombre }}</a>
+                  <div *ngIf="solicitudPrestacion.adhesion">
+                    <a (click)="popupPaciente(solicitudPrestacion.adhesion!.cliente!)">{{
+                      solicitudPrestacion.adhesion?.cliente?.nombre
+                    }}</a>
                   </div>
                 </td>
-                <td>{{ solicitudPrestacion.domicilio }}</td>
-                <td>{{ solicitudPrestacion.telefono }}</td>
-                <td>{{ solicitudPrestacion.edad }}</td>
-                <td>{{ solicitudPrestacion.motivoLlamado }}</td>
-                <td class="text-center">
-                  <div *ngIf="solicitudPrestacion.seEfectuo"><fa-icon icon="check"></fa-icon></div>
-                  <div *ngIf="!solicitudPrestacion.seEfectuo"><fa-icon icon="times"></fa-icon></div>
+                <td>
+                  <div *ngIf="solicitudPrestacion.adhesion">
+                    <a (click)="popupPaciente(solicitudPrestacion.adhesion!.individuo!)">{{
+                      solicitudPrestacion.adhesion?.individuo?.nombre
+                    }}</a>
+                  </div>
                 </td>
-                <td class="text-center">
-                  <div *ngIf="solicitudPrestacion.internacion"><fa-icon icon="check"></fa-icon></div>
-                  <div *ngIf="!solicitudPrestacion.internacion"><fa-icon icon="times"></fa-icon></div>
-                </td>
-                <td>{{ solicitudPrestacion.observaciones }}</td>
+                <td>{{ solicitudPrestacion.itemNomenclador?.nombre }}</td>
+                <td>{{ solicitudPrestacion.prestador?.nombre }}</td>
+                <td>${{ solicitudPrestacion.precioReal }}</td>
 
                 <td class="text-right">
                   <div class="btn-group">
@@ -399,12 +394,15 @@
                       <span class="d-none d-md-inline">Modificar</span>
                     </button>
 
-                    <!--
-                      <button type="submit" (click)="delete(solicitudPrestacion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                        <fa-icon icon="times"></fa-icon>
-                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                      </button>
-                      -->
+                    <button
+                      type="submit"
+                      (click)="delete(solicitudPrestacion)"
+                      class="btn btn-outline-danger btn-sm"
+                      data-cy="entityDeleteButton"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                    </button>
                   </div>
                 </td>
               </tr>

@@ -142,6 +142,15 @@ public class ProvisionResource {
         return provisionService.findAll();
     }
 
+    @GetMapping("/provisions/porplan/{planid}")
+    public List<Provision> getAllProvisions(
+        @PathVariable Long planid,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
+        log.debug("REST request to get all Provisions de Plan " + planid);
+        return provisionService.findAllByPlanId(planid);
+    }
+
     /**
      * {@code GET  /provisions/:id} : get the "id" provision.
      *

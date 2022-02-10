@@ -25,4 +25,9 @@ public interface ProvisionRepository extends JpaRepository<Provision, Long> {
 
     @Query("select provision from Provision provision left join fetch provision.insumos where provision.id =:id")
     Optional<Provision> findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query(
+        "select distinct provision from Provision provision left join fetch provision.reglaPrestacions where provision.plan.id = :planid"
+    )
+    List<Provision> findAllByPlanIdWithEagerRelationships(@Param("planid") Long planid);
 }

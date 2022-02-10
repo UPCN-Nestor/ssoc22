@@ -20,7 +20,7 @@ import { IInsumo } from 'app/entities/insumo/insumo.model';
 import { InsumoService } from 'app/entities/insumo/service/insumo.service';
 import { IIndividuo } from 'app/entities/individuo/individuo.model';
 import { IndividuoService } from 'app/entities/individuo/service/individuo.service';
-import { NgbModal, NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 import { PrestadorService } from 'app/entities/prestador/service/prestador.service';
@@ -58,7 +58,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   errorPractica = '';
   practicaSearchFailed = false;
   practicaSeleccionada: IItemNomenclador | null = null;
-  // *** En práctica typeahead
+  // *** End práctica typeahead
 
   adhesionesDeCliente: IAdhesion[] | null = [];
   practicasHabilitadas: IItemNomenclador[] | null = [];
@@ -71,6 +71,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   insumosSharedCollection: IInsumo[] = [];
   individuosSharedCollection: IIndividuo[] = [];
   prestadorsSharedCollection: IPrestador[] = [];
+  adhesionsSharedCollection: IAdhesion[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -88,7 +89,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     itemNomenclador: [],
     usuarioSolicitud: [],
     insumos: [],
-    individuo: [],
+    adhesion: [],
     precioReal: [],
     prestador: [],
   });
@@ -106,7 +107,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     protected modalService: NgbModal,
     protected prestadorService: PrestadorService,
     protected adhesionService: AdhesionService,
-    protected router: Router
+    protected router: Router,
+    protected activeModal: NgbActiveModal
   ) {
     // eslint-disable-next-line
     this.router.events.subscribe(console.log);
@@ -124,7 +126,19 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
       nueva.tipo = this.tipo;
       this.updateForm(nueva);
     } else {
-      this.clienteSeleccionado = this.solicitudPrestacionBonoParaModificar.cliente!;
+      this.clienteSeleccionado = this.solicitudPrestacionBonoParaModificar.adhesion!.cliente!;
+      this.numeroSocioSeleccionado = this.solicitudPrestacionBonoParaModificar.adhesion!.cliente!.socio!;
+      this.practicaSeleccionada = this.solicitudPrestacionBonoParaModificar.itemNomenclador!;
+
+      this.adhesionService.queryPorCliente(this.clienteSeleccionado.id!).subscribe(as => {
+        this.adhesionesDeCliente = as.body;
+        this.adhesionSeleccionada = this.adhesionesDeCliente!.find(
+          a =>
+            a.cliente!.id === this.clienteSeleccionado!.id &&
+            a.individuo!.id === this.solicitudPrestacionBonoParaModificar!.adhesion!.individuo!.id
+        )!;
+      });
+
       this.updateForm(this.solicitudPrestacionBonoParaModificar);
     }
 
@@ -271,8 +285,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     );
   }
 
-  selectIndividuo(adhesion: any): void {
-    this.editForm.patchValue({ individuo: adhesion.individuo, itemNomenclador: null, precioReal: null, prestador: null });
+  selectAdhesion(adhesion: any): void {
+    this.editForm.patchValue({ adhesion, itemNomenclador: null, precioReal: null, prestador: null });
 
     this.practicaSeleccionada = null;
     this.adhesionSeleccionada = adhesion;
@@ -317,6 +331,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
+    this.activeModal.close();
     this.previousState();
   }
 
@@ -345,9 +360,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
       itemNomenclador: solicitudPrestacion.itemNomenclador,
       usuarioSolicitud: solicitudPrestacion.usuarioSolicitud,
       insumos: solicitudPrestacion.insumos,
-      individuo: solicitudPrestacion.individuo,
+      adhesion: solicitudPrestacion.adhesion,
       precioReal: solicitudPrestacion.precioReal,
-      cliente: solicitudPrestacion.cliente,
       prestador: solicitudPrestacion.prestador,
     });
 
@@ -366,10 +380,6 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
     this.insumosSharedCollection = this.insumoService.addInsumoToCollectionIfMissing(
       this.insumosSharedCollection,
       ...(solicitudPrestacion.insumos ?? [])
-    );
-    this.individuosSharedCollection = this.individuoService.addIndividuoToCollectionIfMissing(
-      this.individuosSharedCollection,
-      solicitudPrestacion.individuo
     );
   }
 
@@ -410,16 +420,6 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
       )
       .subscribe((insumos: IInsumo[]) => (this.insumosSharedCollection = insumos));
 
-    this.individuoService
-      .query()
-      .pipe(map((res: HttpResponse<IIndividuo[]>) => res.body ?? []))
-      .pipe(
-        map((individuos: IIndividuo[]) =>
-          this.individuoService.addIndividuoToCollectionIfMissing(individuos, this.editForm.get('individuo')!.value)
-        )
-      )
-      .subscribe((individuos: IIndividuo[]) => (this.individuosSharedCollection = individuos));
-
     this.prestadorService
       .query()
       .pipe(map((res: HttpResponse<IPrestador[]>) => res.body ?? []))
@@ -429,6 +429,16 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
         )
       )
       .subscribe((prestadors: IPrestador[]) => (this.prestadorsSharedCollection = prestadors));
+
+    this.adhesionService
+      .query()
+      .pipe(map((res: HttpResponse<IAdhesion[]>) => res.body ?? []))
+      .pipe(
+        map((adhesions: IAdhesion[]) =>
+          this.adhesionService.addAdhesionToCollectionIfMissing(adhesions, this.editForm.get('adhesion')!.value)
+        )
+      )
+      .subscribe((adhesions: IAdhesion[]) => (this.adhesionsSharedCollection = adhesions));
   }
 
   protected createFromForm(): ISolicitudPrestacion {
@@ -451,9 +461,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
       itemNomenclador: this.editForm.get(['itemNomenclador'])!.value,
       usuarioSolicitud: this.editForm.get(['usuarioSolicitud'])!.value,
       insumos: this.editForm.get(['insumos'])!.value,
-      individuo: this.editForm.get(['individuo'])!.value,
+      adhesion: this.editForm.get(['adhesion'])!.value,
       precioReal: this.editForm.get(['precioReal'])!.value,
-      cliente: this.clienteSeleccionado,
       prestador: this.editForm.get(['prestador'])!.value,
     };
   }

@@ -6,3 +6,5 @@ id;nombre;dias_carencia;codigo;prestacion_id
 5;Traslado a Distancia;;500;5
 6;Sepelio;;600;6
 7;Clínico;;101;1
+8;Ecografía;;102;1
+9;Análisis de sangre;;103;1

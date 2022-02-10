@@ -124,4 +124,8 @@ public class ProvisionServiceImpl implements ProvisionService {
 
         return precio;
     }
+
+    public List<Provision> findAllByPlanId(Long planid) {
+        return provisionRepository.findAllByPlanIdWithEagerRelationships(planid);
+    }
 }

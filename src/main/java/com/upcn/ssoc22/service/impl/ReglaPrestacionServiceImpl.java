@@ -54,11 +54,12 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
             .map(reglaPrestacionRepository::save);
     }
 
+    // Esto devuelve todas las Reglas "prototipo" disponibles
     @Override
     @Transactional(readOnly = true)
-    public List<ReglaPrestacion> findAll() {
+    public List<ReglaPrestacion> findAllPrototipos() {
         log.debug("Request to get all ReglaPrestacions");
-        return reglaPrestacionRepository.findAll();
+        return reglaPrestacionRepository.findAllByProvisionId(null);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
     }
 
     public boolean procesarReglaDeHabilitacion(ReglaPrestacion r, Adhesion a) {
-        if (r.getCodigoRegla().equals("H1")) {
+        if (r.getTipoRegla().equals("Habilita")) {
             // Ejemplo
             return true;
         }
@@ -85,7 +86,7 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
 
     @Override
     public int procesarReglaDeCarencia(ReglaPrestacion r, Adhesion a) {
-        if (r.getCodigoRegla().equals("C1")) {
+        if (r.getTipoRegla().equals("Carencia")) {
             // Ejemplo
             return Integer.parseInt(r.getDatos());
         }
@@ -94,7 +95,7 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
 
     @Override
     public float procesarReglaDeDescuento(ReglaPrestacion r, Adhesion a, float precioBase) {
-        if (r.getCodigoRegla().equals("D1")) {
+        if (r.getTipoRegla().equals("Descuento")) {
             // Ejemplo
             return precioBase * (100 - (Integer.parseInt(r.getDatos()))) / 100;
         }

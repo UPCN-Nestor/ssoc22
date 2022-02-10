@@ -47,9 +47,13 @@ import {
   faDatabase,
   faUsers,
   faUsersCog,
+  faClipboardCheck,
+  faExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const fontAwesomeIcons = [
+  faExclamation,
+  faClipboardCheck,
   faCogs,
   faDatabase,
   faUsers,

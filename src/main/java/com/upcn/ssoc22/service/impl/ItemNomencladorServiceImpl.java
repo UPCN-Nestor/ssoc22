@@ -99,6 +99,7 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
 
         Set<ItemNomenclador> toRet = new HashSet<ItemNomenclador>();
 
+        // No tomo en cuenta adhesiones vencidas.
         Adhesion a = adhesionRepository.findById(adhesionid).get();
 
         if (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) throw new AdhesionNoHabilitadaException();
@@ -170,6 +171,7 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
         float precioBase = i.getPrestacion().getPrecio(); // Acá se puede implementar fácilmente precios por ítem nomenclador individual
         float precioMenor = precioBase;
 
+        // No tomo en cuenta adhesiones vencidas.
         if (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) throw new AdhesionNoHabilitadaException();
 
         for (Contrato c : a.getCliente().getContratoes()) {
@@ -182,6 +184,9 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
             log.debug("> Plan: " + p.getId());
 
             for (Provision prov : p.getProvisions()) {
+                // Controlo que hablemos de la práctica o prestación solicitada
+                if (prov.getItemNomenclador() != i && prov.getPrestacion() != i.getPrestacion()) continue;
+
                 log.debug(
                     ">> Provisión " +
                     prov.getId() +

@@ -14,7 +14,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "solicitud_prestacion")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class SolicitudPrestacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -86,12 +86,12 @@ public class SolicitudPrestacion implements Serializable {
         joinColumns = @JoinColumn(name = "solicitud_prestacion_id"),
         inverseJoinColumns = @JoinColumn(name = "insumo_id")
     )
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "movimientoStocks", "prestacions", "solicitudPrestacions", "provisions" }, allowSetters = true)
     private Set<Insumo> insumos = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "solicitudPrestacions", "individuo", "cliente" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "solicitudPrestacions" }, allowSetters = true)
     private Adhesion adhesion;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

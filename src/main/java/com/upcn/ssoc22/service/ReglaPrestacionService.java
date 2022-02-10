@@ -30,7 +30,7 @@ public interface ReglaPrestacionService {
      *
      * @return the list of entities.
      */
-    List<ReglaPrestacion> findAll();
+    List<ReglaPrestacion> findAllPrototipos();
 
     /**
      * Get the "id" reglaPrestacion.

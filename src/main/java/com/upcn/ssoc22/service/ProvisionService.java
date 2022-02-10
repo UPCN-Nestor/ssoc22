@@ -63,4 +63,6 @@ public interface ProvisionService {
     int diasCarencia(Provision p, Adhesion a);
 
     float procesarDescuento(Provision prov, Adhesion a, float precioBase);
+
+    List<Provision> findAllByPlanId(Long planid);
 }

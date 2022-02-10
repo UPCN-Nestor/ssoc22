@@ -1,6 +1,7 @@
 package com.upcn.ssoc22.repository;
 
 import com.upcn.ssoc22.domain.ReglaPrestacion;
+import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ReglaPrestacionRepository extends JpaRepository<ReglaPrestacion, Long> {}
+public interface ReglaPrestacionRepository extends JpaRepository<ReglaPrestacion, Long> {
+    List<ReglaPrestacion> findAllByProvisionId(Long provisionid);
+}

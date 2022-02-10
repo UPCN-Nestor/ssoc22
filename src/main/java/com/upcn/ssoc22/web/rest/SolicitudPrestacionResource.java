@@ -10,12 +10,15 @@ import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +71,12 @@ public class SolicitudPrestacionResource {
 
         solicitudPrestacion.setHoraSolicitud(ZonedDateTime.now());
         solicitudPrestacion.setUsuarioSolicitud(userService.getUserWithAuthorities().get());
+
+        ZonedDateTime hoy = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS);
+        ZonedDateTime mañana = hoy.plusDays(1);
+        Integer numSolicitud = solicitudPrestacionRepository.getNumeroPorFechayTipo(solicitudPrestacion.getTipo(), hoy, mañana);
+        log.debug("******************** " + numSolicitud);
+        solicitudPrestacion.setNumero(numSolicitud);
 
         SolicitudPrestacion result = solicitudPrestacionRepository.save(solicitudPrestacion);
         return ResponseEntity

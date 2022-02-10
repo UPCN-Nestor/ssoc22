@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "individuo")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Individuo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public class Individuo implements Serializable {
     private String dni;
 
     @OneToMany(mappedBy = "individuo")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "solicitudPrestacions", "individuo", "cliente" }, allowSetters = true)
     private Set<Adhesion> adhesions = new HashSet<>();
 

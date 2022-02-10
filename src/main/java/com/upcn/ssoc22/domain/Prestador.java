@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "prestador")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Prestador implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,12 +36,12 @@ public class Prestador implements Serializable {
         joinColumns = @JoinColumn(name = "prestador_id"),
         inverseJoinColumns = @JoinColumn(name = "item_nomenclador_id")
     )
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "prestacion", "solicitudPrestacions", "provisions", "prestadors" }, allowSetters = true)
     private Set<ItemNomenclador> itemNomencladors = new HashSet<>();
 
     @OneToMany(mappedBy = "prestador")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(
         value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "individuo", "cliente" },
         allowSetters = true

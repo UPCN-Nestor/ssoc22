@@ -16,4 +16,7 @@ public interface AdhesionRepository extends JpaRepository<Adhesion, Long> {
         value = "select adhesion from Adhesion adhesion where adhesion.cliente.id = :clienteid and (fecha_baja is null or fecha_baja > current_date())"
     )
     List<Adhesion> findAllVigentesByClienteId(@Param("clienteid") Long clienteid);
+
+    @Query("select distinct adhesion from Adhesion adhesion left join fetch adhesion.cliente left join fetch adhesion.individuo")
+    List<Adhesion> findAllWithEagerRelationships();
 }

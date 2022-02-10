@@ -41,6 +41,11 @@ export class PrestacionService {
     return this.http.get<IPrestacion[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  queryPorTipo(tipo: string, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IPrestacion[]>(this.resourceUrl + `/portipo/${tipo}`, { params: options, observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

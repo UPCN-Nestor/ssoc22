@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "item_nomenclador")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class ItemNomenclador implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class ItemNomenclador implements Serializable {
     private Prestacion prestacion;
 
     @OneToMany(mappedBy = "itemNomenclador")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(
         value = { "despacho", "itemNomenclador", "prestador", "usuarioSolicitud", "insumos", "individuo", "cliente" },
         allowSetters = true
@@ -46,12 +46,12 @@ public class ItemNomenclador implements Serializable {
     private Set<SolicitudPrestacion> solicitudPrestacions = new HashSet<>();
 
     @OneToMany(mappedBy = "itemNomenclador")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "prestacion", "insumos", "plan" }, allowSetters = true)
     private Set<Provision> provisions = new HashSet<>();
 
     @ManyToMany(mappedBy = "itemNomencladors")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "itemNomencladors", "solicitudPrestacions" }, allowSetters = true)
     private Set<Prestador> prestadors = new HashSet<>();
 

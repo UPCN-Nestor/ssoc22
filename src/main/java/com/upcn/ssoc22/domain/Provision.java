@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "provision")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Provision implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,15 +25,17 @@ public class Provision implements Serializable {
     private Long id;
 
     @OneToMany(mappedBy = "provision")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "provision" }, allowSetters = true)
     private Set<ReglaPrestacion> reglaPrestacions = new HashSet<>();
 
     @ManyToOne
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "prestacion", "solicitudPrestacions", "provisions", "prestadors" }, allowSetters = true)
     private ItemNomenclador itemNomenclador;
 
     @ManyToOne
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "itemNomencladors", "insumos", "provisions" }, allowSetters = true)
     private Prestacion prestacion;
 
@@ -43,11 +45,12 @@ public class Provision implements Serializable {
         joinColumns = @JoinColumn(name = "provision_id"),
         inverseJoinColumns = @JoinColumn(name = "insumo_id")
     )
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "movimientoStocks", "prestacions", "solicitudPrestacions", "provisions" }, allowSetters = true)
     private Set<Insumo> insumos = new HashSet<>();
 
     @ManyToOne
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "provisions", "tarifas", "contratoes" }, allowSetters = true)
     private Plan plan;
 

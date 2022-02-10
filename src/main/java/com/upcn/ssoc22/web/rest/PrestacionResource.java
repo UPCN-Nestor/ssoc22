@@ -161,6 +161,15 @@ public class PrestacionResource {
         return prestacionRepository.findAllWithEagerRelationships();
     }
 
+    @GetMapping("/prestacions/portipo/{tipo}")
+    public List<Prestacion> getAllPrestacions(
+        @PathVariable String tipo,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
+        log.debug("REST request to get all Prestacions por tipo " + tipo);
+        return prestacionRepository.findAllByTipo(tipo);
+    }
+
     /**
      * {@code GET  /prestacions/:id} : get the "id" prestacion.
      *
