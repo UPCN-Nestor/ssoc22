@@ -153,6 +153,12 @@ public class ProvisionServiceImpl implements ProvisionService {
                         toRet = false;
                     }
                 }
+                if (r.getCodigoRegla().equals("LPA")) {
+                    if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorAñoPorPaciente(r, a)) {
+                        log.info(">>> No se cumple.");
+                        toRet = false;
+                    }
+                }
                 if (r.getCodigoRegla().equals("LCM")) {
                     if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorMesPorCliente(r, a)) {
                         log.info(">>> No se cumple.");
@@ -170,6 +176,12 @@ public class ProvisionServiceImpl implements ProvisionService {
                 log.info(">>> Regla de limite: " + r.getId() + " " + r.getNombre() + " " + r.getDatos());
                 if (r.getCodigoRegla().equals("LPM")) {
                     if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorMesPorPaciente(r, a)) {
+                        log.info(">>> No se cumple.");
+                        toRet = false;
+                    }
+                }
+                if (r.getCodigoRegla().equals("LPA")) {
+                    if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorAñoPorPaciente(r, a)) {
                         log.info(">>> No se cumple.");
                         toRet = false;
                     }

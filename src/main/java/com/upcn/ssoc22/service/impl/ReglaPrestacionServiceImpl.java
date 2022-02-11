@@ -116,6 +116,43 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
     }
 
     @Override
+    public boolean procesarReglaDeLimiteVecesPorAñoPorPaciente(ReglaPrestacion r, Adhesion a) {
+        Prestacion p = r.getProvision().getPrestacion();
+        ItemNomenclador i = r.getProvision().getItemNomenclador();
+
+        ZonedDateTime inicioAño = ZonedDateTime.now().with(TemporalAdjusters.firstDayOfYear()).truncatedTo(ChronoUnit.DAYS);
+        ZonedDateTime finAño = ZonedDateTime.now().with(TemporalAdjusters.firstDayOfYear()).truncatedTo(ChronoUnit.DAYS).plusYears(1);
+
+        // Caso práctica individual
+        if (i != null) {
+            // Acá falta contemplar que la solicitudPrestación esté efectuada, no sólo solicitada
+            Integer cantidad = solicitudPrestacionRepository.getCantidadPorIndividuoYPracticaEntreFechas(
+                i.getId(),
+                a.getIndividuo().getId(),
+                inicioAño,
+                finAño
+            );
+            Integer maxPermitido = Integer.parseInt(r.getDatos());
+            log.info(">>>> Cantidad de " + i.getNombre() + " el ultimo año: " + cantidad + ", max: " + maxPermitido);
+            if (cantidad < maxPermitido) return true; else return false;
+        }
+        // Caso grupo de prácticas (ej. restricción sobre Bonos en general)
+        else if (p != null) {
+            Integer cantidad = solicitudPrestacionRepository.getCantidadPorIndividuoYPrestacionEntreFechas(
+                p.getId(),
+                a.getIndividuo().getId(),
+                inicioAño,
+                finAño
+            );
+            Integer maxPermitido = Integer.parseInt(r.getDatos());
+            log.info(">>>> Cantidad de " + p.getNombre() + " el ultimo año: " + cantidad + ", max: " + maxPermitido);
+            if (cantidad < maxPermitido) return true; else return false;
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean procesarReglaDeLimiteVecesPorMesPorPaciente(ReglaPrestacion r, Adhesion a) {
         Prestacion p = r.getProvision().getPrestacion();
         ItemNomenclador i = r.getProvision().getItemNomenclador();
