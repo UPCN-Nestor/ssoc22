@@ -58,11 +58,13 @@ public interface ProvisionService {
      */
     void delete(Long id);
 
-    boolean estaHabilitadaPara(Provision p, Adhesion a);
+    //boolean estaHabilitadaPara(Provision p, Adhesion a);
 
     int diasCarencia(Provision p, Adhesion a);
 
     float procesarDescuento(Provision prov, Adhesion a, float precioBase);
 
     List<Provision> findAllByPlanId(Long planid);
+
+    boolean cumpleLimites(Provision prov, Adhesion a);
 }

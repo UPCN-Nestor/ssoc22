@@ -93,8 +93,7 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
         itemNomencladorRepository.deleteById(id);
     }
 
-    // Busco los EXPLÍCITAMENTE habilitados por adhesión, esto lo usaríamos para los bonos
-    public List<ItemNomenclador> getAllItemNomencladorsHabilitadosPorAdhesion(Long adhesionid) throws AdhesionNoHabilitadaException {
+    public List<ItemNomenclador> getAllBonosHabilitadosPorAdhesion(Long adhesionid) throws AdhesionNoHabilitadaException {
         log.debug("REST request to get all ItemNomencladors habilitados para adhesión " + adhesionid);
 
         Set<ItemNomenclador> toRet = new HashSet<ItemNomenclador>();
@@ -114,6 +113,13 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
             log.debug("> Plan: " + p.getId());
 
             for (Provision prov : p.getProvisions()) {
+                if (
+                    (prov.getItemNomenclador() != null && prov.getItemNomenclador().getPrestacion().getTipo().equals("bono")) ||
+                    (prov.getPrestacion() != null && prov.getPrestacion().getTipo().equals("bono"))
+                ) {
+                    /* Es un bono */
+                } else continue;
+
                 log.debug(
                     ">> Provisión " +
                     prov.getId() +
@@ -121,23 +127,23 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
                     (prov.getPrestacion() != null ? prov.getPrestacion().getNombre() : prov.getItemNomenclador().getNombre())
                 );
 
-                // En realidad creo que este IF es lo único que diferencia Bonos de la lógica de las demás prestaciones
-                if (provisionService.estaHabilitadaPara(prov, a)) {
-                    // Si la Provisión es sobre una Prestación, agrego como disponibles todos los ItemNomencladors asociados. Si no, sólo el indicado.
-                    if (prov.getPrestacion() != null) {
-                        LinkedList<ItemNomenclador> toAdd = new LinkedList<ItemNomenclador>(
-                            Arrays.asList(prov.getPrestacion().getItemNomencladors().toArray(new ItemNomenclador[0]))
-                        );
-                        int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
-                        toAdd.removeIf(i -> !cumpleCarenciaDefinidaODefault(i, a, c, diasCarenciaSegunProvision));
-                        toRet.addAll(toAdd);
-                    } else {
-                        int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
-                        if (cumpleCarenciaDefinidaODefault(prov.getItemNomenclador(), a, c, diasCarenciaSegunProvision)) toRet.add(
-                            prov.getItemNomenclador()
-                        );
+                // Reglas de cantidad por período
+                if (!provisionService.cumpleLimites(prov, a)) continue;
+
+                if (prov.getPrestacion() != null) {
+                    LinkedList<ItemNomenclador> toAdd = new LinkedList<ItemNomenclador>(
+                        Arrays.asList(prov.getPrestacion().getItemNomencladors().toArray(new ItemNomenclador[0]))
+                    );
+                    int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
+                    toAdd.removeIf(i -> !cumpleCarenciaDefinidaODefault(i, a, c, diasCarenciaSegunProvision));
+                    toRet.addAll(toAdd);
+                    log.debug(">> Habilitadas " + toAdd.size());
+                } else {
+                    int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
+                    if (cumpleCarenciaDefinidaODefault(prov.getItemNomenclador(), a, c, diasCarenciaSegunProvision)) {
+                        toRet.add(prov.getItemNomenclador());
+                        log.debug(">> Habilitada " + prov.getItemNomenclador().getNombre());
                     }
-                    log.debug(">> Habilitada.");
                 }
             }
         }

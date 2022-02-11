@@ -44,6 +44,8 @@ export class PlanAltaComponent implements OnInit {
   reglasDisponibles: IReglaPrestacion[] = [];
   datoNuevaRegla = '';
 
+  nombreParaModificar = '';
+
   // eslint-disable-next-line
   constructor(
     protected itemNomencladorService: ItemNomencladorService,
@@ -110,8 +112,8 @@ export class PlanAltaComponent implements OnInit {
     return item.id!;
   }
 
-  delete(provision: IProvision): void {
-    const modalRef = this.modalService.open(ProvisionDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+  deleteProvision(provision: IProvision): void {
+    const modalRef = this.modalService.open(ProvisionDeleteDialogComponent, { size: 'sm', backdrop: true });
     modalRef.componentInstance.provision = provision;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
@@ -133,7 +135,7 @@ export class PlanAltaComponent implements OnInit {
         return 'calendar-times';
     }
 
-    return 'exclamation';
+    return 'mouse-pointer';
   }
 
   seleccionarRegla(regla: IReglaPrestacion): void {
@@ -142,7 +144,7 @@ export class PlanAltaComponent implements OnInit {
 
   // eslint-disable-next-line
   deleteRegla(reglaPrestacion: IReglaPrestacion): void {
-    const modalRef = this.modalService.open(ReglaPrestacionDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(ReglaPrestacionDeleteDialogComponent, { size: 'sm', backdrop: true });
     modalRef.componentInstance.reglaPrestacion = reglaPrestacion;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
@@ -167,6 +169,7 @@ export class PlanAltaComponent implements OnInit {
     this.reglaService.create(toAdd).subscribe(res => {
       this.reglaSeleccionada = null;
       this.provisionSeleccionada = null;
+      this.datoNuevaRegla = '';
       this.modalService.dismissAll();
       this.loadProvisions();
     });
@@ -203,6 +206,19 @@ export class PlanAltaComponent implements OnInit {
       this.practicaSeleccionada = null;
       this.modalService.dismissAll();
       this.loadProvisions();
+    });
+  }
+
+  openParaModificarNombre(content: any): void {
+    this.nombreParaModificar = this.planActivo!.nombre!;
+    this.open(content);
+  }
+
+  // eslint-disable-next-line
+  modificarNombre(): void {
+    this.planActivo!.nombre = this.nombreParaModificar;
+    this.planService.update(this.planActivo!).subscribe(res => {
+      this.modalService.dismissAll();
     });
   }
 }

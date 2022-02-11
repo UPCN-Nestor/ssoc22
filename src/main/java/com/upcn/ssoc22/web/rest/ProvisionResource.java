@@ -1,8 +1,10 @@
 package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.Provision;
+import com.upcn.ssoc22.domain.ReglaPrestacion;
 import com.upcn.ssoc22.repository.ProvisionRepository;
 import com.upcn.ssoc22.service.ProvisionService;
+import com.upcn.ssoc22.service.ReglaPrestacionService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,9 +37,16 @@ public class ProvisionResource {
 
     private final ProvisionRepository provisionRepository;
 
-    public ProvisionResource(ProvisionService provisionService, ProvisionRepository provisionRepository) {
+    private final ReglaPrestacionService reglaPrestacionService;
+
+    public ProvisionResource(
+        ProvisionService provisionService,
+        ProvisionRepository provisionRepository,
+        ReglaPrestacionService reglaPrestacionService
+    ) {
         this.provisionService = provisionService;
         this.provisionRepository = provisionRepository;
+        this.reglaPrestacionService = reglaPrestacionService;
     }
 
     /**
@@ -173,6 +182,7 @@ public class ProvisionResource {
     @DeleteMapping("/provisions/{id}")
     public ResponseEntity<Void> deleteProvision(@PathVariable Long id) {
         log.debug("REST request to delete Provision : {}", id);
+
         provisionService.delete(id);
         return ResponseEntity
             .noContent()

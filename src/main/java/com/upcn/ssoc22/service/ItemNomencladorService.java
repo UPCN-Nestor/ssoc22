@@ -46,7 +46,7 @@ public interface ItemNomencladorService {
      */
     void delete(Long id);
 
-    List<ItemNomenclador> getAllItemNomencladorsHabilitadosPorAdhesion(Long adhesionid);
+    List<ItemNomenclador> getAllBonosHabilitadosPorAdhesion(Long adhesionid);
 
     float getPrecioReal(Long itemnomencladorid, Long adhesionid);
 }

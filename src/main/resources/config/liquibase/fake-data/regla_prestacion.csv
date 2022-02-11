@@ -1,11 +1,10 @@
 id;codigo_regla;tipo_regla;datos;provision_id
-1;Habilitación;Habilita;;null
 2;Carencia (días);Carencia;;null
 3;Descuento %;Descuento;;null
 4;Límite por paciente por mes;Limite;;null
-5;Prueba;Descuento;;null
-111;Habilitación;Habilita;;1
-112;Habilitación;Habilita;;2
+5;Límite por cliente por mes;Limite;;null
+6;Límite por paciente por año;Limite;;null
+7;Carencia %;Carencia;;null
 113;Carencia (días);Carencia;5;2
 114;Descuento %;Descuento;10;2
 115;Descuento %;Descuento;50;3

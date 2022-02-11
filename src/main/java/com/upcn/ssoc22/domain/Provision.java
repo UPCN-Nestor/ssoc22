@@ -24,7 +24,7 @@ public class Provision implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany(mappedBy = "provision")
+    @OneToMany(mappedBy = "provision", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "provision" }, allowSetters = true)
     private Set<ReglaPrestacion> reglaPrestacions = new HashSet<>();

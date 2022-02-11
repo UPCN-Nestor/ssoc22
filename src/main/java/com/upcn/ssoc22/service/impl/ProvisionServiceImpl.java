@@ -128,4 +128,15 @@ public class ProvisionServiceImpl implements ProvisionService {
     public List<Provision> findAllByPlanId(Long planid) {
         return provisionRepository.findAllByPlanIdWithEagerRelationships(planid);
     }
+
+    @Override
+    public boolean cumpleLimites(Provision prov, Adhesion a) {
+        for (ReglaPrestacion r : prov.getReglaPrestacions()) {
+            if (r.getTipoRegla().equals("Limite")) {
+                log.debug(">>> Regla de límite: " + r.getId());
+                reglaPrestacionService.procesarReglaDeLimite(r, a);
+            }
+        }
+        return false;
+    }
 }
