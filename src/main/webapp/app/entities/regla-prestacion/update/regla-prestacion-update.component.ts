@@ -24,6 +24,7 @@ export class ReglaPrestacionUpdateComponent implements OnInit {
     codigoRegla: [],
     tipoRegla: [],
     datos: [],
+    nombre: [],
     provision: [],
   });
 
@@ -85,6 +86,7 @@ export class ReglaPrestacionUpdateComponent implements OnInit {
       codigoRegla: reglaPrestacion.codigoRegla,
       tipoRegla: reglaPrestacion.tipoRegla,
       datos: reglaPrestacion.datos,
+      nombre: reglaPrestacion.nombre,
       provision: reglaPrestacion.provision,
     });
 
@@ -113,6 +115,7 @@ export class ReglaPrestacionUpdateComponent implements OnInit {
       codigoRegla: this.editForm.get(['codigoRegla'])!.value,
       tipoRegla: this.editForm.get(['tipoRegla'])!.value,
       datos: this.editForm.get(['datos'])!.value,
+      nombre: this.editForm.get(['nombre'])!.value,
       provision: this.editForm.get(['provision'])!.value,
     };
   }

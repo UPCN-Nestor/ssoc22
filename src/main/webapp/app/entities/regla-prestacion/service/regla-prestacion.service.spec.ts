@@ -24,6 +24,7 @@ describe('ReglaPrestacion Service', () => {
       codigoRegla: 'AAAAAAA',
       tipoRegla: 'AAAAAAA',
       datos: 'AAAAAAA',
+      nombre: 'AAAAAAA',
     };
   });
 
@@ -62,6 +63,7 @@ describe('ReglaPrestacion Service', () => {
           codigoRegla: 'BBBBBB',
           tipoRegla: 'BBBBBB',
           datos: 'BBBBBB',
+          nombre: 'BBBBBB',
         },
         elemDefault
       );
@@ -80,6 +82,7 @@ describe('ReglaPrestacion Service', () => {
         {
           tipoRegla: 'BBBBBB',
           datos: 'BBBBBB',
+          nombre: 'BBBBBB',
         },
         new ReglaPrestacion()
       );
@@ -102,6 +105,7 @@ describe('ReglaPrestacion Service', () => {
           codigoRegla: 'BBBBBB',
           tipoRegla: 'BBBBBB',
           datos: 'BBBBBB',
+          nombre: 'BBBBBB',
         },
         elemDefault
       );
@@ -153,7 +157,7 @@ describe('ReglaPrestacion Service', () => {
       });
 
       it('should add only unique ReglaPrestacion to an array', () => {
-        const reglaPrestacionArray: IReglaPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 88331 }];
+        const reglaPrestacionArray: IReglaPrestacion[] = [{ id: 123 }, { id: 456 }, { id: 76953 }];
         const reglaPrestacionCollection: IReglaPrestacion[] = [{ id: 123 }];
         expectedResult = service.addReglaPrestacionToCollectionIfMissing(reglaPrestacionCollection, ...reglaPrestacionArray);
         expect(expectedResult).toHaveLength(3);

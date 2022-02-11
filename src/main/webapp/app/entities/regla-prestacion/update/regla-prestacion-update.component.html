@@ -42,6 +42,11 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" jhiTranslate="ssoc22App.reglaPrestacion.nombre" for="field_nombre">Nombre</label>
+          <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" jhiTranslate="ssoc22App.reglaPrestacion.provision" for="field_provision">Provision</label>
           <select class="form-control" id="field_provision" data-cy="provision" name="provision" formControlName="provision">
             <option [ngValue]="null"></option>

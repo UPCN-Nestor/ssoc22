@@ -33,6 +33,7 @@ export class ReglaPrestacionUpdatePage {
   codigoReglaInput = element(by.id('field_codigoRegla'));
   tipoReglaInput = element(by.id('field_tipoRegla'));
   datosInput = element(by.id('field_datos'));
+  nombreInput = element(by.id('field_nombre'));
 
   provisionSelect = element(by.id('field_provision'));
 
@@ -70,6 +71,14 @@ export class ReglaPrestacionUpdatePage {
 
   async getDatosInput(): Promise<string> {
     return await this.datosInput.getAttribute('value');
+  }
+
+  async setNombreInput(nombre: string): Promise<void> {
+    await this.nombreInput.sendKeys(nombre);
+  }
+
+  async getNombreInput(): Promise<string> {
+    return await this.nombreInput.getAttribute('value');
   }
 
   async provisionSelectLastOption(): Promise<void> {

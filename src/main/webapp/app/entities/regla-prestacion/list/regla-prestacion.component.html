@@ -36,6 +36,7 @@
           <th scope="col"><span jhiTranslate="ssoc22App.reglaPrestacion.codigoRegla">Codigo Regla</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.reglaPrestacion.tipoRegla">Tipo Regla</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.reglaPrestacion.datos">Datos</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.reglaPrestacion.nombre">Nombre</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.reglaPrestacion.provision">Provision</span></th>
           <th scope="col"></th>
         </tr>
@@ -48,6 +49,7 @@
           <td>{{ reglaPrestacion.codigoRegla }}</td>
           <td>{{ reglaPrestacion.tipoRegla }}</td>
           <td>{{ reglaPrestacion.datos }}</td>
+          <td>{{ reglaPrestacion.nombre }}</td>
           <td>
             <div *ngIf="reglaPrestacion.provision">
               <a [routerLink]="['/provision', reglaPrestacion.provision?.id, 'view']">{{ reglaPrestacion.provision?.id }}</a>

@@ -38,6 +38,9 @@ class ReglaPrestacionResourceIT {
     private static final String DEFAULT_DATOS = "AAAAAAAAAA";
     private static final String UPDATED_DATOS = "BBBBBBBBBB";
 
+    private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
+    private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/regla-prestacions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -65,7 +68,8 @@ class ReglaPrestacionResourceIT {
         ReglaPrestacion reglaPrestacion = new ReglaPrestacion()
             .codigoRegla(DEFAULT_CODIGO_REGLA)
             .tipoRegla(DEFAULT_TIPO_REGLA)
-            .datos(DEFAULT_DATOS);
+            .datos(DEFAULT_DATOS)
+            .nombre(DEFAULT_NOMBRE);
         return reglaPrestacion;
     }
 
@@ -79,7 +83,8 @@ class ReglaPrestacionResourceIT {
         ReglaPrestacion reglaPrestacion = new ReglaPrestacion()
             .codigoRegla(UPDATED_CODIGO_REGLA)
             .tipoRegla(UPDATED_TIPO_REGLA)
-            .datos(UPDATED_DATOS);
+            .datos(UPDATED_DATOS)
+            .nombre(UPDATED_NOMBRE);
         return reglaPrestacion;
     }
 
@@ -106,6 +111,7 @@ class ReglaPrestacionResourceIT {
         assertThat(testReglaPrestacion.getCodigoRegla()).isEqualTo(DEFAULT_CODIGO_REGLA);
         assertThat(testReglaPrestacion.getTipoRegla()).isEqualTo(DEFAULT_TIPO_REGLA);
         assertThat(testReglaPrestacion.getDatos()).isEqualTo(DEFAULT_DATOS);
+        assertThat(testReglaPrestacion.getNombre()).isEqualTo(DEFAULT_NOMBRE);
     }
 
     @Test
@@ -142,7 +148,8 @@ class ReglaPrestacionResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(reglaPrestacion.getId().intValue())))
             .andExpect(jsonPath("$.[*].codigoRegla").value(hasItem(DEFAULT_CODIGO_REGLA)))
             .andExpect(jsonPath("$.[*].tipoRegla").value(hasItem(DEFAULT_TIPO_REGLA)))
-            .andExpect(jsonPath("$.[*].datos").value(hasItem(DEFAULT_DATOS)));
+            .andExpect(jsonPath("$.[*].datos").value(hasItem(DEFAULT_DATOS)))
+            .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)));
     }
 
     @Test
@@ -159,7 +166,8 @@ class ReglaPrestacionResourceIT {
             .andExpect(jsonPath("$.id").value(reglaPrestacion.getId().intValue()))
             .andExpect(jsonPath("$.codigoRegla").value(DEFAULT_CODIGO_REGLA))
             .andExpect(jsonPath("$.tipoRegla").value(DEFAULT_TIPO_REGLA))
-            .andExpect(jsonPath("$.datos").value(DEFAULT_DATOS));
+            .andExpect(jsonPath("$.datos").value(DEFAULT_DATOS))
+            .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE));
     }
 
     @Test
@@ -181,7 +189,7 @@ class ReglaPrestacionResourceIT {
         ReglaPrestacion updatedReglaPrestacion = reglaPrestacionRepository.findById(reglaPrestacion.getId()).get();
         // Disconnect from session so that the updates on updatedReglaPrestacion are not directly saved in db
         em.detach(updatedReglaPrestacion);
-        updatedReglaPrestacion.codigoRegla(UPDATED_CODIGO_REGLA).tipoRegla(UPDATED_TIPO_REGLA).datos(UPDATED_DATOS);
+        updatedReglaPrestacion.codigoRegla(UPDATED_CODIGO_REGLA).tipoRegla(UPDATED_TIPO_REGLA).datos(UPDATED_DATOS).nombre(UPDATED_NOMBRE);
 
         restReglaPrestacionMockMvc
             .perform(
@@ -198,6 +206,7 @@ class ReglaPrestacionResourceIT {
         assertThat(testReglaPrestacion.getCodigoRegla()).isEqualTo(UPDATED_CODIGO_REGLA);
         assertThat(testReglaPrestacion.getTipoRegla()).isEqualTo(UPDATED_TIPO_REGLA);
         assertThat(testReglaPrestacion.getDatos()).isEqualTo(UPDATED_DATOS);
+        assertThat(testReglaPrestacion.getNombre()).isEqualTo(UPDATED_NOMBRE);
     }
 
     @Test
@@ -270,7 +279,7 @@ class ReglaPrestacionResourceIT {
         ReglaPrestacion partialUpdatedReglaPrestacion = new ReglaPrestacion();
         partialUpdatedReglaPrestacion.setId(reglaPrestacion.getId());
 
-        partialUpdatedReglaPrestacion.tipoRegla(UPDATED_TIPO_REGLA);
+        partialUpdatedReglaPrestacion.tipoRegla(UPDATED_TIPO_REGLA).nombre(UPDATED_NOMBRE);
 
         restReglaPrestacionMockMvc
             .perform(
@@ -287,6 +296,7 @@ class ReglaPrestacionResourceIT {
         assertThat(testReglaPrestacion.getCodigoRegla()).isEqualTo(DEFAULT_CODIGO_REGLA);
         assertThat(testReglaPrestacion.getTipoRegla()).isEqualTo(UPDATED_TIPO_REGLA);
         assertThat(testReglaPrestacion.getDatos()).isEqualTo(DEFAULT_DATOS);
+        assertThat(testReglaPrestacion.getNombre()).isEqualTo(UPDATED_NOMBRE);
     }
 
     @Test
@@ -301,7 +311,11 @@ class ReglaPrestacionResourceIT {
         ReglaPrestacion partialUpdatedReglaPrestacion = new ReglaPrestacion();
         partialUpdatedReglaPrestacion.setId(reglaPrestacion.getId());
 
-        partialUpdatedReglaPrestacion.codigoRegla(UPDATED_CODIGO_REGLA).tipoRegla(UPDATED_TIPO_REGLA).datos(UPDATED_DATOS);
+        partialUpdatedReglaPrestacion
+            .codigoRegla(UPDATED_CODIGO_REGLA)
+            .tipoRegla(UPDATED_TIPO_REGLA)
+            .datos(UPDATED_DATOS)
+            .nombre(UPDATED_NOMBRE);
 
         restReglaPrestacionMockMvc
             .perform(
@@ -318,6 +332,7 @@ class ReglaPrestacionResourceIT {
         assertThat(testReglaPrestacion.getCodigoRegla()).isEqualTo(UPDATED_CODIGO_REGLA);
         assertThat(testReglaPrestacion.getTipoRegla()).isEqualTo(UPDATED_TIPO_REGLA);
         assertThat(testReglaPrestacion.getDatos()).isEqualTo(UPDATED_DATOS);
+        assertThat(testReglaPrestacion.getNombre()).isEqualTo(UPDATED_NOMBRE);
     }
 
     @Test

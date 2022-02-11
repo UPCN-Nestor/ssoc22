@@ -11,7 +11,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "regla_prestacion")
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ReglaPrestacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,8 +31,10 @@ public class ReglaPrestacion implements Serializable {
     @Column(name = "datos")
     private String datos;
 
+    @Column(name = "nombre")
+    private String nombre;
+
     @ManyToOne
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "reglaPrestacions", "itemNomenclador", "prestacion", "insumos", "plan" }, allowSetters = true)
     private Provision provision;
 
@@ -90,6 +92,19 @@ public class ReglaPrestacion implements Serializable {
         this.datos = datos;
     }
 
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public ReglaPrestacion nombre(String nombre) {
+        this.setNombre(nombre);
+        return this;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Provision getProvision() {
         return this.provision;
     }
@@ -130,6 +145,7 @@ public class ReglaPrestacion implements Serializable {
             ", codigoRegla='" + getCodigoRegla() + "'" +
             ", tipoRegla='" + getTipoRegla() + "'" +
             ", datos='" + getDatos() + "'" +
+            ", nombre='" + getNombre() + "'" +
             "}";
     }
 }

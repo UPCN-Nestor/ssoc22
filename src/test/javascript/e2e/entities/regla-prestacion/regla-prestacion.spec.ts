@@ -49,6 +49,7 @@ describe('ReglaPrestacion e2e test', () => {
       reglaPrestacionUpdatePage.setCodigoReglaInput('codigoRegla'),
       reglaPrestacionUpdatePage.setTipoReglaInput('tipoRegla'),
       reglaPrestacionUpdatePage.setDatosInput('datos'),
+      reglaPrestacionUpdatePage.setNombreInput('nombre'),
       reglaPrestacionUpdatePage.provisionSelectLastOption(),
     ]);
 

@@ -74,6 +74,7 @@ class ReglaPrestacionGatlingTest extends Simulation {
                 "codigoRegla":"SAMPLE_TEXT"
                 , "tipoRegla":"SAMPLE_TEXT"
                 , "datos":"SAMPLE_TEXT"
+                , "nombre":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_reglaPrestacion_url"))).exitHereIfFailed

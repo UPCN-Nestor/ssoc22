@@ -23,6 +23,9 @@
             <column name="datos" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="nombre" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="provision_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -50,6 +53,7 @@
             <column name="codigo_regla" type="string"/>
             <column name="tipo_regla" type="string"/>
             <column name="datos" type="string"/>
+            <column name="nombre" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

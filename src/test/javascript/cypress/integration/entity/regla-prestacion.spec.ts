@@ -154,6 +154,10 @@ describe('ReglaPrestacion e2e test', () => {
 
       cy.get(`[data-cy="datos"]`).type('technologies Investigación Somali').should('have.value', 'technologies Investigación Somali');
 
+      cy.get(`[data-cy="nombre"]`)
+        .type('Inteligente methodologies Bedfordshire')
+        .should('have.value', 'Inteligente methodologies Bedfordshire');
+
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

@@ -1,11 +1,11 @@
-id;codigo_regla;tipo_regla;datos;provision_id
-2;Carencia (días);Carencia;;null
-3;Descuento %;Descuento;;null
-4;Límite por paciente por mes;Limite;;null
-5;Límite por cliente por mes;Limite;;null
-6;Límite por paciente por año;Limite;;null
-7;Carencia %;Carencia;;null
-113;Carencia (días);Carencia;5;2
-114;Descuento %;Descuento;10;2
-115;Descuento %;Descuento;50;3
-116;Límite por paciente por mes;Limite;2;3
+id;codigo_regla;tipo_regla;datos;provision_id;nombre
+2;CD;Carencia;;null;Carencia (días)
+3;DP;Descuento;;null;Descuento %
+4;LPM;Limite;;null;Límite por paciente por mes
+5;LCM;Limite;;null;Límite por cliente por mes
+6;LPA;Limite;;null;Límite por paciente por año
+7;CP;Carencia;;null;Carencia %
+113;CD;Carencia;5;2;Carencia (días)
+114;DP;Descuento;10;2;Descuento %
+115;DP;Descuento;50;3;Descuento %
+116;LPM;Limite;2;3;Límite por paciente por mes

@@ -5,6 +5,7 @@ export interface IReglaPrestacion {
   codigoRegla?: string | null;
   tipoRegla?: string | null;
   datos?: string | null;
+  nombre?: string | null;
   provision?: IProvision | null;
 }
 
@@ -14,6 +15,7 @@ export class ReglaPrestacion implements IReglaPrestacion {
     public codigoRegla?: string | null,
     public tipoRegla?: string | null,
     public datos?: string | null,
+    public nombre?: string | null,
     public provision?: IProvision | null
   ) {}
 }

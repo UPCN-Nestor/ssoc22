@@ -70,6 +70,7 @@ entity ReglaPrestacion {
 	codigoRegla String
     tipoRegla String
     datos String
+    nombre String
 }
 
 entity Prestacion {
