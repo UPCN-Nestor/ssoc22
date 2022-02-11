@@ -22,6 +22,14 @@
         <dd>
           <span>{{ tarifa.datos }}</span>
         </dd>
+        <dt><span jhiTranslate="ssoc22App.tarifa.precio">Precio</span></dt>
+        <dd>
+          <span>{{ tarifa.precio }}</span>
+        </dd>
+        <dt><span jhiTranslate="ssoc22App.tarifa.vigenciaDesde">Vigencia Desde</span></dt>
+        <dd>
+          <span>{{ tarifa.vigenciaDesde | formatMediumDatetime }}</span>
+        </dd>
         <dt><span jhiTranslate="ssoc22App.tarifa.vigenciaHasta">Vigencia Hasta</span></dt>
         <dd>
           <span>{{ tarifa.vigenciaHasta | formatMediumDatetime }}</span>

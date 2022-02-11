@@ -127,6 +127,12 @@ public class TarifaResource {
                 if (tarifa.getDatos() != null) {
                     existingTarifa.setDatos(tarifa.getDatos());
                 }
+                if (tarifa.getPrecio() != null) {
+                    existingTarifa.setPrecio(tarifa.getPrecio());
+                }
+                if (tarifa.getVigenciaDesde() != null) {
+                    existingTarifa.setVigenciaDesde(tarifa.getVigenciaDesde());
+                }
                 if (tarifa.getVigenciaHasta() != null) {
                     existingTarifa.setVigenciaHasta(tarifa.getVigenciaHasta());
                 }

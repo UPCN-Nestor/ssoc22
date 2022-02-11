@@ -26,6 +26,8 @@ export class TarifaUpdateComponent implements OnInit {
     id: [],
     tipo: [],
     datos: [],
+    precio: [],
+    vigenciaDesde: [],
     vigenciaHasta: [],
     plan: [],
   });
@@ -41,6 +43,7 @@ export class TarifaUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ tarifa }) => {
       if (tarifa.id === undefined) {
         const today = dayjs().startOf('day');
+        tarifa.vigenciaDesde = today;
         tarifa.vigenciaHasta = today;
       }
 
@@ -92,6 +95,8 @@ export class TarifaUpdateComponent implements OnInit {
       id: tarifa.id,
       tipo: tarifa.tipo,
       datos: tarifa.datos,
+      precio: tarifa.precio,
+      vigenciaDesde: tarifa.vigenciaDesde ? tarifa.vigenciaDesde.format(DATE_TIME_FORMAT) : null,
       vigenciaHasta: tarifa.vigenciaHasta ? tarifa.vigenciaHasta.format(DATE_TIME_FORMAT) : null,
       plan: tarifa.plan,
     });
@@ -113,6 +118,10 @@ export class TarifaUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       tipo: this.editForm.get(['tipo'])!.value,
       datos: this.editForm.get(['datos'])!.value,
+      precio: this.editForm.get(['precio'])!.value,
+      vigenciaDesde: this.editForm.get(['vigenciaDesde'])!.value
+        ? dayjs(this.editForm.get(['vigenciaDesde'])!.value, DATE_TIME_FORMAT)
+        : undefined,
       vigenciaHasta: this.editForm.get(['vigenciaHasta'])!.value
         ? dayjs(this.editForm.get(['vigenciaHasta'])!.value, DATE_TIME_FORMAT)
         : undefined,

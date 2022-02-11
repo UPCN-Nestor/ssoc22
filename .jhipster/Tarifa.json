@@ -14,6 +14,14 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "precio",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "vigenciaDesde",
+      "fieldType": "ZonedDateTime"
+    },
+    {
       "fieldName": "vigenciaHasta",
       "fieldType": "ZonedDateTime"
     }

@@ -152,7 +152,11 @@ describe('Tarifa e2e test', () => {
 
       cy.get(`[data-cy="datos"]`).type('Dollar Analista').should('have.value', 'Dollar Analista');
 
-      cy.get(`[data-cy="vigenciaHasta"]`).type('2022-01-23T21:39').should('have.value', '2022-01-23T21:39');
+      cy.get(`[data-cy="precio"]`).type('67793').should('have.value', '67793');
+
+      cy.get(`[data-cy="vigenciaDesde"]`).type('2022-01-24T01:40').should('have.value', '2022-01-24T01:40');
+
+      cy.get(`[data-cy="vigenciaHasta"]`).type('2022-01-23T20:02').should('have.value', '2022-01-23T20:02');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

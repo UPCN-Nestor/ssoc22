@@ -45,6 +45,8 @@ describe('Tarifa e2e test', () => {
     await promise.all([
       tarifaUpdatePage.setTipoInput('tipo'),
       tarifaUpdatePage.setDatosInput('datos'),
+      tarifaUpdatePage.setPrecioInput('5'),
+      tarifaUpdatePage.setVigenciaDesdeInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       tarifaUpdatePage.setVigenciaHastaInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       tarifaUpdatePage.planSelectLastOption(),
     ]);

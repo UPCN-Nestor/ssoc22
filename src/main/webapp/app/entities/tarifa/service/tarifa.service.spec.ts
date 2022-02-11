@@ -27,6 +27,8 @@ describe('Tarifa Service', () => {
       id: 0,
       tipo: 'AAAAAAA',
       datos: 'AAAAAAA',
+      precio: 0,
+      vigenciaDesde: currentDate,
       vigenciaHasta: currentDate,
     };
   });
@@ -35,6 +37,7 @@ describe('Tarifa Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign(
         {
+          vigenciaDesde: currentDate.format(DATE_TIME_FORMAT),
           vigenciaHasta: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
@@ -51,6 +54,7 @@ describe('Tarifa Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 0,
+          vigenciaDesde: currentDate.format(DATE_TIME_FORMAT),
           vigenciaHasta: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
@@ -58,6 +62,7 @@ describe('Tarifa Service', () => {
 
       const expected = Object.assign(
         {
+          vigenciaDesde: currentDate,
           vigenciaHasta: currentDate,
         },
         returnedFromService
@@ -76,6 +81,8 @@ describe('Tarifa Service', () => {
           id: 1,
           tipo: 'BBBBBB',
           datos: 'BBBBBB',
+          precio: 1,
+          vigenciaDesde: currentDate.format(DATE_TIME_FORMAT),
           vigenciaHasta: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
@@ -83,6 +90,7 @@ describe('Tarifa Service', () => {
 
       const expected = Object.assign(
         {
+          vigenciaDesde: currentDate,
           vigenciaHasta: currentDate,
         },
         returnedFromService
@@ -98,7 +106,8 @@ describe('Tarifa Service', () => {
     it('should partial update a Tarifa', () => {
       const patchObject = Object.assign(
         {
-          vigenciaHasta: currentDate.format(DATE_TIME_FORMAT),
+          precio: 1,
+          vigenciaDesde: currentDate.format(DATE_TIME_FORMAT),
         },
         new Tarifa()
       );
@@ -107,6 +116,7 @@ describe('Tarifa Service', () => {
 
       const expected = Object.assign(
         {
+          vigenciaDesde: currentDate,
           vigenciaHasta: currentDate,
         },
         returnedFromService
@@ -125,6 +135,8 @@ describe('Tarifa Service', () => {
           id: 1,
           tipo: 'BBBBBB',
           datos: 'BBBBBB',
+          precio: 1,
+          vigenciaDesde: currentDate.format(DATE_TIME_FORMAT),
           vigenciaHasta: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
@@ -132,6 +144,7 @@ describe('Tarifa Service', () => {
 
       const expected = Object.assign(
         {
+          vigenciaDesde: currentDate,
           vigenciaHasta: currentDate,
         },
         returnedFromService
@@ -182,7 +195,7 @@ describe('Tarifa Service', () => {
       });
 
       it('should add only unique Tarifa to an array', () => {
-        const tarifaArray: ITarifa[] = [{ id: 123 }, { id: 456 }, { id: 80449 }];
+        const tarifaArray: ITarifa[] = [{ id: 123 }, { id: 456 }, { id: 72774 }];
         const tarifaCollection: ITarifa[] = [{ id: 123 }];
         expectedResult = service.addTarifaToCollectionIfMissing(tarifaCollection, ...tarifaArray);
         expect(expectedResult).toHaveLength(3);

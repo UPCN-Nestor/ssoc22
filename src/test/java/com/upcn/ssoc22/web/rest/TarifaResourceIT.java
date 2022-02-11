@@ -40,6 +40,12 @@ class TarifaResourceIT {
     private static final String DEFAULT_DATOS = "AAAAAAAAAA";
     private static final String UPDATED_DATOS = "BBBBBBBBBB";
 
+    private static final Float DEFAULT_PRECIO = 1F;
+    private static final Float UPDATED_PRECIO = 2F;
+
+    private static final ZonedDateTime DEFAULT_VIGENCIA_DESDE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_VIGENCIA_DESDE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
     private static final ZonedDateTime DEFAULT_VIGENCIA_HASTA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_VIGENCIA_HASTA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
@@ -67,7 +73,12 @@ class TarifaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Tarifa createEntity(EntityManager em) {
-        Tarifa tarifa = new Tarifa().tipo(DEFAULT_TIPO).datos(DEFAULT_DATOS).vigenciaHasta(DEFAULT_VIGENCIA_HASTA);
+        Tarifa tarifa = new Tarifa()
+            .tipo(DEFAULT_TIPO)
+            .datos(DEFAULT_DATOS)
+            .precio(DEFAULT_PRECIO)
+            .vigenciaDesde(DEFAULT_VIGENCIA_DESDE)
+            .vigenciaHasta(DEFAULT_VIGENCIA_HASTA);
         return tarifa;
     }
 
@@ -78,7 +89,12 @@ class TarifaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Tarifa createUpdatedEntity(EntityManager em) {
-        Tarifa tarifa = new Tarifa().tipo(UPDATED_TIPO).datos(UPDATED_DATOS).vigenciaHasta(UPDATED_VIGENCIA_HASTA);
+        Tarifa tarifa = new Tarifa()
+            .tipo(UPDATED_TIPO)
+            .datos(UPDATED_DATOS)
+            .precio(UPDATED_PRECIO)
+            .vigenciaDesde(UPDATED_VIGENCIA_DESDE)
+            .vigenciaHasta(UPDATED_VIGENCIA_HASTA);
         return tarifa;
     }
 
@@ -102,6 +118,8 @@ class TarifaResourceIT {
         Tarifa testTarifa = tarifaList.get(tarifaList.size() - 1);
         assertThat(testTarifa.getTipo()).isEqualTo(DEFAULT_TIPO);
         assertThat(testTarifa.getDatos()).isEqualTo(DEFAULT_DATOS);
+        assertThat(testTarifa.getPrecio()).isEqualTo(DEFAULT_PRECIO);
+        assertThat(testTarifa.getVigenciaDesde()).isEqualTo(DEFAULT_VIGENCIA_DESDE);
         assertThat(testTarifa.getVigenciaHasta()).isEqualTo(DEFAULT_VIGENCIA_HASTA);
     }
 
@@ -137,6 +155,8 @@ class TarifaResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(tarifa.getId().intValue())))
             .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)))
             .andExpect(jsonPath("$.[*].datos").value(hasItem(DEFAULT_DATOS)))
+            .andExpect(jsonPath("$.[*].precio").value(hasItem(DEFAULT_PRECIO.doubleValue())))
+            .andExpect(jsonPath("$.[*].vigenciaDesde").value(hasItem(sameInstant(DEFAULT_VIGENCIA_DESDE))))
             .andExpect(jsonPath("$.[*].vigenciaHasta").value(hasItem(sameInstant(DEFAULT_VIGENCIA_HASTA))));
     }
 
@@ -154,6 +174,8 @@ class TarifaResourceIT {
             .andExpect(jsonPath("$.id").value(tarifa.getId().intValue()))
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO))
             .andExpect(jsonPath("$.datos").value(DEFAULT_DATOS))
+            .andExpect(jsonPath("$.precio").value(DEFAULT_PRECIO.doubleValue()))
+            .andExpect(jsonPath("$.vigenciaDesde").value(sameInstant(DEFAULT_VIGENCIA_DESDE)))
             .andExpect(jsonPath("$.vigenciaHasta").value(sameInstant(DEFAULT_VIGENCIA_HASTA)));
     }
 
@@ -176,7 +198,12 @@ class TarifaResourceIT {
         Tarifa updatedTarifa = tarifaRepository.findById(tarifa.getId()).get();
         // Disconnect from session so that the updates on updatedTarifa are not directly saved in db
         em.detach(updatedTarifa);
-        updatedTarifa.tipo(UPDATED_TIPO).datos(UPDATED_DATOS).vigenciaHasta(UPDATED_VIGENCIA_HASTA);
+        updatedTarifa
+            .tipo(UPDATED_TIPO)
+            .datos(UPDATED_DATOS)
+            .precio(UPDATED_PRECIO)
+            .vigenciaDesde(UPDATED_VIGENCIA_DESDE)
+            .vigenciaHasta(UPDATED_VIGENCIA_HASTA);
 
         restTarifaMockMvc
             .perform(
@@ -192,6 +219,8 @@ class TarifaResourceIT {
         Tarifa testTarifa = tarifaList.get(tarifaList.size() - 1);
         assertThat(testTarifa.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testTarifa.getDatos()).isEqualTo(UPDATED_DATOS);
+        assertThat(testTarifa.getPrecio()).isEqualTo(UPDATED_PRECIO);
+        assertThat(testTarifa.getVigenciaDesde()).isEqualTo(UPDATED_VIGENCIA_DESDE);
         assertThat(testTarifa.getVigenciaHasta()).isEqualTo(UPDATED_VIGENCIA_HASTA);
     }
 
@@ -263,7 +292,7 @@ class TarifaResourceIT {
         Tarifa partialUpdatedTarifa = new Tarifa();
         partialUpdatedTarifa.setId(tarifa.getId());
 
-        partialUpdatedTarifa.tipo(UPDATED_TIPO);
+        partialUpdatedTarifa.tipo(UPDATED_TIPO).vigenciaDesde(UPDATED_VIGENCIA_DESDE).vigenciaHasta(UPDATED_VIGENCIA_HASTA);
 
         restTarifaMockMvc
             .perform(
@@ -279,7 +308,9 @@ class TarifaResourceIT {
         Tarifa testTarifa = tarifaList.get(tarifaList.size() - 1);
         assertThat(testTarifa.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testTarifa.getDatos()).isEqualTo(DEFAULT_DATOS);
-        assertThat(testTarifa.getVigenciaHasta()).isEqualTo(DEFAULT_VIGENCIA_HASTA);
+        assertThat(testTarifa.getPrecio()).isEqualTo(DEFAULT_PRECIO);
+        assertThat(testTarifa.getVigenciaDesde()).isEqualTo(UPDATED_VIGENCIA_DESDE);
+        assertThat(testTarifa.getVigenciaHasta()).isEqualTo(UPDATED_VIGENCIA_HASTA);
     }
 
     @Test
@@ -294,7 +325,12 @@ class TarifaResourceIT {
         Tarifa partialUpdatedTarifa = new Tarifa();
         partialUpdatedTarifa.setId(tarifa.getId());
 
-        partialUpdatedTarifa.tipo(UPDATED_TIPO).datos(UPDATED_DATOS).vigenciaHasta(UPDATED_VIGENCIA_HASTA);
+        partialUpdatedTarifa
+            .tipo(UPDATED_TIPO)
+            .datos(UPDATED_DATOS)
+            .precio(UPDATED_PRECIO)
+            .vigenciaDesde(UPDATED_VIGENCIA_DESDE)
+            .vigenciaHasta(UPDATED_VIGENCIA_HASTA);
 
         restTarifaMockMvc
             .perform(
@@ -310,6 +346,8 @@ class TarifaResourceIT {
         Tarifa testTarifa = tarifaList.get(tarifaList.size() - 1);
         assertThat(testTarifa.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testTarifa.getDatos()).isEqualTo(UPDATED_DATOS);
+        assertThat(testTarifa.getPrecio()).isEqualTo(UPDATED_PRECIO);
+        assertThat(testTarifa.getVigenciaDesde()).isEqualTo(UPDATED_VIGENCIA_DESDE);
         assertThat(testTarifa.getVigenciaHasta()).isEqualTo(UPDATED_VIGENCIA_HASTA);
     }
 

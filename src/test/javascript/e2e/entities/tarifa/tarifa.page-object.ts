@@ -32,6 +32,8 @@ export class TarifaUpdatePage {
   idInput = element(by.id('field_id'));
   tipoInput = element(by.id('field_tipo'));
   datosInput = element(by.id('field_datos'));
+  precioInput = element(by.id('field_precio'));
+  vigenciaDesdeInput = element(by.id('field_vigenciaDesde'));
   vigenciaHastaInput = element(by.id('field_vigenciaHasta'));
 
   planSelect = element(by.id('field_plan'));
@@ -62,6 +64,22 @@ export class TarifaUpdatePage {
 
   async getDatosInput(): Promise<string> {
     return await this.datosInput.getAttribute('value');
+  }
+
+  async setPrecioInput(precio: string): Promise<void> {
+    await this.precioInput.sendKeys(precio);
+  }
+
+  async getPrecioInput(): Promise<string> {
+    return await this.precioInput.getAttribute('value');
+  }
+
+  async setVigenciaDesdeInput(vigenciaDesde: string): Promise<void> {
+    await this.vigenciaDesdeInput.sendKeys(vigenciaDesde);
+  }
+
+  async getVigenciaDesdeInput(): Promise<string> {
+    return await this.vigenciaDesdeInput.getAttribute('value');
   }
 
   async setVigenciaHastaInput(vigenciaHasta: string): Promise<void> {

@@ -75,12 +75,14 @@ export class TarifaService {
 
   protected convertDateFromClient(tarifa: ITarifa): ITarifa {
     return Object.assign({}, tarifa, {
+      vigenciaDesde: tarifa.vigenciaDesde?.isValid() ? tarifa.vigenciaDesde.toJSON() : undefined,
       vigenciaHasta: tarifa.vigenciaHasta?.isValid() ? tarifa.vigenciaHasta.toJSON() : undefined,
     });
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
+      res.body.vigenciaDesde = res.body.vigenciaDesde ? dayjs(res.body.vigenciaDesde) : undefined;
       res.body.vigenciaHasta = res.body.vigenciaHasta ? dayjs(res.body.vigenciaHasta) : undefined;
     }
     return res;
@@ -89,6 +91,7 @@ export class TarifaService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((tarifa: ITarifa) => {
+        tarifa.vigenciaDesde = tarifa.vigenciaDesde ? dayjs(tarifa.vigenciaDesde) : undefined;
         tarifa.vigenciaHasta = tarifa.vigenciaHasta ? dayjs(tarifa.vigenciaHasta) : undefined;
       });
     }

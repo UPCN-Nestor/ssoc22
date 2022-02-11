@@ -32,6 +32,8 @@ entity Individuo {
 entity Tarifa {
 	tipo String
     datos String
+    precio Float
+    vigenciaDesde ZonedDateTime
     vigenciaHasta ZonedDateTime
 }
 

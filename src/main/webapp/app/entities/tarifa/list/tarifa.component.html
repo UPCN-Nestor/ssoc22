@@ -35,6 +35,8 @@
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.tarifa.tipo">Tipo</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.tarifa.datos">Datos</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.tarifa.precio">Precio</span></th>
+          <th scope="col"><span jhiTranslate="ssoc22App.tarifa.vigenciaDesde">Vigencia Desde</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.tarifa.vigenciaHasta">Vigencia Hasta</span></th>
           <th scope="col"><span jhiTranslate="ssoc22App.tarifa.plan">Plan</span></th>
           <th scope="col"></th>
@@ -47,6 +49,8 @@
           </td>
           <td>{{ tarifa.tipo }}</td>
           <td>{{ tarifa.datos }}</td>
+          <td>{{ tarifa.precio }}</td>
+          <td>{{ tarifa.vigenciaDesde | formatMediumDatetime }}</td>
           <td>{{ tarifa.vigenciaHasta | formatMediumDatetime }}</td>
           <td>
             <div *ngIf="tarifa.plan">

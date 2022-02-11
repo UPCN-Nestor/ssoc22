@@ -20,6 +20,8 @@
       "id": "ID",
       "tipo": "Tipo",
       "datos": "Datos",
+      "precio": "Precio",
+      "vigenciaDesde": "Vigencia Desde",
       "vigenciaHasta": "Vigencia Hasta",
       "plan": "Plan"
     }

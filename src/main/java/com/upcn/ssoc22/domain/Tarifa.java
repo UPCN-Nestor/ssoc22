@@ -12,7 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "tarifa")
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Tarifa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,6 +28,12 @@ public class Tarifa implements Serializable {
 
     @Column(name = "datos")
     private String datos;
+
+    @Column(name = "precio")
+    private Float precio;
+
+    @Column(name = "vigencia_desde")
+    private ZonedDateTime vigenciaDesde;
 
     @Column(name = "vigencia_hasta")
     private ZonedDateTime vigenciaHasta;
@@ -75,6 +81,32 @@ public class Tarifa implements Serializable {
 
     public void setDatos(String datos) {
         this.datos = datos;
+    }
+
+    public Float getPrecio() {
+        return this.precio;
+    }
+
+    public Tarifa precio(Float precio) {
+        this.setPrecio(precio);
+        return this;
+    }
+
+    public void setPrecio(Float precio) {
+        this.precio = precio;
+    }
+
+    public ZonedDateTime getVigenciaDesde() {
+        return this.vigenciaDesde;
+    }
+
+    public Tarifa vigenciaDesde(ZonedDateTime vigenciaDesde) {
+        this.setVigenciaDesde(vigenciaDesde);
+        return this;
+    }
+
+    public void setVigenciaDesde(ZonedDateTime vigenciaDesde) {
+        this.vigenciaDesde = vigenciaDesde;
     }
 
     public ZonedDateTime getVigenciaHasta() {
@@ -129,6 +161,8 @@ public class Tarifa implements Serializable {
             "id=" + getId() +
             ", tipo='" + getTipo() + "'" +
             ", datos='" + getDatos() + "'" +
+            ", precio=" + getPrecio() +
+            ", vigenciaDesde='" + getVigenciaDesde() + "'" +
             ", vigenciaHasta='" + getVigenciaHasta() + "'" +
             "}";
     }
