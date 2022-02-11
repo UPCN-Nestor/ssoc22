@@ -133,6 +133,8 @@ export class PlanAltaComponent implements OnInit {
         return 'coins';
       case 'Limite':
         return 'calendar-times';
+      case 'Stock':
+        return 'box';
     }
 
     return 'mouse-pointer';

@@ -38,7 +38,7 @@
                         <small><fa-icon [icon]="iconPorTipoRegla(r.tipoRegla!)"></fa-icon></small>
                       </td>
                       <td class="w-50">
-                        <small>{{ r.codigoRegla }}</small>
+                        <small>{{ r.nombre }}</small>
                       </td>
                       <td class="w-25">
                         <small>{{ r.datos }}</small>
@@ -113,12 +113,12 @@
         aria-expanded="false"
       >
         <fa-icon [icon]="iconPorTipoRegla(this.reglaSeleccionada?.tipoRegla!)"></fa-icon>
-        {{ this.reglaSeleccionada?.codigoRegla ?? 'Seleccionar condición' }}
+        {{ this.reglaSeleccionada?.nombre ?? 'Seleccionar condición' }}
       </button>
       <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <div *ngFor="let reglaOption of reglasDisponibles">
           <button ngbDropdownItem class="dropdown-item" href="#" (click)="seleccionarRegla(reglaOption)">
-            <fa-icon [icon]="iconPorTipoRegla(reglaOption.tipoRegla!)"></fa-icon> {{ reglaOption.codigoRegla }}
+            <fa-icon [icon]="iconPorTipoRegla(reglaOption.tipoRegla!)"></fa-icon> {{ reglaOption.nombre }}
           </button>
         </div>
       </div>

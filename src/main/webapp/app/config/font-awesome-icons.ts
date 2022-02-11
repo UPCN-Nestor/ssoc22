@@ -50,9 +50,11 @@ import {
   faClipboardCheck,
   faExclamation,
   faMousePointer,
+  faBox,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const fontAwesomeIcons = [
+  faBox,
   faMousePointer,
   faExclamation,
   faClipboardCheck,

@@ -2,7 +2,6 @@ package com.upcn.ssoc22.service;
 
 import com.upcn.ssoc22.domain.Adhesion;
 import com.upcn.ssoc22.domain.Provision;
-import com.upcn.ssoc22.domain.ReglaPrestacion;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

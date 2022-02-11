@@ -5,7 +5,6 @@ import com.upcn.ssoc22.domain.Contrato;
 import com.upcn.ssoc22.domain.ItemNomenclador;
 import com.upcn.ssoc22.domain.Plan;
 import com.upcn.ssoc22.domain.Provision;
-import com.upcn.ssoc22.domain.ReglaPrestacion;
 import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.repository.ItemNomencladorRepository;
 import com.upcn.ssoc22.service.ItemNomencladorService;
@@ -104,15 +103,29 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
         if (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) throw new AdhesionNoHabilitadaException();
 
         for (Contrato c : a.getCliente().getContratoes()) {
-            log.debug("> Contrato: " + c.getId());
+            log.info("> Contrato: " + c.getId());
 
             // No tomo en cuenta los contratos vencidos.
             if (c.getFechaBaja() != null && c.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) continue;
 
             Plan p = c.getPlan();
-            log.debug("> Plan: " + p.getId());
+            log.info("> Plan: " + p.getId());
 
-            for (Provision prov : p.getProvisions()) {
+            Set<Provision> analizar = p.getProvisions();
+
+            // Antes de analizar, copio las reglas de los Bonos en general, a las prácticas individuales, para que éstas también las respeten.
+            for (Provision bonogeneral : p.getProvisions()) {
+                if (bonogeneral.getPrestacion() != null && bonogeneral.getPrestacion().getTipo().equals("bono")) {
+                    analizar.forEach((Provision bonoparticular) -> {
+                        if (
+                            bonoparticular.getItemNomenclador() != null &&
+                            bonoparticular.getItemNomenclador().getPrestacion().getTipo().equals("bono")
+                        ) bonoparticular.getReglaPrestacions().addAll(bonogeneral.getReglaPrestacions());
+                    });
+                }
+            }
+
+            for (Provision prov : analizar) {
                 if (
                     (prov.getItemNomenclador() != null && prov.getItemNomenclador().getPrestacion().getTipo().equals("bono")) ||
                     (prov.getPrestacion() != null && prov.getPrestacion().getTipo().equals("bono"))
@@ -120,29 +133,41 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
                     /* Es un bono */
                 } else continue;
 
-                log.debug(
-                    ">> Provisión " +
+                log.info(
+                    ">> ANALIZANDO PROVISION " +
                     prov.getId() +
-                    " sobre " +
+                    ": " +
                     (prov.getPrestacion() != null ? prov.getPrestacion().getNombre() : prov.getItemNomenclador().getNombre())
                 );
 
                 // Reglas de cantidad por período
-                if (!provisionService.cumpleLimites(prov, a)) continue;
+                if (!provisionService.cumpleLimites(prov, a)) {
+                    continue;
+                }
 
                 if (prov.getPrestacion() != null) {
                     LinkedList<ItemNomenclador> toAdd = new LinkedList<ItemNomenclador>(
                         Arrays.asList(prov.getPrestacion().getItemNomencladors().toArray(new ItemNomenclador[0]))
                     );
+
+                    // No tomo en cuenta las prácticas que estén definidas como casos particulares en otra Provisión.
+                    for (Provision otra : p.getProvisions()) {
+                        if (otra != prov && otra.getItemNomenclador().getPrestacion().getTipo().equals("bono")) {
+                            log.info(">>> Excluyendo por existir caso mas particular: " + otra.getItemNomenclador().getNombre());
+                            toAdd.remove(otra.getItemNomenclador());
+                        }
+                    }
+
                     int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
                     toAdd.removeIf(i -> !cumpleCarenciaDefinidaODefault(i, a, c, diasCarenciaSegunProvision));
+
                     toRet.addAll(toAdd);
-                    log.debug(">> Habilitadas " + toAdd.size());
+                    log.info(">>> Habilitadas por caso general: " + toAdd.size());
                 } else {
                     int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
                     if (cumpleCarenciaDefinidaODefault(prov.getItemNomenclador(), a, c, diasCarenciaSegunProvision)) {
                         toRet.add(prov.getItemNomenclador());
-                        log.debug(">> Habilitada " + prov.getItemNomenclador().getNombre());
+                        log.info(">>> Habilitada " + prov.getItemNomenclador().getNombre());
                     }
                 }
             }
@@ -165,7 +190,7 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
         Integer carenciaDefault = i.getDiasCarencia() == null ? i.getPrestacion().getDiasCarencia() : i.getDiasCarencia();
         Integer carenciaFinal = diasCarenciaSegunProvision > 0 ? diasCarenciaSegunProvision : carenciaDefault;
 
-        log.debug("Mayor alta entre adhesión y contrato: " + masReciente + ", carencia hallada: " + carenciaFinal);
+        log.info(">>> Max(adhesion,contrato): " + masReciente.toLocalDate() + ", carencia para: " + i.getNombre() + ", " + carenciaFinal);
 
         return masReciente.plusDays(carenciaFinal).compareTo(ZonedDateTime.now()) < 0;
     }
@@ -181,22 +206,22 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
         if (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) throw new AdhesionNoHabilitadaException();
 
         for (Contrato c : a.getCliente().getContratoes()) {
-            log.debug("> Contrato: " + c.getId());
+            log.info("> Contrato: " + c.getId());
 
             // No tomo en cuenta los contratos vencidos.
             if (c.getFechaBaja() != null && c.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) continue;
 
             Plan p = c.getPlan();
-            log.debug("> Plan: " + p.getId());
+            log.info("> Plan: " + p.getId());
 
             for (Provision prov : p.getProvisions()) {
                 // Controlo que hablemos de la práctica o prestación solicitada
                 if (prov.getItemNomenclador() != i && prov.getPrestacion() != i.getPrestacion()) continue;
 
-                log.debug(
-                    ">> Provisión " +
+                log.info(
+                    ">> PROVISION " +
                     prov.getId() +
-                    " sobre " +
+                    ": " +
                     (prov.getPrestacion() != null ? prov.getPrestacion().getNombre() : prov.getItemNomenclador().getNombre())
                 );
                 float precioEncontrado = provisionService.procesarDescuento(prov, a, precioBase);
@@ -205,7 +230,7 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
             }
         }
 
-        log.debug("> Precio hallado: " + precioMenor);
+        log.info(">> Precio hallado: " + precioMenor);
         return precioMenor;
     }
 }

@@ -1,9 +1,15 @@
 package com.upcn.ssoc22.service.impl;
 
 import com.upcn.ssoc22.domain.Adhesion;
+import com.upcn.ssoc22.domain.ItemNomenclador;
+import com.upcn.ssoc22.domain.Prestacion;
 import com.upcn.ssoc22.domain.ReglaPrestacion;
 import com.upcn.ssoc22.repository.ReglaPrestacionRepository;
+import com.upcn.ssoc22.repository.SolicitudPrestacionRepository;
 import com.upcn.ssoc22.service.ReglaPrestacionService;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -21,9 +27,14 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
     private final Logger log = LoggerFactory.getLogger(ReglaPrestacionServiceImpl.class);
 
     private final ReglaPrestacionRepository reglaPrestacionRepository;
+    private final SolicitudPrestacionRepository solicitudPrestacionRepository;
 
-    public ReglaPrestacionServiceImpl(ReglaPrestacionRepository reglaPrestacionRepository) {
+    public ReglaPrestacionServiceImpl(
+        ReglaPrestacionRepository reglaPrestacionRepository,
+        SolicitudPrestacionRepository solicitudPrestacionRepository
+    ) {
         this.reglaPrestacionRepository = reglaPrestacionRepository;
+        this.solicitudPrestacionRepository = solicitudPrestacionRepository;
     }
 
     @Override
@@ -75,6 +86,7 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
         reglaPrestacionRepository.deleteById(id);
     }
 
+    // Sin uso
     public boolean procesarReglaDeHabilitacion(ReglaPrestacion r, Adhesion a) {
         if (r.getTipoRegla().equals("Habilita")) {
             // Ejemplo
@@ -101,5 +113,79 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
         }
 
         return precioBase;
+    }
+
+    @Override
+    public boolean procesarReglaDeLimiteVecesPorMesPorPaciente(ReglaPrestacion r, Adhesion a) {
+        Prestacion p = r.getProvision().getPrestacion();
+        ItemNomenclador i = r.getProvision().getItemNomenclador();
+
+        ZonedDateTime inicioMes = ZonedDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).truncatedTo(ChronoUnit.DAYS);
+        ZonedDateTime finMes = ZonedDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).truncatedTo(ChronoUnit.DAYS).plusMonths(1);
+
+        // Caso práctica individual
+        if (i != null) {
+            // Acá falta contemplar que la solicitudPrestación esté efectuada, no sólo solicitada
+            Integer cantidad = solicitudPrestacionRepository.getCantidadPorIndividuoYPracticaEntreFechas(
+                i.getId(),
+                a.getIndividuo().getId(),
+                inicioMes,
+                finMes
+            );
+            Integer maxPermitido = Integer.parseInt(r.getDatos());
+            log.info(">>>> Cantidad de " + i.getNombre() + " el ultimo mes: " + cantidad + ", max: " + maxPermitido);
+            if (cantidad < maxPermitido) return true; else return false;
+        }
+        // Caso grupo de prácticas (ej. restricción sobre Bonos en general)
+        else if (p != null) {
+            Integer cantidad = solicitudPrestacionRepository.getCantidadPorIndividuoYPrestacionEntreFechas(
+                p.getId(),
+                a.getIndividuo().getId(),
+                inicioMes,
+                finMes
+            );
+            Integer maxPermitido = Integer.parseInt(r.getDatos());
+            log.info(">>>> Cantidad de " + p.getNombre() + " el ultimo mes: " + cantidad + ", max: " + maxPermitido);
+            if (cantidad < maxPermitido) return true; else return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean procesarReglaDeLimiteVecesPorMesPorCliente(ReglaPrestacion r, Adhesion a) {
+        Prestacion p = r.getProvision().getPrestacion();
+        ItemNomenclador i = r.getProvision().getItemNomenclador();
+
+        ZonedDateTime inicioMes = ZonedDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).truncatedTo(ChronoUnit.DAYS);
+        ZonedDateTime finMes = ZonedDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).truncatedTo(ChronoUnit.DAYS).plusMonths(1);
+
+        // Caso práctica individual
+        if (i != null) {
+            // Acá falta contemplar que la solicitudPrestación esté efectuada, no sólo solicitada
+            Integer cantidad = solicitudPrestacionRepository.getCantidadPorClienteYPracticaEntreFechas(
+                i.getId(),
+                a.getCliente().getId(),
+                inicioMes,
+                finMes
+            );
+            Integer maxPermitido = Integer.parseInt(r.getDatos());
+            log.info(">>>> Cantidad de " + i.getNombre() + " el ultimo mes: " + cantidad + ", max: " + maxPermitido);
+            if (cantidad < maxPermitido) return true; else return false;
+        }
+        // Caso grupo de prácticas (ej. restricción sobre Bonos en general)
+        else if (p != null) {
+            Integer cantidad = solicitudPrestacionRepository.getCantidadPorClienteYPrestacionEntreFechas(
+                p.getId(),
+                a.getCliente().getId(),
+                inicioMes,
+                finMes
+            );
+            Integer maxPermitido = Integer.parseInt(r.getDatos());
+            log.info(">>>> Cantidad de " + p.getNombre() + " el ultimo mes: " + cantidad + ", max: " + maxPermitido);
+            if (cantidad < maxPermitido) return true; else return false;
+        }
+
+        return true;
     }
 }

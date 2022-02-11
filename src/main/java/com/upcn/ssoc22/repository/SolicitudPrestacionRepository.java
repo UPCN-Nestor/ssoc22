@@ -42,4 +42,44 @@ public interface SolicitudPrestacionRepository extends JpaRepository<SolicitudPr
         "select COALESCE(MAX(numero),0)+1 from SolicitudPrestacion s where s.horaSolicitud > :hoy and s.horaSolicitud < :manana and s.tipo = :tipo"
     )
     Integer getNumeroPorFechayTipo(@Param("tipo") String tipo, @Param("hoy") ZonedDateTime hoy, @Param("manana") ZonedDateTime mañana);
+
+    @Query(
+        "select COUNT(id) as cantidad from SolicitudPrestacion s where s.horaSolicitud >= :desde and s.horaSolicitud < :hasta and s.itemNomenclador.id = :itemnomencladorid and s.adhesion.individuo.id = :individuoid"
+    )
+    Integer getCantidadPorIndividuoYPracticaEntreFechas(
+        @Param("itemnomencladorid") Long itemnomencladorid,
+        @Param("individuoid") Long individuoid,
+        @Param("desde") ZonedDateTime desde,
+        @Param("hasta") ZonedDateTime hasta
+    );
+
+    @Query(
+        "select COUNT(id) as cantidad from SolicitudPrestacion s where s.horaSolicitud >= :desde and s.horaSolicitud < :hasta and s.itemNomenclador.prestacion.id = :prestacionid and s.adhesion.individuo.id = :individuoid"
+    )
+    Integer getCantidadPorIndividuoYPrestacionEntreFechas(
+        @Param("prestacionid") Long prestacionid,
+        @Param("individuoid") Long individuoid,
+        @Param("desde") ZonedDateTime desde,
+        @Param("hasta") ZonedDateTime hasta
+    );
+
+    @Query(
+        "select COUNT(id) as cantidad from SolicitudPrestacion s where s.horaSolicitud >= :desde and s.horaSolicitud < :hasta and s.itemNomenclador.id = :itemnomencladorid and s.adhesion.cliente.id = :clienteid"
+    )
+    Integer getCantidadPorClienteYPracticaEntreFechas(
+        @Param("itemnomencladorid") Long itemnomencladorid,
+        @Param("clienteid") Long clienteid,
+        @Param("desde") ZonedDateTime desde,
+        @Param("hasta") ZonedDateTime hasta
+    );
+
+    @Query(
+        "select COUNT(id) as cantidad from SolicitudPrestacion s where s.horaSolicitud >= :desde and s.horaSolicitud < :hasta and s.itemNomenclador.prestacion.id = :prestacionid and s.adhesion.cliente.id = :clienteid"
+    )
+    Integer getCantidadPorClienteYPrestacionEntreFechas(
+        @Param("prestacionid") Long prestacionid,
+        @Param("clienteid") Long clienteid,
+        @Param("desde") ZonedDateTime desde,
+        @Param("hasta") ZonedDateTime hasta
+    );
 }

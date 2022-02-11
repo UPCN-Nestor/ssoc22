@@ -52,4 +52,8 @@ public interface ReglaPrestacionService {
     int procesarReglaDeCarencia(ReglaPrestacion r, Adhesion a);
 
     float procesarReglaDeDescuento(ReglaPrestacion r, Adhesion a, float precioBase);
+
+    boolean procesarReglaDeLimiteVecesPorMesPorPaciente(ReglaPrestacion r, Adhesion a);
+
+    boolean procesarReglaDeLimiteVecesPorMesPorCliente(ReglaPrestacion r, Adhesion a);
 }

@@ -5,6 +5,7 @@ id;codigo_regla;tipo_regla;datos;provision_id;nombre
 5;LCM;Limite;;null;Límite por cliente por mes
 6;LPA;Limite;;null;Límite por paciente por año
 7;CP;Carencia;;null;Carencia %
+8;ST;Stock;;null;Cambio de insumo
 113;CD;Carencia;5;2;Carencia (días)
 114;DP;Descuento;10;2;Descuento %
 115;DP;Descuento;50;3;Descuento %
