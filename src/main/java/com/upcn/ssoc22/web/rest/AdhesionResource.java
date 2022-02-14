@@ -2,6 +2,7 @@ package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.Adhesion;
 import com.upcn.ssoc22.repository.AdhesionRepository;
+import com.upcn.ssoc22.service.AdhesionService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -22,7 +22,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class AdhesionResource {
 
     private final Logger log = LoggerFactory.getLogger(AdhesionResource.class);
@@ -32,9 +31,12 @@ public class AdhesionResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final AdhesionService adhesionService;
+
     private final AdhesionRepository adhesionRepository;
 
-    public AdhesionResource(AdhesionRepository adhesionRepository) {
+    public AdhesionResource(AdhesionService adhesionService, AdhesionRepository adhesionRepository) {
+        this.adhesionService = adhesionService;
         this.adhesionRepository = adhesionRepository;
     }
 
@@ -51,7 +53,7 @@ public class AdhesionResource {
         if (adhesion.getId() != null) {
             throw new BadRequestAlertException("A new adhesion cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Adhesion result = adhesionRepository.save(adhesion);
+        Adhesion result = adhesionService.save(adhesion);
         return ResponseEntity
             .created(new URI("/api/adhesions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -85,7 +87,7 @@ public class AdhesionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Adhesion result = adhesionRepository.save(adhesion);
+        Adhesion result = adhesionService.save(adhesion);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, adhesion.getId().toString()))
@@ -120,25 +122,7 @@ public class AdhesionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Adhesion> result = adhesionRepository
-            .findById(adhesion.getId())
-            .map(existingAdhesion -> {
-                if (adhesion.getFechaAlta() != null) {
-                    existingAdhesion.setFechaAlta(adhesion.getFechaAlta());
-                }
-                if (adhesion.getFechaBaja() != null) {
-                    existingAdhesion.setFechaBaja(adhesion.getFechaBaja());
-                }
-                if (adhesion.getEstado() != null) {
-                    existingAdhesion.setEstado(adhesion.getEstado());
-                }
-                if (adhesion.getCondicion() != null) {
-                    existingAdhesion.setCondicion(adhesion.getCondicion());
-                }
-
-                return existingAdhesion;
-            })
-            .map(adhesionRepository::save);
+        Optional<Adhesion> result = adhesionService.partialUpdate(adhesion);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -154,7 +138,7 @@ public class AdhesionResource {
     @GetMapping("/adhesions")
     public List<Adhesion> getAllAdhesions() {
         log.debug("REST request to get all Adhesions");
-        return adhesionRepository.findAll();
+        return adhesionService.findAll();
     }
 
     @GetMapping("/adhesions/cliente/{idcliente}")
@@ -172,7 +156,7 @@ public class AdhesionResource {
     @GetMapping("/adhesions/{id}")
     public ResponseEntity<Adhesion> getAdhesion(@PathVariable Long id) {
         log.debug("REST request to get Adhesion : {}", id);
-        Optional<Adhesion> adhesion = adhesionRepository.findById(id);
+        Optional<Adhesion> adhesion = adhesionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(adhesion);
     }
 
@@ -185,7 +169,7 @@ public class AdhesionResource {
     @DeleteMapping("/adhesions/{id}")
     public ResponseEntity<Void> deleteAdhesion(@PathVariable Long id) {
         log.debug("REST request to delete Adhesion : {}", id);
-        adhesionRepository.deleteById(id);
+        adhesionService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

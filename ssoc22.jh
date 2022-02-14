@@ -37,6 +37,7 @@ entity Tarifa {
     vigenciaHasta ZonedDateTime
 }
 
+@service(serviceImpl)
 entity Adhesion {
 	fechaAlta ZonedDateTime
     fechaBaja ZonedDateTime
@@ -44,6 +45,7 @@ entity Adhesion {
     condicion String
 }
 
+@service(serviceImpl)
 entity Contrato {
 	fechaAlta ZonedDateTime
     fechaBaja ZonedDateTime

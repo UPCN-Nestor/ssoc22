@@ -58,7 +58,6 @@ export class AdhesionService {
       .get<IAdhesion[]>(this.resourceUrl + `/cliente/${idcliente}`, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
-
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

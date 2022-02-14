@@ -2,6 +2,7 @@ package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.Contrato;
 import com.upcn.ssoc22.repository.ContratoRepository;
+import com.upcn.ssoc22.service.ContratoService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -22,7 +22,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ContratoResource {
 
     private final Logger log = LoggerFactory.getLogger(ContratoResource.class);
@@ -32,9 +31,12 @@ public class ContratoResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ContratoService contratoService;
+
     private final ContratoRepository contratoRepository;
 
-    public ContratoResource(ContratoRepository contratoRepository) {
+    public ContratoResource(ContratoService contratoService, ContratoRepository contratoRepository) {
+        this.contratoService = contratoService;
         this.contratoRepository = contratoRepository;
     }
 
@@ -51,7 +53,7 @@ public class ContratoResource {
         if (contrato.getId() != null) {
             throw new BadRequestAlertException("A new contrato cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Contrato result = contratoRepository.save(contrato);
+        Contrato result = contratoService.save(contrato);
         return ResponseEntity
             .created(new URI("/api/contratoes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -85,7 +87,7 @@ public class ContratoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Contrato result = contratoRepository.save(contrato);
+        Contrato result = contratoService.save(contrato);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, contrato.getId().toString()))
@@ -120,22 +122,7 @@ public class ContratoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Contrato> result = contratoRepository
-            .findById(contrato.getId())
-            .map(existingContrato -> {
-                if (contrato.getFechaAlta() != null) {
-                    existingContrato.setFechaAlta(contrato.getFechaAlta());
-                }
-                if (contrato.getFechaBaja() != null) {
-                    existingContrato.setFechaBaja(contrato.getFechaBaja());
-                }
-                if (contrato.getParticularidades() != null) {
-                    existingContrato.setParticularidades(contrato.getParticularidades());
-                }
-
-                return existingContrato;
-            })
-            .map(contratoRepository::save);
+        Optional<Contrato> result = contratoService.partialUpdate(contrato);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -151,7 +138,7 @@ public class ContratoResource {
     @GetMapping("/contratoes")
     public List<Contrato> getAllContratoes() {
         log.debug("REST request to get all Contratoes");
-        return contratoRepository.findAll();
+        return contratoService.findAll();
     }
 
     /**
@@ -163,7 +150,7 @@ public class ContratoResource {
     @GetMapping("/contratoes/{id}")
     public ResponseEntity<Contrato> getContrato(@PathVariable Long id) {
         log.debug("REST request to get Contrato : {}", id);
-        Optional<Contrato> contrato = contratoRepository.findById(id);
+        Optional<Contrato> contrato = contratoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(contrato);
     }
 
@@ -176,7 +163,7 @@ public class ContratoResource {
     @DeleteMapping("/contratoes/{id}")
     public ResponseEntity<Void> deleteContrato(@PathVariable Long id) {
         log.debug("REST request to delete Contrato : {}", id);
-        contratoRepository.deleteById(id);
+        contratoService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
