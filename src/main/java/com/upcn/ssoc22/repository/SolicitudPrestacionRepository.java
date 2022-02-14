@@ -44,21 +44,23 @@ public interface SolicitudPrestacionRepository extends JpaRepository<SolicitudPr
     Integer getNumeroPorFechayTipo(@Param("tipo") String tipo, @Param("hoy") ZonedDateTime hoy, @Param("manana") ZonedDateTime mañana);
 
     @Query(
-        "select COUNT(id) as cantidad from SolicitudPrestacion s where s.horaSolicitud >= :desde and s.horaSolicitud < :hasta and s.itemNomenclador.id = :itemnomencladorid and s.adhesion.individuo.id = :individuoid"
+        "select COUNT(id) as cantidad from SolicitudPrestacion s where s.horaSolicitud >= :desde and s.horaSolicitud < :hasta and s.itemNomenclador.id = :itemnomencladorid and s.adhesion.individuo.id = :individuoid and s.adhesion.id = :adhesionid"
     )
     Integer getCantidadPorIndividuoYPracticaEntreFechas(
         @Param("itemnomencladorid") Long itemnomencladorid,
         @Param("individuoid") Long individuoid,
+        @Param("adhesionid") Long adhesionid,
         @Param("desde") ZonedDateTime desde,
         @Param("hasta") ZonedDateTime hasta
     );
 
     @Query(
-        "select COUNT(id) as cantidad from SolicitudPrestacion s where s.horaSolicitud >= :desde and s.horaSolicitud < :hasta and s.itemNomenclador.prestacion.id = :prestacionid and s.adhesion.individuo.id = :individuoid"
+        "select COUNT(id) as cantidad from SolicitudPrestacion s where s.horaSolicitud >= :desde and s.horaSolicitud < :hasta and s.itemNomenclador.prestacion.id = :prestacionid and s.adhesion.individuo.id = :individuoid and s.adhesion.id = :adhesionid"
     )
     Integer getCantidadPorIndividuoYPrestacionEntreFechas(
         @Param("prestacionid") Long prestacionid,
         @Param("individuoid") Long individuoid,
+        @Param("adhesionid") Long adhesionid,
         @Param("desde") ZonedDateTime desde,
         @Param("hasta") ZonedDateTime hasta
     );

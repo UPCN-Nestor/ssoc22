@@ -129,6 +129,7 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
             Integer cantidad = solicitudPrestacionRepository.getCantidadPorIndividuoYPracticaEntreFechas(
                 i.getId(),
                 a.getIndividuo().getId(),
+                a.getId(),
                 inicioAño,
                 finAño
             );
@@ -141,6 +142,7 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
             Integer cantidad = solicitudPrestacionRepository.getCantidadPorIndividuoYPrestacionEntreFechas(
                 p.getId(),
                 a.getIndividuo().getId(),
+                a.getId(),
                 inicioAño,
                 finAño
             );
@@ -166,6 +168,7 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
             Integer cantidad = solicitudPrestacionRepository.getCantidadPorIndividuoYPracticaEntreFechas(
                 i.getId(),
                 a.getIndividuo().getId(),
+                a.getId(),
                 inicioMes,
                 finMes
             );
@@ -178,6 +181,7 @@ public class ReglaPrestacionServiceImpl implements ReglaPrestacionService {
             Integer cantidad = solicitudPrestacionRepository.getCantidadPorIndividuoYPrestacionEntreFechas(
                 p.getId(),
                 a.getIndividuo().getId(),
+                a.getId(),
                 inicioMes,
                 finMes
             );

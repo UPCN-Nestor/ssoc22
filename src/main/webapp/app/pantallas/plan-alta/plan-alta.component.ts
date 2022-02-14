@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IItemNomenclador } from 'app/entities/item-nomenclador/item-nomenclador.model';
-import { debounceTime, distinctUntilChanged, filter, map, merge, Observable, of, OperatorFunction, Subject, switchMap } from 'rxjs';
-import { NgbActiveModal, NgbModal, NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { debounceTime, distinctUntilChanged, merge, Observable, of, OperatorFunction, Subject, switchMap } from 'rxjs';
+import { NgbModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { ItemNomencladorService } from 'app/entities/item-nomenclador/service/item-nomenclador.service';
 import { IProvision, Provision } from 'app/entities/provision/provision.model';
 import { ProvisionService } from 'app/entities/provision/service/provision.service';
@@ -90,7 +90,7 @@ export class PlanAltaComponent implements OnInit {
 
   practicaSearch: OperatorFunction<string, readonly (IItemNomenclador | IPrestacion)[]> = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-    //const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance!.isPopupOpen()));
+    // const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance!.isPopupOpen()));
     const inputFocus$ = this.focus$;
 
     return merge(debouncedText$, inputFocus$).pipe(
@@ -168,7 +168,7 @@ export class PlanAltaComponent implements OnInit {
     toAdd.datos = this.datoNuevaRegla;
     toAdd.provision = this.provisionSeleccionada;
 
-    this.reglaService.create(toAdd).subscribe(res => {
+    this.reglaService.create(toAdd).subscribe(() => {
       this.reglaSeleccionada = null;
       this.provisionSeleccionada = null;
       this.datoNuevaRegla = '';
@@ -181,10 +181,10 @@ export class PlanAltaComponent implements OnInit {
   open(content: any): void {
     // eslint-disable-next-line
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      result => {
+      () => {
         // this.closeResult = `Closed with: ${result}`;
       },
-      reason => {
+      () => {
         // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       }
     );
@@ -204,7 +204,7 @@ export class PlanAltaComponent implements OnInit {
       toAdd.itemNomenclador = this.practicaSeleccionada;
     }
 
-    this.provisionService.create(toAdd).subscribe(res => {
+    this.provisionService.create(toAdd).subscribe(() => {
       this.practicaSeleccionada = null;
       this.modalService.dismissAll();
       this.loadProvisions();
@@ -219,7 +219,7 @@ export class PlanAltaComponent implements OnInit {
   // eslint-disable-next-line
   modificarNombre(): void {
     this.planActivo!.nombre = this.nombreParaModificar;
-    this.planService.update(this.planActivo!).subscribe(res => {
+    this.planService.update(this.planActivo!).subscribe(() => {
       this.modalService.dismissAll();
     });
   }

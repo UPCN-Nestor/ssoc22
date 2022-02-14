@@ -13,7 +13,7 @@ export class IndividuoPopupComponent implements OnInit {
   constructor(protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ individuo }) => {
+    this.activatedRoute.data.subscribe(() => {
       // this.individuo = individuo;
     });
   }
