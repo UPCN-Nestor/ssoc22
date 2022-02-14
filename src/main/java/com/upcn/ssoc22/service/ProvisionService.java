@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
 
 /**
  * Service Interface for managing {@link Provision}.
@@ -65,5 +66,5 @@ public interface ProvisionService {
 
     List<Provision> findAllByPlanId(Long planid);
 
-    boolean cumpleLimites(Provision prov, Adhesion a);
+    Pair<Boolean, String> cumpleLimites(Provision prov, Adhesion a);
 }

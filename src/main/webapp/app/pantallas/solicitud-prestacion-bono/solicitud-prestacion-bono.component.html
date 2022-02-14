@@ -69,17 +69,25 @@
             [(ngModel)]="practicaSeleccionada"
             [ngbTypeahead]="practicaSearch"
             placeholder="Ver disponibles"
-            [resultFormatter]="practicaResultFormatter"
+            [resultTemplate]="rt"
             [inputFormatter]="practicaInputFormatter"
             [ngModelOptions]="{ standalone: true }"
             (focus)="focus$.next($any($event).target.value)"
             (click)="click$.next($any($event).target.value)"
             (ngModelChange)="selectItemNomenclador($event)"
             required
+            [editable]="false"
           />
           <!--<small *ngIf="searching" class="form-text text-muted">Buscando...</small>-->
           <div class="invalid-feedback" *ngIf="practicaSearchFailed">No se pudieron cargar las sugerencias.</div>
           <small class="form-text text-danger">{{ errorPractica }}</small>
+
+          <ng-template #rt let-r="result" let-t="term">
+            <div placement="right" ngbTooltip="{{ r.motivoInhabilitado }}" tooltipClass="my-custom-class">
+              <fa-icon *ngIf="r.habilitado === false" icon="times" class="text-danger"></fa-icon>
+              <ngb-highlight [class.text-muted]="r.habilitado === false" [result]="r.nombre" [term]="t"></ngb-highlight>
+            </div>
+          </ng-template>
 
           <!-- VERSIÓN CON SELECT 
           <select

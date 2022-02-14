@@ -1,5 +1,6 @@
 package com.upcn.ssoc22.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -30,7 +31,9 @@ public class JacksonConfiguration {
      */
     @Bean
     public Hibernate5Module hibernate5Module() {
-        return new Hibernate5Module();
+        Hibernate5Module hibernate5Module = new Hibernate5Module();
+        hibernate5Module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
+        return hibernate5Module;
     }
 
     /*

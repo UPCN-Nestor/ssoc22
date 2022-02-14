@@ -12,6 +12,8 @@ export interface IItemNomenclador {
   solicitudPrestacions?: ISolicitudPrestacion[] | null;
   provisions?: IProvision[] | null;
   prestadors?: IPrestador[] | null;
+  habilitado?: boolean;
+  motivoInhabilitado?: string;
 }
 
 export class ItemNomenclador implements IItemNomenclador {
@@ -23,7 +25,9 @@ export class ItemNomenclador implements IItemNomenclador {
     public prestacion?: IPrestacion | null,
     public solicitudPrestacions?: ISolicitudPrestacion[] | null,
     public provisions?: IProvision[] | null,
-    public prestadors?: IPrestador[] | null
+    public prestadors?: IPrestador[] | null,
+    public habilitado?: boolean,
+    public motivoInhabilitado?: string
   ) {}
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,6 +31,18 @@ import { AdhesionService } from 'app/entities/adhesion/service/adhesion.service'
 @Component({
   selector: 'jhi-solicitud-prestacion-bono',
   templateUrl: './solicitud-prestacion-bono.component.html',
+  encapsulation: ViewEncapsulation.None,
+  styles: [
+    `
+      .my-custom-class .tooltip-inner {
+        background-color: #ff000088;
+        font-size: 75%;
+      }
+      .my-custom-class .arrow::before {
+        border-right-color: #ff000088;
+      }
+    `,
+  ],
 })
 export class SolicitudPrestacionBonoComponent implements OnInit {
   isSaving = false;
@@ -261,7 +273,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   // eslint-disable-next-line
   practicaResultFormatter: (item: any) => string = i => i.nombre || '';
   // eslint-disable-next-line
-  practicaInputFormatter: (item: any) => string = i => i.nombre || '';
+  practicaInputFormatter: (item: any) => string = i => (i.habilitado !== false ? i.nombre : '') || '';
 
   // ** Fin typeahead práctica
 
@@ -297,7 +309,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   }
 
   selectItemNomenclador(item: any): void {
-    this.editForm.patchValue({ itemNomenclador: item });
+    this.prestadorsSharedCollection = [];
+    this.editForm.patchValue({ itemNomenclador: item, precioReal: null });
     const itemnomencladorid = this.editForm.get('itemNomenclador')?.value?.id;
     const adhesionid = this.adhesionSeleccionada?.id;
 

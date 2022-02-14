@@ -1,5 +1,6 @@
 package com.upcn.ssoc22.domain;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -54,6 +55,34 @@ public class ItemNomenclador implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @JsonIgnoreProperties(value = { "itemNomencladors", "solicitudPrestacions" }, allowSetters = true)
     private Set<Prestador> prestadors = new HashSet<>();
+
+    // Esto no va a la base de datos, lo uso para devolver al cliente si un ItemNomenclador dado está habilitado o no, y el motivo.
+    // Una alternativa más engorrosa sería hacer otra entidad que englobe ItemNomenclador, como un DTO.
+    @Transient
+    private Boolean habilitado;
+
+    @Transient
+    private String motivoInhabilitado;
+
+    @Transient
+    @JsonGetter(value = "habilitado")
+    public Boolean getHabilitado() {
+        return habilitado;
+    }
+
+    public void setHabilitado(Boolean habilitado) {
+        this.habilitado = habilitado;
+    }
+
+    @Transient
+    @JsonGetter(value = "motivoInhabilitado")
+    public String getMotivoInhabilitado() {
+        return motivoInhabilitado;
+    }
+
+    public void setMotivoInhabilitado(String motivoInhabilitado) {
+        this.motivoInhabilitado = motivoInhabilitado;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -242,6 +271,8 @@ public class ItemNomenclador implements Serializable {
             ", nombre='" + getNombre() + "'" +
             ", diasCarencia=" + getDiasCarencia() +
             ", codigo='" + getCodigo() + "'" +
+            ", habilitado='" + getHabilitado() + "'" + 
+            ", motivoInhabilitado='" + getMotivoInhabilitado() + "'" + 
             "}";
     }
 }

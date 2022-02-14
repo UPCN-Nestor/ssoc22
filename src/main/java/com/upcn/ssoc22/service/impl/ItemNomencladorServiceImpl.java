@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -125,6 +126,7 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
                 }
             }
 
+            // Bucle principal en donde analizo si cada práctica está o no habilitada.
             for (Provision prov : analizar) {
                 if (
                     (prov.getItemNomenclador() != null && prov.getItemNomenclador().getPrestacion().getTipo().equals("bono")) ||
@@ -141,11 +143,22 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
                 );
 
                 // Reglas de cantidad por período
-                if (!provisionService.cumpleLimites(prov, a)) {
+                Pair<Boolean, String> cumpleLimites = provisionService.cumpleLimites(prov, a);
+                if (!cumpleLimites.getFirst()) {
+                    // Este objeto es ad-hoc, sólo lleva el nombre, incluso puede ser el nombre de una Prestación ("Bonos")
+                    ItemNomenclador rechazada = new ItemNomenclador();
+                    String nombre = prov.getItemNomenclador() != null
+                        ? prov.getItemNomenclador().getNombre()
+                        : prov.getPrestacion().getNombre();
+                    rechazada.setNombre(nombre);
+                    rechazada.setHabilitado(false);
+                    rechazada.setMotivoInhabilitado("No se cumple: " + cumpleLimites.getSecond());
+                    toRet.add(rechazada);
                     continue;
                 }
 
                 if (prov.getPrestacion() != null) {
+                    // Caso "todos los bonos"
                     LinkedList<ItemNomenclador> toAdd = new LinkedList<ItemNomenclador>(
                         Arrays.asList(prov.getPrestacion().getItemNomencladors().toArray(new ItemNomenclador[0]))
                     );
@@ -159,16 +172,30 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
                     }
 
                     int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
-                    toAdd.removeIf(i -> !cumpleCarenciaDefinidaODefault(i, a, c, diasCarenciaSegunProvision));
+                    for (ItemNomenclador i : toAdd) {
+                        Pair<Boolean, String> cumpleCarencia = cumpleCarenciaDefinidaODefault(i, a, c, diasCarenciaSegunProvision);
+                        if (!cumpleCarencia.getFirst()) {
+                            i.setHabilitado(false);
+                            i.setMotivoInhabilitado(cumpleCarencia.getSecond());
+                        }
+                    }
 
                     toRet.addAll(toAdd);
-                    log.info(">>> Habilitadas por caso general: " + toAdd.size());
+                    log.info(">>> Procesadas por caso general: " + toAdd.size());
                 } else {
+                    // Caso práctica individual
                     int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
-                    if (cumpleCarenciaDefinidaODefault(prov.getItemNomenclador(), a, c, diasCarenciaSegunProvision)) {
-                        toRet.add(prov.getItemNomenclador());
+                    ItemNomenclador i = prov.getItemNomenclador();
+                    Pair<Boolean, String> cumpleCarencia = cumpleCarenciaDefinidaODefault(i, a, c, diasCarenciaSegunProvision);
+
+                    if (!cumpleCarencia.getFirst()) {
+                        i.setHabilitado(false);
+                        i.setMotivoInhabilitado(cumpleCarencia.getSecond());
+                    } else {
                         log.info(">>> Habilitada " + prov.getItemNomenclador().getNombre());
                     }
+
+                    toRet.add(i);
                 }
             }
         }
@@ -176,12 +203,14 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
         List<ItemNomenclador> toRetList = Arrays.asList(toRet.toArray(new ItemNomenclador[0]));
 
         toRetList.sort((i1, i2) -> {
-            return i1.getNombre().compareTo(i2.getNombre());
+            if (i1.getHabilitado() == i2.getHabilitado()) return i1.getNombre().compareTo(i2.getNombre()); else return (
+                i1.getHabilitado() == null ? -1 : 1
+            );
         });
         return toRetList;
     }
 
-    boolean cumpleCarenciaDefinidaODefault(ItemNomenclador i, Adhesion a, Contrato c, int diasCarenciaSegunProvision) {
+    Pair<Boolean, String> cumpleCarenciaDefinidaODefault(ItemNomenclador i, Adhesion a, Contrato c, int diasCarenciaSegunProvision) {
         ZonedDateTime fechaAdhesion = a.getFechaAlta();
         ZonedDateTime fechaContrato = c.getFechaAlta();
         ZonedDateTime masReciente = fechaAdhesion.compareTo(fechaContrato) > 0 ? fechaAdhesion : fechaContrato;
@@ -192,7 +221,11 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
 
         log.info(">>> Max(adhesion,contrato): " + masReciente.toLocalDate() + ", carencia para: " + i.getNombre() + ", " + carenciaFinal);
 
-        return masReciente.plusDays(carenciaFinal).compareTo(ZonedDateTime.now()) < 0;
+        boolean toRet = masReciente.plusDays(carenciaFinal).compareTo(ZonedDateTime.now()) < 0;
+        String motivoInhabilitado = !toRet
+            ? carenciaFinal + " días de carencia, fecha más reciente entre adhesión y contrato: " + masReciente.toLocalDate()
+            : "";
+        return Pair.of(toRet, motivoInhabilitado);
     }
 
     public float getPrecioReal(Long itemnomencladorid, Long adhesionid) {

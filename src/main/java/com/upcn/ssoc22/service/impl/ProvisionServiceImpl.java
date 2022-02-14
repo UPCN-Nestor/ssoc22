@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -141,8 +142,9 @@ public class ProvisionServiceImpl implements ProvisionService {
     }
 
     @Override
-    public boolean cumpleLimites(Provision p, Adhesion a) {
+    public Pair<Boolean, String> cumpleLimites(Provision p, Adhesion a) {
         boolean toRet = true;
+        String motivo = "";
 
         for (ReglaPrestacion r : p.getReglaPrestacions()) {
             if (r.getTipoRegla().equals("Limite") && esReglaCopiada(r, p)) {
@@ -150,18 +152,21 @@ public class ProvisionServiceImpl implements ProvisionService {
                 if (r.getCodigoRegla().equals("LPM")) {
                     if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorMesPorPaciente(r, a)) {
                         log.info(">>> No se cumple.");
+                        motivo += r.getNombre() + ": " + r.getDatos() + ". ";
                         toRet = false;
                     }
                 }
                 if (r.getCodigoRegla().equals("LPA")) {
                     if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorAñoPorPaciente(r, a)) {
                         log.info(">>> No se cumple.");
+                        motivo += r.getNombre() + ": " + r.getDatos() + ". ";
                         toRet = false;
                     }
                 }
                 if (r.getCodigoRegla().equals("LCM")) {
                     if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorMesPorCliente(r, a)) {
                         log.info(">>> No se cumple.");
+                        motivo += r.getNombre() + ": " + r.getDatos() + ". ";
                         toRet = false;
                     }
                 }
@@ -177,24 +182,27 @@ public class ProvisionServiceImpl implements ProvisionService {
                 if (r.getCodigoRegla().equals("LPM")) {
                     if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorMesPorPaciente(r, a)) {
                         log.info(">>> No se cumple.");
+                        motivo += r.getNombre() + ": " + r.getDatos() + ". ";
                         toRet = false;
                     }
                 }
                 if (r.getCodigoRegla().equals("LPA")) {
                     if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorAñoPorPaciente(r, a)) {
                         log.info(">>> No se cumple.");
+                        motivo += r.getNombre() + ": " + r.getDatos() + ". ";
                         toRet = false;
                     }
                 }
                 if (r.getCodigoRegla().equals("LCM")) {
                     if (!reglaPrestacionService.procesarReglaDeLimiteVecesPorMesPorCliente(r, a)) {
                         log.info(">>> No se cumple.");
+                        motivo += r.getNombre() + ": " + r.getDatos() + ". ";
                         toRet = false;
                     }
                 }
             }
         }
 
-        return toRet;
+        return Pair.of(toRet, motivo);
     }
 }

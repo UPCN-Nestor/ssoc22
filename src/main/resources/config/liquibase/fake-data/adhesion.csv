@@ -5,3 +5,4 @@ id;fecha_alta;fecha_baja;estado;condicion;individuo_id;cliente_id
 4;2022-01-24T09:37:27;2021-05-23T18:49:14;;titular;3;3
 5;2022-01-23T18:40:32;null;;titular;4;4
 6;2022-01-24T04:29:28;null;;familiar;5;2
+7;2022-01-01T00:00:00;2022-01-01T00:00:00;;familiar;6;2
