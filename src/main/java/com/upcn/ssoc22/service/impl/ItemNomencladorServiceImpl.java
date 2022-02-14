@@ -153,6 +153,21 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
                     rechazada.setNombre(nombre);
                     rechazada.setHabilitado(false);
                     rechazada.setMotivoInhabilitado("No se cumple: " + cumpleLimites.getSecond());
+
+                    // Sólo informativo. Para que si vuelve rechazada por límites igual informe que también fallaría por carencias. Ojo, no funciona para "todos los bonos"
+                    if (prov.getItemNomenclador() != null) {
+                        int diasCarenciaSegunProvision = provisionService.diasCarencia(prov, a);
+                        Pair<Boolean, String> cumpleCarencia = cumpleCarenciaDefinidaODefault(
+                            prov.getItemNomenclador(),
+                            a,
+                            c,
+                            diasCarenciaSegunProvision
+                        );
+                        if (!cumpleCarencia.getFirst()) {
+                            rechazada.setMotivoInhabilitado(rechazada.getMotivoInhabilitado() + cumpleCarencia.getSecond() + ".");
+                        }
+                    }
+
                     toRet.add(rechazada);
                     continue;
                 }
@@ -223,7 +238,7 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
 
         boolean toRet = masReciente.plusDays(carenciaFinal).compareTo(ZonedDateTime.now()) < 0;
         String motivoInhabilitado = !toRet
-            ? carenciaFinal + " días de carencia, fecha más reciente entre adhesión y contrato: " + masReciente.toLocalDate()
+            ? "Carencia: " + carenciaFinal + " días, fecha más reciente entre adhesión y contrato: " + masReciente.toLocalDate()
             : "";
         return Pair.of(toRet, motivoInhabilitado);
     }
