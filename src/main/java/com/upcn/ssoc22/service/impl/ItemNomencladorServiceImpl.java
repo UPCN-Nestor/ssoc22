@@ -7,6 +7,8 @@ import com.upcn.ssoc22.domain.Plan;
 import com.upcn.ssoc22.domain.Provision;
 import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.repository.ItemNomencladorRepository;
+import com.upcn.ssoc22.service.AdhesionService;
+import com.upcn.ssoc22.service.ContratoService;
 import com.upcn.ssoc22.service.ItemNomencladorService;
 import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.web.rest.errors.AdhesionNoHabilitadaException;
@@ -36,15 +38,18 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
 
     private final ProvisionService provisionService;
     private final ItemNomencladorRepository itemNomencladorRepository;
-    private final AdhesionRepository adhesionRepository;
+    private final AdhesionService adhesionService;
+    private final ContratoService contratoService;
 
     public ItemNomencladorServiceImpl(
         ItemNomencladorRepository itemNomencladorRepository,
-        AdhesionRepository adhesionRepository,
+        AdhesionService adhesionService,
+        ContratoService contratoService,
         ProvisionService provisionService
     ) {
         this.itemNomencladorRepository = itemNomencladorRepository;
-        this.adhesionRepository = adhesionRepository;
+        this.adhesionService = adhesionService;
+        this.contratoService = contratoService;
         this.provisionService = provisionService;
     }
 
@@ -93,21 +98,21 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
         itemNomencladorRepository.deleteById(id);
     }
 
-    public List<ItemNomenclador> getAllBonosHabilitadosPorAdhesion(Long adhesionid) throws AdhesionNoHabilitadaException {
+    public List<ItemNomenclador> getAllBonosHabilitadosPorAdhesion(Long adhesionid) {
         log.debug("REST request to get all ItemNomencladors habilitados para adhesión " + adhesionid);
 
         Set<ItemNomenclador> toRet = new HashSet<ItemNomenclador>();
 
         // No tomo en cuenta adhesiones vencidas.
-        Adhesion a = adhesionRepository.findById(adhesionid).get();
+        Adhesion a = adhesionService.findOne(adhesionid).get();
 
-        if (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) throw new AdhesionNoHabilitadaException();
+        if (!adhesionService.checkVigencia(a)) return null;
 
         for (Contrato c : a.getCliente().getContratoes()) {
             log.info("> Contrato: " + c.getId());
 
             // No tomo en cuenta los contratos vencidos.
-            if (c.getFechaBaja() != null && c.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) continue;
+            if (!contratoService.checkVigencia(c)) continue;
 
             Plan p = c.getPlan();
             log.info("> Plan: " + p.getId());
@@ -245,7 +250,7 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
 
     public float getPrecioReal(Long itemnomencladorid, Long adhesionid) {
         ItemNomenclador i = itemNomencladorRepository.getById(itemnomencladorid);
-        Adhesion a = adhesionRepository.getById(adhesionid);
+        Adhesion a = adhesionService.findOne(adhesionid).get();
 
         float precioBase = i.getPrestacion().getPrecio(); // Acá se puede implementar fácilmente precios por ítem nomenclador individual
         float precioMenor = precioBase;

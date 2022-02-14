@@ -45,4 +45,6 @@ public interface ContratoService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    boolean checkVigencia(Contrato c);
 }

@@ -3,6 +3,7 @@ package com.upcn.ssoc22.service.impl;
 import com.upcn.ssoc22.domain.Contrato;
 import com.upcn.ssoc22.repository.ContratoRepository;
 import com.upcn.ssoc22.service.ContratoService;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -71,5 +72,10 @@ public class ContratoServiceImpl implements ContratoService {
     public void delete(Long id) {
         log.debug("Request to delete Contrato : {}", id);
         contratoRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean checkVigencia(Contrato c) {
+        return c.getFechaBaja() != null && c.getFechaBaja().compareTo(ZonedDateTime.now()) < 0;
     }
 }

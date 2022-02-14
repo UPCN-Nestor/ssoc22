@@ -33,11 +33,8 @@ public class AdhesionResource {
 
     private final AdhesionService adhesionService;
 
-    private final AdhesionRepository adhesionRepository;
-
-    public AdhesionResource(AdhesionService adhesionService, AdhesionRepository adhesionRepository) {
+    public AdhesionResource(AdhesionService adhesionService) {
         this.adhesionService = adhesionService;
-        this.adhesionRepository = adhesionRepository;
     }
 
     /**
@@ -83,10 +80,6 @@ public class AdhesionResource {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!adhesionRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
         Adhesion result = adhesionService.save(adhesion);
         return ResponseEntity
             .ok()
@@ -118,10 +111,6 @@ public class AdhesionResource {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!adhesionRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
         Optional<Adhesion> result = adhesionService.partialUpdate(adhesion);
 
         return ResponseUtil.wrapOrNotFound(
@@ -144,7 +133,7 @@ public class AdhesionResource {
     @GetMapping("/adhesions/cliente/{idcliente}")
     public List<Adhesion> getAllVigentesByClienteId(@PathVariable Long idcliente) {
         log.debug("REST request to get all Adhesions");
-        return adhesionRepository.findAllVigentesByClienteId(idcliente);
+        return adhesionService.findAllVigentesByClienteId(idcliente);
     }
 
     /**

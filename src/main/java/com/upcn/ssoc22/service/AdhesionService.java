@@ -45,4 +45,8 @@ public interface AdhesionService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<Adhesion> findAllVigentesByClienteId(Long idcliente);
+
+    boolean checkVigencia(Adhesion a);
 }

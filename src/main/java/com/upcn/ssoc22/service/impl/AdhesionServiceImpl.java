@@ -3,6 +3,8 @@ package com.upcn.ssoc22.service.impl;
 import com.upcn.ssoc22.domain.Adhesion;
 import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.service.AdhesionService;
+import com.upcn.ssoc22.web.rest.errors.AdhesionNoHabilitadaException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -74,5 +76,16 @@ public class AdhesionServiceImpl implements AdhesionService {
     public void delete(Long id) {
         log.debug("Request to delete Adhesion : {}", id);
         adhesionRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Adhesion> findAllVigentesByClienteId(Long idcliente) {
+        // Esto probablemente necesite refactorizar, usando "checkVigencia(...)"
+        return adhesionRepository.findAllVigentesByClienteId(idcliente);
+    }
+
+    @Override
+    public boolean checkVigencia(Adhesion a) throws AdhesionNoHabilitadaException {
+        return (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0);
     }
 }
