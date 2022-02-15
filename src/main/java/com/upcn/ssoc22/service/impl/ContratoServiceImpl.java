@@ -76,6 +76,6 @@ public class ContratoServiceImpl implements ContratoService {
 
     @Override
     public boolean checkVigencia(Contrato c) {
-        return c.getFechaBaja() != null && c.getFechaBaja().compareTo(ZonedDateTime.now()) < 0;
+        return c.getFechaBaja() == null || c.getFechaBaja().compareTo(ZonedDateTime.now()) > 0;
     }
 }

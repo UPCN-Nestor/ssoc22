@@ -146,6 +146,8 @@ public class ProvisionServiceImpl implements ProvisionService {
         boolean toRet = true;
         String motivo = "";
 
+        // Si las reglas generales (copiadas) y específicas van a tener la misma jerarquía, acá hay que refactorizar para eliminar la distinción de "esReglaCopiada"
+
         for (ReglaPrestacion r : p.getReglaPrestacions()) {
             if (r.getTipoRegla().equals("Limite") && esReglaCopiada(r, p)) {
                 log.info(">>> Regla de limite COPIADA: " + r.getId() + " " + r.getNombre() + " " + r.getDatos());
@@ -175,7 +177,6 @@ public class ProvisionServiceImpl implements ProvisionService {
 
         for (ReglaPrestacion r : p.getReglaPrestacions()) {
             if (r.getTipoRegla().equals("Limite") && !esReglaCopiada(r, p)) {
-                // Creo que en este caso las reglas generales (copiadas) y específicas tienen la misma jerarquía.
                 //toRet = true;
 
                 log.info(">>> Regla de limite: " + r.getId() + " " + r.getNombre() + " " + r.getDatos());

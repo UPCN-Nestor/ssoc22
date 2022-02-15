@@ -85,7 +85,7 @@ public class AdhesionServiceImpl implements AdhesionService {
     }
 
     @Override
-    public boolean checkVigencia(Adhesion a) throws AdhesionNoHabilitadaException {
-        return (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0);
+    public boolean checkVigencia(Adhesion a) {
+        return a.getFechaBaja() == null || a.getFechaBaja().compareTo(ZonedDateTime.now()) > 0;
     }
 }
