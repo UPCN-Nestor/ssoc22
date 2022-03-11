@@ -1,5 +1,6 @@
 package com.upcn.ssoc22.service;
 
+import com.upcn.ssoc22.domain.DTO.Descuento;
 import com.upcn.ssoc22.domain.ItemNomenclador;
 import java.util.List;
 import java.util.Optional;
@@ -48,5 +49,5 @@ public interface ItemNomencladorService {
 
     List<ItemNomenclador> getAllBonosHabilitadosPorAdhesion(Long adhesionid);
 
-    float getPrecioReal(Long itemnomencladorid, Long adhesionid);
+    Descuento getPrecioReal(Long itemnomencladorid, Long adhesionid);
 }

@@ -8,6 +8,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ISolicitudPrestacion, getSolicitudPrestacionIdentifier } from '../solicitud-prestacion.model';
+import { Descuento } from 'app/entities/DTO/descuento.model';
 
 export type EntityResponseType = HttpResponse<ISolicitudPrestacion>;
 export type EntityArrayResponseType = HttpResponse<ISolicitudPrestacion[]>;
@@ -63,9 +64,9 @@ export class SolicitudPrestacionService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  getPrecioReal(itemnomencladorid: number, adhesionid: number, req?: any): Observable<HttpResponse<number>> {
+  getPrecioReal(itemnomencladorid: number, adhesionid: number, req?: any): Observable<HttpResponse<Descuento>> {
     const options = createRequestOption(req);
-    return this.http.get<number>(`${this.resourceUrl}/precioreal/${itemnomencladorid}/${adhesionid}`, {
+    return this.http.get<Descuento>(`${this.resourceUrl}/precioreal/${itemnomencladorid}/${adhesionid}`, {
       params: options,
       observe: 'response',
     });

@@ -27,22 +27,13 @@ import { PrestadorService } from 'app/entities/prestador/service/prestador.servi
 import { IPrestador } from 'app/entities/prestador/prestador.model';
 import { IAdhesion } from 'app/entities/adhesion/adhesion.model';
 import { AdhesionService } from 'app/entities/adhesion/service/adhesion.service';
+import { Descuento } from 'app/entities/DTO/descuento.model';
 
 @Component({
   selector: 'jhi-solicitud-prestacion-bono',
   templateUrl: './solicitud-prestacion-bono.component.html',
   encapsulation: ViewEncapsulation.None,
-  styles: [
-    `
-      .my-custom-class .tooltip-inner {
-        background-color: #ff000088;
-        font-size: 75%;
-      }
-      .my-custom-class .arrow::before {
-        border-right-color: #ff000088;
-      }
-    `,
-  ],
+  styleUrls: ['./solicitud-prestacion-bono.component.scss'],
 })
 export class SolicitudPrestacionBonoComponent implements OnInit {
   isSaving = false;
@@ -76,6 +67,8 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
   practicasHabilitadas: IItemNomenclador[] | null = [];
 
   adhesionSeleccionada: IAdhesion | null = null;
+
+  motivoDescuento = '';
 
   despachosCollection: IDespacho[] = [];
   itemNomencladorsSharedCollection: IItemNomenclador[] = [];
@@ -319,7 +312,9 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
 
     if (itemnomencladorid != null && adhesionid != null) {
       this.solicitudPrestacionService.getPrecioReal(itemnomencladorid, adhesionid).subscribe(res => {
-        this.editForm.patchValue({ precioReal: res.body });
+        const d: Descuento = res.body!;
+        this.motivoDescuento = d.motivoDescuento;
+        this.editForm.patchValue({ precioReal: d.descuento });
       });
 
       this.prestadorService.queryPorItemNomenclador(item.id).subscribe(res => {
@@ -432,7 +427,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
         )
       )
       .subscribe((insumos: IInsumo[]) => (this.insumosSharedCollection = insumos));
-
+    /*
     this.prestadorService
       .query()
       .pipe(map((res: HttpResponse<IPrestador[]>) => res.body ?? []))
@@ -442,7 +437,7 @@ export class SolicitudPrestacionBonoComponent implements OnInit {
         )
       )
       .subscribe((prestadors: IPrestador[]) => (this.prestadorsSharedCollection = prestadors));
-
+*/
     this.adhesionService
       .query()
       .pipe(map((res: HttpResponse<IAdhesion[]>) => res.body ?? []))

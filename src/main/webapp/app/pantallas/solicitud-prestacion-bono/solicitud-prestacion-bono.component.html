@@ -83,7 +83,7 @@
           <small class="form-text text-danger">{{ errorPractica }}</small>
 
           <ng-template #rt let-r="result" let-t="term">
-            <div placement="right" ngbTooltip="{{ r.motivoInhabilitado }}" tooltipClass="my-custom-class">
+            <div placement="right" ngbTooltip="{{ r.motivoInhabilitado }}" tooltipClass="my-tooltip-class">
               <fa-icon *ngIf="r.habilitado === false" icon="times" class="text-danger"></fa-icon>
               <ngb-highlight [class.text-muted]="r.habilitado === false" [result]="r.nombre" [term]="t"></ngb-highlight>
             </div>
@@ -114,7 +114,7 @@
           -->
         </div>
 
-        <div class="form-group">
+        <div class="form-group" placement="bottom" ngbTooltip="{{ motivoDescuento }}" tooltipClass="my-tooltip-class-top">
           <label class="form-control-label" for="field_precioReal">Precio</label>
           <div class="input-group mb-3">
             <div class="input-group-prepend">

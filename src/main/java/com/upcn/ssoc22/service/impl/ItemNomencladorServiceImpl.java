@@ -2,19 +2,17 @@ package com.upcn.ssoc22.service.impl;
 
 import com.upcn.ssoc22.domain.Adhesion;
 import com.upcn.ssoc22.domain.Contrato;
+import com.upcn.ssoc22.domain.DTO.Descuento;
 import com.upcn.ssoc22.domain.ItemNomenclador;
 import com.upcn.ssoc22.domain.Plan;
 import com.upcn.ssoc22.domain.Provision;
-import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.repository.ItemNomencladorRepository;
 import com.upcn.ssoc22.service.AdhesionService;
 import com.upcn.ssoc22.service.ContratoService;
 import com.upcn.ssoc22.service.ItemNomencladorService;
 import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.web.rest.errors.AdhesionNoHabilitadaException;
-import java.time.Duration;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -248,12 +246,13 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
         return Pair.of(toRet, motivoInhabilitado);
     }
 
-    public float getPrecioReal(Long itemnomencladorid, Long adhesionid) {
+    public Descuento getPrecioReal(Long itemnomencladorid, Long adhesionid) {
         ItemNomenclador i = itemNomencladorRepository.getById(itemnomencladorid);
         Adhesion a = adhesionService.findOne(adhesionid).get();
 
         float precioBase = i.getPrestacion().getPrecio(); // Acá se puede implementar fácilmente precios por ítem nomenclador individual
-        float precioMenor = precioBase;
+        Descuento precioMenor = new Descuento();
+        precioMenor.setDescuento(precioBase);
 
         // No tomo en cuenta adhesiones vencidas.
         if (a.getFechaBaja() != null && a.getFechaBaja().compareTo(ZonedDateTime.now()) < 0) throw new AdhesionNoHabilitadaException();
@@ -277,13 +276,16 @@ public class ItemNomencladorServiceImpl implements ItemNomencladorService {
                     ": " +
                     (prov.getPrestacion() != null ? prov.getPrestacion().getNombre() : prov.getItemNomenclador().getNombre())
                 );
-                float precioEncontrado = provisionService.procesarDescuento(prov, a, precioBase);
+
                 // Devuelvo el mejor descuento (ej. si en un plan tengo "-30% en bonos y -50% específicamente en radiografías", o incluso eso mismo en dos planes diferentes)
-                precioMenor = precioEncontrado < precioMenor ? precioEncontrado : precioMenor;
+                Descuento precioEncontrado = provisionService.procesarDescuento(prov, a, precioBase);
+                if (precioEncontrado.getDescuento() < precioMenor.getDescuento()) {
+                    precioMenor = precioEncontrado;
+                }
             }
         }
 
-        log.info(">> Precio hallado: " + precioMenor);
+        log.info(">> Precio hallado: " + precioMenor.getDescuento() + " " + precioMenor.getMotivoDescuento());
         return precioMenor;
     }
 }

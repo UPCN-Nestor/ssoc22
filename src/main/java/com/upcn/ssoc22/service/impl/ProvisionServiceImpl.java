@@ -1,6 +1,7 @@
 package com.upcn.ssoc22.service.impl;
 
 import com.upcn.ssoc22.domain.Adhesion;
+import com.upcn.ssoc22.domain.DTO.Descuento;
 import com.upcn.ssoc22.domain.Provision;
 import com.upcn.ssoc22.domain.ReglaPrestacion;
 import com.upcn.ssoc22.repository.ProvisionRepository;
@@ -124,17 +125,22 @@ public class ProvisionServiceImpl implements ProvisionService {
         return dias;
     }
 
-    public float procesarDescuento(Provision prov, Adhesion a, float precioBase) {
+    public Descuento procesarDescuento(Provision prov, Adhesion a, float precioBase) {
         float precio = precioBase;
+        String motivo = "";
 
         for (ReglaPrestacion r : prov.getReglaPrestacions()) {
             if (r.getTipoRegla().equals("Descuento")) {
                 log.info(">>> Regla de descuento: " + r.getId() + " " + r.getNombre() + " " + r.getDatos());
+                motivo += r.getNombre() + ": " + r.getDatos();
                 precio = reglaPrestacionService.procesarReglaDeDescuento(r, a, precioBase);
             }
         }
 
-        return precio;
+        Descuento toRet = new Descuento();
+        toRet.setDescuento(precio);
+        toRet.setMotivoDescuento(motivo);
+        return toRet;
     }
 
     public List<Provision> findAllByPlanId(Long planid) {

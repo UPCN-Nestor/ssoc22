@@ -1,0 +1,17 @@
+.my-tooltip .tooltip-inner {
+  background-color: #ff000088;
+  font-size: 85%;
+}
+
+.my-tooltip .arrow::before {
+  border-right-color: #ff000088;
+}
+
+.my-tooltip-top .tooltip-inner {
+  background-color: #ff000088;
+  font-size: 85%;
+}
+
+.my-tooltip-top .arrow::before {
+  border-bottom-color: #ff000088;
+}

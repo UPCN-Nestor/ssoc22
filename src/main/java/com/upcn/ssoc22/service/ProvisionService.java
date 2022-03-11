@@ -1,6 +1,7 @@
 package com.upcn.ssoc22.service;
 
 import com.upcn.ssoc22.domain.Adhesion;
+import com.upcn.ssoc22.domain.DTO.Descuento;
 import com.upcn.ssoc22.domain.Provision;
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +63,7 @@ public interface ProvisionService {
 
     int diasCarencia(Provision p, Adhesion a);
 
-    float procesarDescuento(Provision prov, Adhesion a, float precioBase);
+    Descuento procesarDescuento(Provision prov, Adhesion a, float precioBase);
 
     List<Provision> findAllByPlanId(Long planid);
 

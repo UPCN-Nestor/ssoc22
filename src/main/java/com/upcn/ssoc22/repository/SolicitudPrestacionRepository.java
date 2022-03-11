@@ -1,11 +1,9 @@
 package com.upcn.ssoc22.repository;
 
 import com.upcn.ssoc22.domain.SolicitudPrestacion;
-import java.sql.Date;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
-import org.hibernate.query.NativeQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;

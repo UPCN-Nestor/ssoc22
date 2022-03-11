@@ -1,7 +1,6 @@
 package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.Provision;
-import com.upcn.ssoc22.domain.ReglaPrestacion;
 import com.upcn.ssoc22.repository.ProvisionRepository;
 import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.service.ReglaPrestacionService;

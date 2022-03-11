@@ -1,16 +1,14 @@
 package com.upcn.ssoc22.web.rest;
 
+import com.upcn.ssoc22.domain.DTO.Descuento;
 import com.upcn.ssoc22.domain.SolicitudPrestacion;
-import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.repository.SolicitudPrestacionRepository;
 import com.upcn.ssoc22.service.ItemNomencladorService;
-import com.upcn.ssoc22.service.ProvisionService;
 import com.upcn.ssoc22.service.UserService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +16,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -219,12 +216,10 @@ public class SolicitudPrestacionResource {
     }
 
     // Este endpoint queda definido acá porque se consume al generar solicitudes de prestación.
-    // Se llama a ProviisonService porque es la "menor" entidad que contiene toda la información necesaria.
-    // Esto puede cambiar si se requiere que cada ItemNomenclador tenga diferente precio (i.e. en el caso de bonos).
     @GetMapping("/solicitud-prestacions/precioreal/{itemnomencladorid}/{adhesionid}")
-    public float getPrecioReal(@PathVariable Long itemnomencladorid, @PathVariable Long adhesionid) {
+    public Descuento getPrecioReal(@PathVariable Long itemnomencladorid, @PathVariable Long adhesionid) {
         log.debug("REST request to get precio real de item nomenclador " + itemnomencladorid + " y adhesión " + adhesionid);
-        float toRet = itemNomencladorService.getPrecioReal(itemnomencladorid, adhesionid);
+        Descuento toRet = itemNomencladorService.getPrecioReal(itemnomencladorid, adhesionid);
 
         return toRet;
     }

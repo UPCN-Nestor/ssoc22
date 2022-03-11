@@ -1,6 +1,5 @@
 package com.upcn.ssoc22;
 
-import com.upcn.ssoc22.Ssoc22App;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

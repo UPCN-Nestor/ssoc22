@@ -1,7 +1,6 @@
 package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.Adhesion;
-import com.upcn.ssoc22.repository.AdhesionRepository;
 import com.upcn.ssoc22.service.AdhesionService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
