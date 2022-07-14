@@ -99,6 +99,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+
             <!-- jhipster-needle-maven-add-dependency-management -->
         </dependencies>
     </dependencyManagement>
@@ -328,6 +330,16 @@
             <artifactId>mssql-jdbc</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web-services</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!--
         <dependency>
             <groupId>org.javatuples</groupId>
@@ -405,6 +417,51 @@
                 <groupId>org.gaul</groupId>
                 <artifactId>modernizer-maven-plugin</artifactId>
             </plugin>
+
+            <!-- PARA AGREGAR WS GLM-->
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.14.0</version>
+                <executions>
+                    <?m2e execute onConfiguration,onIncremental?>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <generatePackage>com.upcn.glm.comprobante</generatePackage>
+                    <schemas>
+                        <schema>
+                            <url>http://192.168.0.228/UPCN_SERVICIOS_PROD/servlet/ar.com.glmsa.servicios.comercial.awscomprobante?wsdl</url>
+                        </schema>
+                    </schemas>
+                </configuration>
+            </plugin>   
+            <!-- PARA AGREGAR AL CLASSPATH -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                        <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                        <sources>
+                            <source>${project.build.directory}/generated-sources/xjc</source>
+                        </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
         <pluginManagement>

@@ -1,0 +1,55 @@
+{
+  "changelogDate": "20220714130056",
+  "fields": [
+    {
+      "fieldName": "socio",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "suministro",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "fechaFactura",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "tipoComp",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "letraComp",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ptoVtaComp",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "numeroComp",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "servicio",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "item",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "orden",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "importe",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "name": "ItemPropio",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no",
+  "skipClient": true
+}

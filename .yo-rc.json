@@ -41,7 +41,8 @@
       "Movil",
       "SolicitudPrestacion",
       "ItemNomenclador",
-      "Prestador"
+      "Prestador",
+      "ItemPropio"
     ],
     "entitySuffix": "",
     "gradleEnterpriseHost": "",
@@ -49,7 +50,7 @@
     "jhipsterVersion": "7.6.0",
     "jwtSecretKey": "ZGU0NmJiNmY4ZTk3MzI5ZWI1MzA0YjQ3ZTQ2MjEyZmMwMjQwYTIzOTdiOTQzMzQyMWI1Y2FjZjQ1NzU1MWU0ZDg2OGZkMTJmYWNjMWE3YTkzNjg2Y2E5M2QxMjRmYTgyYzhkNDljZWQxNGY3MTczNTNkYTc1MDQ3N2U0YWFlMWU=",
     "languages": ["es"],
-    "lastLiquibaseTimestamp": 1643033595000,
+    "lastLiquibaseTimestamp": 1657803656000,
     "messageBroker": false,
     "nativeLanguage": "es",
     "otherModules": [],

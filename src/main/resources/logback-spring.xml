@@ -2,8 +2,10 @@
 <!DOCTYPE configuration>
 
 <configuration scan="true">
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+    
 <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
 <!--
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -26,6 +28,16 @@
         <appender-ref ref="ASYNC"/>
     </root>
 -->
+    <appender name="UPC" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %gray(%d{yyyy-MM-dd HH:mm:ss}) %gray(%-20.-20([%thread])) %gray(|) %highlight(%-5level) %gray(|) %-32(%logger{30}) %msg %red(%ex{3}) %nopex%n
+            </Pattern>
+        </layout>
+    </appender>
+    <root level="DEBUG">
+        <appender-ref ref="UPC" />
+    </root>
 
     <logger name="javax.activation" level="WARN"/>
     <logger name="javax.mail" level="WARN"/>
