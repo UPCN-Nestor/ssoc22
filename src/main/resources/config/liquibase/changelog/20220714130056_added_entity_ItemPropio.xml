@@ -47,6 +47,9 @@
             <column name="importe" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
+            <column name="insertado_en_web" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="item_propio" columnName="fecha_factura" columnDataType="${datetimeType}"/>
@@ -80,6 +83,7 @@
             <column name="item" type="numeric"/>
             <column name="orden" type="numeric"/>
             <column name="importe" type="numeric"/>
+            <column name="insertado_en_web" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -5,6 +5,8 @@ import com.upcn.ssoc22.repository.ItemPropioRepository;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -156,6 +158,9 @@ public class ItemPropioResource {
                 if (itemPropio.getImporte() != null) {
                     existingItemPropio.setImporte(itemPropio.getImporte());
                 }
+                if (itemPropio.getInsertadoEnWeb() != null) {
+                    existingItemPropio.setInsertadoEnWeb(itemPropio.getInsertadoEnWeb());
+                }
 
                 return existingItemPropio;
             })
@@ -205,5 +210,11 @@ public class ItemPropioResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/item-propios/obtener-de-win/{fecha}")
+    public ResponseEntity<List<ItemPropio>> obtenerDeWin(@PathVariable ZonedDateTime fecha) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        List < ItemPropio > itemPropioRepository.obtenerDeWin(fecha.format(df));
     }
 }

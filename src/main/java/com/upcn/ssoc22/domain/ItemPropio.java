@@ -56,6 +56,9 @@ public class ItemPropio implements Serializable {
     @Column(name = "importe", precision = 21, scale = 2)
     private BigDecimal importe;
 
+    @Column(name = "insertado_en_web")
+    private String insertadoEnWeb;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -214,6 +217,19 @@ public class ItemPropio implements Serializable {
         this.importe = importe;
     }
 
+    public String getInsertadoEnWeb() {
+        return this.insertadoEnWeb;
+    }
+
+    public ItemPropio insertadoEnWeb(String insertadoEnWeb) {
+        this.setInsertadoEnWeb(insertadoEnWeb);
+        return this;
+    }
+
+    public void setInsertadoEnWeb(String insertadoEnWeb) {
+        this.insertadoEnWeb = insertadoEnWeb;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -249,6 +265,7 @@ public class ItemPropio implements Serializable {
             ", item=" + getItem() +
             ", orden=" + getOrden() +
             ", importe=" + getImporte() +
+            ", insertadoEnWeb='" + getInsertadoEnWeb() + "'" +
             "}";
     }
 }

@@ -24,14 +24,12 @@ upcn:
   glm-real: true
   glm-simular-error: false
   glm-ws-user: WEB
-  glm-ws-uri: http://192.168.0.225/UPCN_SERVICIOS_PRUE/servlet/
-  glm-wsdl-comprobante: http://192.168.0.225/UPCN_SERVICIOS_PRUE/servlet/ar.com.glmsa.servicios.comercial.awscomprobante?wsdl
-  glm-wsdl-recibo: http://192.168.0.225/UPCN_SERVICIOS_PRUE/servlet/ar.com.glmsa.servicios.comercial.awsrecibo?wsdl
+  glm-wsdl-novedad: http://192.168.0.225/UPCN_SERVICIOS_PRUE/servlet/ar.com.glmsa.servicios.comercial.awsnovedad?wsdl
   #glm-ws-uri: http://192.168.0.228/UPCN_SERVICIOS_PROD/servlet/
-  #glm-wsdl-comprobante: http://192.168.0.228/UPCN_SERVICIOS_PROD/servlet/ar.com.glmsa.servicios.comercial.awscomprobante?wsdl
-  #glm-wsdl-recibo: http://192.168.0.228/UPCN_SERVICIOS_PROD/servlet/ar.com.glmsa.servicios.comercial.awsrecibo?wsdl
+  #glm-wsdl-novedad: http://192.168.0.228/UPCN_SERVICIOS_PRUE/servlet/ar.com.glmsa.servicios.comercial.awsnovedad?wsdl
   glm-ws-action:
-    itempropio: http://tempuri.org/action/AWS...
+    insertar: http://tempuri.org/action/AWSNOVEDAD.INSERTAR
+    consultar: http://tempuri.org/action/AWSNOVEDAD.CONSULTAR
 
 spring:
   devtools:

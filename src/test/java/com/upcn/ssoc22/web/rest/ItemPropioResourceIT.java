@@ -69,6 +69,9 @@ class ItemPropioResourceIT {
     private static final BigDecimal DEFAULT_IMPORTE = new BigDecimal(1);
     private static final BigDecimal UPDATED_IMPORTE = new BigDecimal(2);
 
+    private static final String DEFAULT_INSERTADO_EN_WEB = "AAAAAAAAAA";
+    private static final String UPDATED_INSERTADO_EN_WEB = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/item-propios";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -104,7 +107,8 @@ class ItemPropioResourceIT {
             .servicio(DEFAULT_SERVICIO)
             .item(DEFAULT_ITEM)
             .orden(DEFAULT_ORDEN)
-            .importe(DEFAULT_IMPORTE);
+            .importe(DEFAULT_IMPORTE)
+            .insertadoEnWeb(DEFAULT_INSERTADO_EN_WEB);
         return itemPropio;
     }
 
@@ -126,7 +130,8 @@ class ItemPropioResourceIT {
             .servicio(UPDATED_SERVICIO)
             .item(UPDATED_ITEM)
             .orden(UPDATED_ORDEN)
-            .importe(UPDATED_IMPORTE);
+            .importe(UPDATED_IMPORTE)
+            .insertadoEnWeb(UPDATED_INSERTADO_EN_WEB);
         return itemPropio;
     }
 
@@ -159,6 +164,7 @@ class ItemPropioResourceIT {
         assertThat(testItemPropio.getItem()).isEqualTo(DEFAULT_ITEM);
         assertThat(testItemPropio.getOrden()).isEqualTo(DEFAULT_ORDEN);
         assertThat(testItemPropio.getImporte()).isEqualByComparingTo(DEFAULT_IMPORTE);
+        assertThat(testItemPropio.getInsertadoEnWeb()).isEqualTo(DEFAULT_INSERTADO_EN_WEB);
     }
 
     @Test
@@ -201,7 +207,8 @@ class ItemPropioResourceIT {
             .andExpect(jsonPath("$.[*].servicio").value(hasItem(DEFAULT_SERVICIO)))
             .andExpect(jsonPath("$.[*].item").value(hasItem(DEFAULT_ITEM)))
             .andExpect(jsonPath("$.[*].orden").value(hasItem(DEFAULT_ORDEN)))
-            .andExpect(jsonPath("$.[*].importe").value(hasItem(sameNumber(DEFAULT_IMPORTE))));
+            .andExpect(jsonPath("$.[*].importe").value(hasItem(sameNumber(DEFAULT_IMPORTE))))
+            .andExpect(jsonPath("$.[*].insertadoEnWeb").value(hasItem(DEFAULT_INSERTADO_EN_WEB)));
     }
 
     @Test
@@ -226,7 +233,8 @@ class ItemPropioResourceIT {
             .andExpect(jsonPath("$.servicio").value(DEFAULT_SERVICIO))
             .andExpect(jsonPath("$.item").value(DEFAULT_ITEM))
             .andExpect(jsonPath("$.orden").value(DEFAULT_ORDEN))
-            .andExpect(jsonPath("$.importe").value(sameNumber(DEFAULT_IMPORTE)));
+            .andExpect(jsonPath("$.importe").value(sameNumber(DEFAULT_IMPORTE)))
+            .andExpect(jsonPath("$.insertadoEnWeb").value(DEFAULT_INSERTADO_EN_WEB));
     }
 
     @Test
@@ -259,7 +267,8 @@ class ItemPropioResourceIT {
             .servicio(UPDATED_SERVICIO)
             .item(UPDATED_ITEM)
             .orden(UPDATED_ORDEN)
-            .importe(UPDATED_IMPORTE);
+            .importe(UPDATED_IMPORTE)
+            .insertadoEnWeb(UPDATED_INSERTADO_EN_WEB);
 
         restItemPropioMockMvc
             .perform(
@@ -284,6 +293,7 @@ class ItemPropioResourceIT {
         assertThat(testItemPropio.getItem()).isEqualTo(UPDATED_ITEM);
         assertThat(testItemPropio.getOrden()).isEqualTo(UPDATED_ORDEN);
         assertThat(testItemPropio.getImporte()).isEqualByComparingTo(UPDATED_IMPORTE);
+        assertThat(testItemPropio.getInsertadoEnWeb()).isEqualTo(UPDATED_INSERTADO_EN_WEB);
     }
 
     @Test
@@ -359,7 +369,8 @@ class ItemPropioResourceIT {
             .tipoComp(UPDATED_TIPO_COMP)
             .letraComp(UPDATED_LETRA_COMP)
             .numeroComp(UPDATED_NUMERO_COMP)
-            .servicio(UPDATED_SERVICIO);
+            .servicio(UPDATED_SERVICIO)
+            .insertadoEnWeb(UPDATED_INSERTADO_EN_WEB);
 
         restItemPropioMockMvc
             .perform(
@@ -384,6 +395,7 @@ class ItemPropioResourceIT {
         assertThat(testItemPropio.getItem()).isEqualTo(DEFAULT_ITEM);
         assertThat(testItemPropio.getOrden()).isEqualTo(DEFAULT_ORDEN);
         assertThat(testItemPropio.getImporte()).isEqualByComparingTo(DEFAULT_IMPORTE);
+        assertThat(testItemPropio.getInsertadoEnWeb()).isEqualTo(UPDATED_INSERTADO_EN_WEB);
     }
 
     @Test
@@ -409,7 +421,8 @@ class ItemPropioResourceIT {
             .servicio(UPDATED_SERVICIO)
             .item(UPDATED_ITEM)
             .orden(UPDATED_ORDEN)
-            .importe(UPDATED_IMPORTE);
+            .importe(UPDATED_IMPORTE)
+            .insertadoEnWeb(UPDATED_INSERTADO_EN_WEB);
 
         restItemPropioMockMvc
             .perform(
@@ -434,6 +447,7 @@ class ItemPropioResourceIT {
         assertThat(testItemPropio.getItem()).isEqualTo(UPDATED_ITEM);
         assertThat(testItemPropio.getOrden()).isEqualTo(UPDATED_ORDEN);
         assertThat(testItemPropio.getImporte()).isEqualByComparingTo(UPDATED_IMPORTE);
+        assertThat(testItemPropio.getInsertadoEnWeb()).isEqualTo(UPDATED_INSERTADO_EN_WEB);
     }
 
     @Test

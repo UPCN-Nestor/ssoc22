@@ -82,6 +82,7 @@ class ItemPropioGatlingTest extends Simulation {
                 , "item":"0"
                 , "orden":"0"
                 , "importe":"0"
+                , "insertadoEnWeb":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_itemPropio_url"))).exitHereIfFailed

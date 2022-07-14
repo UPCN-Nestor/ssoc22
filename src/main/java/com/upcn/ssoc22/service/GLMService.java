@@ -25,14 +25,14 @@ public class GLMService extends WebServiceGatewaySupport {
     @Value("${upcn.glm-ws-uri}")
     private String wsUri;
 
-    @Value("${upcn.glm-wsdl-recibo}")
-    private String wsdlRecibo;
+    @Value("${upcn.glm-wsdl-novedad}")
+    private String wsdlNovedad;
 
-    @Value("${upcn.glm-wsdl-comprobante}")
-    private String wsdlComprobante;
+    @Value("${upcn.glm-ws-action.insertar}")
+    private String actionInsertar;
 
-    @Value("${upcn.glm-ws-action.itempropio}")
-    private String actionItemPropior;
+    @Value("${upcn.glm-ws-action.consultar}")
+    private String actionConsultar;
 
     private static DatatypeFactory datatypeFactory;
     private static final Logger log = LoggerFactory.getLogger(GLMService.class);

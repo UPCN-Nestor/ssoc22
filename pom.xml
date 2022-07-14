@@ -433,10 +433,10 @@
                 </executions>
                 <configuration>
                     <schemaLanguage>WSDL</schemaLanguage>
-                    <generatePackage>com.upcn.glm.comprobante</generatePackage>
+                    <generatePackage>com.upcn.glm.novedad</generatePackage>
                     <schemas>
                         <schema>
-                            <url>http://192.168.0.228/UPCN_SERVICIOS_PROD/servlet/ar.com.glmsa.servicios.comercial.awscomprobante?wsdl</url>
+                            <url>http://192.168.0.225/UPCN_SERVICIOS_PRUE/servlet/ar.com.glmsa.servicios.comercial.awsnovedad?wsdl</url>
                         </schema>
                     </schemas>
                 </configuration>
