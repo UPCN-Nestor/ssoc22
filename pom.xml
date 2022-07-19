@@ -419,6 +419,7 @@
             </plugin>
 
             <!-- PARA AGREGAR WS GLM-->
+            <!--
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
@@ -441,7 +442,31 @@
                     </schemas>
                 </configuration>
             </plugin>   
-            <!-- PARA AGREGAR AL CLASSPATH -->
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.14.0</version>
+                <executions>
+                    <?m2e execute onConfiguration,onIncremental?>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <generatePackage>com.upcn.glm.novedad</generatePackage>
+                    <schemas>
+                        <schema>
+                            <url>http://192.168.0.225/UPCN_SERVICIOS_PRUE/servlet/ar.com.glmsa.servicios.comercial.awscomprobante?wsdl</url>
+                        </schema>
+                    </schemas>
+                </configuration>
+            </plugin>   
+            -->
+            <!-- PARA AGREGAR AL CLASSPATH - ESTO LO COPIÉ DE PREPAGO PERO ACÁ NO ESTÁ FUNCIONANDO, COPIÉ LOS SOURCES A MANO A /SRC/MAIN/JAVA -->
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -461,7 +486,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+            -->
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
         <pluginManagement>

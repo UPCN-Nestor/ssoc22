@@ -2,7 +2,9 @@ package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.ItemPropio;
 import com.upcn.ssoc22.repository.ItemPropioRepository;
+import com.upcn.ssoc22.service.GLMService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
@@ -35,9 +37,11 @@ public class ItemPropioResource {
     private String applicationName;
 
     private final ItemPropioRepository itemPropioRepository;
+    private final GLMService glmService;
 
-    public ItemPropioResource(ItemPropioRepository itemPropioRepository) {
+    public ItemPropioResource(ItemPropioRepository itemPropioRepository, GLMService glmService) {
         this.itemPropioRepository = itemPropioRepository;
+        this.glmService = glmService;
     }
 
     /**
@@ -212,9 +216,63 @@ public class ItemPropioResource {
             .build();
     }
 
-    @GetMapping("/item-propios/obtener-de-win/{fecha}")
-    public ResponseEntity<List<ItemPropio>> obtenerDeWin(@PathVariable ZonedDateTime fecha) {
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        List < ItemPropio > itemPropioRepository.obtenerDeWin(fecha.format(df));
+    @GetMapping("/item-propios/migrar-items-de-win/{fechaFactura}")
+    public ResponseEntity<List<ItemPropio>> migrarItemsDeWin(@PathVariable String fechaFactura) {
+        List<ItemPropio> items = itemPropioRepository.obtenerItemsDeWin(fechaFactura);
+
+        return ResponseEntity.ok().body(items);
+    }
+
+    @GetMapping("/item-propios/migrar-facturas-de-win/{fechaFactura}")
+    public ResponseEntity<String> migrarFacturasDeWin(@PathVariable String fechaFactura) {
+        List<ItemPropio> facturas = itemPropioRepository.obtenerFacturasDeWin(fechaFactura);
+
+        log.info("Facturando desde WIN, cantidad: " + facturas.size());
+
+        for (ItemPropio f : facturas) {
+            try {
+                log.info(
+                    "Facturando: " +
+                    f.getId() +
+                    " | " +
+                    f.getSocio() +
+                    "/" +
+                    f.getSuministro() +
+                    " " +
+                    f.getTipoComp() +
+                    "-" +
+                    f.getLetraComp() +
+                    "-" +
+                    f.getPtoVtaComp() +
+                    "-" +
+                    f.getNumeroComp() +
+                    ", vto: " +
+                    f.getFechaFactura()
+                );
+
+                List<ItemPropio> items = itemPropioRepository.obtenerDetalleFacturaDeWin(
+                    f.getTipoComp(),
+                    f.getLetraComp(),
+                    "" + f.getPtoVtaComp(),
+                    f.getNumeroComp()
+                );
+
+                double importeParaControl = items
+                    .stream()
+                    .map(i -> i.getImporte())
+                    .reduce(BigDecimal.ZERO, (a, b) -> a.add(b))
+                    .doubleValue();
+
+                String nuevaFactura = glmService.actualizarFactura(f.getSocio(), f.getSuministro(), f.getFechaFactura(), "PRUEBA", items);
+
+                itemPropioRepository.save(f);
+
+                log.info("Nueva factura: " + nuevaFactura + " $" + importeParaControl);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+        }
+
+        return ResponseEntity.ok().body("OK");
     }
 }

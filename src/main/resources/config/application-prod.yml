@@ -23,13 +23,13 @@ upcn:
   glm-real: true
   glm-simular-error: false
   glm-ws-user: WEB
-  glm-ws-uri: http://192.168.0.225/UPCN_SERVICIOS_PRUE/servlet/
-  glm-wsdl-novedad: http://192.168.0.225/UPCN_SERVICIOS_PRUE/servlet/ar.com.glmsa.servicios.comercial.awsnovedad?wsdl
-  #glm-ws-uri: http://192.168.0.228/UPCN_SERVICIOS_PROD/servlet/
-  #glm-wsdl-novedad: http://192.168.0.228/UPCN_SERVICIOS_PRUE/servlet/ar.com.glmsa.servicios.comercial.awsnovedad?wsdl
+  glm-ws-uri: http://192.168.0.228/UPCN_SERVICIOS_PROD/servlet/
+  glm-wsdl-novedad: http://192.168.0.228/UPCN_SERVICIOS_PROD/servlet/ar.com.glmsa.servicios.comercial.awsnovedad?wsdl
+  glm-wsdl-comprobante: http://192.168.0.228/UPCN_SERVICIOS_PROD/servlet/ar.com.glmsa.servicios.comercial.awscomprobante?wsdl
   glm-ws-action:
     insertar: http://tempuri.org/action/AWSNOVEDAD.INSERTAR
     consultar: http://tempuri.org/action/AWSNOVEDAD.CONSULTAR
+    actualizar: http://tempuri.org/action/AWSCOMPROBANTE.ACTUALIZACIONCALCULOEXTERNO
 
 management:
   metrics:
@@ -45,7 +45,7 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:sqlserver://192.168.0.227;database=UPCN_SISTEMAS_SSOC
+    url: jdbc:sqlserver://192.168.0.230:1433;database=UPCN_SISTEMAS_SSOC
     username: glmapp
     password: palmera123+
     hikari:

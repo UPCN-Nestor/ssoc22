@@ -44,7 +44,7 @@
     "e2e:cypress:audits:headless": "npm run e2e:cypress -- --config-file cypress-audits.json",
     "e2e:cypress:headed": "npm run e2e:cypress -- --headed",
     "e2e:dev": "concurrently -k -s first \"./mvnw\" \"npm run e2e\"",
-    "e2e:devserver": "concurrently -k -s first \"npm run backend:start\" \"npm start\" \"wait-on http-get://localhost:9000 && npm run e2e:headless -- -c baseUrl=http://localhost:9000\"",
+    "e2e:devserver": "concurrently -k -s first \"npm run backend:start\" \"npm start\" \"wait-on http-get://localhost:9081 && npm run e2e:headless -- -c baseUrl=http://localhost:9081\"",
     "pree2e:headless": "npm run ci:server:await",
     "e2e:headless": "npm run e2e:cypress --",
     "e2e:protractor": "protractor src/test/javascript/protractor.conf.js",
