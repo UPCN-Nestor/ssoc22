@@ -7,7 +7,7 @@
 
     <groupId>com.upcn.ssoc22</groupId>
     <artifactId>ssoc-22</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Ssoc 22</name>
     <description>Description for ssoc22</description>

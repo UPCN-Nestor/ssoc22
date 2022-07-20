@@ -28,6 +28,17 @@
         <appender-ref ref="ASYNC"/>
     </root>
 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>%gray(%d{yyyy-MM-dd HH:mm:ss}) %gray(%-20.-20([%thread])) %gray(|) %highlight(%-5level) %gray(|) %-32(%logger{30}) %msg %red(%ex{3}) %nopex%n</Pattern>
+        </encoder>
+    </appender>
+    
     <appender name="UPC" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
@@ -37,6 +48,7 @@
     </appender>
     <root level="DEBUG">
         <appender-ref ref="UPC" />
+        <appender-ref ref="FILE" />
     </root>
 
     <logger name="javax.activation" level="WARN"/>

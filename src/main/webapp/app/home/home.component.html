@@ -33,6 +33,7 @@
     <!-- *** TEST *** -->
     <br />
 
+    <!--
     <div class="col-md-12 m-2">
       <button routerLink="/pantalla/telefono" type="button" class="btn btn-secondary">
         <fa-icon icon="phone"></fa-icon> Telefonista / Bonos
@@ -41,7 +42,12 @@
     <div class="col-md-12 m-2">
       <button routerLink="/pantalla/plan-alta" type="button" class="btn btn-secondary"><fa-icon icon="list"></fa-icon> Planes</button>
     </div>
-
+-->
+    <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+      <a class="btn btn-secondary" href="/swagger-ui/index.html#/item-propio-resource/migrarFacturaIndividualDeWin">
+        Migrar factura individual de Win
+      </a>
+    </div>
     <!--
     <br />
     <div class="progress">

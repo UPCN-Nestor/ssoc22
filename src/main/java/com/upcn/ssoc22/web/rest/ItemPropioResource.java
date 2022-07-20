@@ -2,21 +2,24 @@ package com.upcn.ssoc22.web.rest;
 
 import com.upcn.ssoc22.domain.ItemPropio;
 import com.upcn.ssoc22.repository.ItemPropioRepository;
+import com.upcn.ssoc22.repository.ItemPropioRepository.FacturaDeWinDTO;
+import com.upcn.ssoc22.repository.ItemPropioRepository.ItemFacturaDeWinDTO;
 import com.upcn.ssoc22.service.GLMService;
 import com.upcn.ssoc22.web.rest.errors.BadRequestAlertException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -225,73 +228,98 @@ public class ItemPropioResource {
         return ResponseEntity.ok().body(items);
     }
 
-    @Transactional
+    //@Scheduled(cron = "0 */10 * * * ?")
+    public ResponseEntity<String> migrarFacturasDeWinAutomatico() {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String hoy = ZonedDateTime.now().format(df);
+        return migrarFacturasDeWin(hoy);
+    }
+
+    @GetMapping("/item-propios/migrar-factura-individual-de-win/{tipoComp}/{letraComp}/{ptoVtaComp}/{numeroComp}")
+    public ResponseEntity<String> migrarFacturaIndividualDeWin(
+        @PathVariable Integer tipoComp,
+        @PathVariable String letraComp,
+        @PathVariable Integer ptoVtaComp,
+        @PathVariable Integer numeroComp
+    ) {
+        return doMigrarFacturasDeWin(itemPropioRepository.obtenerFacturasIndividualDeWinDTO(tipoComp, letraComp, ptoVtaComp, numeroComp));
+    }
+
     @GetMapping("/item-propios/migrar-facturas-de-win/{fechaFactura}")
     public ResponseEntity<String> migrarFacturasDeWin(@PathVariable String fechaFactura) {
-        List<Map<String, Object>> facturas = itemPropioRepository.obtenerFacturasDeWinDTO(fechaFactura);
+        List<FacturaDeWinDTO> facturas = itemPropioRepository.obtenerFacturasDeWinDTO(fechaFactura);
 
-        log.info("Facturando desde WIN, cantidad: " + facturas.size());
+        return doMigrarFacturasDeWin(facturas);
+    }
 
-        int limiteParaTest = 0;
+    private ResponseEntity<String> doMigrarFacturasDeWin(List<FacturaDeWinDTO> facturas) {
+        log.info("*** Facturando desde WIN, cantidad: " + facturas.size());
 
-        for (Map<String, Object> f : facturas) {
-            limiteParaTest++;
-            if (limiteParaTest > 5) break;
+        int ix = 0;
+
+        for (FacturaDeWinDTO f : facturas) {
+            ix++;
+            /* 
+            if(ix > 10) {
+                break;
+            }*/
 
             try {
                 log.info(
-                    "Facturando: " +
-                    f.get("socio") +
+                    ix +
+                    " | Facturando: " +
+                    f.getSocio() +
                     "/" +
-                    f.get("suministro") +
+                    f.getSuministro() +
                     " " +
-                    f.get("tipo_comp") +
+                    f.getTipoComp() +
                     "-" +
-                    f.get("letra_comp") +
+                    f.getLetraComp() +
                     "-" +
-                    f.get("letra_comp") +
+                    f.getPtoVtaComp() +
                     "-" +
-                    f.get("numero_comp") +
+                    f.getNumeroComp() +
                     ", vto: " +
-                    f.get("fecha_vto")
+                    f.getFechaVto()
                 );
 
-                // ******************************* Caché??
-                /* 
-                if(itemPropioRepository.getById(f.getId()).getInsertadoEnWeb() != null) {
-                    log.info("Ya fue facturada segun DB, omitiendo. " + itemPropioRepository.getById(f.getId()));
+                if (
+                    itemPropioRepository.yaExiste("" + f.getTipoComp(), f.getLetraComp(), "" + f.getPtoVtaComp(), "" + f.getNumeroComp()) >
+                    0
+                ) {
+                    log.info("Ya fue facturada segun DB, omitiendo. ");
                     continue;
                 }
-*/
-                List<Map<String, Object>> items = itemPropioRepository.obtenerDetalleFacturaDeWinDTO(
-                    "" + f.get("tipo_comp"),
-                    "" + f.get("letra_comp"),
-                    "" + f.get("pto_vta_comp"),
-                    "" + f.get("numero_comp")
+
+                List<ItemFacturaDeWinDTO> items = itemPropioRepository.obtenerDetalleFacturaDeWinDTO(
+                    "" + f.getTipoComp(),
+                    f.getLetraComp(),
+                    "" + f.getPtoVtaComp(),
+                    "" + f.getNumeroComp()
                 );
 
-                //double importeParaControl = items.stream().map(i->i.get("importe")).reduce(0, (a,b)->((double)a)+((double)b));
+                double importeParaControl = items.stream().map(i -> i.getImporte()).reduce(0.0, (a, b) -> a + b);
 
-                String nuevaFacturaWeb = glmService.actualizarFactura(
-                    (Integer) f.get("socio"),
-                    (Integer) f.get("suministro"),
-                    (ZonedDateTime) f.get("fecha_vto"),
-                    "PRUEBA",
+                String nuevaFactura = glmService.actualizarFactura(
+                    f.getSocio(),
+                    f.getSuministro(),
+                    f.getFechaVto().toLocalDateTime().atZone(ZoneId.systemDefault()).plusHours(12),
+                    f.getTipoComp() + "-" + f.getLetraComp() + "-" + f.getPtoVtaComp() + "-" + f.getNumeroComp(),
                     items
                 );
 
-                // ******************* NO ANDA
-                ItemPropio nueva = new ItemPropio();
-                nueva.setSocio((Integer) f.get("socio"));
-                nueva.setSuministro((Integer) f.get("suministro"));
-                nueva.setTipoComp("" + f.get("tipo_comp"));
-                nueva.setLetraComp("" + f.get("letra_comp"));
-                nueva.setPtoVtaComp((Integer) f.get("pto_vta_comp"));
-                nueva.setNumeroComp("" + f.get("numero_comp"));
-                nueva.setInsertadoEnWeb(nuevaFacturaWeb);
-                itemPropioRepository.save(nueva);
+                ItemPropio nuevo = new ItemPropio();
+                nuevo.setSocio(f.getSocio());
+                nuevo.setSuministro(f.getSuministro());
+                nuevo.setTipoComp("" + f.getTipoComp());
+                nuevo.setLetraComp(f.getLetraComp());
+                nuevo.setPtoVtaComp(f.getPtoVtaComp());
+                nuevo.setNumeroComp("" + f.getNumeroComp());
+                nuevo.setFechaFactura(f.getFechaVto().toLocalDateTime().atZone(ZoneId.systemDefault()));
+                nuevo.setInsertadoEnWeb(nuevaFactura);
+                itemPropioRepository.save(nuevo);
 
-                log.info("Nueva factura: " + nuevaFacturaWeb); //+ " $" + importeParaControl);
+                log.info(ix + " | Nueva factura: " + nuevaFactura + " $" + importeParaControl);
             } catch (Exception e) {
                 log.error(e.getMessage());
             }

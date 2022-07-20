@@ -3,11 +3,11 @@ package com.upcn.ssoc22.service;
 import com.upcn.glm.comprobante.*;
 import com.upcn.glm.comprobante.CompExtIN.Items;
 import com.upcn.ssoc22.domain.ItemPropio;
+import com.upcn.ssoc22.repository.ItemPropioRepository.ItemFacturaDeWinDTO;
 import com.upcn.ssoc22.service.exception.GLMException;
 import java.time.ZonedDateTime;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import org.slf4j.Logger;
@@ -89,7 +89,7 @@ public class GLMService extends WebServiceGatewaySupport {
         int suministro,
         ZonedDateTime vencimiento,
         String observaciones,
-        List<Map<String, Object>> items
+        List<ItemFacturaDeWinDTO> items
     ) throws GLMException {
         simularError();
 
@@ -117,11 +117,11 @@ public class GLMService extends WebServiceGatewaySupport {
 
         Items itemsParaAgregar = new Items();
 
-        for (Map<String, Object> i : items) {
+        for (ItemFacturaDeWinDTO i : items) {
             CompExtINItem item = new CompExtINItem();
-            item.setFac1Srv((byte) i.get("servicio"));
-            item.setFac2Itm((short) i.get("item"));
-            item.setFac2Imp1((double) i.get("importe"));
+            item.setFac1Srv(i.getServicio().byteValue());
+            item.setFac2Itm(i.getItem().shortValue());
+            item.setFac2Imp1(i.getImporte().doubleValue());
 
             itemsParaAgregar.getItem().add(item);
         }
