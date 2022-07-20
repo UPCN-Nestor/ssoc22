@@ -100,7 +100,6 @@ public class CacheConfiguration {
             createCache(cm, com.upcn.ssoc22.domain.Prestador.class.getName() + ".despachos");
             createCache(cm, com.upcn.ssoc22.domain.Prestacion.class.getName() + ".provisions");
             createCache(cm, com.upcn.ssoc22.domain.Adhesion.class.getName() + ".solicitudPrestacions");
-            createCache(cm, com.upcn.ssoc22.domain.ItemPropio.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -7,6 +7,7 @@ import com.upcn.ssoc22.service.exception.GLMException;
 import java.time.ZonedDateTime;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import org.slf4j.Logger;
@@ -83,8 +84,13 @@ public class GLMService extends WebServiceGatewaySupport {
         if (wsSimularError) throw new GLMException("Error simulado");
     }
 
-    public String actualizarFactura(int socio, int suministro, ZonedDateTime vencimiento, String observaciones, List<ItemPropio> items)
-        throws GLMException {
+    public String actualizarFactura(
+        int socio,
+        int suministro,
+        ZonedDateTime vencimiento,
+        String observaciones,
+        List<Map<String, Object>> items
+    ) throws GLMException {
         simularError();
 
         if (!wsGlmReal) {
@@ -111,11 +117,11 @@ public class GLMService extends WebServiceGatewaySupport {
 
         Items itemsParaAgregar = new Items();
 
-        for (ItemPropio i : items) {
+        for (Map<String, Object> i : items) {
             CompExtINItem item = new CompExtINItem();
-            item.setFac1Srv(i.getServicio().byteValue());
-            item.setFac2Itm(i.getItem().shortValue());
-            item.setFac2Imp1(i.getImporte().doubleValue());
+            item.setFac1Srv((byte) i.get("servicio"));
+            item.setFac2Itm((short) i.get("item"));
+            item.setFac2Imp1((double) i.get("importe"));
 
             itemsParaAgregar.getItem().add(item);
         }

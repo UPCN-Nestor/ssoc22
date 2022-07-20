@@ -10,12 +10,14 @@ import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -223,51 +225,73 @@ public class ItemPropioResource {
         return ResponseEntity.ok().body(items);
     }
 
+    @Transactional
     @GetMapping("/item-propios/migrar-facturas-de-win/{fechaFactura}")
     public ResponseEntity<String> migrarFacturasDeWin(@PathVariable String fechaFactura) {
-        List<ItemPropio> facturas = itemPropioRepository.obtenerFacturasDeWin(fechaFactura);
+        List<Map<String, Object>> facturas = itemPropioRepository.obtenerFacturasDeWinDTO(fechaFactura);
 
         log.info("Facturando desde WIN, cantidad: " + facturas.size());
 
-        for (ItemPropio f : facturas) {
+        int limiteParaTest = 0;
+
+        for (Map<String, Object> f : facturas) {
+            limiteParaTest++;
+            if (limiteParaTest > 5) break;
+
             try {
                 log.info(
                     "Facturando: " +
-                    f.getId() +
-                    " | " +
-                    f.getSocio() +
+                    f.get("socio") +
                     "/" +
-                    f.getSuministro() +
+                    f.get("suministro") +
                     " " +
-                    f.getTipoComp() +
+                    f.get("tipo_comp") +
                     "-" +
-                    f.getLetraComp() +
+                    f.get("letra_comp") +
                     "-" +
-                    f.getPtoVtaComp() +
+                    f.get("letra_comp") +
                     "-" +
-                    f.getNumeroComp() +
+                    f.get("numero_comp") +
                     ", vto: " +
-                    f.getFechaFactura()
+                    f.get("fecha_vto")
                 );
 
-                List<ItemPropio> items = itemPropioRepository.obtenerDetalleFacturaDeWin(
-                    f.getTipoComp(),
-                    f.getLetraComp(),
-                    "" + f.getPtoVtaComp(),
-                    f.getNumeroComp()
+                // ******************************* Caché??
+                /* 
+                if(itemPropioRepository.getById(f.getId()).getInsertadoEnWeb() != null) {
+                    log.info("Ya fue facturada segun DB, omitiendo. " + itemPropioRepository.getById(f.getId()));
+                    continue;
+                }
+*/
+                List<Map<String, Object>> items = itemPropioRepository.obtenerDetalleFacturaDeWinDTO(
+                    "" + f.get("tipo_comp"),
+                    "" + f.get("letra_comp"),
+                    "" + f.get("pto_vta_comp"),
+                    "" + f.get("numero_comp")
                 );
 
-                double importeParaControl = items
-                    .stream()
-                    .map(i -> i.getImporte())
-                    .reduce(BigDecimal.ZERO, (a, b) -> a.add(b))
-                    .doubleValue();
+                //double importeParaControl = items.stream().map(i->i.get("importe")).reduce(0, (a,b)->((double)a)+((double)b));
 
-                String nuevaFactura = glmService.actualizarFactura(f.getSocio(), f.getSuministro(), f.getFechaFactura(), "PRUEBA", items);
+                String nuevaFacturaWeb = glmService.actualizarFactura(
+                    (Integer) f.get("socio"),
+                    (Integer) f.get("suministro"),
+                    (ZonedDateTime) f.get("fecha_vto"),
+                    "PRUEBA",
+                    items
+                );
 
-                itemPropioRepository.save(f);
+                // ******************* NO ANDA
+                ItemPropio nueva = new ItemPropio();
+                nueva.setSocio((Integer) f.get("socio"));
+                nueva.setSuministro((Integer) f.get("suministro"));
+                nueva.setTipoComp("" + f.get("tipo_comp"));
+                nueva.setLetraComp("" + f.get("letra_comp"));
+                nueva.setPtoVtaComp((Integer) f.get("pto_vta_comp"));
+                nueva.setNumeroComp("" + f.get("numero_comp"));
+                nueva.setInsertadoEnWeb(nuevaFacturaWeb);
+                itemPropioRepository.save(nueva);
 
-                log.info("Nueva factura: " + nuevaFactura + " $" + importeParaControl);
+                log.info("Nueva factura: " + nuevaFacturaWeb); //+ " $" + importeParaControl);
             } catch (Exception e) {
                 log.error(e.getMessage());
             }

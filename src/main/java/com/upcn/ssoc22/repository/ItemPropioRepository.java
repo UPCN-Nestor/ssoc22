@@ -2,6 +2,8 @@ package com.upcn.ssoc22.repository;
 
 import com.upcn.ssoc22.domain.ItemPropio;
 import java.util.List;
+import java.util.Map;
+import org.hibernate.query.NativeQuery;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,12 +30,33 @@ public interface ItemPropioRepository extends JpaRepository<ItemPropio, Long> {
     List<ItemPropio> obtenerFacturasDeWin(@Param("fechaFact") String fechaFact);
 
     @Query(
+        value = "select fc.Soc_numero socio, fc.Sumi_numer suministro, fc.Fact_fecvt fecha_vto, fs.Form_codig tipo_comp, fs.Fact_letra letra_comp, fs.Fact_sucur pto_vta_comp, fs.Fact_numer numero_comp " +
+        "from [192.168.0.8].[UPCCOMPROD].[dbo].[FACTUS] fs join [192.168.0.8].[UPCCOMPROD].[dbo].[FACTUC] fc on (fs.SucCodigo = fc.SucCodigo and fs.Form_codig = fc.Form_codig and fs.Fact_letra = fc.Fact_letra and fs.Fact_sucur = fc.Fact_sucur and fs.Fact_numer = fc.Fact_numer) " +
+        "where fs.SucCodigo = 1 and fs.Fact_fecha = :fechaFact and fs.Fac1Servic = 10 and fc.Fact_quin <> 9 and fc.FactArea like 'SS%' ", // *** FALTA ALGUNA MARCA PARA NO TRAER LAS DE ITEMS PROPIOS
+        nativeQuery = true
+    )
+    List<Map<String, Object>> obtenerFacturasDeWinDTO(@Param("fechaFact") String fechaFact);
+
+    @Query(
         value = "select cast(fi.Soc_numero as bigint)*1000000 + fi.Sumi_numer*1000 + ROW_NUMBER() OVER (order by fi.Fac2Item) id, 0 socio, 0 suministro, null fecha_factura, 0 tipo_comp, '' letra_comp, 0 pto_vta_comp, 0 numero_comp, fi.Fac1Servic servicio, fi.Fac2Item item, null orden, fi.Fac2Impvt1 importe, null insertado_en_web " +
         "from [192.168.0.8].[UPCCOMPROD].[dbo].[FACTUI] fi " +
         "where fi.Form_codig = :tipo and fi.Fact_letra = :letra and fi.Fact_sucur = :pto_vta and fi.Fact_numer = :numero ",
         nativeQuery = true
     )
     List<ItemPropio> obtenerDetalleFacturaDeWin(
+        @Param("tipo") String tipo,
+        @Param("letra") String letra,
+        @Param("pto_vta") String pto_vta,
+        @Param("numero") String numero
+    );
+
+    @Query(
+        value = "select fi.Fac1Servic servicio, fi.Fac2Item item, fi.Fac2Impvt1 importe " +
+        "from [192.168.0.8].[UPCCOMPROD].[dbo].[FACTUI] fi " +
+        "where fi.Form_codig = :tipo and fi.Fact_letra = :letra and fi.Fact_sucur = :pto_vta and fi.Fact_numer = :numero ",
+        nativeQuery = true
+    )
+    List<Map<String, Object>> obtenerDetalleFacturaDeWinDTO(
         @Param("tipo") String tipo,
         @Param("letra") String letra,
         @Param("pto_vta") String pto_vta,
